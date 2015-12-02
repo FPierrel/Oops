@@ -7,6 +7,7 @@ package fr.univ_lorraine.beans;
 
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 
 /**
  *
