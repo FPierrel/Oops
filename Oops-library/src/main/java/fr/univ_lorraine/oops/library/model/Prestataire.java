@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 
 @Entity
 public class Prestataire extends Utilisateur implements Serializable {
+    private static final long serialVersionUID = 1L;
     
     private String nomEntreprise;
     private int nbEmployes;
@@ -36,7 +37,6 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public void setChiffreAffaire(int chiffreAffaire) {
         this.chiffreAffaire = chiffreAffaire;
-    }
-    
+    }    
     
 }

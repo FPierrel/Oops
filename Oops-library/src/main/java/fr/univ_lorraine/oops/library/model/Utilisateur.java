@@ -1,9 +1,13 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import java.util.Objects;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 
 @Entity
 public abstract class Utilisateur implements Serializable {
@@ -15,6 +19,8 @@ public abstract class Utilisateur implements Serializable {
     private String motDePasse;
     private String mail;
     private String numeroTelephone;
+    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    private Collection<Adresse> adresses;
 
     public String getLogin() {
         return login;

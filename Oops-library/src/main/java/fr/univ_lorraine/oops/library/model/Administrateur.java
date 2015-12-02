@@ -4,10 +4,10 @@ import java.io.Serializable;
 import javax.persistence.Entity;
 
 @Entity
-public class Soumissionnaire extends Utilisateur implements Serializable {    
+public class Administrateur extends Moderateur implements Serializable {
     private static final long serialVersionUID = 1L;
     
-    public Soumissionnaire() {
+    public Administrateur() {
         
     }
     
