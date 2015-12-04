@@ -70,6 +70,18 @@ public abstract class Utilisateur implements Serializable {
         this.numeroTelephone = numeroTelephone;
     }
 
+    public Collection<Adresse> getAdresses() {
+        return adresses;
+    }
+
+    public void setAdresses(Collection<Adresse> adresses) {
+        this.adresses = adresses;
+    }
+    
+    public void addAdresse(Adresse adresse) {
+        this.adresses.add(adresse);
+    }
+    
     @Override
     public int hashCode() {
         int hash = 5;
