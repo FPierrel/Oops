@@ -11,7 +11,7 @@ import javax.inject.Inject;
 @Named(value = "registrationBean")
 @RequestScoped
 public class RegistrationBean {
-    
+
     @Inject
     UserManagerBean userManager;
 
@@ -23,7 +23,7 @@ public class RegistrationBean {
     private String companyName;
     private String lastname;
     private String firstname;
-    
+
     /**
      * Creates a new instance of RegistrationBean
      */
@@ -94,9 +94,9 @@ public class RegistrationBean {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-    
+
     public String registrationSoumissionnaire() {
-        if(!this.password.equals(this.confirmPassword)) {
+        if (!this.password.equals(this.confirmPassword)) {
             //TODO : Message à afficher pour l'utilisateur.
             System.out.println("********************************** MDP !");
             System.out.println(this.password);
@@ -107,11 +107,11 @@ public class RegistrationBean {
         s.setLogin(this.login);
         s.setMotDePasse(this.password);
         s.setMail(this.email);
-        s.setNom(this.firstname);
+        s.setNom(this.lastname);
         s.setPrenom(this.firstname);
         s.setNumeroTelephone(this.phone);
         Utilisateur user = this.userManager.registerUser(s);
-        if(user == null) {
+        if (user == null) {
             System.out.println("********************************** EXISTE !");
             return "inscriptionS.xhtml";
             //TODO : Message à afficher pour l'utilisateur (login déjà pris).
@@ -120,9 +120,9 @@ public class RegistrationBean {
             //TODO : Message à afficher à l'utilisateur (inscription réussie).
         }
     }
-    
+
     public String registrationPrestataire() {
-        if(!this.password.equals(this.confirmPassword)) {
+        if (!this.password.equals(this.confirmPassword)) {
             //TODO : Message à afficher pour l'utilisateur.
             return "inscriptionP.xhtml";
         }
@@ -130,12 +130,12 @@ public class RegistrationBean {
         p.setLogin(this.login);
         p.setMotDePasse(this.password);
         p.setMail(this.email);
-        p.setNom(this.firstname);
+        p.setNom(this.lastname);
         p.setPrenom(this.firstname);
         p.setNumeroTelephone(this.phone);
         p.setNomEntreprise(this.companyName);
         Utilisateur user = this.userManager.registerUser(p);
-        if(user == null) {
+        if (user == null) {
             return "inscriptionP.xhtml";
             //TODO : Message à afficher pour l'utilisateur (login déjà pris).
         } else {
@@ -143,5 +143,5 @@ public class RegistrationBean {
             //TODO : Message à afficher à l'utilisateur (inscription réussie).
         }
     }
-    
+
 }

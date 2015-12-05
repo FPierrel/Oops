@@ -11,6 +11,19 @@
         <h:button value="Inscription Prestataire" outcome="inscriptionP"/>
         <br/>
         <h:button value="Inscription Soumissionnaire" outcome="inscriptionS"/>
+        <br/>
+
+        <fieldset title="Search">            
+            <h:form>
+                Prenom : <h:inputText value="#{ficheBean.prenomSearch}"/>
+                Nom: <h:inputText value="#{ficheBean.nomSearch}"/>            
+                <h:commandButton value="Search" action="#{ficheBean.searchPrenomNom()}"/>
+            </h:form>
+            <h:form>
+                Login : <h:inputText value="#{ficheBean.loginSearch}"/>           
+                <h:commandButton value="Search" action="#{ficheBean.searchLogin()}"/>
+            </h:form>
+        </fieldset>
     </h:body>
 </html>
 
