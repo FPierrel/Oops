@@ -43,20 +43,9 @@
     <dependencies>
         <dependency>
             <groupId>fr.univ_lorraine</groupId>
-            <artifactId>Oops-ejb</artifactId>
-            <version>1.0-SNAPSHOT</version>
-            <type>ejb</type>
-        </dependency>
-        <dependency>
-            <groupId>fr.univ_lorraine</groupId>
             <artifactId>Oops-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
-        </dependency>
-        <dependency>
-            <groupId>${project.groupId}</groupId>
-            <artifactId>Oops-library</artifactId>
-            <version>${project.version}</version>
         </dependency>
     </dependencies>
 </project>

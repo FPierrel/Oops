@@ -242,5 +242,5 @@ public class RegistrationBean implements Serializable {
             return "index.xhtml";
         }
     }
-        
+    
 }
