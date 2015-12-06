@@ -4,31 +4,35 @@ import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
+import java.io.Serializable;
+import java.util.regex.Pattern;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.component.UIComponent;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 @Named(value = "registrationBean")
-@RequestScoped
-public class RegistrationBean {
+@SessionScoped
+public class RegistrationBean implements Serializable {
     
     @Inject
     UserManagerBean userManager;
 
-    private String login;
-    private String password;
-    private String confirmPassword;
-    private String email;
-    private String phone;
-    private String companyName;
-    private String lastname;
-    private String firstname;
+    private String login, password, confirmPassword, email, phone, companyName, lastname, firstname, user;
+    private boolean prestataire, soumissionnaire;    
+    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, emailComponent, phoneComponent, 
+            companyNameComponent, lastnameComponent, firstnameComponent;
     
     /**
      * Creates a new instance of RegistrationBean
      */
     public RegistrationBean() {
-
+        this.user = "Soumissionnaire";
+        this.login = "Bonjour";
+        this.prestataire = false;
+        this.soumissionnaire = true;
     }
 
     public String getLogin() {
@@ -94,54 +98,149 @@ public class RegistrationBean {
     public void setFirstname(String firstname) {
         this.firstname = firstname;
     }
-    
-    public String registrationSoumissionnaire() {
-        if(!this.password.equals(this.confirmPassword)) {
-            //TODO : Message à afficher pour l'utilisateur.
-            System.out.println("********************************** MDP !");
-            System.out.println(this.password);
-            System.out.println(this.confirmPassword);
-            return "inscriptionS.xhtml";
-        }
-        Soumissionnaire s = new Soumissionnaire();
-        s.setLogin(this.login);
-        s.setMotDePasse(this.password);
-        s.setMail(this.email);
-        s.setNom(this.firstname);
-        s.setPrenom(this.firstname);
-        s.setNumeroTelephone(this.phone);
-        Utilisateur user = this.userManager.registerUser(s);
-        if(user == null) {
-            System.out.println("********************************** EXISTE !");
-            return "inscriptionS.xhtml";
-            //TODO : Message à afficher pour l'utilisateur (login déjà pris).
+
+    public boolean isPrestataire() {
+        return prestataire;
+    }
+
+    public void setPrestataire(boolean prestataire) {
+        this.prestataire = prestataire;
+    }
+
+    public boolean isSoumissionnaire() {
+        return soumissionnaire;
+    }
+
+    public void setSoumissionnaire(boolean soumissionnaire) {
+        this.soumissionnaire = soumissionnaire;
+    }
+
+    public String getUser() {
+        return user;
+    }
+
+    public void setUser(String user) {
+        this.user = user;
+        if(user.equals("Soumissionnaire")) {
+            this.soumissionnaire = true;
+            this.prestataire = false;
         } else {
-            return "index.xhtml";
-            //TODO : Message à afficher à l'utilisateur (inscription réussie).
+            this.soumissionnaire = false;
+            this.prestataire = true;
         }
     }
-    
-    public String registrationPrestataire() {
-        if(!this.password.equals(this.confirmPassword)) {
-            //TODO : Message à afficher pour l'utilisateur.
-            return "inscriptionP.xhtml";
+
+    public UIComponent getConfirmPasswordComponent() {
+        return confirmPasswordComponent;
+    }
+
+    public void setConfirmPasswordComponent(UIComponent confirmPasswordComponent) {
+        this.confirmPasswordComponent = confirmPasswordComponent;
+    }
+
+    public UIComponent getLoginComponent() {
+        return loginComponent;
+    }
+
+    public void setLoginComponent(UIComponent loginComponent) {
+        this.loginComponent = loginComponent;
+    }
+
+    public UIComponent getPasswordComponent() {
+        return passwordComponent;
+    }
+
+    public void setPasswordComponent(UIComponent passwordComponent) {
+        this.passwordComponent = passwordComponent;
+    }
+
+    public UIComponent getEmailComponent() {
+        return emailComponent;
+    }
+
+    public void setEmailComponent(UIComponent emailComponent) {
+        this.emailComponent = emailComponent;
+    }
+
+    public UIComponent getPhoneComponent() {
+        return phoneComponent;
+    }
+
+    public void setPhoneComponent(UIComponent phoneComponent) {
+        this.phoneComponent = phoneComponent;
+    }
+
+    public UIComponent getCompanyNameComponent() {
+        return companyNameComponent;
+    }
+
+    public void setCompanyNameComponent(UIComponent companyNameComponent) {
+        this.companyNameComponent = companyNameComponent;
+    }
+
+    public UIComponent getLastnameComponent() {
+        return lastnameComponent;
+    }
+
+    public void setLastnameComponent(UIComponent lastnameComponent) {
+        this.lastnameComponent = lastnameComponent;
+    }
+
+    public UIComponent getFirstnameComponent() {
+        return firstnameComponent;
+    }
+
+    public void setFirstnameComponent(UIComponent firstnameComponent) {
+        this.firstnameComponent = firstnameComponent;
+    }
+   
+    public String registration() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(this.password.length() < 6) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit, veuillez recommencer !", null);
+            context.addMessage(this.passwordComponent.getClientId(), message); 
+            return "inscription.xhtml";
         }
-        Prestataire p = new Prestataire();
-        p.setLogin(this.login);
-        p.setMotDePasse(this.password);
-        p.setMail(this.email);
-        p.setNom(this.firstname);
-        p.setPrenom(this.firstname);
-        p.setNumeroTelephone(this.phone);
-        p.setNomEntreprise(this.companyName);
-        Utilisateur user = this.userManager.registerUser(p);
-        if(user == null) {
-            return "inscriptionP.xhtml";
-            //TODO : Message à afficher pour l'utilisateur (login déjà pris).
+        if(!this.password.equals(this.confirmPassword)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe différent, veuillez recommencer !", null);
+            context.addMessage(this.confirmPasswordComponent.getClientId(), message); 
+            return "inscription.xhtml";
+        }
+        if(! Pattern.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$", this.email)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
+            context.addMessage(this.emailComponent.getClientId(), message); 
+            return "inscription.xhtml";
+        }
+        Utilisateur user;
+        if(this.soumissionnaire) {
+            Soumissionnaire s = new Soumissionnaire();
+            s.setLogin(this.login);
+            s.setMotDePasse(this.password);
+            s.setMail(this.email);
+            s.setNom(this.lastname);
+            s.setPrenom(this.firstname);
+            s.setNumeroTelephone(this.phone);
+            user = this.userManager.registerUser(s);
         } else {
+            Prestataire p = new Prestataire();
+            p.setLogin(this.login);
+            p.setMotDePasse(this.password);
+            p.setMail(this.email);
+            p.setNom(this.lastname);
+            p.setPrenom(this.firstname);
+            p.setNumeroTelephone(this.phone);
+            p.setNomEntreprise(this.companyName);
+            user = this.userManager.registerUser(p);
+        }
+        if(user == null) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login déjà  utilisé, veuillez en choisir un nouveau !", null);
+            context.addMessage(this.loginComponent.getClientId(), message); 
+            return "inscription.xhtml";
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Inscription réussie !");
+            context.addMessage(null, message); 
             return "index.xhtml";
-            //TODO : Message à afficher à l'utilisateur (inscription réussie).
         }
     }
-    
+        
 }

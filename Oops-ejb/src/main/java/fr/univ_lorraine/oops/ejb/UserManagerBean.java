@@ -1,7 +1,5 @@
 package fr.univ_lorraine.oops.ejb;
 
-import fr.univ_lorraine.oops.library.model.Prestataire;
-import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -16,12 +14,7 @@ public class UserManagerBean {
     private EntityManager em;
     
     public Utilisateur registerUser(Utilisateur u) {
-        //Utilisateur user;
-        //if(u instanceof Prestataire) {
-           Utilisateur user = this.em.find(Prestataire.class, u.getLogin());
-        /*} else {
-            user = this.em.find(Soumissionnaire.class, u.getLogin());
-        }*/
+        Utilisateur user = this.em.find(Utilisateur.class, u.getLogin());
         if(user == null) {
             this.em.persist(u);
             return u;
