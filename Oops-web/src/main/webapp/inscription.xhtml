@@ -3,11 +3,16 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"          
-      xmlns:p="http://primefaces.org/ui"> 
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
     <h:head>
         <title>Oops | Page d'inscription</title>
+                <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>            
+        <ui:include src="header.xhtml"/>
+        <ui:include src="search.xhtml"/>
         <h1>Oops | Page d'inscription</h1>
         <h:form>
             <fieldset>
@@ -73,6 +78,8 @@
                 </h:panelGroup>
             </fieldset>
         </h:form>
+        
+        <ui:include src="footer.xhtml"/>
     </h:body>
 </html>
 

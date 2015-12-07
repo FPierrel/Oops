@@ -1,0 +1,23 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui">
+    
+            <div id="featured-wrapper">
+            <div id="featured" class="container">
+                <div class="dark">
+                    <h:form>
+                        <span>
+                            <p:inputText class="search square" placeholder="Quoi ?"/>
+                        </span>
+                        <span>
+                            <p:inputText class="search square" placeholder="Où ?"/>
+                            <p:commandButton class="button"  value="Rechercher"/>
+                        </span>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+</ui:composition>
+
