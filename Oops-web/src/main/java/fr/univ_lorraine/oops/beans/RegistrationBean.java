@@ -30,7 +30,6 @@ public class RegistrationBean implements Serializable {
      */
     public RegistrationBean() {
         this.user = "Soumissionnaire";
-        this.login = "Bonjour";
         this.prestataire = false;
         this.soumissionnaire = true;
     }
@@ -197,7 +196,7 @@ public class RegistrationBean implements Serializable {
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
         if(this.password.length() < 6) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit, veuillez recommencer !", null);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit (inférieur à 6), veuillez recommencer !", null);
             context.addMessage(this.passwordComponent.getClientId(), message); 
             return "inscription.xhtml";
         }
