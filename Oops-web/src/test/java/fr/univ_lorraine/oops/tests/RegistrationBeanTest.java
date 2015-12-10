@@ -160,8 +160,5 @@ public class RegistrationBeanTest {
         driver.findElement(By.name("j_idt20:j_idt41")).click();
         String str = "Veuillez renseigner votre prénom !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
-    }
-    
-    
-    
+    } 
 }
