@@ -239,56 +239,6 @@ h1, h2, h3 {
     color: #FFFFFF;
 }*/
 
-/** FOOTER */
-
-#footer-wrapper
-
-{
-    overflow: hidden;
-    padding: 20px 0px;
-    background: #3b3b3b;
-    border-top: 1px solid #404040;
-    border-bottom: 1px solid #404040;
-    margin-top: 50px;
-    width : 100%;
-}
-
-#footer
-{
-    overflow: hidden;
-    color: #FFFFFF;
-}
-
-#footer header
-{
-    margin-bottom: 2px;
-    font-size: 20px;
-    font-weight: 400;
-    color: #FFFFFF;
-}
-
-#footer #fbox1
-{
-    float: left;
-    width: 700px;
-}
-
-#footer #fbox2
-{
-    float: right;
-    width: 300px;
-}
-
-#footer a
-{
-    color: #D0D0D0;
-}
-
-#footer .button-small
-{
-    color: #FFFFFF;
-}
-
 .dark form{
 	width:900px;
 	margin:0 auto;
@@ -335,3 +285,18 @@ input[type=text]{
     width : 440px;
     margin : auto;
 }
+
+html, body, #container { height: 100%; }
+
+body > #container { height: auto; min-height: 100%; }
+
+#footer {
+ clear: both;
+ position: relative;
+ z-index: 10;
+ height: 8em;
+ margin-top: -8em;
+ background-color: #3b3b3b;
+}
+
+#content { padding-bottom: 3em; }

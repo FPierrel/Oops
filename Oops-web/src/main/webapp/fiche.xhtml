@@ -12,13 +12,26 @@ and open the template in the editor.
     <h:head>
         <title>Fiche Prestataire</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-                <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>      
-        <ui:include src="header.xhtml"/>
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1><a href="#">Oops</a></h1>
+                </div>
+                <div id="menu">
+                    <ul>
+                        <li ><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                        <li ><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li ><a href="#">Connexion</a></li>
+                    </ul>
+                </div>
+            </div>                 
+        </div>
         <ui:include src="search.xhtml"/>
-        
+
         Nom : <h:outputText value="#{ficheBean.nom}"/> <br/>
         Prenom : <h:outputText value="#{ficheBean.prenom}"/><br/>
         Chiffre d'affaire : <h:outputText value="#{ficheBean.chiffreAffaire}"/><br/>
@@ -67,7 +80,7 @@ and open the template in the editor.
         Nombre d'employés : <h:outputText value="#{ficheBean.nbEmployes}"/><br/>
         Nom de l'entreprise: <h:outputText value="#{ficheBean.nomEntreprise}"/><br/>
         Mail : <h:outputText value="#{ficheBean.mail}"/><br/>
-        
+
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>

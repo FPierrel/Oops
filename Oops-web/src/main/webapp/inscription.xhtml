@@ -7,78 +7,95 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
     <h:head>
         <title>Oops | Page d'inscription</title>
-                <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>            
-        <ui:include src="header.xhtml"/>
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1><a href="#">Oops</a></h1>
+                </div>
+                <div id="menu">
+                    <ul>
+                        <li ><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                        <li class="active"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li><a href="#">Connexion</a></li>
+                    </ul>
+                </div>
+            </div>                 
+        </div>
         <ui:include src="search.xhtml"/>
-        <h1>Oops | Page d'inscription</h1>
-        <h:form>
-            <fieldset>
-                <legend> Formulaire d'inscription </legend>
-                <h:panelGroup id="inputs">
-                    <h:selectOneRadio value="#{registrationBean.user}"  >
-                        <f:selectItem itemValue="Soumissionnaire" itemLabel="Soumissionnaire"/>
-                        <f:selectItem itemValue="Prestataire" itemLabel="Prestataire"/>
-                        <f:ajax render="inputs"/>
-                    </h:selectOneRadio>
-                    <h:panelGrid id="grid" columns="3" cellpadding="5">
-                        <p:outputLabel for="login" value="Login :"/> 
-                        <p:inputText value="#{registrationBean.login}" 
-                                     id="login" binding="#{registrationBean.loginComponent}" 
-                                     required="true" requiredMessage="Veuillez renseigner un login !">             
-                        </p:inputText>
-                        <p:message for="login"/>
-                        <p:outputLabel for="password" value="Mot de passe :"/> 
-                        <p:password value="#{registrationBean.password}"
-                                     id="password" binding="#{registrationBean.passwordComponent}" 
-                                     required="true" requiredMessage="Veuillez renseigner un mot de passe !">             
-                        </p:password>
-                        <p:message for="password"/>
-                        <p:outputLabel for="confirmPassword" value="Confirmation du mot de passe :"/> 
-                        <p:password value="#{registrationBean.confirmPassword}" 
-                                       id="confirmPassword" binding="#{registrationBean.confirmPasswordComponent}" 
-                                       required="true" requiredMessage="Veuillez confirmer votre mot de passe !">             
-                        </p:password>
-                        <p:message for="confirmPassword"/>
-                        <p:outputLabel for="email" value="Adresse mail :"/>
-                        <p:inputText value="#{registrationBean.email}" 
-                                     id="email" binding="#{registrationBean.emailComponent}" 
-                                     required="true" requiredMessage="Veuillez renseigner votre adresse mail !">             
-                        </p:inputText>
-                        <p:message for="email"/>
-                        <p:outputLabel for="companyName" rendered="#{registrationBean.prestataire}" value="Nom du Prestataire :"/> 
-                        <p:inputText value="#{registrationBean.companyName}" binding="#{registrationBean.companyNameComponent}" 
-                                     id="companyName" required="#{registrationBean.prestataire}"
-                                     rendered="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre nom de prestataire !">             
-                        </p:inputText>
-                        <p:message rendered="#{registrationBean.prestataire}" for="companyName"/>
-                        <p:outputLabel for="lastname" value="Nom :"/>
-                        <p:inputText value="#{registrationBean.lastname}" 
-                                     id="lastname" binding="#{registrationBean.lastnameComponent}" 
-                                     required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre nom !">             
-                        </p:inputText>
-                        <p:message for="lastname"/>
-                        <p:outputLabel for="firstname" value="Prénom :"/> 
-                        <p:inputText value="#{registrationBean.firstname}" 
-                                     id="firstname" binding="#{registrationBean.firstnameComponent}" 
-                                     required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre prénom !">             
-                        </p:inputText>
-                        <p:message for="firstname"/>
-                        <p:outputLabel for="phone" value="Téléphone :"/> 
-                        <p:inputText value="#{registrationBean.phone}" 
-                                     id="phone" binding="#{registrationBean.phoneComponent}" 
-                                     required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de téléphone !">             
-                        </p:inputText>
-                        <p:message for="phone"/>
-                        <h:commandButton value="S'inscrire" 
-                                         action="#{registrationBean.registration()}"/>
-                    </h:panelGrid>
-                </h:panelGroup>
-            </fieldset>
-        </h:form>
-        
+
+        <div id ="container">
+            <div id="content">
+                <h1>Oops | Page d'inscription</h1>
+                <h:form>
+                    <fieldset>
+                        <legend> Formulaire d'inscription </legend>
+                        <h:panelGroup id="inputs">
+                            <h:selectOneRadio value="#{registrationBean.user}"  >
+                                <f:selectItem itemValue="Soumissionnaire" itemLabel="Soumissionnaire"/>
+                                <f:selectItem itemValue="Prestataire" itemLabel="Prestataire"/>
+                                <f:ajax render="inputs"/>
+                            </h:selectOneRadio>
+                            <h:panelGrid id="grid" columns="3" cellpadding="5">
+                                <p:outputLabel for="login" value="Login :"/> 
+                                <p:inputText value="#{registrationBean.login}" 
+                                             id="login" binding="#{registrationBean.loginComponent}" 
+                                             required="true" requiredMessage="Veuillez renseigner un login !">             
+                                </p:inputText>
+                                <p:message for="login"/>
+                                <p:outputLabel for="password" value="Mot de passe :"/> 
+                                <p:password value="#{registrationBean.password}"
+                                            id="password" binding="#{registrationBean.passwordComponent}" 
+                                            required="true" requiredMessage="Veuillez renseigner un mot de passe !">             
+                                </p:password>
+                                <p:message for="password"/>
+                                <p:outputLabel for="confirmPassword" value="Confirmation du mot de passe :"/> 
+                                <p:password value="#{registrationBean.confirmPassword}" 
+                                            id="confirmPassword" binding="#{registrationBean.confirmPasswordComponent}" 
+                                            required="true" requiredMessage="Veuillez confirmer votre mot de passe !">             
+                                </p:password>
+                                <p:message for="confirmPassword"/>
+                                <p:outputLabel for="email" value="Adresse mail :"/>
+                                <p:inputText value="#{registrationBean.email}" 
+                                             id="email" binding="#{registrationBean.emailComponent}" 
+                                             required="true" requiredMessage="Veuillez renseigner votre adresse mail !">             
+                                </p:inputText>
+                                <p:message for="email"/>
+                                <p:outputLabel for="companyName" rendered="#{registrationBean.prestataire}" value="Nom du Prestataire :"/> 
+                                <p:inputText value="#{registrationBean.companyName}" binding="#{registrationBean.companyNameComponent}" 
+                                             id="companyName" required="#{registrationBean.prestataire}"
+                                             rendered="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre nom de prestataire !">             
+                                </p:inputText>
+                                <p:message rendered="#{registrationBean.prestataire}" for="companyName"/>
+                                <p:outputLabel for="lastname" value="Nom :"/>
+                                <p:inputText value="#{registrationBean.lastname}" 
+                                             id="lastname" binding="#{registrationBean.lastnameComponent}" 
+                                             required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre nom !">             
+                                </p:inputText>
+                                <p:message for="lastname"/>
+                                <p:outputLabel for="firstname" value="Prénom :"/> 
+                                <p:inputText value="#{registrationBean.firstname}" 
+                                             id="firstname" binding="#{registrationBean.firstnameComponent}" 
+                                             required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre prénom !">             
+                                </p:inputText>
+                                <p:message for="firstname"/>
+                                <p:outputLabel for="phone" value="Téléphone :"/> 
+                                <p:inputText value="#{registrationBean.phone}" 
+                                             id="phone" binding="#{registrationBean.phoneComponent}" 
+                                             required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de téléphone !">             
+                                </p:inputText>
+                                <p:message for="phone"/>
+                                <h:commandButton value="S'inscrire" 
+                                                 action="#{registrationBean.registration()}"/>
+                            </h:panelGrid>
+                        </h:panelGroup>
+                    </fieldset>
+                </h:form>
+            </div></div>
+
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>

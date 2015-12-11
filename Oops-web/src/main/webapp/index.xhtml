@@ -10,27 +10,43 @@
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>
-        <ui:include src="header.xhtml"/>
+        <div id="header-wrapper">
+            <div id="header" class="container">
+                <div id="logo">
+                    <h1><a href="#">Oops</a></h1>
+                </div>
+                <div id="menu">
+                    <ul>
+                        <li class="active"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                        <li><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li><a href="#">Connexion</a></li>
+                    </ul>
+                </div>
+            </div>                 
+        </div>
         <ui:include src="search.xhtml"/>
 
+        <div id ="container">
+            <div id="content">
+                <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
+                <h1>Oops | Page d'Accueil</h1>
+                <br/>
 
-        <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
-        <h1>Oops | Page d'Accueil</h1>
-        <br/>
+                <br/>
 
-        <br/>
-
-        <fieldset title="Search">            
-            <h:form>
-                Prenom : <h:inputText value="#{ficheBean.prenomSearch}"/>
-                Nom: <h:inputText value="#{ficheBean.nomSearch}"/>            
-                <h:commandButton value="Search" action="#{ficheBean.searchPrenomNom()}"/>
-            </h:form>
-            <h:form>
-                Login : <h:inputText value="#{ficheBean.loginSearch}"/>           
-                <h:commandButton value="Search" action="#{ficheBean.searchLogin()}"/>
-            </h:form>
-        </fieldset>
+                <fieldset title="Search">            
+                    <h:form>
+                        Prenom : <h:inputText value="#{ficheBean.prenomSearch}"/>
+                        Nom: <h:inputText value="#{ficheBean.nomSearch}"/>            
+                        <h:commandButton value="Search" action="#{ficheBean.searchPrenomNom()}"/>
+                    </h:form>
+                    <h:form>
+                        Login : <h:inputText value="#{ficheBean.loginSearch}"/>           
+                        <h:commandButton value="Search" action="#{ficheBean.searchLogin()}"/>
+                    </h:form>
+                </fieldset>
+            </div>
+        </div>
 
         <ui:include src="footer.xhtml"/>
     </h:body>
