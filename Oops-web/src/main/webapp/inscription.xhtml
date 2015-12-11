@@ -54,6 +54,22 @@
                                      rendered="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre nom de prestataire !">             
                         </p:inputText>
                         <p:message rendered="#{registrationBean.prestataire}" for="companyName"/>
+                        
+                        
+                        <p:outputLabel for="nbEmployee" rendered="#{registrationBean.prestataire}" value="Nombre d'employé(s) :"/> 
+                        <p:inputText value="#{registrationBean.employee}" binding="#{registrationBean.employeeComponent}" 
+                                     id="nbEmployee" rendered="#{registrationBean.prestataire}">             
+                        </p:inputText>
+                        <p:message rendered="#{registrationBean.prestataire}" for="nbEmployee"/>
+                        
+                        
+                        <p:outputLabel for="turnoverNumber" rendered="#{registrationBean.prestataire}" value="Chiffre d'affaire :"/> 
+                        <p:inputText value="#{registrationBean.turnover}" binding="#{registrationBean.turnoverComponent}" 
+                                     id="turnoverNumber" rendered="#{registrationBean.prestataire}">             
+                        </p:inputText>
+                        <p:message rendered="#{registrationBean.prestataire}" for="turnoverNumber"/>
+                        
+                        
                         <p:outputLabel for="lastname" value="Nom :"/>
                         <p:inputText value="#{registrationBean.lastname}" 
                                      id="lastname" binding="#{registrationBean.lastnameComponent}" 
@@ -76,6 +92,35 @@
                                          action="#{registrationBean.registration()}"/>
                     </h:panelGrid>
                 </h:panelGroup>
+                <p:outputLabel for="number" value="Numéro :"/> 
+                <p:inputText value="#{registrationBean.number}" 
+                             id="number" binding="#{registrationBean.numberComponent}"
+                             required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de rue !">             
+                </p:inputText>
+                <p:outputLabel for="street" value="Rue :"/> 
+                <p:inputText value="#{registrationBean.street}" 
+                             id="street" binding="#{registrationBean.streetComponent}"
+                             required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre rue !">             
+                </p:inputText>
+                <p:outputLabel for="complement" value="Complément :"/> 
+                <p:inputText value="#{registrationBean.complement}" 
+                             id="complement" binding="#{registrationBean.complementComponent}">             
+                </p:inputText>
+                <p:outputLabel for="code" value="Code Postal :"/> 
+                <p:inputText value="#{registrationBean.code}" 
+                             id="code" binding="#{registrationBean.codeComponent}"
+                             required="true" requiredMessage="Veuillez renseigner votre code postal !">             
+                </p:inputText>
+                <p:outputLabel for="town" value="Ville :"/> 
+                <p:inputText value="#{registrationBean.town}" 
+                             id="town" binding="#{registrationBean.townComponent}"
+                             required="true" requiredMessage="Veuillez renseigner votre ville !">             
+                </p:inputText>
+                <p:outputLabel for="country" value="Pays :"/> 
+                <p:inputText value="#{registrationBean.country}" 
+                             id="country" binding="#{registrationBean.countryComponent}"
+                             required="true" requiredMessage="Veuillez renseigner votre pays !">             
+                </p:inputText>
             </fieldset>
         </h:form>
         
