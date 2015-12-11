@@ -13,10 +13,14 @@ public class UserManagerBean {
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
     
+    public EntityManager getEntityManager() { 
+        return em; 
+    }
+    
     public Utilisateur registerUser(Utilisateur u) {
-        Utilisateur user = this.em.find(Utilisateur.class, u.getLogin());
+        Utilisateur user = this.getEntityManager().find(Utilisateur.class, u.getLogin());
         if(user == null) {
-            this.em.persist(u);
+            this.getEntityManager().persist(u);
             return u;
         }
         return null;
