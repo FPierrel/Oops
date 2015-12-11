@@ -8,6 +8,7 @@ package fr.univ_lorraine.oops.tests;
 
 import fr.univ_lorraine.oops.beans.RegistrationBean;
 import java.sql.Time;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.AfterClass;
 import org.junit.Test;
@@ -18,6 +19,10 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.Random;
+import org.junit.After;
+import org.openqa.selenium.Dimension;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.support.ui.Select;
 
 /**
  *
@@ -173,4 +178,39 @@ public class RegistrationBeanTest {
         String str = "Veuillez renseigner votre prénom !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     } 
+    
+    @Test
+    public void testRegistrationPostalMiss() {    
+        driver.findElement(By.id("j_idt20:code")).clear();
+        driver.findElement(By.name("j_idt20:register")).click();
+        String str = "Veuillez renseigner votre code postal !" ; 
+        assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
+    } 
+    
+    @Test
+    public void testRegistrationTownMiss() {    
+        driver.findElement(By.id("j_idt20:town")).clear();
+        driver.findElement(By.name("j_idt20:register")).click();
+        String str = "Veuillez renseigner votre ville !" ; 
+        assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
+    } 
+    
+    @Test
+    public void testRegistrationCountryMiss() {    
+        driver.findElement(By.id("j_idt20:country")).clear();
+        driver.findElement(By.name("j_idt20:register")).click();
+        String str = "Veuillez renseigner votre pays !" ; 
+        assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
+    }
+    
+    /*@Test
+    public void testRegistrationCompanyNameMiss() { 
+        driver.findElement(By.xpath("//div[@class = 'ui-helper-hidden-accessible']")).click();
+        driver.findElement(By.id("j_idt20:radios:1")).click();
+        driver.findElement(By.id("j_idt20:companyName")).clear();
+        driver.findElement(By.name("j_idt20:register")).click();
+        String str = "Veuillez renseigner votre nom de prestataire !" ; 
+        assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
+        driver.findElement(By.id("j_idt20:j_idt21:0")).click();
+    }*/
 }
