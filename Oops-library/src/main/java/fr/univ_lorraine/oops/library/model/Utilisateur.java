@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Objects;
 import javax.persistence.CascadeType;
@@ -21,6 +22,10 @@ public abstract class Utilisateur implements Serializable {
     private String numeroTelephone;
     @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
+    
+    public Utilisateur() {
+        this.adresses = new ArrayList<>();
+    }
 
     public String getLogin() {
         return login;

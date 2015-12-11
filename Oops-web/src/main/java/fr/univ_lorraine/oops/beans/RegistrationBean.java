@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
+import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
@@ -20,10 +21,14 @@ public class RegistrationBean implements Serializable {
     @Inject
     UserManagerBean userManager;
 
-    private String login, password, confirmPassword, email, phone, companyName, lastname, firstname, user;
+    private String login, password, confirmPassword, email, phone, companyName, 
+            lastname, firstname, user, number, street, code, complement, town, country;
+    private int turnover, employee;
     private boolean prestataire, soumissionnaire;    
-    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, emailComponent, phoneComponent, 
-            companyNameComponent, lastnameComponent, firstnameComponent;
+    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, 
+            emailComponent, phoneComponent, companyNameComponent, lastnameComponent, 
+            firstnameComponent, numberComponent, streetComponent, complementComponent, 
+            codeComponent, townComponent, countryComponent, turnoverComponent, employeeComponent;
     
     /**
      * Creates a new instance of RegistrationBean
@@ -192,7 +197,135 @@ public class RegistrationBean implements Serializable {
     public void setFirstnameComponent(UIComponent firstnameComponent) {
         this.firstnameComponent = firstnameComponent;
     }
-   
+
+    public String getNumber() {
+        return number;
+    }
+
+    public void setNumber(String number) {
+        this.number = number;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }   
+
+    public UIComponent getNumberComponent() {
+        return numberComponent;
+    }
+
+    public void setNumberComponent(UIComponent numberComponent) {
+        this.numberComponent = numberComponent;
+    }
+
+    public UIComponent getStreetComponent() {
+        return streetComponent;
+    }
+
+    public void setStreetComponent(UIComponent streetComponent) {
+        this.streetComponent = streetComponent;
+    }
+
+    public UIComponent getComplementComponent() {
+        return complementComponent;
+    }
+
+    public void setComplementComponent(UIComponent complementComponent) {
+        this.complementComponent = complementComponent;
+    }
+
+    public UIComponent getCodeComponent() {
+        return codeComponent;
+    }
+
+    public void setCodeComponent(UIComponent codeComponent) {
+        this.codeComponent = codeComponent;
+    }
+
+    public UIComponent getTownComponent() {
+        return townComponent;
+    }
+
+    public void setTownComponent(UIComponent townComponent) {
+        this.townComponent = townComponent;
+    }
+
+    public UIComponent getCountryComponent() {
+        return countryComponent;
+    }
+
+    public void setCountryComponent(UIComponent countryComponent) {
+        this.countryComponent = countryComponent;
+    }
+
+    public int getTurnover() {
+        return turnover;
+    }
+
+    public void setTurnover(int turnover) {
+        this.turnover = turnover;
+    }
+
+    public int getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(int employee) {
+        this.employee = employee;
+    }
+
+    public UIComponent getTurnoverComponent() {
+        return turnoverComponent;
+    }
+
+    public void setTurnoverComponent(UIComponent turnoverComponent) {
+        this.turnoverComponent = turnoverComponent;
+    }
+
+    public UIComponent getEmployeeComponent() {
+        return employeeComponent;
+    }
+
+    public void setEmployeeComponent(UIComponent employeeComponent) {
+        this.employeeComponent = employeeComponent;
+    }    
+    
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
         if(this.password.length() < 6) {
@@ -211,6 +344,13 @@ public class RegistrationBean implements Serializable {
             return "inscription.xhtml";
         }
         Utilisateur user;
+        Adresse address = new Adresse();
+        address.setNumero(this.number);
+        address.setRue(this.street);
+        address.setComplement(this.complement);
+        address.setCodePostal(this.code);
+        address.setVille(this.town);
+        address.setPays(this.country);
         if(this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
             s.setLogin(this.login);
@@ -219,6 +359,7 @@ public class RegistrationBean implements Serializable {
             s.setNom(this.lastname);
             s.setPrenom(this.firstname);
             s.setNumeroTelephone(this.phone);
+            s.addAdresse(address);
             user = this.userManager.registerUser(s);
         } else {
             Prestataire p = new Prestataire();
@@ -229,6 +370,9 @@ public class RegistrationBean implements Serializable {
             p.setPrenom(this.firstname);
             p.setNumeroTelephone(this.phone);
             p.setNomEntreprise(this.companyName);
+            p.setChiffreAffaire(this.turnover);
+            p.setNbEmployes(this.employee);
+            p.addAdresse(address);
             user = this.userManager.registerUser(p);
         }
         if(user == null) {
