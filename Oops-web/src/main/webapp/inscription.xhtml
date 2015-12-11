@@ -103,7 +103,7 @@
                                              required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de téléphone !">             
                                 </p:inputText>
                                 <p:message for="phone"/>
-                                <h:commandButton value="S'inscrire" 
+                                <h:commandButton id="register" value="S'inscrire" 
                                                  action="#{registrationBean.registration()}"/>
                             </h:panelGrid>
                         </h:panelGroup>

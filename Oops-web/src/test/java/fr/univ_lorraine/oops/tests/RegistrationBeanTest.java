@@ -59,6 +59,12 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:lastname")).clear();
         driver.findElement(By.id("j_idt20:phone")).clear();
         driver.findElement(By.id("j_idt20:email")).clear();
+        driver.findElement(By.id("j_idt20:number")).clear();
+        driver.findElement(By.id("j_idt20:street")).clear();
+        driver.findElement(By.id("j_idt20:complement")).clear();
+        driver.findElement(By.id("j_idt20:code")).clear();
+        driver.findElement(By.id("j_idt20:town")).clear();
+        driver.findElement(By.id("j_idt20:country")).clear();
         // Complete fields with no errors
         driver.findElement(By.id("j_idt20:login")).sendKeys("Jose");
         driver.findElement(By.id("j_idt20:password")).sendKeys("JoseJose");
@@ -67,6 +73,12 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:lastname")).sendKeys("Jose");
         driver.findElement(By.id("j_idt20:phone")).sendKeys("06 66 66 66 66");
         driver.findElement(By.id("j_idt20:email")).sendKeys("jose@jose.jose");
+        driver.findElement(By.id("j_idt20:number")).sendKeys("12");
+        driver.findElement(By.id("j_idt20:street")).sendKeys("laRue");
+        driver.findElement(By.id("j_idt20:complement")).sendKeys("3e étage");
+        driver.findElement(By.id("j_idt20:code")).sendKeys("92000");
+        driver.findElement(By.id("j_idt20:town")).sendKeys("laVille");
+        driver.findElement(By.id("j_idt20:country")).sendKeys("lePays");
     }
     
     public int randomLogin() {
@@ -85,7 +97,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:login")).sendKeys(log+"");
         driver.findElement(By.id("j_idt20:email")).clear();
         driver.findElement(By.id("j_idt20:email")).sendKeys(log+"@jose.jose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Inscription réussie !" ; 
         assertEquals(driver.findElement(By.className("ui-messages-info-detail")).getText(),str);
     }
@@ -96,13 +108,13 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:login")).sendKeys(log+"");
         driver.findElement(By.id("j_idt20:email")).clear();
         driver.findElement(By.id("j_idt20:email")).sendKeys(log+"@jose.jose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         driver.get("http://localhost:8080/Oops-web/faces/inscription.xhtml");
         this.fillFields();
         driver.findElement(By.id("j_idt20:login")).sendKeys(log+"");
         driver.findElement(By.id("j_idt20:email")).clear();
         driver.findElement(By.id("j_idt20:email")).sendKeys(log+"@jose.jose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Login déjà  utilisé, veuillez en choisir un nouveau !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str);
     }
@@ -113,8 +125,8 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:confirmPassword")).clear();
         driver.findElement(By.id("j_idt20:password")).sendKeys("Jose");
         driver.findElement(By.id("j_idt20:confirmPassword")).sendKeys("Jose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
-        String str = "Mot de passe trop petit, veuillez recommencer !" ; 
+        driver.findElement(By.name("j_idt20:register")).click();
+        String str = "Mot de passe trop petit (inférieur à 6), veuillez recommencer !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     }
     
@@ -124,7 +136,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("j_idt20:confirmPassword")).clear();
         driver.findElement(By.id("j_idt20:password")).sendKeys("Josejosee");
         driver.findElement(By.id("j_idt20:confirmPassword")).sendKeys("Josejose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Mot de passe différent, veuillez recommencer !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     }
@@ -132,7 +144,7 @@ public class RegistrationBeanTest {
     @Test
     public void testRegistrationLoginMiss() {    
         driver.findElement(By.id("j_idt20:login")).clear();
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Veuillez renseigner un login !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     }
@@ -141,7 +153,7 @@ public class RegistrationBeanTest {
     public void testRegistrationInvalidEmail() {    
         driver.findElement(By.id("j_idt20:email")).clear();
         driver.findElement(By.id("j_idt20:email")).sendKeys("Jose@Jose");
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Adresse mail non valide, veuillez recommencer !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     }
@@ -149,7 +161,7 @@ public class RegistrationBeanTest {
     @Test
     public void testRegistrationLastnameMiss() {    
         driver.findElement(By.id("j_idt20:lastname")).clear();
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Veuillez renseigner votre nom !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     }
@@ -157,7 +169,7 @@ public class RegistrationBeanTest {
     @Test
     public void testRegistrationFirstnameMiss() {    
         driver.findElement(By.id("j_idt20:firstname")).clear();
-        driver.findElement(By.name("j_idt20:j_idt41")).click();
+        driver.findElement(By.name("j_idt20:register")).click();
         String str = "Veuillez renseigner votre prénom !" ; 
         assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
     } 
