@@ -15,7 +15,7 @@ html, body {
 
 body {
     margin: 0px;
-    padding: 0px;
+
     background: #ffffff;
     font-family: 'Arial', sans-serif;
     font-size: 13px;
@@ -312,3 +312,7 @@ body > #container { height: auto; min-height: 100%; }
 }
 
 #content { padding-bottom: 3em; }
+
+#container{    
+    padding-top: 5%;
+}

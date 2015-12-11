@@ -52,11 +52,9 @@ public class RegistrationTest {
         Utilisateur p1 = new Prestataire();
         p1.setLogin("José");
 
-        // Mock the EntityManager to return our dummy element
         EntityManager em = Mockito.mock(EntityManager.class);
         Mockito.when(em.find(Utilisateur.class, p1.getLogin())).thenReturn(null);
 
-        // Mock the SomeDao to use our EntityManager
         UserManagerBean umb = Mockito.mock(UserManagerBean.class);
         Mockito.when(umb.registerUser(p1)).thenCallRealMethod();
         Mockito.when(umb.getEntityManager()).thenReturn(em);
@@ -69,11 +67,9 @@ public class RegistrationTest {
         Utilisateur p1 = new Prestataire();
         p1.setLogin("José");
 
-        // Mock the EntityManager to return our dummy element
         EntityManager em = Mockito.mock(EntityManager.class);
         Mockito.when(em.find(Utilisateur.class, p1.getLogin())).thenReturn(p1);
 
-        // Mock the SomeDao to use our EntityManager
         UserManagerBean umb = Mockito.mock(UserManagerBean.class);
         Mockito.when(umb.registerUser(p1)).thenCallRealMethod();
         Mockito.when(umb.getEntityManager()).thenReturn(em);
