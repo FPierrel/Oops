@@ -338,7 +338,7 @@ public class RegistrationBean implements Serializable {
             context.addMessage(this.confirmPasswordComponent.getClientId(), message); 
             return "inscription.xhtml";
         }
-        if(! Pattern.matches("^[_a-z0-9-]+(\\.[_a-z0-9-]+)*@[a-z0-9-]+(\\.[a-z0-9-]+)+$", this.email)) {
+        if(! Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.email)) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
             context.addMessage(this.emailComponent.getClientId(), message); 
             return "inscription.xhtml";
