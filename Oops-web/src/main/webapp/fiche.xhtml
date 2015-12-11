@@ -15,7 +15,7 @@ and open the template in the editor.
         <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
-    <h:body>      
+    <h:body>    
         <div id="header-wrapper">
             <div id="header" class="container">
                 <div id="logo">
@@ -31,56 +31,59 @@ and open the template in the editor.
             </div>                 
         </div>
         <ui:include src="search.xhtml"/>
+        <div id="container">
+            <div id ="content">
 
-        Nom : <h:outputText value="#{ficheBean.nom}"/> <br/>
-        Prenom : <h:outputText value="#{ficheBean.prenom}"/><br/>
-        Chiffre d'affaire : <h:outputText value="#{ficheBean.chiffreAffaire}"/><br/>
-        Numéro de téléphone : <h:outputText value="#{ficheBean.numeroTelephone}"/><br/>
-        Adresse :
-        <h:dataTable value="#{ficheBean.adresses}" var="address">
 
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Numéro" />
-                </f:facet>
-                <h:outputText value="#{address.numero}"/>                  
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Rue" />
-                </f:facet>
-                <h:outputText value="#{address.rue}"/>                  
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Code Postal" />
-                </f:facet>
-                <h:outputText value="#{address.codePostal}"/>                  
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Ville" />
-                </f:facet>
-                <h:outputText value="#{address.ville}"/>                  
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Pays" />
-                </f:facet>
-                <h:outputText value="#{address.pays}"/>                  
-            </h:column>
-            <h:column>
-                <f:facet name="header">
-                    <h:outputText value="Complément" />
-                </f:facet>
-                <h:outputText value="#{address.complement}"/>                  
-            </h:column>
+                Nom : <h:outputText value="#{ficheBean.nom}"/> <br/>
+                Prenom : <h:outputText value="#{ficheBean.prenom}"/><br/>
+                Chiffre d'affaire : <h:outputText value="#{ficheBean.chiffreAffaire}"/><br/>
+                Numéro de téléphone : <h:outputText value="#{ficheBean.numeroTelephone}"/><br/>
+                Adresse :
+                <h:dataTable value="#{ficheBean.adresses}" var="address">
 
-        </h:dataTable>
-        Nombre d'employés : <h:outputText value="#{ficheBean.nbEmployes}"/><br/>
-        Nom de l'entreprise: <h:outputText value="#{ficheBean.nomEntreprise}"/><br/>
-        Mail : <h:outputText value="#{ficheBean.mail}"/><br/>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Numéro" />
+                        </f:facet>
+                        <h:outputText value="#{address.numero}"/>                  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Rue" />
+                        </f:facet>
+                        <h:outputText value="#{address.rue}"/>                  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Code Postal" />
+                        </f:facet>
+                        <h:outputText value="#{address.codePostal}"/>                  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Ville" />
+                        </f:facet>
+                        <h:outputText value="#{address.ville}"/>                  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Pays" />
+                        </f:facet>
+                        <h:outputText value="#{address.pays}"/>                  
+                    </h:column>
+                    <h:column>
+                        <f:facet name="header">
+                            <h:outputText value="Complément" />
+                        </f:facet>
+                        <h:outputText value="#{address.complement}"/>                  
+                    </h:column>
 
+                </h:dataTable>
+                Nombre d'employés : <h:outputText value="#{ficheBean.nbEmployes}"/><br/>
+                Nom de l'entreprise: <h:outputText value="#{ficheBean.nomEntreprise}"/><br/>
+                Mail : <h:outputText value="#{ficheBean.mail}"/><br/>
+            </div></div>
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>
