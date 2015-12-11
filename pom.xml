@@ -8,8 +8,8 @@
   <name>Oops</name>
   <modules>
     <module>Oops-ear</module>
-    <module>Oops-web</module>
     <module>Oops-ejb</module>
     <module>Oops-library</module>
+    <module>Oops-web</module>
   </modules>
 </project>
