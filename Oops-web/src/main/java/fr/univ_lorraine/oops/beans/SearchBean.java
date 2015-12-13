@@ -34,12 +34,11 @@ public class SearchBean implements Serializable {
      * Creates a new instance of SearchBean
      */
     public SearchBean() {
-        this.advanced = false;
         prestataires = new ArrayList<>();
     }
 
     public String search() {
-        prestataires = s.search(lastnameSearch, firstnameSearch, townSearch, employeeSearch, ratingSearch);
+        prestataires = new ArrayList(s.search(lastnameSearch, firstnameSearch, townSearch, employeeSearch, ratingSearch));
 
         return "results.xhtml";
     }

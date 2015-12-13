@@ -55,7 +55,7 @@ public class FicheBean {
 
     public void setLoginSearch(String loginSearch) {
         this.loginSearch = loginSearch;
-         searchLogin();
+        searchLogin();
     }
 
     public String getPrenom() {
