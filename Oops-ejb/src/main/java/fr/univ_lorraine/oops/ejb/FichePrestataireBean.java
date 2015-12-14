@@ -24,7 +24,7 @@ public class FichePrestataireBean {
     }
 
     public List<Prestataire> getPrestataireLogin(String login) {
-        Query query = em.createNamedQuery("Prestataire.findByLogin");
+        Query query = em.createNamedQuery("Prestataire.findLogin");
         query.setParameter("login", login);
         List<Prestataire> p = query.getResultList();
         return p;

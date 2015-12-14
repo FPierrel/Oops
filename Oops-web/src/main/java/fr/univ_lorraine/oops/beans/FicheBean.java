@@ -23,8 +23,16 @@ public class FicheBean {
 
     }
 
+    public String searchPrenomNom() {
+        List<Prestataire> listPres = fiche.getPrestatairePrenomNom(prenomSearch, nomSearch);
+        if (listPres.size() > 0) {
+            p = listPres.get(0);
+            return "fiche.xhtml";
+        }
+        return "index.xhtml";
+    }
+
     public String searchLogin() {
-        p = null;
         List<Prestataire> listPres = fiche.getPrestataireLogin(loginSearch);
         if (listPres.size() > 0) {
             p = listPres.get(0);
@@ -55,7 +63,6 @@ public class FicheBean {
 
     public void setLoginSearch(String loginSearch) {
         this.loginSearch = loginSearch;
-         searchLogin();
     }
 
     public String getPrenom() {
