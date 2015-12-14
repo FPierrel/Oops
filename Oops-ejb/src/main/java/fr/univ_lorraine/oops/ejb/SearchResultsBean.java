@@ -6,6 +6,7 @@
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -30,18 +31,21 @@ public class SearchResultsBean {
     List<Prestataire> ratingRes;
     List<Prestataire> employeeRes;
 
-    private String q;
+    private int numberOfSearches;
 
-    public List<Prestataire> search(String lastnameSearch, String firstnameSearch, String townSearch, int employeeSearch, float ratingSearch) {
-        q = "SELECT p FROM Prestataire p WHERE 1 = 1";
+    public ArrayList<Prestataire> search(String lastnameSearch, String firstnameSearch, String townSearch, int employeeSearch, float ratingSearch) {
+        numberOfSearches = 0;
+        lastnameRes = new ArrayList<>();
+        firstnameRes = new ArrayList<>();
+        townRes = new ArrayList<>();
+        ratingRes = new ArrayList<>();
+        employeeRes = new ArrayList<>();
+
         if (!firstnameSearch.isEmpty()) {
             searchPrestataireByFirstname(firstnameSearch);
         }
         if (!lastnameSearch.isEmpty()) {
             searchPrestataireByLastname(lastnameSearch);
-        }
-        if (!townSearch.isEmpty()) {
-            searchByTown(townSearch);
         }
         searchByEmployee(employeeSearch);
         searchByRating(ratingSearch);
@@ -49,28 +53,62 @@ public class SearchResultsBean {
         return computeResults();
     }
 
-    public List<Prestataire> computeResults() {
-        Query query = em.createQuery(q, Prestataire.class);
-        return query.getResultList();
+    public ArrayList<Prestataire> computeResults() {
+        ArrayList<Prestataire> l = new ArrayList<>();
+        for (Prestataire p : ratingRes) {
+            int nb = 0;
+            if (lastnameRes.contains(p)) {
+                nb++;
+            }
+            if (firstnameRes.contains(p)) {
+                nb++;
+            }
+            if (townRes.contains(p)) {
+                nb++;
+            }
+            if (employeeRes.contains(p)) {
+                nb++;
+            }
+
+            if (numberOfSearches == nb) {
+                l.add(p);
+            }
+        }
+        return l;
     }
 
     public void searchPrestataireByLastname(String lastname) {
-        q += " AND p.nom = '" + lastname + "'";
+
+        Query query = em.createNamedQuery("Prestataire.findByLastname");
+        query.setParameter("lastname", lastname);
+        lastnameRes = query.getResultList();
+        numberOfSearches++;
     }
 
     public void searchPrestataireByFirstname(String firstname) {
-        q += " AND p.prenom = '" + firstname + "'";
+        Query query = em.createNamedQuery("Prestataire.findByFirstname");
+        query.setParameter("firstname", firstname);
+        firstnameRes = query.getResultList();
+        numberOfSearches++;
     }
 
     public void searchByTown(String town) {
-        //q += " AND p.adresse.ville = '"+town+"'";
+        Query query = em.createNamedQuery("Prestataire.findByTown");
+        query.setParameter("town", town);
+        townRes = query.getResultList();
+        numberOfSearches++;
     }
 
     public void searchByRating(float rating) {
-        q += " AND p.rating >= '" + rating + "'";
+        Query query = em.createNamedQuery("Prestataire.findByRating");
+        query.setParameter("rating", rating);
+        ratingRes = query.getResultList();
     }
 
     public void searchByEmployee(int employee) {
-        q += " AND p.nbEmployes >= " + employee;
+        Query query = em.createNamedQuery("Prestataire.findByEmployee");
+        query.setParameter("employee", employee);
+        employeeRes = query.getResultList();
+        numberOfSearches++;
     }
 }
