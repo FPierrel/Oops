@@ -20,7 +20,7 @@ public abstract class Utilisateur implements Serializable {
     private String motDePasse;
     private String mail;
     private String numeroTelephone;
-    @OneToMany(cascade = CascadeType.PERSIST, fetch = FetchType.EAGER)
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
     
     public Utilisateur() {
