@@ -14,9 +14,13 @@ public class FichePrestataireBean {
 
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    public EntityManager getEntityManager() { 
+        return this.em; 
+    }
 
     public List<Prestataire> getPrestatairePrenomNom(String prenom, String nom) {
-        Query query = em.createNamedQuery("Prestataire.findNomPrenom");
+        Query query = this.getEntityManager().createNamedQuery("Prestataire.findNomPrenom");
         query.setParameter("nom", nom);
         query.setParameter("prenom", prenom);
         List<Prestataire> p = query.getResultList();
@@ -24,7 +28,7 @@ public class FichePrestataireBean {
     }
 
     public List<Prestataire> getPrestataireLogin(String login) {
-        Query query = em.createNamedQuery("Prestataire.findLogin");
+        Query query = this.getEntityManager().createNamedQuery("Prestataire.findLogin");
         query.setParameter("login", login);
         List<Prestataire> p = query.getResultList();
         return p;

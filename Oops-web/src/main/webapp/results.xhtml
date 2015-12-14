@@ -50,6 +50,11 @@
                                 <tr>
                                     <td> Ville(s) :</td>
                                     <td>
+                                        <h:dataTable value="#{pres.adresses}" var="address">
+                                            <h:column>
+                                                <h:outputText value="#{address.ville}(#{address.codePostal})  "/>                  
+                                            </h:column>
+                                        </h:dataTable>
                                     </td>
                                 </tr>
                                 <tr>

@@ -17,7 +17,6 @@ public class SearchBean implements Serializable{
     
     private String lastnameSearch, firstnameSearch, townSearch;
     private int employeeSearch;
-    private float ratingSearch;
     private boolean advanced;
     
     private List<Prestataire> prestataires;
@@ -29,7 +28,7 @@ public class SearchBean implements Serializable{
     }
     
     public String search() {
-        this.prestataires = this.searchResults.search(this.lastnameSearch);
+        this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
         return "results?faces-redirect=true";
     }
 
@@ -64,15 +63,7 @@ public class SearchBean implements Serializable{
     public void setEmployeeSearch(int employeeSearch) {
         this.employeeSearch = employeeSearch;
     }
-
-    public float getRatingSearch() {
-        return ratingSearch;
-    }
-
-    public void setRatingSearch(float ratingSearch) {
-        this.ratingSearch = ratingSearch;
-    }
-    
+   
     public boolean isAdvanced() {
         return advanced;
     }

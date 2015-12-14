@@ -14,7 +14,7 @@ public class UserManagerBean {
     private EntityManager em;
     
     public EntityManager getEntityManager() { 
-        return em; 
+        return this.em; 
     }
     
     public Utilisateur registerUser(Utilisateur u) {

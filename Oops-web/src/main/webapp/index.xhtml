@@ -31,20 +31,6 @@
                 <p:messages id="messages" showDetail="true" autoUpdate="true" closable="true"/>
                 <h1>Oops | Page d'Accueil</h1>
                 <br/>
-
-                <br/>
-
-                <fieldset title="Search">            
-                    <h:form>
-                        Prenom : <h:inputText value="#{ficheBean.prenomSearch}"/>
-                        Nom: <h:inputText value="#{ficheBean.nomSearch}"/>            
-                        <h:commandButton value="Search" action="#{ficheBean.searchPrenomNom()}"/>
-                    </h:form>
-                    <h:form>
-                        Login : <h:inputText value="#{ficheBean.loginSearch}"/>           
-                        <h:commandButton value="Search" action="#{ficheBean.searchLogin()}"/>
-                    </h:form>
-                </fieldset>
             </div>
         </div>
 
