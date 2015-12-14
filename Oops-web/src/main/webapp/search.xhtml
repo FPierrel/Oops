@@ -3,21 +3,42 @@
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:p="http://primefaces.org/ui">
-    
-            <div id="featured-wrapper">
-            <div id="featured" class="container">
-                <div class="dark">
-                    <h:form>
-                        <span>
-                            <p:inputText class="search square" placeholder="Quoi ?"/>
-                        </span>
-                        <span>
-                            <p:inputText class="search square" placeholder="Où ?"/>
-                            <p:commandButton class="button"  value="Rechercher"/>
-                        </span>
-                    </h:form>
-                </div>
+
+    <div id="featured-wrapper">
+        <div id="featured" class="container">
+            <div class="dark">
+                <h:form>
+                    <span>
+                        <p:inputText class="search square" placeholder="Quoi ?"/>
+                    </span>
+                    <span>
+                        <p:inputText class="search square" placeholder="Où ?"/>
+                        <p:commandButton class="button"  value="Rechercher"/>
+                    </span>
+                </h:form>
+                <h:form>
+                    <h:panelGroup id="advanced_search">
+                        Recherche avancée :
+                        <p:selectBooleanCheckbox value="#{searchBean.advanced}">
+                            <f:ajax render="advanced_search"/>
+                        </p:selectBooleanCheckbox>
+                        <h:panelGrid id="grid" columns="2" cellpadding="5">
+                            <p:outputLabel value="Nom :"  rendered="#{searchBean.advanced}"/>
+                            <p:inputText value="#{searchBean.lastnameSearch}" id="lastnameSearch" rendered="#{searchBean.advanced}"/>
+                            <p:outputLabel value="Prénom :" rendered="#{searchBean.advanced}"/>
+                            <p:inputText value="#{searchBean.firstnameSearch}" id="firstnameSearch" rendered="#{searchBean.advanced}"/>
+                            <p:outputLabel value="Ville : " rendered="#{searchBean.advanced}"/>
+                            <p:inputText value="#{searchBean.townSearch}" id="townSearch" rendered="#{searchBean.advanced}"/>
+                            <p:outputLabel value="Nombre d'employés minimum : " rendered="#{searchBean.advanced}"/>
+                            <p:inputText value="#{searchBean.employeeSearch}" id="employeeSearch" rendered="#{searchBean.advanced}"/>
+                            <p:outputLabel value="Moyenne des avis minimum : " rendered="#{searchBean.advanced}"/>
+                            <p:inputText value="#{searchBean.ratingSearch}" id="ratingSearch" rendered="#{searchBean.advanced}"/>
+                        </h:panelGrid>
+                        <h:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}" rendered="#{searchBean.advanced}"/>
+                    </h:panelGroup>
+                </h:form>
             </div>
         </div>
+    </div>
 </ui:composition>
 
