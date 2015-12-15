@@ -49,7 +49,7 @@ public class RegistrationBeanTest {
     @Before
     public void setUp() {
         rb = new RegistrationBean();
-        driver.get("http://localhost:80/Oops-web/faces/inscription.xhtml");
+        driver.get("http://localhost/oops/faces/inscription.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.fillFields();
     }
