@@ -22,6 +22,7 @@ import java.util.Random;
 import org.junit.After;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
@@ -42,8 +43,9 @@ public class RegistrationBeanTest {
     @BeforeClass
     public static void setUpClass() {
         //driver = new FirefoxDriver() ; 
-        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        driver = new PhantomJSDriver(capabilities);
+        //DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+        //driver = new PhantomJSDriver(capabilities);
+        driver = new HtmlUnitDriver(true);
     }
 
     @Before
