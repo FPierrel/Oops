@@ -44,9 +44,9 @@ public class RegistrationBeanTest {
     @BeforeClass
     public static void setUpClass() {
         //driver = new FirefoxDriver() ; 
-        //DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        //driver = new PhantomJSDriver(capabilities);
-        driver = new HtmlUnitDriver(true);
+        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+        driver = new PhantomJSDriver(capabilities);
+        //driver = new HtmlUnitDriver(true);
     }
 
     @Before
