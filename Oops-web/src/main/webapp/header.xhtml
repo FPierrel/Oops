@@ -1,18 +1,28 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
                 xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets">
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
     
     <div id="header-wrapper">
         <div id="header" class="container">
             <div id="logo">
-                <h1><a href="#">Oops</a></h1>
+                <hi><h:link outcome="index">Oops</h:link></hi>
             </div>
             <div id="menu">
                 <ul>
-                    <li class="active"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
-                    <li class="active"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
-                    <li class="active"><a href="#">Connexion</a></li>
+                    <c:choose>
+                        <c:when test="#{view.viewId == '/index.xhtml'}">
+                            <c:set value="active" var="cssIndexLink"/>
+                        </c:when>
+                        <c:when test="#{view.viewId == '/inscription.xhtml'}">
+                            <c:set value="active" var="cssSigninLink"/>
+                        </c:when>
+                    </c:choose>
+                    
+                    <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                    <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                    <li class="${cssLoginLink}"><a href="#">Connexion</a></li>                 
                 </ul>
             </div>
         </div>                 

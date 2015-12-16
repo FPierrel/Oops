@@ -10,21 +10,8 @@
         <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
-    <h:body>            
-        <div id="header-wrapper">
-            <div id="header" class="container">
-                <div id="logo">
-                    <h1><a href="#">Oops</a></h1>
-                </div>
-                <div id="menu">
-                    <ul>
-                        <li ><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
-                        <li class="active"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
-                        <li><a href="#">Connexion</a></li>
-                    </ul>
-                </div>
-            </div>                 
-        </div>
+    <h:body> 
+        <ui:include src="header.xhtml"/>
         <ui:include src="search.xhtml"/>
         <div id="container">
             <div id="content">
