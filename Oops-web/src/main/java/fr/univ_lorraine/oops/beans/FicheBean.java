@@ -1,132 +1,58 @@
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.FichePrestataireBean;
-import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
-import java.util.Collection;
-import java.util.List;
+import java.io.Serializable;
+import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 
 @Named(value = "ficheBean")
-@RequestScoped
-public class FicheBean {
+@ConversationScoped
+public class FicheBean implements Serializable {
 
     @Inject
     private FichePrestataireBean fiche;
+    
+    private String page;
+    private Prestataire prestataire;
 
-    private Prestataire p = null;
-    private String prenomSearch, nomSearch, loginSearch;
-
+    /**
+     * Creates a new instance of FicheBean
+     */
     public FicheBean() {
 
     }
 
-    public String searchPrenomNom() {
-        List<Prestataire> listPres = fiche.getPrestatairePrenomNom(prenomSearch, nomSearch);
-        if (listPres.size() > 0) {
-            p = listPres.get(0);
-            return "fiche.xhtml";
+    public void init() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        if(this.page.isEmpty()) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mauvaise requête ! Utilisez un lien correct !", null);
+            context.addMessage(null, message); 
+        }        
+        this.prestataire = this.fiche.getPrestataireLogin(this.page);        
+        if(this.prestataire == null && !(this.page.isEmpty())) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mauvaise requête ! Utilisez un lien correct !", null);
+            context.addMessage(null, message);            
         }
-        return "index.xhtml";
+    }
+    
+    public Prestataire getPrestataire() {
+        return this.prestataire;
     }
 
-    public String searchLogin() {
-        List<Prestataire> listPres = fiche.getPrestataireLogin(loginSearch);
-        if (listPres.size() > 0) {
-            p = listPres.get(0);
-            return "fiche.xhtml";
-        }
-        return "index.xhtml";
+    public void setPrestataire(Prestataire prestataire) {
+        this.prestataire = prestataire;
     }
 
-    public String getPrenomSearch() {
-        return prenomSearch;
+    public String getPage() {
+        return this.page;
     }
 
-    public void setPrenomSearch(String prenomSearch) {
-        this.prenomSearch = prenomSearch;
+    public void setPage(String page) {
+        this.page = page;
     }
-
-    public String getNomSearch() {
-        return nomSearch;
-    }
-
-    public void setNomSearch(String nomSeach) {
-        this.nomSearch = nomSeach;
-    }
-
-    public String getLoginSearch() {
-        return loginSearch;
-    }
-
-    public void setLoginSearch(String loginSearch) {
-        this.loginSearch = loginSearch;
-    }
-
-    public String getPrenom() {
-        return p.getPrenom();
-    }
-
-    public void setPrenom(String prenom) {
-        p.setPrenom(prenom);
-    }
-
-    public String getNom() {
-        return p.getNom();
-    }
-
-    public void setNom(String nom) {
-        p.setNom(nom);
-    }
-
-    public String getMail() {
-        return p.getMail();
-    }
-
-    public void setMail(String mail) {
-        p.setMail(mail);
-    }
-
-    public String getNumeroTelephone() {
-        return p.getNumeroTelephone();
-    }
-
-    public void setNumeroTelephone(String numeroTelephone) {
-        p.setNumeroTelephone(numeroTelephone);
-    }
-
-    public String getNomEntreprise() {
-        return p.getNomEntreprise();
-    }
-
-    public void setNomEntreprise(String nomEntreprise) {
-        p.setNomEntreprise(nomEntreprise);
-    }
-
-    public int getNbEmployes() {
-        return p.getNbEmployes();
-    }
-
-    public void setNbEmployes(int nbEmployes) {
-        p.setNbEmployes(nbEmployes);
-    }
-
-    public int getChiffreAffaire() {
-        return p.getChiffreAffaire();
-    }
-
-    public void setChiffreAffaire(int chiffreAffaire) {
-        p.setChiffreAffaire(chiffreAffaire);
-    }
-
-    public Collection<Adresse> getAdresses() {
-        return p.getAdresses();
-    }
-
-    public void setAdresses(Collection<Adresse> adresses) {
-        p.setAdresses(adresses);
-    }
-
+    
 }

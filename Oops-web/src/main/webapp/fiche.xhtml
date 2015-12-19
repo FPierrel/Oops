@@ -1,76 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-To change this license header, choose License Headers in Project Properties.
-To change this template file, choose Tools | Templates
-and open the template in the editor.
--->
-<!DOCTYPE html>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:metadata>
+        <f:viewParam name="page" value="#{ficheBean.page}" />
+        <f:viewAction action="#{ficheBean.init}" />
+    </f:metadata>
     <h:head>
-        <title>Fiche Prestataire</title>
+        <title>Oops | #{ficheBean.prestataire.nomEntreprise}</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
         <link href="style/style.css" rel="stylesheet" type="text/css" />
     </h:head>
-    <h:body>   
+    <h:body>
         <ui:include src="header.xhtml"/>
         <ui:include src="search.xhtml"/>
+        <p:messages />
         <div id="container">
             <div id ="content">
-
-
-                Nom : <h:outputText value="#{ficheBean.nom}"/> <br/>
-                Prenom : <h:outputText value="#{ficheBean.prenom}"/><br/>
-                Chiffre d'affaire : <h:outputText value="#{ficheBean.chiffreAffaire}"/><br/>
-                Numéro de téléphone : <h:outputText value="#{ficheBean.numeroTelephone}"/><br/>
+                Nom Prestataire : <h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/> <br/>
+                Chiffre d'affaire : <h:outputText value="#{ficheBean.prestataire.chiffreAffaire}"/><br/>
+                Numéro de téléphone : <h:outputText value="#{ficheBean.prestataire.numeroTelephone}"/><br/>
                 Adresse :
-                <h:dataTable value="#{ficheBean.adresses}" var="address">
-
+                <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">
                     <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Numéro" />
-                        </f:facet>
                         <h:outputText value="#{address.numero}"/>                  
                     </h:column>
                     <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Rue" />
-                        </f:facet>
-                        <h:outputText value="#{address.rue}"/>                  
+                        <h:outputText value="#{address.rue}"/>             
                     </h:column>
                     <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Code Postal" />
-                        </f:facet>
+                        <h:outputText value="#{address.complement}"/>                  
+                    </h:column>
+                    <h:column>
                         <h:outputText value="#{address.codePostal}"/>                  
                     </h:column>
                     <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Ville" />
-                        </f:facet>
                         <h:outputText value="#{address.ville}"/>                  
                     </h:column>
                     <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Pays" />
-                        </f:facet>
                         <h:outputText value="#{address.pays}"/>                  
-                    </h:column>
-                    <h:column>
-                        <f:facet name="header">
-                            <h:outputText value="Complément" />
-                        </f:facet>
-                        <h:outputText value="#{address.complement}"/>                  
                     </h:column>
 
                 </h:dataTable>
-                Nombre d'employés : <h:outputText value="#{ficheBean.nbEmployes}"/><br/>
-                Nom de l'entreprise: <h:outputText value="#{ficheBean.nomEntreprise}"/><br/>
-                Mail : <h:outputText value="#{ficheBean.mail}"/><br/>
-            </div></div>
+                Nombre d'employés : <h:outputText value="#{ficheBean.prestataire.nbEmployes}"/><br/>
+                Mail : <h:outputText value="#{ficheBean.prestataire.mail}"/><br/>
+            </div>
+        </div>
         <ui:include src="footer.xhtml"/>
     </h:body>
 </html>

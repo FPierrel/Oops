@@ -21,8 +21,11 @@
                                 <tr>
                                     <td>
                                         <h:form>
-                                            <h:outputText value="#{pres.nomEntreprise}" style="font-weight:bold"/>
-                                            <h:outputText value=" : "/>
+                                            <h:link outcome="fiche.xhtml">
+                                                <f:param name="page" value="#{pres.login}"/>
+                                                <h:outputText value="#{pres.nomEntreprise}" style="font-weight:bold"/>
+                                                <h:outputText value=" : "/>
+                                            </h:link>
                                         </h:form>
                                     </td>
                                     <td>

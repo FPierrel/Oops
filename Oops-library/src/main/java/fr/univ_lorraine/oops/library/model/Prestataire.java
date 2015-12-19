@@ -8,7 +8,6 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Prestataire.findNomPrenom", query = "SELECT p FROM Prestataire p WHERE p.nom = :nom AND p.prenom = :prenom"),
-    @NamedQuery(name = "Prestataire.findLogin", query = "SELECT p FROM Prestataire p WHERE p.login = :login")
 })
 public class Prestataire extends Utilisateur implements Serializable {
 
