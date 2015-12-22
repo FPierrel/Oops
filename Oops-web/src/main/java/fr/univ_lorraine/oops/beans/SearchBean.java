@@ -18,7 +18,7 @@ public class SearchBean implements Serializable{
     private String lastnameSearch, firstnameSearch, townSearch;
     private int employeeSearch;
     private boolean advanced;
-    
+    private int note = 3; /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
     private List<Prestataire> prestataires;
 
     /**
@@ -28,8 +28,11 @@ public class SearchBean implements Serializable{
     }
     
     public String search() {
-        this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
-        return "results?faces-redirect=true";
+        if(this.advanced) {
+            this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
+            return "results?faces-redirect=true";
+        }
+        return "";
     }
 
     public String getLastnameSearch() {
@@ -78,6 +81,14 @@ public class SearchBean implements Serializable{
 
     public void setPrestataires(List<Prestataire> prestataires) {
         this.prestataires = prestataires;
+    }
+
+    public int getNote() {
+        return note;
+    }
+
+    public void setNote(int note) {
+        this.note = note;
     }
     
 }

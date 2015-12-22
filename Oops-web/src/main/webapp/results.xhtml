@@ -3,69 +3,47 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:f="http://xmlns.jcp.org/jsf/core">
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Oops | Résultats</title>
         <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
-        <link href="style/style.css" rel="stylesheet" type="text/css" />
+        <link href="style/style2.css" rel="stylesheet" type="text/css" />
     </h:head>
     <h:body>   
         <ui:include src="header.xhtml"/>
         <ui:include src="search.xhtml"/>
-        <div id="container">
+        <div id="featured-wrapper">
             <div id ="content">
-                <div>
-                    <h:dataTable value="#{searchBean.prestataires}" var="pres">
-                        <h:column>
-                            <table>
-                                <tr>
-                                    <td>
-                                        <h:form>
-                                            <h:link outcome="fiche.xhtml">
-                                                <f:param name="page" value="#{pres.login}"/>
-                                                <h:outputText value="#{pres.nomEntreprise}" style="font-weight:bold"/>
-                                                <h:outputText value=" : "/>
-                                            </h:link>
-                                        </h:form>
-                                    </td>
-                                    <td>
-                                        <h:outputText value="#{pres.mail}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Description :</td>
-                                    <td></td>
-                                </tr>
-
-                                <tr>
-                                    <td> Ville(s) :</td>
-                                    <td>
-                                        <h:dataTable value="#{pres.adresses}" var="address">
-                                            <h:column>
-                                                <h:outputText value="#{address.ville}(#{address.codePostal})  "/>                  
-                                            </h:column>
-                                        </h:dataTable>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>Nombre d'employé(s) :</td>
-                                    <td>
-                                        <h:outputText value="#{pres.nbEmployes}"/>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <h:outputText value="Téléphone :"/>
-                                    </td>
-                                    <td>
-                                        <h:outputText value="#{pres.numeroTelephone}"/>
-                                    </td>
-                                </tr>
-
-                            </table>
-                        </h:column>
-                        <br/>
-                    </h:dataTable>
+                <div id="featured" class="container">
+                    <h:messages />
+                    <header>
+                        <h:outputText value=" Aucun Résultat !" rendered="#{searchBean.prestataires.size() == 0}"/>
+                        <h:outputText value="#{searchBean.prestataires.size()} Résultat :" rendered="#{searchBean.prestataires.size() == 1}"/>
+                        <h:outputText value="#{searchBean.prestataires.size()} Résultats :" rendered="#{searchBean.prestataires.size() > 1}"/>
+                    </header>
+                    <ui:repeat value="#{searchBean.prestataires}" var="pres">
+                        <div class="prestataire">    
+                                <h:form>
+                                    <h:link outcome="fiche.xhtml">
+                                        <f:param name="page" value="#{pres.login}"/>
+                                        <h:outputText value="#{pres.nomEntreprise}"/>
+                                    </h:link>
+                                </h:form>
+                            
+                            <h:form><p:rating value="#{searchBean.note}" readonly="true"/></h:form>
+                            <div id="rating"><a href="#">255 avis</a></div><br/><br/>|
+                                    
+                                <ui:repeat value="#{pres.adresses}" var="address">
+                                    <h:column>
+                                        <h:outputText value="#{address.ville}" style="font-weight: bold"/>
+                                        <h:outputText value=" (#{address.codePostal}) |"/>                  
+                                    </h:column>
+                                </ui:repeat>
+                            <br/><br/>
+                            <h:outputText value="Description du prestataire.... (Peut être un extrait et mettre la complète seulement dans la fiche ?!)" />
+                        </div>
+                    </ui:repeat>
                 </div>
             </div>
         </div>
