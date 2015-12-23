@@ -8,8 +8,8 @@
         <center>
             <h:form>
                 <h:panelGrid id="advanced_search" columns="3" cellpadding="5">
-                    <p:inputText class="search square" placeholder="Quoi ?"/>
-                    <p:inputText class="search square" placeholder="Où ?"/>
+                    <p:inputText class="search square" placeholder="Quoi ?" value="#{searchBean.quoi}" id="quoi"/>
+                    <p:inputText class="search square" placeholder="Où ?" value="#{searchBean.ou}" id="ou"/>
                     <h:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}"/>
                     <h:outputLabel></h:outputLabel><h:outputLabel></h:outputLabel>
                     <h:panelGroup>

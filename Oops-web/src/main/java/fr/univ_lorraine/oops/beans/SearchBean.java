@@ -16,6 +16,7 @@ public class SearchBean implements Serializable{
     SearchResultsBean searchResults;
     
     private String lastnameSearch, firstnameSearch, townSearch;
+    private String quoi, ou;
     private int employeeSearch;
     private boolean advanced;
     private int note = 3; /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
@@ -31,8 +32,10 @@ public class SearchBean implements Serializable{
         if(this.advanced) {
             this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
             return "results?faces-redirect=true";
+        }else{
+            this.prestataires = this.searchResults.simpleSearch(this.quoi, this.ou);
+            return "results?faces-redirect=true";
         }
-        return "";
     }
 
     public String getLastnameSearch() {
@@ -90,5 +93,22 @@ public class SearchBean implements Serializable{
     public void setNote(int note) {
         this.note = note;
     }
+
+    public String getQuoi() {
+        return quoi;
+    }
+
+    public void setQuoi(String quoi) {
+        this.quoi = quoi;
+    }
+
+    public String getOu() {
+        return ou;
+    }
+
+    public void setOu(String ou) {
+        this.ou = ou;
+    }
+    
     
 }
