@@ -9,10 +9,12 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 
 @Entity
 public abstract class Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
+    public final static String defaut = "DEFAUT";
     @Id
     private String login;
     private String nom;
@@ -20,9 +22,10 @@ public abstract class Utilisateur implements Serializable {
     private String motDePasse;
     private String mail;
     private String numeroTelephone;
+    protected String groupe;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
-    
+        
     public Utilisateur() {
         this.adresses = new ArrayList<>();
     }
@@ -85,6 +88,14 @@ public abstract class Utilisateur implements Serializable {
     
     public void addAdresse(Adresse adresse) {
         this.adresses.add(adresse);
+    }
+
+    public String getGroupe() {
+        return groupe;
+    }
+
+    public void setGroupe(String groupe) {
+        this.groupe = groupe;
     }
     
     @Override

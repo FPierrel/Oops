@@ -5,10 +5,11 @@ import javax.persistence.Entity;
 
 @Entity
 public class Administrateur extends Moderateur implements Serializable {
-    private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;    
+    public final static String administrateur = "ADMINISTRATEUR";
     
     public Administrateur() {
-        
+        this.groupe = administrateur;
     }
     
 }

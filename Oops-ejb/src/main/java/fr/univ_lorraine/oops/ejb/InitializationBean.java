@@ -1,8 +1,10 @@
 package fr.univ_lorraine.oops.ejb;
 
+import fr.univ_lorraine.oops.library.model.Administrateur;
 import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
+import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -24,7 +26,7 @@ public class InitializationBean {
         this.addPrestataires();
         this.addSoumissionaires();
     }
-    
+       
     /**
      * 1 login, 1 motDePasse, 1 mail, 1 telephone, 1 nomEntreprise et 1 adresse : OBLIGATOIRES !
      */
@@ -34,22 +36,22 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesJose = new ArrayList<>();
         adressesJose.add(this.creerAdresse("10", "rue des OGM", "", "75000", "Paris", "France"));
-        liste.add(this.creerPrestataire("jose", "Bové", "José", "123456", "jose.bove@gmail.com", 
+        liste.add(this.creerPrestataire("jose", "Bové", "José", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "jose.bove@gmail.com", 
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose));
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
         adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz Ville", "Allemagne"));
-        liste.add(this.creerPrestataire("noupi", "Le lapin", "Noupi", "123456", "noupi@lelapin.com", 
+        liste.add(this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi));
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
         adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz Ville", "Allemagne"));
-        liste.add(this.creerPrestataire("philippe", "Le héros", "Philippe", "123456", "philippe@hitman-lecobra.com", 
+        liste.add(this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe));
         //----------------------------------------------
         ArrayList<Adresse> adressesDemon = new ArrayList<>();
         adressesDemon.add(this.creerAdresse("666", "avenue de l'enfer", "", "666 666", "Le four", "Enfer"));
-        liste.add(this.creerPrestataire("satan", "Satan", "Belzébuth", "123456", "satan@satan.enfer", 
+        liste.add(this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon));
         //----------------------------------------------
         //FIN AJOUTS DE PRESTATAIRE.
@@ -89,6 +91,8 @@ public class InitializationBean {
         prestataire.setNbEmployes(nbEmployes);
         prestataire.setChiffreAffaire(chiffreAffaire);
         prestataire.setAdresses(adresses);
+        if(login == "jose")
+            prestataire.setGroupe(Administrateur.administrateur);
         return prestataire;
     }
     

@@ -6,9 +6,10 @@ import javax.persistence.Entity;
 @Entity
 public class Moderateur extends Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
+    public final static String moderateur = "MODERATEUR";
     
     public Moderateur() {
-        
+        this.groupe = moderateur;
     }
     
 }

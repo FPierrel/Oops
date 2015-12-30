@@ -21,4 +21,51 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>admin-pages</web-resource-name>
+            <description>Pages d'administration</description>
+            <url-pattern>/admin/*</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder aux pages d'administration</description>
+            <role-name>ADMINISTRATEUR</role-name>
+            <role-name>MODERATEUR</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>oops_realm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/login.xhtml</form-login-page>
+            <form-error-page>/faces/login.xhtml?failed=true</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description>Rôle d'Administrateur</description>
+        <role-name>ADMINISTRATEUR</role-name>
+    </security-role>
+    <security-role>
+        <description>Rôle de Modérateur</description>
+        <role-name>MODERATEUR</role-name>
+    </security-role>
+    <security-role>
+        <description>Rôle de Prestataire</description>
+        <role-name>PRESTATAIRE</role-name>
+    </security-role>
+    <security-role>
+        <description>Rôle de Soumissionaire</description>
+        <role-name>SOUMISSIONNAIRE</role-name>
+    </security-role>
+    <security-role>
+        <description>Rôle par defaut</description>
+        <role-name>DEFAUT</role-name>
+    </security-role>
 </web-app>

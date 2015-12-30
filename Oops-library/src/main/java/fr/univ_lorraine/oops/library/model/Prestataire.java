@@ -10,15 +10,14 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Prestataire.findNomPrenom", query = "SELECT p FROM Prestataire p WHERE p.nom = :nom AND p.prenom = :prenom"),
 })
 public class Prestataire extends Utilisateur implements Serializable {
-
     private static final long serialVersionUID = 1L;
-
+    public final static String prestataire = "PRESTATAIRE";
     private String nomEntreprise;
     private int nbEmployes;
     private int chiffreAffaire;
 
     public Prestataire() {
-
+        this.groupe = prestataire;
     }
 
     public String getNomEntreprise() {
