@@ -9,6 +9,7 @@
     <class>fr.univ_lorraine.oops.library.model.Moderateur</class>
     <class>fr.univ_lorraine.oops.library.model.Administrateur</class>
     <class>fr.univ_lorraine.oops.library.model.Adresse</class>
+    <class>fr.univ_lorraine.oops.library.model.Categorie</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/OOPS"/>
       <property name="javax.persistence.jdbc.password" value="OOPS"/>

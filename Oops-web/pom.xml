@@ -42,14 +42,14 @@
             <version>4.11</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
+        </dependency><!--
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-api</artifactId>
             <version>2.48.2</version>
             <scope>test</scope>
             <type>jar</type>
-        </dependency>
+        </dependency>-->
         <dependency>
             <groupId>javax</groupId>
             <artifactId>javaee-web-api</artifactId>
@@ -72,7 +72,7 @@
             <artifactId>phantomjsdriver</artifactId>
             <version>1.0.4</version>
             <scope>test</scope>
-        </dependency>
+        </dependency><!--
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
@@ -82,7 +82,7 @@
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-common</artifactId>
             <version>2.0b1</version>
-        </dependency>
+        </dependency>-->
     </dependencies>
 
     <build>

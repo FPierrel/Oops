@@ -1,9 +1,11 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -15,6 +17,8 @@ public class Prestataire extends Utilisateur implements Serializable {
     private String nomEntreprise;
     private int nbEmployes;
     private int chiffreAffaire;
+    @OneToMany
+    private Collection<Categorie> categories;
 
     public Prestataire() {
         this.groupe = prestataire;
@@ -43,5 +47,12 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setChiffreAffaire(int chiffreAffaire) {
         this.chiffreAffaire = chiffreAffaire;
     }
+    
+    public Collection<Categorie> getCategories() {
+        return categories;
+    }
 
+    public void setCategories(Collection<Categorie> categories) {
+        this.categories = categories;
+    }
 }
