@@ -9,12 +9,13 @@
     <class>fr.univ_lorraine.oops.library.model.Moderateur</class>
     <class>fr.univ_lorraine.oops.library.model.Administrateur</class>
     <class>fr.univ_lorraine.oops.library.model.Adresse</class>
+    <class>fr.univ_lorraine.oops.library.model.Categorie</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/OOPS"/>
       <property name="javax.persistence.jdbc.password" value="OOPS"/>
       <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.ClientDriver"/>
       <property name="javax.persistence.jdbc.user" value="OOPS"/>
-      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/> 
+      <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
     </properties>
   </persistence-unit>
 </persistence>

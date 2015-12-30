@@ -26,16 +26,16 @@ public class RegistrationBeanTest {
     
     @BeforeClass
     public static void setUpClass() {
-        driver = new FirefoxDriver();
-        //DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        //river = new PhantomJSDriver(capabilities);
+        //driver = new FirefoxDriver();
+        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+        driver = new PhantomJSDriver(capabilities);
     }
 
     @Before
     public void setUp() {
         rb = new RegistrationBean();
         driver.get("http://localhost:8080/Oops-web/faces/inscription.xhtml");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         this.fillFields();
     }
     
