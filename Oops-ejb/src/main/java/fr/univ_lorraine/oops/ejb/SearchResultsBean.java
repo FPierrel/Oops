@@ -1,8 +1,15 @@
 package fr.univ_lorraine.oops.ejb;
 
+import com.mysql.jdbc.Connection;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
@@ -15,6 +22,7 @@ public class SearchResultsBean {
 
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
+    private List<String> villes = new ArrayList<>();
 
     public EntityManager getEntityManager() {
         return this.em;
@@ -57,22 +65,36 @@ public class SearchResultsBean {
     }
 
     public List<Prestataire> simpleSearch(String quoi, String ou) {
-        /* Recherche Rapide
-        recherche sur :
-        nom de la boite
-        nom
-        prenom    
-         */
-        String queryString = "SELECT p "
-                + "FROM Prestataire p "
-                + "WHERE 1 = 1"
-                + searchPrestataireWithEnterprisename(quoi, "AND");
-        /* + searchPrestataireWithLastname(quoi, "OR")
-                    + searchPrestataireWithFirstname(quoi, "OR")
-                    + searchPrestataireWithTown(ou, "AND");*/
+        if (!ou.isEmpty() && quoi.isEmpty()) {
+            String queryString = "Select p "
+                    + "FROM Prestataire p, Adresse a "
+                    + "WHERE 1=1 "
+                    + searchPrestataireWithTownName(ou, "AND");
 
-        Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-        return query.getResultList();
+            Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+            
+            if(!this.villes.isEmpty()){
+                 query.setParameter("villes", this.villes);
+            }
+           
+            return query.getResultList();
+        } /* Recherche Rapide
+         recherche sur :
+         nom de la boite
+         nom
+         prenom    
+         */ else {
+            String queryString = "SELECT p "
+                    + "FROM Prestataire p "
+                    + "WHERE 1 = 1"
+                    + searchPrestataireWithEnterprisename(quoi, "AND");
+            /* + searchPrestataireWithLastname(quoi, "OR")
+             + searchPrestataireWithFirstname(quoi, "OR")
+             + searchPrestataireWithTown(ou, "AND");*/
+
+            Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+            return query.getResultList();
+        }
     }
 
     private String searchPrestataireWithEnterprisename(String quoi, String operateur) {
@@ -94,4 +116,80 @@ public class SearchResultsBean {
 
     }
 
+    public List<String> searchTownsByRadius(String ville, int radius) {
+        List<String> li = new ArrayList<>();
+        /* Connexion à la base de données */
+        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
+        String utilisateur = "root";
+        String motDePasse = "fakepwd88";
+        Connection connexion = null;
+        ResultSet resultat = null;
+        Statement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+            statement = connexion.createStatement();
+            
+            /* Récupérer latitude longitude de la ville de référence */
+            resultat = statement.executeQuery(""
+                    + "SELECT ville_latitude_deg, ville_longitude_deg "
+                    + "FROM villes_france_free "
+                    + "WHERE ville_nom_reel = '" + ville + "'");
+            
+            double latitude = 0;
+            double longitude = 0;
+                     
+            while (resultat.next()) {
+                latitude = resultat.getDouble("ville_latitude_deg");
+                longitude = resultat.getDouble("ville_longitude_deg");
+            }
+            
+            /* Récupérer liste des villes à radius m à la ronde */
+            resultat = statement.executeQuery(""
+                    + "SELECT *, "
+                    + "get_distance_metres('" + latitude + "', '" + longitude + "', ville_latitude_deg, ville_longitude_deg) AS distance "
+                    + "FROM villes_france_free "
+                    + "HAVING distance < " + radius);
+
+            while (resultat.next()) {
+                String nom = resultat.getString("ville_nom");
+                li.add(nom);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connexion != null) {
+                try {
+                    connexion.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (resultat != null) {
+                try {
+                    resultat.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+        
+        return li;
+    }
+    
+    private String searchPrestataireWithTownName(String ou, String operateur) {
+        this.villes = this.searchTownsByRadius(ou, 10000);
+        
+       if(this.villes.isEmpty()){
+           return "";
+       }
+       
+        return " " + operateur + " UPPER(a.ville) IN :villes AND a MEMBER OF p.adresses";
+    }
 }

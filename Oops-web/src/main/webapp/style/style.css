@@ -70,7 +70,7 @@ h1, h2, h3 {
 }
 
 
-#logo h1 a
+#logo hi a 
 
 {
     display: block;
@@ -241,7 +241,7 @@ h1, h2, h3 {
 
 .dark form{
 	width:900px;
-	margin:0 auto;
+	margin: auto;
 }
 .search { 
 	padding:6px 15px 6px 30px;
@@ -315,4 +315,8 @@ body > #container { height: auto; min-height: 100%; }
 
 #container{    
     padding-top: 5%;
+}
+
+#advanced_search{
+    
 }

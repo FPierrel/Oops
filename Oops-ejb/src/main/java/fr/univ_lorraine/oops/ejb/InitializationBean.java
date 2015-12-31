@@ -54,6 +54,22 @@ public class InitializationBean {
         liste.add(this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon));
         //----------------------------------------------
+        ArrayList<Adresse> adressesNeufchateau = new ArrayList<>();
+        adressesNeufchateau.add(this.creerAdresse("12", "Rue de la rue", "", "88300", "Neufchateau", "France"));
+        liste.add(this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr", 
+                "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau));
+        //----------------------------------------------
+        ArrayList<Adresse> adressesNancy = new ArrayList<>();
+        adressesNancy.add(this.creerAdresse("38", "avenue de oui", "", "54000", "Nancy", "France"));
+        liste.add(this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b", 
+                "0123456789", "Oooooh", 1, 126423, adressesNancy));
+        //----------------------------------------------
+        ArrayList<Adresse> adressesOui = new ArrayList<>();
+        adressesOui.add(this.creerAdresse("Oui", "Oui", "", "88630", "Coussey", "France"));
+        liste.add(this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
+                "0123456789", "Oui", 1, 126423, adressesOui));
+        //----------------------------------------------
+        
         //FIN AJOUTS DE PRESTATAIRE.
         for (Prestataire p : liste) {
             this.em.persist(p);

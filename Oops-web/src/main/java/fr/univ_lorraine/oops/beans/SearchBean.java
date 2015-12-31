@@ -108,7 +108,5 @@ public class SearchBean implements Serializable{
 
     public void setOu(String ou) {
         this.ou = ou;
-    }
-    
-    
+    }   
 }
