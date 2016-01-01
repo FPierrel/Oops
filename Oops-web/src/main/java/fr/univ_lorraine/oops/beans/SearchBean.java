@@ -3,9 +3,11 @@ package fr.univ_lorraine.oops.beans;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 
 @Named(value = "searchBean")
@@ -21,11 +23,14 @@ public class SearchBean implements Serializable{
     private boolean advanced;
     private int note = 3; /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
     private List<Prestataire> prestataires;
+    private List<String> villes = new ArrayList<>(); 
+    private String choix;
 
     /**
      * Creates a new instance of SearchBean
      */
     public SearchBean() {
+       
     }
     
     public String search() {
@@ -33,9 +38,13 @@ public class SearchBean implements Serializable{
             this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
             return "results?faces-redirect=true";
         }else{
-            this.prestataires = this.searchResults.simpleSearch(this.quoi, this.ou);
+            this.prestataires = this.searchResults.simpleSearch(this.quoi, this.choix);
             return "results?faces-redirect=true";
         }
+    }
+    
+    public void searchTown(AjaxBehaviorEvent event){
+        this.villes = this.searchResults.searchTest(this.ou);
     }
 
     public String getLastnameSearch() {
@@ -109,4 +118,24 @@ public class SearchBean implements Serializable{
     public void setOu(String ou) {
         this.ou = ou;
     }   
+
+    public List<String> getVilles() {
+        return villes;
+    }
+
+    public void setVilles(List<String> villes) {
+        this.villes = villes;
+    }
+
+    public String getChoix() {
+        return choix;
+    }
+
+    public void setChoix(String choix) {
+        this.choix = choix;
+    }
+    
+    
+    
+    
 }

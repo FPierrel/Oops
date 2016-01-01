@@ -9,8 +9,17 @@
             <h:form>
                 <h:panelGrid id="advanced_search" columns="3" cellpadding="5">
                     <p:inputText class="search square" placeholder="Quoi ?" value="#{searchBean.quoi}" id="quoi"/>
-                    <p:inputText class="search square" placeholder="Où ?" value="#{searchBean.ou}" id="ou"/>
-                    <h:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}"/>
+                    
+                    <p:inputText class="search square" placeholder="Où ?" value="#{searchBean.ou}" id="ou">
+                        <p:ajax event="keyup" listener="#{searchBean.searchTown}" process="@this" update="result"></p:ajax>
+                    </p:inputText>
+                    
+                    <h:selectOneMenu id="result" value="#{searchBean.choix}" required = "true">
+                        <f:selectItems value="#{searchBean.villes}"/>
+                    </h:selectOneMenu>
+                    
+                    <p:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}" update="advanced_search"/>
+                    
                     <h:outputLabel></h:outputLabel><h:outputLabel></h:outputLabel>
                     <h:panelGroup>
                         <h:outputLabel value="Recherche avancée : "/>
