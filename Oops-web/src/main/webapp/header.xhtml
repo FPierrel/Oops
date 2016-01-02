@@ -4,7 +4,7 @@
                 xmlns:ui="http://java.sun.com/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:p="http://primefaces.org/ui">
-    
+
     <div id="header-wrapper">
         <div id="header" class="container">
             <div id="logo">
@@ -23,12 +23,14 @@
                             <c:set value="active" var="cssLoginLink"/>
                         </c:when>
                     </c:choose>
-                    
+
                     <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
                     <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
                     <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
                     <h:form>
                         <p:menuButton rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
+                            <p:menuitem value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
+                            <p:menuitem value="Editer mon profil" outcome="profil"/>
                             <p:menuitem value="Déconnexion" action="#{authenticationBean.logout()}"/>
                         </p:menuButton>
                     </h:form>

@@ -25,6 +25,7 @@
         <web-resource-collection>
             <web-resource-name>admin-pages</web-resource-name>
             <description>Pages d'administration</description>
+            <url-pattern>/faces/admin/*</url-pattern>
             <url-pattern>/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -38,6 +39,28 @@
             <description>Rôles autorisés à acceder aux pages d'administration</description>
             <role-name>ADMINISTRATEUR</role-name>
             <role-name>MODERATEUR</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>profil-page</web-resource-name>
+            <description>Page de profil</description>
+            <url-pattern>/faces/profil.xhtml</url-pattern>
+            <url-pattern>/profil.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder à la page de profil</description>
+            <role-name>ADMINISTRATEUR</role-name>
+            <role-name>MODERATEUR</role-name>
+            <role-name>PRESTATAIRE</role-name>
+            <role-name>SOUMISSIONNAIRE</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>

@@ -1,0 +1,92 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:metadata>
+        <f:viewAction action="#{profilBean.init(request.remoteUser)}" />
+    </f:metadata>
+    <h:head>
+        <title>Oops | Modifier le profil</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <ui:include src="search.xhtml"/>
+        <div id="featured-wrapper">
+            <div id ="content">
+                <div id="featured" class="container">
+                    <p:messages />
+                    <h:form id="profilForm">
+                        <h:panelGrid id="grid" columns="2" cellpadding="5">
+                            <h:panelGrid id="profilGrid" columns="3" cellpadding="5">
+                                <h:outputLabel for="login" value="Login : "/>
+                                <h:outputLabel id="login" value="#{profilBean.user.login}"/>
+                                <h:outputLabel />
+                                <h:outputLabel for="lastname" value="Nom : "/>
+                                <h:outputLabel id="lastname" value="#{profilBean.user.nom}"/>
+                                <h:outputLabel />
+                                <h:outputLabel for="firstname" value="Prénom : "/>
+                                <h:outputLabel id="firstname" value="#{profilBean.user.prenom}"/>
+                                <h:outputLabel />                        
+                                <h:outputLabel for="oldMail" value="Adresse mail actuelle : "/>
+                                <h:outputLabel id="oldMail" value="#{profilBean.user.mail}"/>
+                                <h:outputLabel />
+                                <h:outputLabel for="newMail" value="Nouvelle adresse mail : "/>
+                                <h:inputText id="newMail" value="#{profilBean.newMail}"/>
+                                <h:message for="newMail" />
+                                <h:outputLabel for="newMailConfirm" value="Confirmation nouvelle adresse mail : "/>
+                                <h:inputText id="newMailConfirm" value="#{profilBean.newMailConfirm}"/>
+                                <h:message for="newMailConfirm" />
+                                <h:outputLabel for="oldPassword" value="Mot de passe actuel : "/>
+                                <h:inputSecret id="oldPassword" value="#{profilBean.oldPassword}"/>
+                                <h:message for="oldPassword" />
+                                <h:outputLabel for="newPassword" value="Nouveau mot de passe : "/>
+                                <h:inputSecret id="newPassword" value="#{profilBean.newPassword}"/>
+                                <h:message for="newPassword" />
+                                <h:outputLabel for="newPasswordConfirm" value="Confimation nouveau mot de passe : "/>
+                                <h:inputSecret id="newPasswordConfirm" value="#{profilBean.newPasswordConfirm}"/>
+                                <h:message for="newPasswordConfirm" />
+                                <h:outputLabel for="telephone" value="Téléphone : "/>
+                                <h:inputText id="telephone" value="#{profilBean.user.numeroTelephone}"/>
+                                <h:message for="telephone" />
+                                <h:outputLabel /><h:outputLabel /><h:outputLabel />
+                                <h:panelGroup>
+                                    <h:button id="cancel" value="Annuler" outcome="index"/>
+                                    <h:commandButton id="save" value="Enregistrer" action="#{profilBean.update()}"/>
+                                </h:panelGroup>
+                                <h:outputLabel /><h:outputLabel />
+                            </h:panelGrid>
+                            <h:panelGrid id="addressGrid" columns="1" cellpadding="5">
+                                <h:dataTable value="#{profilBean.user.adresses}" var="address">
+                                    <h:column>
+                                        <h:panelGrid id="addressGrid" columns="2" cellpadding="5">
+                                            <h:outputText value="Numéro : "/>
+                                            <h:inputText value="#{address.numero}"/>                  
+                                            <h:outputText value="Rue : "/>
+                                            <h:inputText value="#{address.rue}"/>             
+                                            <h:outputText value="Complément : "/>
+                                            <h:inputText value="#{address.complement}"/>                  
+                                            <h:outputText value="Code Postal : "/>
+                                            <h:inputText value="#{address.codePostal}"/>                  
+                                            <h:outputText value="Ville : "/>
+                                            <h:inputText value="#{address.ville}"/>                  
+                                            <h:outputText value="Pays : "/>
+                                            <h:inputText value="#{address.pays}"/> 
+                                        </h:panelGrid>
+                                    </h:column>
+                                </h:dataTable>
+                            </h:panelGrid>
+                        </h:panelGrid>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <ui:include src="footer.xhtml"/>
+    </h:body>
+</html>
+

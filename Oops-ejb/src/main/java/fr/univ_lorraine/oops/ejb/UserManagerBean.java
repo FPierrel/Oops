@@ -25,4 +25,12 @@ public class UserManagerBean {
         }
         return null;
     }
+    
+    public Utilisateur searchByLogin(String login) {
+        return this.getEntityManager().find(Utilisateur.class, login);
+    }
+    
+    public void updateUser(Utilisateur user) {
+        this.getEntityManager().merge(user);
+    }
 }

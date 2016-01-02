@@ -354,7 +354,7 @@ public class RegistrationBean implements Serializable {
         if(this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
             s.setLogin(this.login);
-            s.setMotDePasse(this.password);
+            s.setMotDePasse(ProfilBean.sha256(this.password));
             s.setMail(this.email);
             s.setNom(this.lastname);
             s.setPrenom(this.firstname);
@@ -364,7 +364,7 @@ public class RegistrationBean implements Serializable {
         } else {
             Prestataire p = new Prestataire();
             p.setLogin(this.login);
-            p.setMotDePasse(this.password);
+            p.setMotDePasse(ProfilBean.sha256(this.password));
             p.setMail(this.email);
             p.setNom(this.lastname);
             p.setPrenom(this.firstname);
