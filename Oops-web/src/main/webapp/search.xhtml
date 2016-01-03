@@ -6,39 +6,65 @@
 
     <div id="banner-wrapper">
         <center>
-            <h:form>
-                <h:panelGrid id="advanced_search" columns="3" cellpadding="5">
+            <h:form id="searchForm">
+                <h:panelGrid id="advanced_search" columns="4" cellpadding="5">
                     <p:inputText class="search square" placeholder="Quoi ?" value="#{searchBean.quoi}" id="quoi"/>
-                    
+
                     <p:inputText class="search square" placeholder="Où ?" value="#{searchBean.ou}" id="ou">
                         <p:ajax event="keyup" listener="#{searchBean.searchTown}" process="@this" update="result"></p:ajax>
                     </p:inputText>
-                    
+
                     <h:selectOneMenu id="result" value="#{searchBean.choix}" required = "true">
                         <f:selectItems value="#{searchBean.villes}"/>
                     </h:selectOneMenu>
-                    
-                    <p:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}" update="advanced_search"/>
-                    
-                    <h:outputLabel></h:outputLabel><h:outputLabel></h:outputLabel>
+
+                    <h:outputLabel/>
+                    <h:outputLabel/>
                     <h:panelGroup>
                         <h:outputLabel value="Recherche avancée : "/>
                         <p:selectBooleanCheckbox value="#{searchBean.advanced}">
                             <f:ajax render="advanced_search"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGroup>
-                    <p:outputLabel value="Nom :"  rendered="#{searchBean.advanced}"/>
-                    <p:inputText value="#{searchBean.lastnameSearch}" id="lastnameSearch" rendered="#{searchBean.advanced}"/>
+
+                    <h:outputLabel/>
+
+                    <h:outputLabel rendered="#{searchBean.advanced}"/>                    
+                    <p:inputText placeholder="Nom ?" value="#{searchBean.lastnameSearch}" id="lastnameSearch" rendered="#{searchBean.advanced}"/>
                     <h:message for="lastnameSearch"></h:message>
-                    <p:outputLabel value="Prénom :" rendered="#{searchBean.advanced}"/>
-                    <p:inputText value="#{searchBean.firstnameSearch}" id="firstnameSearch" rendered="#{searchBean.advanced}"/>
-                    <h:message for="lastnameSearch"></h:message>
-                    <p:outputLabel value="Ville : " rendered="#{searchBean.advanced}"/>
-                    <p:inputText value="#{searchBean.townSearch}" id="townSearch" rendered="#{searchBean.advanced}"/>
-                    <h:message for="lastnameSearch"></h:message>
-                    <p:outputLabel value="Nombre d'employés minimum : " rendered="#{searchBean.advanced}"/>
-                    <p:inputText value="#{searchBean.employeeSearch}" id="employeeSearch" rendered="#{searchBean.advanced}"/>
-                    <h:message for="lastnameSearch"></h:message>
+
+                    <h:outputText value="Communication : " rendered="#{searchBean.advanced}"/><p:rating value="#{searchBean.communication}" rendered="#{searchBean.advanced}"/>
+
+                    <p:inputText placeholder="Prénom ?" value="#{searchBean.firstnameSearch}" id="firstnameSearch" rendered="#{searchBean.advanced}"/>
+                    <h:message for="firstnameSearch"></h:message>
+
+                    <h:outputText value="Qualité : " rendered="#{searchBean.advanced}"/><p:rating value="#{searchBean.quality}" rendered="#{searchBean.advanced}"/>
+
+                    <p:inputText placeholder="Nombre d'employés minimum ?" value="#{searchBean.employeeSearch}" id="employeeSearch" rendered="#{searchBean.advanced}" converterMessage="Le nombre d'employés doit être un nombre !">
+                        <f:convertNumber type="number" integerOnly="true" />
+                    </p:inputText>
+                    <h:message for="employeeSearch"></h:message>
+
+                    <h:outputText value="Prix : " rendered="#{searchBean.advanced}"/><p:rating value="#{searchBean.price}" rendered="#{searchBean.advanced}"/>
+
+                    <p:inputText placeholder="Raison sociale ?" value="#{searchBean.raisonSocialeSearch}" id="raisonSocialeSearch" rendered="#{searchBean.advanced}"/>
+                    <h:message for="raisonSocialeSearch"></h:message>
+
+                    <h:outputText value="Délai : " rendered="#{searchBean.advanced}"/><p:rating value="#{searchBean.delay}" rendered="#{searchBean.advanced}"/>
+
+                    <p:inputText placeholder="Forme juridique ?" value="#{searchBean.formeJuridiqueSearch}" id="formeJuridiqueSearch" rendered="#{searchBean.advanced}"/>
+                    <h:message for="formeJuridiqueSearch"></h:message>
+                    
+                    <h:outputText value="Moyenne : " rendered="#{searchBean.advanced}"/><p:rating value="#{searchBean.moyenne}" rendered="#{searchBean.advanced}"/>
+
+                    <p:inputText placeholder="Chiffre d'affaire minimum ?" value="#{searchBean.chiffreAffaireSearch}" id="chiffreAffaireSearch" rendered="#{searchBean.advanced}" converterMessage="Le chiffre d'affaire doit être un nombre !">
+                        <f:convertNumber type="number" integerOnly="true" />
+                    </p:inputText>
+                    <h:message for="chiffreAffaireSearch"></h:message>
+                   
+                    <h:outputLabel rendered="#{searchBean.advanced}"/><h:outputLabel rendered="#{searchBean.advanced}"/> <h:outputLabel rendered="#{searchBean.advanced}"/> 
+
+                    <p:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}" update="advanced_search"/>
                 </h:panelGrid>
             </h:form>
         </center>

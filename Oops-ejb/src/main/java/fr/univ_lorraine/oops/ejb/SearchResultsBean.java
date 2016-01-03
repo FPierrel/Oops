@@ -27,16 +27,38 @@ public class SearchResultsBean {
     public EntityManager getEntityManager() {
         return this.em;
     }
-
-    public List<Prestataire> search(String lastname, String firstname, String town, int employee) {
+    public List<Prestataire> search(String what, String where, String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne) {
+        
         String queryString = "SELECT p "
-                + "FROM Prestataire p "
+                + "FROM Prestataire p"
+                + ((!where.isEmpty())?", Adresse a ":"")
                 + "WHERE 1 = 1"
                 + searchPrestataireWithLastname(lastname, "AND")
                 + searchPrestataireWithFirstname(firstname, "AND")
-                + searchPrestataireWithTown(town, "AND")
-                + searchPrestataireWithEmployee(employee, "AND");
+                + searchPrestataireWithEmployee(employee, "AND")
+                + searchPrestataireWithRaisonSociale(raisonSociale, "AND")
+                + searchPrestataireWithFormeJuridique(formeJuridique, "AND")
+                + searchPrestataireWithChiffreAffaire(chiffreAffaire, "AND")
+                + searchPrestataireWithCommunication(communication, "AND")
+                + searchPrestataireWithQuality(quality, "AND")
+                + searchPrestataireWithPrice(price, "AND")
+                + searchPrestataireWithValue(delay, "AND")
+                + searchPrestataireWithMoyenne(moyenne, "AND");
+
+        if (!what.isEmpty()) {
+            queryString += searchPrestataireWithEnterprisename(what, "AND");
+        }
+        
+        if (!where.isEmpty()) {
+            queryString += searchPrestataireWithTownName(where, "AND");
+        }
+
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+        
+        if (!this.villes.isEmpty()) {
+            query.setParameter("villes", this.villes);
+        }
+       
         return query.getResultList();
     }
 
@@ -44,26 +66,65 @@ public class SearchResultsBean {
         if (lastname.isEmpty()) {
             return "";
         }
-        return " " + operateur + " p.nom = '" + lastname + "'";
+        return " " + operateur + " UPPER(p.nom) = '" + lastname.toUpperCase() + "'";
     }
 
     public String searchPrestataireWithFirstname(String firstname, String operateur) {
         if (firstname.isEmpty()) {
             return "";
         }
-        return " " + operateur + " p.prenom = '" + firstname + "'";
+        return " " + operateur + " UPPER(p.prenom) = '" + firstname.toUpperCase() + "'";
     }
-
-    public String searchPrestataireWithTown(String town, String operateur) {
-        //if(town.isEmpty())
-        return "";
-        //return " " + operateur + " p.adresse = '" + town + "'";
-    }
-
+   
     public String searchPrestataireWithEmployee(int employee, String operateur) {
-        return " " + operateur + " p.nbEmployes >= " + employee + "";
+        return " " + operateur + " p.nbEmployes >= " + employee;
+    }
+    
+    public String searchPrestataireWithRaisonSociale(String raisonSociale, String operateur) {
+        if (raisonSociale.isEmpty()) {
+            return "";
+        }
+        return "";
+        //return " " + operateur + " UPPER(p.raisonSociale) = '" + raisonSociale.toUpperCase() + "'";
     }
 
+    public String searchPrestataireWithFormeJuridique(String formeJuridique, String operateur) {
+        if (formeJuridique.isEmpty()) {
+            return "";
+        }
+        return "";
+        //return " " + operateur + " UPPER(p.formeJuridique) = '" + formeJuridique.toUpperCase() + "'";
+    }
+    
+    public String searchPrestataireWithChiffreAffaire(int chiffreAffaire, String operateur) {
+        return " " + operateur + " p.chiffreAffaire >= " + chiffreAffaire;
+    }
+    
+    public String searchPrestataireWithCommunication(int communication, String operateur) {
+        return "";
+        //return " " + operateur + " p.communication >= " + communication;
+    }
+    
+    public String searchPrestataireWithQuality(int quality, String operateur) {
+        return "";
+        //return " " + operateur + " p.quality >= " + quality;
+    }
+    
+    public String searchPrestataireWithPrice(int price, String operateur) {
+        return "";
+        //return " " + operateur + " p.price >= " + price;
+    }
+    
+    public String searchPrestataireWithValue(int delay, String operateur) {
+        return "";
+        //return " " + operateur + " p.delay >= " + delay;
+    }
+    
+    public String searchPrestataireWithMoyenne(int moyenne, String operateur) {
+        return "";
+        //return " " + operateur + " p.moyenne >= " + moyenne;
+    }
+    
     public List<Prestataire> simpleSearch(String quoi, String ou) {
         if (!ou.isEmpty() && quoi.isEmpty()) {
             String queryString = "Select p "

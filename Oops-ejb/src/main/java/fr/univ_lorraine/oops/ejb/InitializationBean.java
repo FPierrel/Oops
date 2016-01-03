@@ -40,12 +40,12 @@ public class InitializationBean {
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose));
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
-        adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz Ville", "Allemagne"));
+        adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz", "Allemagne"));
         liste.add(this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi));
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
-        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz Ville", "Allemagne"));
+        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz", "Allemagne"));
         liste.add(this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe));
         //----------------------------------------------
