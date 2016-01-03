@@ -72,37 +72,55 @@ public class SearchResultsBean {
 
     public List<Prestataire> simpleSearch(String quoi, String ou) {
         ArrayList<Prestataire> results = new ArrayList<>();
-        float scoreMin = 0.5f;
+        
+        //Si le champs quoi est pas renseigné on s'embete pas
+        if (quoi.isEmpty() && !ou.isEmpty()) {
+            String queryString = "Select p "
+                    + "FROM Prestataire p, Adresse a "
+                    + "WHERE 1=1 "
+                    + searchPrestataireWithTownName(ou, "AND");
+            Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+            if (!this.villes.isEmpty()) {
+                query.setParameter("villes", this.villes);
+            }
+            return query.getResultList();
+        }
+        
+        float scoreMin = 0.9f;
         //Liste des prestataires correspondant un minimum
         HashMap<String, Float> relevanceList = luceneBean.search(quoi);
         ArrayList<Resultat> relevanceList2 = new ArrayList<>();
 
         //Si le champs où est renseigné on cherche les presta. qui peuvent correspondre
-        ArrayList<String> whereList;
-        String queryString = "Select p "
+        List<String> whereList;
+        String queryString = "Select p.login "
                 + "FROM Prestataire p, Adresse a "
                 + "WHERE 1=1 "
                 + searchPrestataireWithTownName(ou, "AND");
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
         if (!this.villes.isEmpty()) {
-                query.setParameter("villes", this.villes);
+            query.setParameter("villes", this.villes);
         }
-        whereList = (ArrayList<String>) query.getResultList();
-        
+        whereList = query.getResultList();
+
         // On fait l'union des deux en gardant les prestataires avec un score honorable
-        for (String s : whereList)
-            if (relevanceList.containsKey(s))
-                if (relevanceList.get(s) > scoreMin)
+        for (String s : whereList) {
+            if (relevanceList.containsKey(s)) {
+                if (relevanceList.get(s) > scoreMin) {
                     relevanceList2.add(new Resultat(s, relevanceList.get(s)));
-        
+                }
+            }
+        }
+
         // Tri par ordre de pertinance
         Collections.sort(relevanceList2);
         Collections.reverse(relevanceList2);
-        
-        for (Resultat r : relevanceList2)
+
+        for (Resultat r : relevanceList2) {
             results.add(em.find(Prestataire.class, r.getId()));
-        
-        return results;        
+        }
+
+        return results;
     }
 
     private String searchPrestataireWithEnterprisename(String quoi, String operateur) {

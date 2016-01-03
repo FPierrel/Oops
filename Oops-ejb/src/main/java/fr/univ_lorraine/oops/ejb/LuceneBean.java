@@ -23,7 +23,6 @@ import org.apache.lucene.index.IndexWriterConfig;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
-import org.apache.lucene.search.FuzzyQuery;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 import org.apache.lucene.search.ScoreDoc;
@@ -39,11 +38,11 @@ public class LuceneBean {
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
 
-    final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
-    Analyzer analyzer;
-    IndexWriter iwriter;
-    IndexWriterConfig config;
-    Directory directory;
+    private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
+    private Analyzer analyzer;
+    private IndexWriter iwriter;
+    private IndexWriterConfig config;
+    private Directory directory;
 
     public LuceneBean() throws IOException {
         this.analyzer = new FrenchAnalyzer();
@@ -94,11 +93,17 @@ public class LuceneBean {
         try {
             DirectoryReader ireader = DirectoryReader.open(directory);
             IndexSearcher isearcher = new IndexSearcher(ireader);
-            FuzzyQuery query;
-
+            //Ajout des suffix fuzzy pour tenir compte des fautes de frappes
+            //TODO: trouver un moyen plus rapide
+            while (quoi.contains("  "))
+                quoi = quoi.replaceAll("  ", " ");
+            quoi = quoi.replaceAll(" ", "~ ");
+            quoi = quoi.replaceAll("\t", "~ ");
+            quoi += "~";
+            Query query;
             QueryParser parser = new MultiFieldQueryParser(new String[]{"nom", "categorie"}, analyzer);
             parser.setFuzzyMinSim(0.6f);
-            query = (FuzzyQuery) parser.parse(quoi);
+            query = parser.parse(quoi);
 
             //Recuperation des resultats
             TopDocs hits;
