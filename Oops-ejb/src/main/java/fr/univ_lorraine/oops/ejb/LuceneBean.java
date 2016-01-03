@@ -1,18 +1,13 @@
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Prestataire;
-import fr.univ_lorraine.oops.library.model.Resultat;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
-import javax.ejb.DependsOn;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -20,8 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.fr.FrenchAnalyzer;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.analysis.util.CharArraySet;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.index.DirectoryReader;
@@ -40,7 +33,6 @@ import org.apache.lucene.store.RAMDirectory;
 
 @Singleton
 @Startup
-//@DependsOn({InitializationBean}) //Inutil si l'ajout de presta se fait proprement
 @LocalBean
 public class LuceneBean {
 
@@ -94,8 +86,8 @@ public class LuceneBean {
         }
     }
 
-    public List<Resultat> search(String quoi) {
-        ArrayList<Resultat> result = new ArrayList<>();
+    public HashMap<String, Float> search(String quoi) {        
+        HashMap<String,Float> result = new HashMap<>();
         if (quoi.isEmpty()) {
             return result;
         }
@@ -113,13 +105,11 @@ public class LuceneBean {
             hits = isearcher.search(query, null, 1000);
             for (ScoreDoc sd : hits.scoreDocs) {
                 try {
-                    result.add(new Resultat(isearcher.doc(sd.doc).getField("id").stringValue(), sd.score));
+                    result.put(isearcher.doc(sd.doc).getField("id").stringValue(), sd.score);
                 } catch (IOException ex) {
                     Logger.getLogger(LuceneBean.class.getName()).log(Level.SEVERE, null, ex);
                 }
-            }
-            Collections.sort(result);
-            Collections.reverse(result);      
+            } 
             ireader.close();            
         } catch (ParseException | IOException ex) {
             Logger.getLogger(LuceneBean.class.getName()).log(Level.SEVERE, null, ex);

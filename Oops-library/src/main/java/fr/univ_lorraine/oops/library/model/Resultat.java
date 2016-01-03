@@ -1,18 +1,16 @@
 package fr.univ_lorraine.oops.library.model;
 
-import java.util.Comparator;
-
 public class Resultat implements Comparable{
-    private String cle;
-    private float score;
+    private final String id;
+    private final float score;
     
     public Resultat(String cle, float score){
-        this.cle = cle;
+        this.id = cle;
         this.score = score;
     }
     
-    public String getCle(){
-        return cle;
+    public String getId(){
+        return id;
     }
     
     public float getScore(){
