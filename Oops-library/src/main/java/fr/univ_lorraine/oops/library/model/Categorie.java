@@ -58,4 +58,14 @@ public class Categorie implements Serializable{
     public void setId(Long id) {
         this.id = id;
     }   
+    
+    public String getLuceneDescription(){
+        String s; 
+        s = "nom" + " ";
+        for (String ss : motsCles)
+            s += ss + " ";
+        for (Categorie c : sousCategories)
+            s += c.getLuceneDescription();
+        return s;
+    }
 }
