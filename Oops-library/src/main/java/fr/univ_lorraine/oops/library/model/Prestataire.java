@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Collection;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
@@ -22,6 +23,7 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public Prestataire() {
         this.groupe = prestataire;
+        this.categories = new ArrayList<>();
     }
 
     public String getNomEntreprise() {
@@ -54,5 +56,12 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public void setCategories(Collection<Categorie> categories) {
         this.categories = categories;
+    }
+    
+    public String getLuceneCategorieDescription(){
+        String s = "";
+        for (Categorie c : categories)
+            s+= c.getLuceneDescription();
+        return s;
     }
 }

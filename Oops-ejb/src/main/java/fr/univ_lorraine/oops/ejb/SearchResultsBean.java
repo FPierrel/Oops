@@ -2,16 +2,20 @@ package fr.univ_lorraine.oops.ejb;
 
 import com.mysql.jdbc.Connection;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Resultat;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -23,6 +27,8 @@ public class SearchResultsBean {
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
     private List<String> villes = new ArrayList<>();
+    @Inject
+    private LuceneBean luceneBean;
 
     public EntityManager getEntityManager() {
         return this.em;
@@ -126,36 +132,56 @@ public class SearchResultsBean {
     }
     
     public List<Prestataire> simpleSearch(String quoi, String ou) {
-        if (!ou.isEmpty() && quoi.isEmpty()) {
+        ArrayList<Prestataire> results = new ArrayList<>();
+        
+        //Si le champs quoi est pas renseigné on s'embete pas
+        if (quoi.isEmpty() && !ou.isEmpty()) {
             String queryString = "Select p "
                     + "FROM Prestataire p, Adresse a "
                     + "WHERE 1=1 "
                     + searchPrestataireWithTownName(ou, "AND");
-
             Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-            
-            if(!this.villes.isEmpty()){
-                 query.setParameter("villes", this.villes);
+            if (!this.villes.isEmpty()) {
+                query.setParameter("villes", this.villes);
             }
-           
-            return query.getResultList();
-        } /* Recherche Rapide
-         recherche sur :
-         nom de la boite
-         nom
-         prenom    
-         */ else {
-            String queryString = "SELECT p "
-                    + "FROM Prestataire p "
-                    + "WHERE 1 = 1"
-                    + searchPrestataireWithEnterprisename(quoi, "AND");
-            /* + searchPrestataireWithLastname(quoi, "OR")
-             + searchPrestataireWithFirstname(quoi, "OR")
-             + searchPrestataireWithTown(ou, "AND");*/
-
-            Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
             return query.getResultList();
         }
+        
+        float scoreMin = 0.9f;
+        //Liste des prestataires correspondant un minimum
+        HashMap<String, Float> relevanceList = luceneBean.search(quoi);
+        ArrayList<Resultat> relevanceList2 = new ArrayList<>();
+
+        //Si le champs où est renseigné on cherche les presta. qui peuvent correspondre
+        List<String> whereList;
+        String queryString = "Select p.login "
+                + "FROM Prestataire p, Adresse a "
+                + "WHERE 1=1 "
+                + searchPrestataireWithTownName(ou, "AND");
+        Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+        if (!this.villes.isEmpty()) {
+            query.setParameter("villes", this.villes);
+        }
+        whereList = query.getResultList();
+
+        // On fait l'union des deux en gardant les prestataires avec un score honorable
+        for (String s : whereList) {
+            if (relevanceList.containsKey(s)) {
+                if (relevanceList.get(s) > scoreMin) {
+                    relevanceList2.add(new Resultat(s, relevanceList.get(s)));
+                }
+            }
+        }
+
+        // Tri par ordre de pertinance
+        Collections.sort(relevanceList2);
+        Collections.reverse(relevanceList2);
+
+        for (Resultat r : relevanceList2) {
+            results.add(em.find(Prestataire.class, r.getId()));
+        }
+
+        return results;
     }
 
     private String searchPrestataireWithEnterprisename(String quoi, String operateur) {
@@ -190,21 +216,21 @@ public class SearchResultsBean {
             Class.forName("com.mysql.jdbc.Driver");
             connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
             statement = connexion.createStatement();
-            
+
             /* Récupérer latitude longitude de la ville de référence */
             resultat = statement.executeQuery(""
                     + "SELECT ville_latitude_deg, ville_longitude_deg "
                     + "FROM villes_france_free "
                     + "WHERE ville_nom_reel = '" + ville + "'");
-            
+
             double latitude = 0;
             double longitude = 0;
-                     
+
             while (resultat.next()) {
                 latitude = resultat.getDouble("ville_latitude_deg");
                 longitude = resultat.getDouble("ville_longitude_deg");
             }
-            
+
             /* Récupérer liste des villes à radius m à la ronde */
             resultat = statement.executeQuery(""
                     + "SELECT *, "
@@ -240,17 +266,17 @@ public class SearchResultsBean {
                 }
             }
         }
-        
+
         return li;
     }
-    
+
     private String searchPrestataireWithTownName(String ou, String operateur) {
         this.villes = this.searchTownsByRadius(ou, 10000);
-        
-       if(this.villes.isEmpty()){
-           return "";
-       }
-       
+
+        if (this.villes.isEmpty()) {
+            return "";
+        }
+
         return " " + operateur + " UPPER(a.ville) IN :villes AND a MEMBER OF p.adresses";
     }
 
@@ -267,7 +293,7 @@ public class SearchResultsBean {
             Class.forName("com.mysql.jdbc.Driver");
             connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
             statement = connexion.createStatement();
-            
+
             /* Récupérer latitude longitude de la ville de référence */
             resultat = statement.executeQuery(""
                     + "SELECT ville_nom "
@@ -303,7 +329,7 @@ public class SearchResultsBean {
                 }
             }
         }
-        
+
         return li;
     }
 }
