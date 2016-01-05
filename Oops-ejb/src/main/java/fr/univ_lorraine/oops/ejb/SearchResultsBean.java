@@ -33,7 +33,7 @@ public class SearchResultsBean {
     public EntityManager getEntityManager() {
         return this.em;
     }
-    public List<Prestataire> search(String what, String where, String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne) {
+    public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne) {
         
         String queryString = "SELECT p "
                 + "FROM Prestataire p"
@@ -56,7 +56,7 @@ public class SearchResultsBean {
         }
         
         if (!where.isEmpty()) {
-            queryString += searchPrestataireWithTownName(where, "AND");
+            queryString += searchPrestataireWithTownName(where, postalCode,"AND");
         }
 
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
@@ -131,7 +131,7 @@ public class SearchResultsBean {
         //return " " + operateur + " p.moyenne >= " + moyenne;
     }
     
-    public List<Prestataire> simpleSearch(String quoi, String ou) {
+    public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {
         ArrayList<Prestataire> results = new ArrayList<>();
         
         //Si le champs quoi est pas renseigné on s'embete pas
@@ -139,7 +139,7 @@ public class SearchResultsBean {
             String queryString = "Select p "
                     + "FROM Prestataire p, Adresse a "
                     + "WHERE 1=1 "
-                    + searchPrestataireWithTownName(ou, "AND");
+                    + searchPrestataireWithTownName(ou, codePostal, "AND");
             Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
             if (!this.villes.isEmpty()) {
                 query.setParameter("villes", this.villes);
@@ -157,7 +157,7 @@ public class SearchResultsBean {
         String queryString = "Select p.login "
                 + "FROM Prestataire p, Adresse a "
                 + "WHERE 1=1 "
-                + searchPrestataireWithTownName(ou, "AND");
+                + searchPrestataireWithTownName(ou, codePostal,"AND");
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
         if (!this.villes.isEmpty()) {
             query.setParameter("villes", this.villes);
@@ -203,7 +203,7 @@ public class SearchResultsBean {
 
     }
 
-    public List<String> searchTownsByRadius(String ville, int radius) {
+    public List<String> searchTownsByRadius(String ville, String codePostal, int radius) {
         List<String> li = new ArrayList<>();
         /* Connexion à la base de données */
         String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
@@ -217,26 +217,7 @@ public class SearchResultsBean {
             connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
             statement = connexion.createStatement();
 
-            /* Récupérer latitude longitude de la ville de référence */
-            resultat = statement.executeQuery(""
-                    + "SELECT ville_latitude_deg, ville_longitude_deg "
-                    + "FROM villes_france_free "
-                    + "WHERE ville_nom_reel = '" + ville + "'");
-
-            double latitude = 0;
-            double longitude = 0;
-
-            while (resultat.next()) {
-                latitude = resultat.getDouble("ville_latitude_deg");
-                longitude = resultat.getDouble("ville_longitude_deg");
-            }
-
-            /* Récupérer liste des villes à radius m à la ronde */
-            resultat = statement.executeQuery(""
-                    + "SELECT *, "
-                    + "get_distance_metres('" + latitude + "', '" + longitude + "', ville_latitude_deg, ville_longitude_deg) AS distance "
-                    + "FROM villes_france_free "
-                    + "HAVING distance < " + radius);
+            resultat = statement.executeQuery("CALL geodist('"+ville+"','"+codePostal+"',"+radius+")");
 
             while (resultat.next()) {
                 String nom = resultat.getString("ville_nom");
@@ -270,8 +251,8 @@ public class SearchResultsBean {
         return li;
     }
 
-    private String searchPrestataireWithTownName(String ou, String operateur) {
-        this.villes = this.searchTownsByRadius(ou, 10000);
+    private String searchPrestataireWithTownName(String ou, String codePostal,String operateur) {
+        this.villes = this.searchTownsByRadius(ou, codePostal, 10);
 
         if (this.villes.isEmpty()) {
             return "";
@@ -296,14 +277,17 @@ public class SearchResultsBean {
 
             /* Récupérer latitude longitude de la ville de référence */
             resultat = statement.executeQuery(""
-                    + "SELECT ville_nom "
+                    + "SELECT ville_nom, ville_code_postal "
                     + "FROM villes_france_free "
                     + "WHERE ville_nom LIKE '" + search + "%' "
                     + "OR ville_code_postal LIKE '" + search + "%' "
                     + "ORDER BY ville_nom ");
 
             while (resultat.next()) {
-                li.add(resultat.getString("ville_nom"));
+                StringBuilder sb = new StringBuilder();
+                sb.append(resultat.getString("ville_nom") + " ");
+                sb.append("("+ resultat.getString("ville_code_postal") + ")");
+                li.add(sb.toString());
             }
         } catch (SQLException e) {
             e.printStackTrace();

@@ -35,12 +35,14 @@ public class SearchBean implements Serializable {
     }
 
     public String search() {
+        String ville = this.choix.split(" ")[0];
+        String codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
         if (this.advanced) {
             int emp = this.employeeSearch == null? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-            this.prestataires = this.searchResults.search(this.quoi, this.choix, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
-        } else {
-            this.prestataires = this.searchResults.simpleSearch(this.quoi, this.choix);
+            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
+        } else {        
+            this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
         return "results?faces-redirect=true";
     }
