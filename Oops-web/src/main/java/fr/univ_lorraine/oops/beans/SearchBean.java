@@ -47,8 +47,12 @@ public class SearchBean implements Serializable {
         return "results?faces-redirect=true";
     }
 
-    public void searchTown(AjaxBehaviorEvent event) {
+    /*public void searchTown(AjaxBehaviorEvent event) {
         this.villes = this.searchResults.searchTest(this.ou);
+    }*/
+    
+    public List<String> searchTown(String query){
+        return this.searchResults.searchTest(query);
     }
 
     public String getLastnameSearch() {

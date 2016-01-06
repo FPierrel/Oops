@@ -74,6 +74,7 @@ public class InitializationBean {
         liste.add(this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
                 "0123456789", "Oui", 1, 126423, adressesOui));
         //----------------------------------------------
+
         
         //FIN AJOUTS DE PRESTATAIRE.
         for (Prestataire p : liste) {

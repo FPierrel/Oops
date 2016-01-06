@@ -135,7 +135,7 @@ public class SearchResultsBean {
         ArrayList<Prestataire> results = new ArrayList<>();
         
         //Si le champs quoi est pas renseigné on s'embete pas
-        if (quoi.isEmpty() && !ou.isEmpty()) {
+        /*if (quoi.isEmpty() && !ou.isEmpty()) {
             String queryString = "Select p "
                     + "FROM Prestataire p, Adresse a "
                     + "WHERE 1=1 "
@@ -145,7 +145,7 @@ public class SearchResultsBean {
                 query.setParameter("villes", this.villes);
             }
             return query.getResultList();
-        }
+        }*/
         
         float scoreMin = 0.9f;
         //Liste des prestataires correspondant un minimum
@@ -252,7 +252,7 @@ public class SearchResultsBean {
     }
 
     private String searchPrestataireWithTownName(String ou, String codePostal,String operateur) {
-        this.villes = this.searchTownsByRadius(ou, codePostal, 10);
+        this.villes = this.searchTownsByRadius(ou, codePostal, 50);
 
         if (this.villes.isEmpty()) {
             return "";
