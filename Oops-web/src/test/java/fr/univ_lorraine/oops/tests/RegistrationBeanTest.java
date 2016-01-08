@@ -12,6 +12,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import java.util.Random;
+import org.openqa.selenium.Dimension;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -27,14 +28,15 @@ public class RegistrationBeanTest {
     @BeforeClass
     public static void setUpClass() {
         //driver = new FirefoxDriver();
-        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
+        DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();        
         driver = new PhantomJSDriver(capabilities);
+        driver.manage().window().setSize(new Dimension(1440, 768));
     }
 
     @Before
     public void setUp() {
         rb = new RegistrationBean();
-        driver.get("http://localhost:8080/Oops-web/faces/inscription.xhtml");
+        driver.get("http://localhost:8080/Oops-web/faces/inscription.xhtml");        
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         this.fillFields();
     }
@@ -59,7 +61,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:code")).clear();
         driver.findElement(By.id("form_signin:town")).clear();
         driver.findElement(By.id("form_signin:country")).clear();
-        // Complete fields with no errors
+        // Complete fields with no errors*/
         driver.findElement(By.id("form_signin:login")).sendKeys("Jose");
         driver.findElement(By.id("form_signin:password")).sendKeys("JoseJose");
         driver.findElement(By.id("form_signin:confirmPassword")).sendKeys("JoseJose");
