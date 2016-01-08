@@ -10,7 +10,7 @@
                 <h:panelGrid id="advanced_search" columns="4" cellpadding="5">
                     <p:inputText  placeholder="Quoi ?" value="#{searchBean.quoi}" id="quoi"/>
 
-                    <p:autoComplete  placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
+                    <p:autoComplete  forceSelection="true" placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
                     
                     <h:outputLabel/>
                     <h:outputLabel/>

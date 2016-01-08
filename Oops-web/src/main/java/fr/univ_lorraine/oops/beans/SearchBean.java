@@ -21,12 +21,14 @@ public class SearchBean implements Serializable {
     private String quoi, ou;
     private String employeeSearch;
     private boolean advanced;
-    private int note = 3; /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
+    private int note = 3;
+    /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
     private List<Prestataire> prestataires;
     private List<String> villes = new ArrayList<>();
     private String choix;
 
     private int communication, quality, price, delay, moyenne;
+
     /**
      * Creates a new instance of SearchBean
      */
@@ -35,13 +37,21 @@ public class SearchBean implements Serializable {
     }
 
     public String search() {
-        String ville = this.choix.split(" ")[0];
-        String codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
+        String ville = "";
+        String codePostal = "";
+        
+        try {
+            ville = this.choix.split(" ")[0];
+            codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
+        } catch (NullPointerException e) {
+
+        }
+
         if (this.advanced) {
-            int emp = this.employeeSearch == null? 0 : Integer.parseInt(this.employeeSearch);
-            int turnover = this.chiffreAffaireSearch == null? 0 : Integer.parseInt(this.chiffreAffaireSearch);
+            int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
+            int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
-        } else {        
+        } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
         return "results?faces-redirect=true";
@@ -50,8 +60,7 @@ public class SearchBean implements Serializable {
     /*public void searchTown(AjaxBehaviorEvent event) {
         this.villes = this.searchResults.searchTest(this.ou);
     }*/
-    
-    public List<String> searchTown(String query){
+    public List<String> searchTown(String query) {
         return this.searchResults.searchTest(query);
     }
 
