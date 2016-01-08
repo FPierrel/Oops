@@ -154,7 +154,7 @@ public class SearchResultsBean {
 
         //Si le champs où est renseigné on cherche les presta. qui peuvent correspondre
         List<String> whereList;
-        String queryString = "Select p.login "
+        String queryString = "SELECT DISTINCT p.login "
                 + "FROM Prestataire p, Adresse a "
                 + "WHERE 1=1 "
                 + searchPrestataireWithTownName(ou, codePostal,"AND");
