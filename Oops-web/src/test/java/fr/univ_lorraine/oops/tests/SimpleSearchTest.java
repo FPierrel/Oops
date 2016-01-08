@@ -27,7 +27,7 @@ public class SimpleSearchTest {
     
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/");
+        driver.get("http://localhost:8080/Oops-web/faces/index.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("searchForm:ou")).clear();
         driver.findElement(By.name("searchForm:quoi")).clear();
@@ -42,7 +42,7 @@ public class SimpleSearchTest {
     
     @Test
     public void testSimpleSearchWithoutWhatField(){
-        driver.findElement(By.name("searchForm:quoi")).sendKeys("NEUFCHATEAU (88300)");
+        driver.findElement(By.name("searchForm:ou")).sendKeys("NEUFCHATEAU (88300)");
         driver.findElement(By.name("searchForm:go")).click();
         Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
@@ -50,7 +50,7 @@ public class SimpleSearchTest {
     @Test
     public void testSimpleSearchNoResult(){ //Ou alors ce serait pas de bol !!
         driver.findElement(By.name("searchForm:quoi")).sendKeys("lfjieozfhsdjkfhequirfyhsqdfsdfrdsfsfsddvce");
-        driver.findElement(By.name("searchForm:quoi")).sendKeys("sdfezdifjiohvruaoidusdqifyeurydfvdxcvxcvreie");
+        driver.findElement(By.name("searchForm:ou")).sendKeys("sdfezdifjiohvruaoidusdqifyeurydfvdxcvxcvreie");
         driver.findElement(By.name("searchForm:go")).click();
         Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
@@ -58,8 +58,14 @@ public class SimpleSearchTest {
     @Test
     public void testSimpleSearch(){
         driver.findElement(By.name("searchForm:quoi")).sendKeys("Jacky");
-        driver.findElement(By.name("searchForm:quoi")).sendKeys("NEUFCHATEAU (88300)");
+        driver.findElement(By.name("searchForm:ou")).sendKeys("NEUFCHATEAU (88300)");
         driver.findElement(By.name("searchForm:go")).click();
         Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
+    }
+    
+    @Test
+    public void testSimpleSearchEmpty(){
+        driver.findElement(By.name("searchForm:go")).click();
+        Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
 }
