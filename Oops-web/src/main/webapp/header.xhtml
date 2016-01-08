@@ -11,7 +11,7 @@
                 <h1><h:link outcome="index">Oops</h:link></h1>
             </div>
             <div id="menu">
-                <h:form>
+                <h:form id="headerForm">
                     <ul>
                         <c:choose>
                             <c:when test="#{view.viewId == '/index.xhtml'}">
@@ -29,10 +29,10 @@
                         <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
                         <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
                         <li>
-                        <p:menuButton class = "menuElement" rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
-                            <p:menuitem value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
-                            <p:menuitem value="Editer mon profil" outcome="profil"/>
-                            <p:menuitem value="Déconnexion" action="#{authenticationBean.logout()}"/>
+                            <p:menuButton id="username" class = "menuElement" rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
+                            <p:menuitem id="fiche" value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
+                            <p:menuitem id="profil" value="Editer mon profil" outcome="profil"/>
+                            <p:menuitem id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/>
                         </p:menuButton>
                         </li>
                     </ul>
