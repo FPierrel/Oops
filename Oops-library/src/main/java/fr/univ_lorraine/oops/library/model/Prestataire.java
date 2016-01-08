@@ -2,6 +2,7 @@ package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
 import java.util.Collection;
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -19,6 +20,9 @@ public class Prestataire extends Utilisateur implements Serializable {
     private int chiffreAffaire;
     @OneToMany
     private Collection<Categorie> categories;
+    
+    @OneToMany(cascade = CascadeType.ALL)
+    private Collection<Avis> cAvis ; 
 
     public Prestataire() {
         this.groupe = prestataire;
@@ -55,4 +59,13 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setCategories(Collection<Categorie> categories) {
         this.categories = categories;
     }
+
+    public Collection<Avis> getcAvis() {
+        return cAvis;
+    }
+
+    public void setcAvis(Collection<Avis> cAvis) {
+        this.cAvis = cAvis;
+    }
+    
 }
