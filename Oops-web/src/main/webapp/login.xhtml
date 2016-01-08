@@ -19,14 +19,14 @@
                 <div id="featured" class="container">
                     <f:event listener="#{authenticationBean.checkErrors}" type="preRenderView"/>
                     <p:messages />
-                    <form id="loginForm" method="post" action="j_security_check">
+                    <form method="post" action="j_security_check">
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Identifiant : " />
-                            <input id="username" type="text" name="j_username" required="true"/>
+                            <input type="text" name="j_username" required="true"/>
                             <h:outputLabel value="Mot de passe :" />
-                            <input id="password" type="password" name="j_password" required="true" />
+                            <input type="password" name="j_password" required="true" />
                             <h:outputText value="" />
-                            <input id="login" type="submit" name="submit" value="Valider"/>
+                            <input type="submit" name="submit" value="Valider"/>
                         </h:panelGrid>
                     </form>
                 </div>
