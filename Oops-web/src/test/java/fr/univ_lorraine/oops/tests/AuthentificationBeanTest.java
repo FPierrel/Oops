@@ -34,7 +34,7 @@ public class AuthentificationBeanTest {
     @Before
     public void setUp() {
         driver.get("http://localhost:8080/Oops-web/faces/login.xhtml");
-        driver.manage().timeouts().implicitlyWait(2, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).clear();
     }
 

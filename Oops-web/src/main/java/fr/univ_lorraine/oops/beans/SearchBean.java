@@ -207,4 +207,15 @@ public class SearchBean implements Serializable {
     public void setChoix(String choix) {
         this.choix = choix;
     }
+    
+    public String getNbResult(){
+        if (this.prestataires.size() == 0)
+            return "Aucun résultat";
+        else if (this.prestataires.size() == 1)
+            return "1 Résultat :";
+        else if (this.prestataires.size() > 0)
+            return "" + this.prestataires.size() + " Résultats :";
+        else
+            return "";
+    }
 }

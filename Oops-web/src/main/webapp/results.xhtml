@@ -18,10 +18,8 @@
                 <div id="featured" class="container">
                     <h:messages />
                     <header>
-                        <h:outputText value=" Aucun Résultat !" rendered="#{searchBean.prestataires.size() == 0}"/>
-                        <h:outputText value="#{searchBean.prestataires.size()} Résultat :" rendered="#{searchBean.prestataires.size() == 1}"/>
-                        <h:outputText value="#{searchBean.prestataires.size()} Résultats :" rendered="#{searchBean.prestataires.size() > 1}"/>
-                    </header>
+                        <h:outputText id="nbResult" value="#{searchBean.nbResult}" />
+                     </header>
                     <ui:repeat value="#{searchBean.prestataires}" var="pres">
                         <div class="prestataire">    
                                 <h:form>
