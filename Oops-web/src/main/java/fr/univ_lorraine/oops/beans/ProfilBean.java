@@ -32,15 +32,15 @@ public class ProfilBean implements Serializable {
     public String update() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message;
-        if (!sha256(this.oldPassword).equals(this.user.getMotDePasse())) {
+        if (!this.oldPassword.isEmpty() && !sha256(this.oldPassword).equals(this.user.getMotDePasse())) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe incorrect !", null);
-        } else if (this.newPassword.length() < 6) {
+        } else if (!this.oldPassword.isEmpty() && this.newPassword.length() < 6) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit (inférieur à 6), veuillez recommencer !", null);
-        } else if (!this.newPassword.equals(this.newPasswordConfirm)) {
+        } else if (!this.oldPassword.isEmpty() && !this.newPassword.isEmpty() && !this.newPassword.equals(this.newPasswordConfirm)) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Confirmation du nouveau mot de passe incorrecte !", null);
-        } else if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.newMail)) {
+        } else if (!this.newMail.isEmpty() && !Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.newMail)) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
-        } else if (!this.newMail.equals(this.newMailConfirm)) {
+        } else if (!this.newMail.isEmpty() && !this.newMail.equals(this.newMailConfirm)) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Confirmation de la nouvelle adresse mail incorrecte !", null);
         } else {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification(s) enregistrée(s) !", null);
