@@ -20,6 +20,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -75,14 +76,21 @@ public class LuceneBean {
     }
   
     public void removePrestataire(Prestataire p) {  
+        removePrestataire(p.getLogin());
+    }
+    
+    public void removePrestataire(String login){
         try {
-            QueryParser parser = new QueryParser("id", analyzer);
-            Query query = parser.parse(p.getLogin());
-            iwriter.deleteDocuments(query);
+            iwriter.deleteDocuments(new Term("id",login));
             iwriter.commit();
-        } catch (ParseException | IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(LuceneBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void updatePrestataire(Prestataire p){
+        removePrestataire(p);
+        indexPrestataire(p);
     }
 
     public HashMap<String, Float> search(String quoi) {        
