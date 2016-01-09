@@ -16,7 +16,7 @@
                     <h:outputLabel/>
                     <h:panelGroup>
                         <h:outputLabel value="Recherche avancée : "/>
-                        <p:selectBooleanCheckbox value="#{searchBean.advanced}">
+                        <p:selectBooleanCheckbox id="advanced_checkbox" value="#{searchBean.advanced}">
                             <f:ajax render="advanced_search"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGroup>

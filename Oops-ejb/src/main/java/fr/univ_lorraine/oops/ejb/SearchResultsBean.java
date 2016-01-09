@@ -135,7 +135,7 @@ public class SearchResultsBean {
     }
     
     private String searchPrestataireWithCategorie(String categorie, String operateur) {
-        return " " + operateur + " c.nom IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles";
+        return " " + operateur + " c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles";
     }
 
     public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {

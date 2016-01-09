@@ -30,13 +30,15 @@ public class InitializationBean {
     
     @PostConstruct
     public void init() {
-        this.addCategories();
         this.addPrestataires();
         this.addSoumissionaires();
     }
 
-    public void addCategories() {
-
+    /**
+     * 1 login, 1 motDePasse, 1 mail, 1 telephone, 1 nomEntreprise et 1 adresse : OBLIGATOIRES !
+     */
+      private void addPrestataires() {
+          
         Categorie tout = new Categorie();
         tout.setNom("Toutes cat\u00e9gories");
         
@@ -96,7 +98,7 @@ public class InitializationBean {
         c3.addSousCategorie(c3c);
 
         Categorie c3d = new Categorie();
-        c3d.setNom("Livraison");
+        c3d.setNom("Livraison \u00e0 domicile");
         c3.addSousCategorie(c3d);
         
         tout.addSousCategorie(c3);
@@ -118,16 +120,33 @@ public class InitializationBean {
 
         Categorie c4d = new Categorie();
         c4d.setNom("Garage");
+        c4.addSousCategorie(c4d);
         
         tout.addSousCategorie(c4);
+        //----------------------------------------------------------
+        Categorie c5 = new Categorie();
+        c5.setNom("Informatique");
 
-        em.persist(tout);
-    }
+        Categorie c5a = new Categorie();
+        c5a.setNom("Audit");
+        c5.addSousCategorie(c5a);
 
-    /**
-     * 1 login, 1 motDePasse, 1 mail, 1 telephone, 1 nomEntreprise et 1 adresse : OBLIGATOIRES !
-     */
-    private void addPrestataires() {
+        Categorie c5b = new Categorie();
+        c5b.setNom("Conseil");
+        c5.addSousCategorie(c5b);
+
+        Categorie c5c = new Categorie();
+        c5c.setNom("D\u00e9pannage");
+        c5.addSousCategorie(c5c);
+
+        Categorie c5d = new Categorie();
+        c5d.setNom("Vente de mat\u00e9riel");
+        c5.addSousCategorie(c5d);
+        
+        tout.addSousCategorie(c5);
+        
+          em.persist(tout);
+
         ArrayList<Prestataire> liste = new ArrayList<>();
         //DEBUT AJOUTS DE PRESTATAIRES : (MODIFIER CI-DESSOUS)
         //----------------------------------------------
@@ -135,8 +154,8 @@ public class InitializationBean {
         adressesJose.add(this.creerAdresse("10", "rue des OGM", "", "75000", "Paris", "France"));
         Prestataire pres1 = this.creerPrestataire("jose", "Bové", "José", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "jose.bove@gmail.com",
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose);
-        Collection<String> col1 = new ArrayList<>();
-        col1.add("Toutes cat\u00e9gories");
+        Collection<Categorie> col1 = new ArrayList<>();
+        col1.add(tout);
         pres1.setCategories(col1);
         liste.add(pres1);
         //----------------------------------------------
@@ -144,19 +163,18 @@ public class InitializationBean {
         adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz", "Allemagne"));
         Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
-        Collection<String> col2 = new ArrayList<>();
-        col2.add("Transport routier");
-        col2.add("Restauration");
+        Collection<Categorie> col2 = new ArrayList<>();
+        col2.add(c4d);
+        col2.add(c4c);
         pres2.setCategories(col2);
         liste.add(pres2);
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
-        adressesPhilippe.add(this.creerAdresse("99", "rue des hÃ©ros", "", "57000", "Metz", "Allemagne"));
+        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz", "Allemagne"));
         Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe);
-        Collection<String> col3 = new ArrayList<>();
-        col3.add("BTP, Construction");
-        col3.add("Restauration");
+        Collection<Categorie> col3 = new ArrayList<>();
+        col3.add(c1);
         pres3.setCategories(col3);
         liste.add(pres3);
         //----------------------------------------------
@@ -164,8 +182,8 @@ public class InitializationBean {
         adressesDemon.add(this.creerAdresse("666", "avenue de l'enfer", "", "666 666", "Le four", "Enfer"));
         Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon);
-        Collection<String> col4 = new ArrayList<>();
-        col4.add("Livraison");
+        Collection<Categorie> col4 = new ArrayList<>();
+        col4.add(c3d);
         pres4.setCategories(col4);
         liste.add(pres4);
         //----------------------------------------------
@@ -173,8 +191,8 @@ public class InitializationBean {
         adressesNeufchateau.add(this.creerAdresse("12", "Rue de la rue", "", "88300", "Neufchateau", "France"));
         Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr", 
                 "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
-        Collection<String> col5 = new ArrayList<>();
-        col5.add("Garage");
+        Collection<Categorie> col5 = new ArrayList<>();
+        col5.add(c4d);
         pres5.setCategories(col5);
         liste.add(pres5);
         //----------------------------------------------
@@ -182,9 +200,9 @@ public class InitializationBean {
         adressesNancy.add(this.creerAdresse("38", "avenue de oui", "", "54000", "Nancy", "France"));
         Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b", 
                 "0123456789", "Oooooh", 1, 126423, adressesNancy);
-        Collection<String> col6 = new ArrayList<>();
-        col6.add("Peinture");
-        col6.add("Architecture");
+        Collection<Categorie> col6 = new ArrayList<>();
+        col6.add(c1c);
+        col6.add(c1d);
         pres6.setCategories(col6);
         liste.add(pres6);
         //----------------------------------------------
@@ -192,8 +210,8 @@ public class InitializationBean {
         adressesOui.add(this.creerAdresse("Oui", "Oui", "", "88630", "Coussey", "France"));
         Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
                 "0123456789", "Oui", 1, 126423, adressesOui);
-        Collection<String> col7 = new ArrayList<>();
-        col7.add("Toutes cat\u00e9gories");
+        Collection<Categorie> col7 = new ArrayList<>();
+        col7.add(c3b);
         pres7.setCategories(col7);
         liste.add(pres7);
         //----------------------------------------------
