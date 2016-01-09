@@ -3,10 +3,10 @@ package fr.univ_lorraine.oops.library.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
@@ -18,8 +18,9 @@ public class Prestataire extends Utilisateur implements Serializable {
     private String nomEntreprise;
     private int nbEmployes;
     private int chiffreAffaire;
-    @OneToMany
-    private Collection<Categorie> categories;
+    
+    @ElementCollection
+    private Collection<String> categories;
 
     public Prestataire() {
         this.groupe = prestataire;
@@ -49,19 +50,19 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setChiffreAffaire(int chiffreAffaire) {
         this.chiffreAffaire = chiffreAffaire;
     }
-    
-    public Collection<Categorie> getCategories() {
+     public Collection<String> getCategories() {
         return categories;
     }
 
-    public void setCategories(Collection<Categorie> categories) {
+    public void setCategories(Collection<String> categories) {
         this.categories = categories;
     }
     
+/*    
     public String getLuceneCategorieDescription(){
         String s = "";
         for (Categorie c : categories)
             s+= c.getLuceneDescription();
         return s;
-    }
+    }*/
 }

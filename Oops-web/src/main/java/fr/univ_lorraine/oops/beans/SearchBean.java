@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
+import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -26,6 +27,8 @@ public class SearchBean implements Serializable {
     private List<Prestataire> prestataires;
     private List<String> villes = new ArrayList<>();
     private String choix;
+    private List<String> categories = new ArrayList<>();
+    private String categorie;
 
     private int communication, quality, price, delay, moyenne;
 
@@ -50,7 +53,7 @@ public class SearchBean implements Serializable {
         if (this.advanced) {
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
+             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie.replace("-", ""));
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
@@ -217,5 +220,21 @@ public class SearchBean implements Serializable {
             return "" + this.prestataires.size() + " Résultats :";
         else
             return "";
+    }
+    public List<String> getCategories() {
+        Categorie c = searchResults.getCategories();
+        return c.getListCategories(new ArrayList<String>(), 0);
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 }

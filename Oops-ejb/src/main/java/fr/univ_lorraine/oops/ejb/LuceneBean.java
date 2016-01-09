@@ -54,7 +54,7 @@ public class LuceneBean {
 
     @PostConstruct
     public void init() {
-        try {
+       try {
             //Chargement des prestataires
             List<Prestataire> liste = em.createQuery("SELECT p FROM Prestataire p").getResultList();
             for (Prestataire p : liste) {
@@ -134,7 +134,7 @@ public class LuceneBean {
         Document d = new Document();
         d.add(new Field("id", p.getLogin(), Field.Store.YES, Field.Index.NOT_ANALYZED));
         d.add(new Field("nom", p.getNomEntreprise(), Field.Store.YES, Field.Index.ANALYZED));
-        d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
+       // d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
         return d;
     }
 }

@@ -22,6 +22,11 @@
                     </h:panelGroup>
 
                     <h:outputLabel/>
+                    
+                    <h:selectOneMenu id="categorie" value="#{searchBean.categorie}" required = "true" rendered="#{searchBean.advanced}"> 
+                        <f:selectItems value="#{searchBean.categories}"/>
+                    </h:selectOneMenu>
+
 
                     <h:outputLabel rendered="#{searchBean.advanced}"/>                    
                     <p:inputText placeholder="Nom ?" value="#{searchBean.lastnameSearch}" id="lastnameSearch" rendered="#{searchBean.advanced}"/>
