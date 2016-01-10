@@ -35,16 +35,10 @@ public class SearchResultsBean {
         return this.em;
     }
    public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, String categorie) {
-        
-        String queryString = "SELECT DISTINCT p "
+         String queryString = "SELECT DISTINCT p "
                 + "FROM Prestataire p"
                 + ((!where.isEmpty())?", Adresse a":"")
                 + ", Categorie c "
-    public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne) {
-        
-        String queryString = "SELECT p "
-                + "FROM Prestataire p"
-                + ((!where.isEmpty())?", Adresse a ":"")
                 + "WHERE 1 = 1"
                 + searchPrestataireWithLastname(lastname, "AND")
                 + searchPrestataireWithFirstname(firstname, "AND")

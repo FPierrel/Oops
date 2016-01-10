@@ -31,9 +31,6 @@ public class SearchBean implements Serializable {
     private String categorie;
 
     private int communication, quality, price, delay, moyenne;
-
-    private int communication, quality, price, delay, moyenne;
-
     /**
      * Creates a new instance of SearchBean
      */
