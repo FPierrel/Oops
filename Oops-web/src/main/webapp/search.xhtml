@@ -8,20 +8,25 @@
         <center>
             <h:form id="searchForm">
                 <h:panelGrid id="advanced_search" columns="4" cellpadding="5">
-                    <p:inputText  placeholder="Quoi ?" value="#{searchBean.quoi}" id="quoi"/>
+                    <p:inputText  id="quoi" placeholder="Quoi ?" value="#{searchBean.quoi}"/>
 
-                    <p:autoComplete  forceSelection="true" placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
+                    <p:autoComplete id="ou" forceSelection="true" placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
                     
                     <h:outputLabel/>
                     <h:outputLabel/>
                     <h:panelGroup>
                         <h:outputLabel value="Recherche avancée : "/>
-                        <p:selectBooleanCheckbox value="#{searchBean.advanced}">
+                        <p:selectBooleanCheckbox id="advanced_checkbox" value="#{searchBean.advanced}">
                             <f:ajax render="advanced_search"/>
                         </p:selectBooleanCheckbox>
                     </h:panelGroup>
 
                     <h:outputLabel/>
+                    
+                    <h:selectOneMenu id="categorie" value="#{searchBean.categorie}" required = "true" rendered="#{searchBean.advanced}"> 
+                        <f:selectItems value="#{searchBean.categories}"/>
+                    </h:selectOneMenu>
+
 
                     <h:outputLabel rendered="#{searchBean.advanced}"/>                    
                     <p:inputText placeholder="Nom ?" value="#{searchBean.lastnameSearch}" id="lastnameSearch" rendered="#{searchBean.advanced}"/>
@@ -58,7 +63,7 @@
                    
                     <h:outputLabel rendered="#{searchBean.advanced}"/><h:outputLabel rendered="#{searchBean.advanced}"/> <h:outputLabel rendered="#{searchBean.advanced}"/> 
 
-                    <p:commandButton class="button"  value="Rechercher" action="#{searchBean.search()}" update="advanced_search"/>
+                    <p:commandButton class="button" id="go" value="Rechercher" action="#{searchBean.search()}" update="advanced_search"/>
                 </h:panelGrid>
             </h:form>
         </center>

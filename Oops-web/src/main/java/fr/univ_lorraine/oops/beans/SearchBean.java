@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
+import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -21,10 +22,15 @@ public class SearchBean implements Serializable {
     private String quoi, ou;
     private String employeeSearch;
     private boolean advanced;
-    private int note = 3 ;
+    private int note = 3;
+    /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
     private List<Prestataire> prestataires;
     private List<String> villes = new ArrayList<>();
     private String choix;
+    private List<String> categories = new ArrayList<>();
+    private String categorie;
+
+    private int communication, quality, price, delay, moyenne;
 
     private int communication, quality, price, delay, moyenne;
 
@@ -49,11 +55,10 @@ public class SearchBean implements Serializable {
         if (this.advanced) {
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
+             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie.replace("-", ""));
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
-       
         return "results?faces-redirect=true";
     }
 
@@ -206,5 +211,32 @@ public class SearchBean implements Serializable {
 
     public void setChoix(String choix) {
         this.choix = choix;
+    }
+    
+    public String getNbResult(){
+        if (this.prestataires.size() == 0)
+            return "Aucun résultat";
+        else if (this.prestataires.size() == 1)
+            return "1 Résultat :";
+        else if (this.prestataires.size() > 0)
+            return "" + this.prestataires.size() + " Résultats :";
+        else
+            return "";
+    }
+    public List<String> getCategories() {
+        Categorie c = searchResults.getCategories();
+        return c.getListCategories(new ArrayList<String>(), 0);
+    }
+
+    public void setCategories(ArrayList<String> categories) {
+        this.categories = categories;
+    }
+
+    public String getCategorie() {
+        return categorie;
+    }
+
+    public void setCategorie(String categorie) {
+        this.categorie = categorie;
     }
 }

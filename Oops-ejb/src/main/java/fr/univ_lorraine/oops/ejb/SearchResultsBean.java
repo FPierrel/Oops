@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.ejb;
 
 import com.mysql.jdbc.Connection;
+import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Resultat;
 import java.sql.DriverManager;
@@ -33,6 +34,12 @@ public class SearchResultsBean {
     public EntityManager getEntityManager() {
         return this.em;
     }
+   public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, String categorie) {
+        
+        String queryString = "SELECT DISTINCT p "
+                + "FROM Prestataire p"
+                + ((!where.isEmpty())?", Adresse a":"")
+                + ", Categorie c "
     public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne) {
         
         String queryString = "SELECT p "
@@ -49,7 +56,8 @@ public class SearchResultsBean {
                 + searchPrestataireWithQuality(quality, "AND")
                 + searchPrestataireWithPrice(price, "AND")
                 + searchPrestataireWithValue(delay, "AND")
-                + searchPrestataireWithMoyenne(moyenne, "AND");
+                + searchPrestataireWithMoyenne(moyenne, "AND")
+                + searchPrestataireWithCategorie(categorie, "AND");
 
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
@@ -131,6 +139,10 @@ public class SearchResultsBean {
         //return " " + operateur + " p.moyenne >= " + moyenne;
     }
     
+    private String searchPrestataireWithCategorie(String categorie, String operateur) {
+        return " " + operateur + " c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles";
+    }
+
     public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {
         ArrayList<Prestataire> results = new ArrayList<>();
         
@@ -315,5 +327,11 @@ public class SearchResultsBean {
         }
 
         return li;
+    }
+
+    public Categorie getCategories() {
+        Query query = em.createNamedQuery("Categorie.findByName");
+        query.setParameter("name", "Toutes cat\u00e9gories");
+        return (Categorie) query.getSingleResult();
     }
 }

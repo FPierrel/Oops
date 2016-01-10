@@ -20,6 +20,7 @@ import org.apache.lucene.document.Field;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexWriter;
 import org.apache.lucene.index.IndexWriterConfig;
+import org.apache.lucene.index.Term;
 import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.queryparser.classic.QueryParser;
@@ -53,7 +54,7 @@ public class LuceneBean {
 
     @PostConstruct
     public void init() {
-        try {
+       try {
             //Chargement des prestataires
             List<Prestataire> liste = em.createQuery("SELECT p FROM Prestataire p").getResultList();
             for (Prestataire p : liste) {
@@ -75,14 +76,21 @@ public class LuceneBean {
     }
   
     public void removePrestataire(Prestataire p) {  
+        removePrestataire(p.getLogin());
+    }
+    
+    public void removePrestataire(String login){
         try {
-            QueryParser parser = new QueryParser("id", analyzer);
-            Query query = parser.parse(p.getLogin());
-            iwriter.deleteDocuments(query);
+            iwriter.deleteDocuments(new Term("id",login));
             iwriter.commit();
-        } catch (ParseException | IOException ex) {
+        } catch (IOException ex) {
             Logger.getLogger(LuceneBean.class.getName()).log(Level.SEVERE, null, ex);
         }
+    }
+    
+    public void updatePrestataire(Prestataire p){
+        removePrestataire(p);
+        indexPrestataire(p);
     }
 
     public HashMap<String, Float> search(String quoi) {        
@@ -126,7 +134,7 @@ public class LuceneBean {
         Document d = new Document();
         d.add(new Field("id", p.getLogin(), Field.Store.YES, Field.Index.NOT_ANALYZED));
         d.add(new Field("nom", p.getNomEntreprise(), Field.Store.YES, Field.Index.ANALYZED));
-        d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
+       // d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
         return d;
     }
 }
