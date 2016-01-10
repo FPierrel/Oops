@@ -24,11 +24,11 @@
                     <p:messages />
                     <div class="prestataire">
                         <h1><h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
-                        <h:form><p:rating value="3" readonly="true"/></h:form>
-                        <div id="rating"><a href="#avis">255 avis</a></div><br/><br/>
-                        <h:outputText value="Description du prestataire... (Complète)" /><br/>
+                        <h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
+                        <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>
+                        <h:outputText value="Description du prestataire... (Complète)" /><br/><br/>
                         
-                        <h2>Informations : </h2>
+                        <h2>Informations : </h2><br/>
                             <h3>Contacts : </h3>
                                 <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>
                                 <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">
@@ -58,16 +58,54 @@
                                 <h:outputText value="Raison sociale : A DEFINIR ! " /><br/>
                                 <h:outputText value="Forme juridique : A DEFINIR ! " /><br/>
                                 <h:outputText value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
-                                <h:outputText value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/>
-                        <h2>Evaluation : </h2>
+                                <h:outputText value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
+                        <h2>Evaluation : </h2><br/>
                             <h:form>
-                                <h:outputText value="Communication : "/><p:rating value="3" readonly="true"/><br/><br/>
-                                <h:outputText value="Qualité : "/><p:rating value="3" readonly="true"/><br/><br/>
-                                <h:outputText value="Prix : "/><p:rating value="3" readonly="true"/><br/><br/>
-                                <h:outputText value="Délai : "/><p:rating value="3" readonly="true"/><br/><br/>
+                                <h:outputText value="Communication : "/><p:rating value="#{ficheBean.noteGlobCom}" readonly="true"/><br/><br/>
+                                <h:outputText value="Qualité : "/><p:rating value="#{ficheBean.noteGlobQualite}" readonly="true"/><br/><br/>
+                                <h:outputText value="Prix : "/><p:rating value="#{ficheBean.noteGlobPrix}" readonly="true"/><br/><br/>
+                                <h:outputText value="Délai : "/><p:rating value="#{ficheBean.noteGlobDelai}" readonly="true"/><br/><br/><br/><br/>
                             </h:form>
-                        <div id="avis">
-                            <h2>Avis : </h2>
+                        <div id="avis">        
+                                <h:form rendered="#{request.remoteUser != null}">
+                                    <h2>Donnez votre avis : </h2><br/>
+                                    <h:outputText value="Communication : "/>
+                                    <p:rating value="#{ficheBean.rate1}" stars="5" cancel="false" /><br/><br/>
+                                    <h:outputText value="Qualité : "/>
+                                    <p:rating value="#{ficheBean.rate2}" stars="5" cancel="false" /><br/><br/>
+                                    <h:outputText value="Prix : "/>
+                                    <p:rating value="#{ficheBean.rate3}" stars="5" cancel="false" /><br/><br/>
+                                    <h:outputText value="Délai : "/>
+                                    <p:rating value="#{ficheBean.rate4}" stars="5" cancel="false" /><br/><br/>
+                                    <h:outputText value="Laissez un commentaire sur la prestation : "/><br/><br/>
+                                    <p:inputText value="#{ficheBean.opinion}" 
+                                                     id="opinion"  
+                                                     required="true" requiredMessage="Veuillez renseigner un avis !">             
+                                    </p:inputText><br/><br/>
+                                    <p:commandButton class="button" id="avis" value="Soumettre" action="#{ficheBean.saveOpinion()}" update=":lAvis"/>
+                                        <!--<f:ajax execute="@form" render="lAvisForm"/>
+                                    </h:commandButton>--><br/><br/><br/><br/>
+                                </h:form>
+                        
+                            <h2>Avis des clients: </h2>
+                                <h:form id="lAvis">
+                                    <ul>
+                                        <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis">
+                                            <li><h:outputText value="#{cAvis.pDate}" /><br/><br/>
+                                                <h:outputText value="Communication : "/>
+                                                <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" /><br/>
+                                                <h:outputText value="Qualité : "/>
+                                                <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" /><br/>
+                                                <h:outputText value="Prix : "/>
+                                                <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" /><br/>
+                                                <h:outputText value="Délai : "/>
+                                                <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" /><br/><br/>
+                                                <h:outputText value="Commentaire : "/><br/>
+                                                <h:outputText value="#{cAvis.contenu}" /><br/><br/>
+                                            </li>
+                                        </ui:repeat>
+                                    </ul>
+                                </h:form>
                         </div>
                     </div>    
                 </div>
