@@ -12,39 +12,56 @@ import javax.inject.Inject;
 
 @Named(value = "searchBean")
 @SessionScoped
-public class SearchBean implements Serializable{
-    
+public class SearchBean implements Serializable {
+
     @Inject
     SearchResultsBean searchResults;
-    
-    private String lastnameSearch, firstnameSearch, townSearch;
+
+    private String lastnameSearch, firstnameSearch, raisonSocialeSearch, formeJuridiqueSearch, chiffreAffaireSearch;
     private String quoi, ou;
-    private int employeeSearch;
+    private String employeeSearch;
     private boolean advanced;
-    private int note = 3; /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
+    private int note = 3 ;
     private List<Prestataire> prestataires;
-    private List<String> villes = new ArrayList<>(); 
+    private List<String> villes = new ArrayList<>();
     private String choix;
+
+    private int communication, quality, price, delay, moyenne;
 
     /**
      * Creates a new instance of SearchBean
      */
     public SearchBean() {
-       
+
     }
-    
+
     public String search() {
-        if(this.advanced) {
-            this.prestataires = this.searchResults.search(this.lastnameSearch, this.firstnameSearch, this.townSearch, this.employeeSearch);
-            return "results?faces-redirect=true";
-        }else{
-            this.prestataires = this.searchResults.simpleSearch(this.quoi, this.choix);
-            return "results?faces-redirect=true";
+        String ville = "";
+        String codePostal = "";
+        
+        try {
+            ville = this.choix.split(" ")[0];
+            codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
+        } catch (NullPointerException e) {
+
         }
+
+        if (this.advanced) {
+            int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
+            int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
+            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne);
+        } else {
+            this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
+        }
+       
+        return "results?faces-redirect=true";
     }
-    
-    public void searchTown(AjaxBehaviorEvent event){
+
+    /*public void searchTown(AjaxBehaviorEvent event) {
         this.villes = this.searchResults.searchTest(this.ou);
+    }*/
+    public List<String> searchTown(String query) {
+        return this.searchResults.searchTest(query);
     }
 
     public String getLastnameSearch() {
@@ -63,29 +80,45 @@ public class SearchBean implements Serializable{
         this.firstnameSearch = firstnameSearch;
     }
 
-    public String getTownSearch() {
-        return townSearch;
-    }
-
-    public void setTownSearch(String townSearch) {
-        this.townSearch = townSearch;
-    }
-
-    public int getEmployeeSearch() {
+    public String getEmployeeSearch() {
         return employeeSearch;
     }
 
-    public void setEmployeeSearch(int employeeSearch) {
+    public void setEmployeeSearch(String employeeSearch) {
         this.employeeSearch = employeeSearch;
     }
-   
+
+    public String getRaisonSocialeSearch() {
+        return raisonSocialeSearch;
+    }
+
+    public void setRaisonSocialeSearch(String raisonSocialeSearch) {
+        this.raisonSocialeSearch = raisonSocialeSearch;
+    }
+
+    public String getFormeJuridiqueSearch() {
+        return formeJuridiqueSearch;
+    }
+
+    public void setFormeJuridiqueSearch(String formeJuridiqueSearch) {
+        this.formeJuridiqueSearch = formeJuridiqueSearch;
+    }
+
+    public String getChiffreAffaireSearch() {
+        return chiffreAffaireSearch;
+    }
+
+    public void setChiffreAffaireSearch(String chiffreAffaireSearch) {
+        this.chiffreAffaireSearch = chiffreAffaireSearch;
+    }
+
     public boolean isAdvanced() {
         return advanced;
     }
 
     public void setAdvanced(boolean advanced) {
         this.advanced = advanced;
-    }    
+    }
 
     public List<Prestataire> getPrestataires() {
         return prestataires;
@@ -117,7 +150,47 @@ public class SearchBean implements Serializable{
 
     public void setOu(String ou) {
         this.ou = ou;
-    }   
+    }
+
+    public int getCommunication() {
+        return communication;
+    }
+
+    public void setCommunication(int communication) {
+        this.communication = communication;
+    }
+
+    public int getQuality() {
+        return quality;
+    }
+
+    public void setQuality(int quality) {
+        this.quality = quality;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getDelay() {
+        return delay;
+    }
+
+    public void setDelay(int delay) {
+        this.delay = delay;
+    }
+
+    public int getMoyenne() {
+        return moyenne;
+    }
+
+    public void setMoyenne(int moyenne) {
+        this.moyenne = moyenne;
+    }
 
     public List<String> getVilles() {
         return villes;
@@ -134,8 +207,4 @@ public class SearchBean implements Serializable{
     public void setChoix(String choix) {
         this.choix = choix;
     }
-    
-    
-    
-    
 }

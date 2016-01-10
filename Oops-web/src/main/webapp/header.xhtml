@@ -11,30 +11,32 @@
                 <h1><h:link outcome="index">Oops</h:link></h1>
             </div>
             <div id="menu">
-                <ul>
-                    <c:choose>
-                        <c:when test="#{view.viewId == '/index.xhtml'}">
-                            <c:set value="active" var="cssIndexLink"/>
-                        </c:when>
-                        <c:when test="#{view.viewId == '/inscription.xhtml'}">
-                            <c:set value="active" var="cssSigninLink"/>
-                        </c:when>
-                        <c:when test="#{view.viewId == '/login.xhtml'}">
-                            <c:set value="active" var="cssLoginLink"/>
-                        </c:when>
-                    </c:choose>
+                <h:form>
+                    <ul>
+                        <c:choose>
+                            <c:when test="#{view.viewId == '/index.xhtml'}">
+                                <c:set value="active" var="cssIndexLink"/>
+                            </c:when>
+                            <c:when test="#{view.viewId == '/inscription.xhtml'}">
+                                <c:set value="active" var="cssSigninLink"/>
+                            </c:when>
+                            <c:when test="#{view.viewId == '/login.xhtml'}">
+                                <c:set value="active" var="cssLoginLink"/>
+                            </c:when>
+                        </c:choose>
 
-                    <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
-                    <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
-                    <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
-                    <h:form>
-                        <p:menuButton rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
+                        <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                        <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
+                        <li>
+                        <p:menuButton class = "menuElement" rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
                             <p:menuitem value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
                             <p:menuitem value="Editer mon profil" outcome="profil"/>
                             <p:menuitem value="Déconnexion" action="#{authenticationBean.logout()}"/>
                         </p:menuButton>
-                    </h:form>
-                </ul>
+                        </li>
+                    </ul>
+                </h:form>
             </div>
         </div>                 
     </div>

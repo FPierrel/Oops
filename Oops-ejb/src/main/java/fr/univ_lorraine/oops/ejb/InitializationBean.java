@@ -7,19 +7,24 @@ import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.ArrayList;
 import javax.annotation.PostConstruct;
+import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
 import javax.ejb.LocalBean;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 @Startup
 @Singleton
+@DependsOn("LuceneBean")
 @LocalBean
 public class InitializationBean {
-
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    @Inject
+    private LuceneBean luceneBean;
     
     @PostConstruct
     public void init() {
@@ -38,14 +43,15 @@ public class InitializationBean {
         adressesJose.add(this.creerAdresse("10", "rue des OGM", "", "75000", "Paris", "France"));
         liste.add(this.creerPrestataire("jose", "Bové", "José", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "jose.bove@gmail.com", 
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose));
+        
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
-        adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz Ville", "Allemagne"));
+        adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz", "Allemagne"));
         liste.add(this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi));
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
-        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz Ville", "Allemagne"));
+        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz", "Allemagne"));
         liste.add(this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe));
         //----------------------------------------------
@@ -69,10 +75,13 @@ public class InitializationBean {
         liste.add(this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
                 "0123456789", "Oui", 1, 126423, adressesOui));
         //----------------------------------------------
+
         
         //FIN AJOUTS DE PRESTATAIRE.
         for (Prestataire p : liste) {
             this.em.persist(p);
+            //Ajout dans le moteur de recherche
+            luceneBean.indexPrestataire(p);
         }
     }
     

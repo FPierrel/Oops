@@ -78,8 +78,8 @@ h1, h2, h3 {
 
 #menu ul
 {
-	float: right;
-	margin: 0px;
+	
+	margin: 5px;
 	padding: 35px 0px 0px 0px;
 	list-style: none;
 	line-height: normal;
@@ -91,7 +91,7 @@ h1, h2, h3 {
 	margin-left: 10px;
 }
 
-#menu a
+#menu a, button
 {
 	display: block;
 	padding: 10px 20px;
@@ -427,6 +427,8 @@ h1, h2, h3 {
 	padding:6px 15px 6px 30px;
 	margin:2px; 
 }
+
+
 
 /** FOOTER */
 
