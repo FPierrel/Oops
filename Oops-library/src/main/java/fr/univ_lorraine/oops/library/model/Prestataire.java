@@ -63,6 +63,10 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setCategories(Collection<Categorie> categories) {
         this.categories = categories;
     }
+    
+    public void addAvis(Avis avis) {
+        this.cAvis.add(avis);
+    }
 
     public Collection<Avis> getcAvis() {
         return cAvis;

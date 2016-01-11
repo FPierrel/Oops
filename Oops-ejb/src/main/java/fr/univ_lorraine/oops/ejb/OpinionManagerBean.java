@@ -38,7 +38,7 @@ public class OpinionManagerBean {
         a.setNoteDelai(nD);
         a.setContenu(contenu);
         a.setpDate(d);
-        a.setpLogin(p.getLogin());
-        this.getEntityManager().persist(a);
+        p.addAvis(a);
+        this.getEntityManager().merge(p);
     }
 }

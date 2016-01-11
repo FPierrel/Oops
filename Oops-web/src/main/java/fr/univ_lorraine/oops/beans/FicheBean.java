@@ -60,13 +60,13 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);            
         }   
         this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin()); 
-        this.noteGlobCom = (int) round(this.fiche.getNoteGlobCom(this.prestataire.getLogin())) ;
+        /*this.noteGlobCom = (int) round(this.fiche.getNoteGlobCom(this.prestataire.getLogin())) ;
         this.noteGlobQualite = (int) round(this.fiche.getNoteGlobQualite(this.prestataire.getLogin())) ;
         this.noteGlobPrix = (int) round(this.fiche.getNoteGlobDelai(this.prestataire.getLogin())) ;
         this.noteGlobDelai = (int) round(this.fiche.getNoteGlobPrix(this.prestataire.getLogin())) ;
         this.nbAvis = this.lAvis.size() ; 
         this.noteTotal = (this.noteGlobCom + this.noteGlobDelai + this.noteGlobPrix + this.noteGlobQualite)/4 ; 
-    }
+    */}
     
     public void saveOpinion() {
         Prestataire pres = this.fiche.getPrestataireLogin(this.page);   

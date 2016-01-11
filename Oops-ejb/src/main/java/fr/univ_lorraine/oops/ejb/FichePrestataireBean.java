@@ -27,9 +27,9 @@ public class FichePrestataireBean {
     }
     
     public List<Avis> getPrestataireAvis(String login) {
-        String queryString = "SELECT a "
-                + "FROM Avis a "
-                + "WHERE  a.pLogin='"+login+"'"
+        String queryString = "SELECT p.cAvis "
+                + "FROM Prestataire p "
+                + "WHERE  p.login='"+login+"'"
                 /*+ "ORDER BY a.date"*/
                 ;
         Query query = this.getEntityManager().createQuery(queryString, Avis.class);

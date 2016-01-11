@@ -15,11 +15,9 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import static javax.persistence.TemporalType.DATE;
 
 /**
  *
@@ -39,9 +37,6 @@ public class Avis implements Serializable {
     private String contenu ; 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Commentaire> commentaires;
-    @ManyToOne(cascade = CascadeType.ALL)
-    private Prestataire prestataire ; 
-    private String pLogin; 
     @Temporal(TemporalType.TIMESTAMP)
     private Date pDate ; 
             
@@ -128,22 +123,6 @@ public class Avis implements Serializable {
 
     public void setpDate(Date pDate) {
         this.pDate = pDate;
-    }
-
-    public String getpLogin() {
-        return pLogin;
-    }
-
-    public void setpLogin(String pLogin) {
-        this.pLogin = pLogin;
-    }
-
-    public Prestataire getPrestataire() {
-        return prestataire;
-    }
-
-    public void setPrestataire(Prestataire prestataire) {
-        this.prestataire = prestataire;
     }
 
     public int getNoteCom() {
