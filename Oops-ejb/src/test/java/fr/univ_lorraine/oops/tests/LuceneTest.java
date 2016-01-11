@@ -8,7 +8,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import org.junit.Assert;
 import org.junit.Before;
-import org.junit.Test;
+import org.junit.Test;    
 
 public class LuceneTest {
     private LuceneBean lb;
