@@ -67,6 +67,25 @@
             <role-name>SOUMISSIONNAIRE</role-name>
         </auth-constraint>
     </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>ficheedit-page</web-resource-name>
+            <description>Page d'édition de fiche</description>
+            <url-pattern>/faces/ficheedit.xhtml</url-pattern>
+            <url-pattern>/ficheedit.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder à la page d'édition de fiche</description>
+            <role-name>PRESTATAIRE</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>oops_realm</realm-name>

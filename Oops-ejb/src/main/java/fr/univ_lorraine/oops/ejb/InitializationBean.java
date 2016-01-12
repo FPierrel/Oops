@@ -154,6 +154,7 @@ public class InitializationBean {
         adressesJose.add(this.creerAdresse("10", "rue des OGM", "", "75000", "Paris", "France"));
         Prestataire pres1 = this.creerPrestataire("jose", "Bové", "José", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "jose.bove@gmail.com",
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose);
+        pres1.setDescription("Chez José Bové, il y a des josés !");
         Collection<Categorie> col1 = new ArrayList<>();
         col1.add(tout);
         pres1.setCategories(col1);
@@ -163,6 +164,7 @@ public class InitializationBean {
         adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz", "Allemagne"));
         Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
+        pres2.setDescription("Ceci est un garenne...");
         Collection<Categorie> col2 = new ArrayList<>();
         col2.add(c4d);
         col2.add(c4c);
@@ -173,6 +175,7 @@ public class InitializationBean {
         adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz", "Allemagne"));
         Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe);
+        pres3.setDescription("Ceci est la description de Philippe ...");
         Collection<Categorie> col3 = new ArrayList<>();
         col3.add(c1);
         pres3.setCategories(col3);
@@ -182,6 +185,7 @@ public class InitializationBean {
         adressesDemon.add(this.creerAdresse("666", "avenue de l'enfer", "", "666 666", "Le four", "Enfer"));
         Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon);
+        pres4.setDescription("Il fait chaud la bas !");
         Collection<Categorie> col4 = new ArrayList<>();
         col4.add(c3d);
         pres4.setCategories(col4);
@@ -191,6 +195,7 @@ public class InitializationBean {
         adressesNeufchateau.add(this.creerAdresse("12", "Rue de la rue", "", "88300", "Neufchateau", "France"));
         Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr", 
                 "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
+        pres5.setDescription("Jacky Tuning c'est le meilleur !");
         Collection<Categorie> col5 = new ArrayList<>();
         col5.add(c4d);
         pres5.setCategories(col5);
@@ -200,6 +205,7 @@ public class InitializationBean {
         adressesNancy.add(this.creerAdresse("38", "avenue de oui", "", "54000", "Nancy", "France"));
         Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b", 
                 "0123456789", "Oooooh", 1, 126423, adressesNancy);
+        pres6.setDescription("Ooooooooooooooooooooooooooooohhhhh la description !!!");
         Collection<Categorie> col6 = new ArrayList<>();
         col6.add(c1c);
         col6.add(c1d);
@@ -210,6 +216,7 @@ public class InitializationBean {
         adressesOui.add(this.creerAdresse("Oui", "Oui", "", "88630", "Coussey", "France"));
         Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
                 "0123456789", "Oui", 1, 126423, adressesOui);
+        pres7.setDescription("Oui oui oui oui oui oui oui oui...");
         Collection<Categorie> col7 = new ArrayList<>();
         col7.add(c3b);
         pres7.setCategories(col7);

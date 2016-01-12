@@ -26,7 +26,7 @@
                         <h1><h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
                         <!--<h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
                         <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>-->
-                        <h:outputText value="Description du prestataire... (Complète)" /><br/><br/>
+                        <h:outputText value="#{ficheBean.prestataire.description}" /><br/><br/>
                         
                         <h2>Informations : </h2><br/>
                             <h3>Contacts : </h3>
@@ -53,7 +53,7 @@
                                 </h:dataTable>
                                 <h:outputText value="Téléphone : #{ficheBean.prestataire.numeroTelephone} " />
                                 <h:outputText value="E-mail : #{ficheBean.prestataire.mail} " />
-                                <h:outputText value="Site Web : A DEFINIR ! " />
+                                <h:outputText value="Site Web : #{ficheBean.prestataire.siteWeb} " />
                             <h3>A propos de :</h3>
                                 <h:outputText value="Raison sociale : A DEFINIR ! " /><br/>
                                 <h:outputText value="Forme juridique : A DEFINIR ! " /><br/>

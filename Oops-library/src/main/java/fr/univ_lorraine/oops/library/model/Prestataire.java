@@ -16,16 +16,12 @@ import javax.persistence.OneToMany;
 public class Prestataire extends Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
     public final static String prestataire = "PRESTATAIRE";
-    private String nomEntreprise;
-    private int nbEmployes;
-    private int chiffreAffaire;
+    private String nomEntreprise, description, siteWeb;
+    private int nbEmployes, chiffreAffaire;
     @OneToMany
-    private Collection<Categorie> categories;
-    
+    private Collection<Categorie> categories;    
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Avis> cAvis ; 
-
-
+    private Collection<Avis> cAvis ;
     
     public Prestataire() {
         this.groupe = prestataire;
@@ -55,6 +51,22 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setChiffreAffaire(int chiffreAffaire) {
         this.chiffreAffaire = chiffreAffaire;
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getSiteWeb() {
+        return siteWeb;
+    }
+
+    public void setSiteWeb(String siteWeb) {
+        this.siteWeb = siteWeb;
+    }
     
     public Collection<Categorie> getCategories() {
         return categories;
@@ -74,17 +86,13 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public void setcAvis(Collection<Avis> cAvis) {
         this.cAvis = cAvis;
-    }
-    
+    }    
     
     public String getLuceneCategorieDescription(){
         String s = "";
         for (Categorie c : categories)
             s+= c.getLuceneDescription();
         return s;
-    }
-
-  
-    
+    }   
     
 }
