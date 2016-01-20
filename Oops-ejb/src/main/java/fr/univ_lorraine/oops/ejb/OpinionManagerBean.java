@@ -7,6 +7,7 @@ package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.Date;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -30,7 +31,8 @@ public class OpinionManagerBean {
         return this.em; 
     }
     
-    public void saveOpinion(int nC, int nP, int nQ, int nD, String contenu, Date d, Prestataire p) {
+    public void saveOpinion(int nC, int nP, int nQ, int nD, String contenu, Date d, Prestataire p, String loginPoseurAvis) {
+        Utilisateur user = this.getEntityManager().find(Utilisateur.class, loginPoseurAvis);
         Avis a = new Avis() ; 
         a.setNoteCom(nC);
         a.setNotePrix(nP);
@@ -38,7 +40,14 @@ public class OpinionManagerBean {
         a.setNoteDelai(nD);
         a.setContenu(contenu);
         a.setpDate(d);
+        a.setOwner(user);
         p.addAvis(a);
+        //user.addAvisSoumis(a);
+        //this.getEntityManager().merge(user) ; 
         this.getEntityManager().merge(p);
+    }
+    
+    public void saveComment(Date d, String login, String message) {
+        System.out.println(message);
     }
 }

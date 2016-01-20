@@ -15,6 +15,7 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,6 +40,7 @@ public class Avis implements Serializable {
     private Collection<Commentaire> commentaires;
     @Temporal(TemporalType.TIMESTAMP)
     private Date pDate ; 
+    private Utilisateur owner ; 
             
     public Avis () {
         this.commentaires = new ArrayList<>() ; 
@@ -146,6 +148,14 @@ public class Avis implements Serializable {
 
     public void setNoteDelai(int noteDelai) {
         this.noteDelai = noteDelai;
+    }
+
+    public Utilisateur getOwner() {
+        return owner;
+    }
+
+    public void setOwner(Utilisateur owner) {
+        this.owner = owner;
     }
 
  

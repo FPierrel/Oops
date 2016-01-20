@@ -8,6 +8,7 @@ import java.io.Serializable;
 import static java.lang.Math.round;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
@@ -15,6 +16,7 @@ import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
+import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "ficheBean")
 @ConversationScoped
@@ -33,13 +35,14 @@ public class FicheBean implements Serializable {
     private int rate3 ; 
     private int rate4 ; 
     private String opinion ; 
+    private String commentaire ; 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private int noteGlobPrix ; 
-    private int noteGlobQualite ; 
-    private int noteGlobDelai ; 
-    private int noteGlobCom ; 
-    private int noteTotal ; 
-    private int nbAvis ; 
+    private int noteGlobPrix = 0; 
+    private int noteGlobQualite = 0; 
+    private int noteGlobDelai = 0; 
+    private int noteGlobCom = 0; 
+    private int noteTotal = 0; 
+    private int nbAvis = 0; 
     
     /**
      * Creates a new instance of FicheBean
@@ -60,21 +63,48 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);            
         }   
         this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin()); 
-        /*this.noteGlobCom = (int) round(this.fiche.getNoteGlobCom(this.prestataire.getLogin())) ;
-        this.noteGlobQualite = (int) round(this.fiche.getNoteGlobQualite(this.prestataire.getLogin())) ;
-        this.noteGlobPrix = (int) round(this.fiche.getNoteGlobDelai(this.prestataire.getLogin())) ;
-        this.noteGlobDelai = (int) round(this.fiche.getNoteGlobPrix(this.prestataire.getLogin())) ;
-        this.nbAvis = this.lAvis.size() ; 
-        this.noteTotal = (this.noteGlobCom + this.noteGlobDelai + this.noteGlobPrix + this.noteGlobQualite)/4 ; 
-    */}
+        
+        if (lAvis.get(0)!=null) { 
+            for (Avis a : lAvis) {
+                this.noteGlobCom += a.getNoteCom() ; 
+                this.noteGlobDelai += a.getNoteDelai() ; 
+                this.noteGlobPrix += a.getNotePrix() ; 
+                this.noteGlobQualite += a.getNoteQualite() ;     
+            }
+            this.noteTotal = round(( (this.noteGlobCom/lAvis.size()) + (this.noteGlobDelai/lAvis.size()) + (this.noteGlobPrix/lAvis.size()) + (this.noteGlobQualite)/lAvis.size()) /4) ;
+            this.noteGlobCom = (int) round(this.noteGlobCom/lAvis.size()) ;
+            this.noteGlobDelai = (int) round(this.noteGlobDelai/lAvis.size()) ;
+            this.noteGlobPrix = (int) round(this.noteGlobPrix/lAvis.size()) ;
+            this.noteGlobQualite = (int) round(this.noteGlobQualite/lAvis.size()) ;
+            this.nbAvis = this.lAvis.size() ; 
+        } else {
+            this.lAvis=new ArrayList<>() ; 
+        }
+    }
     
     public void saveOpinion() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         Prestataire pres = this.fiche.getPrestataireLogin(this.page);   
-        this.om.saveOpinion(rate1, rate3, rate2, rate4, opinion, new Date(),pres) ; 
+        this.om.saveOpinion(rate1, rate3, rate2, rate4, opinion, new Date(),pres,request.getRemoteUser()) ; 
+    }
+    
+    public void saveComment() {
+        System.out.println("******************");
+        System.out.println(this.commentaire+"****************************");
+        this.om.saveComment(new Date(),this.prestataire.getLogin(),this.commentaire) ; 
     }
     
     public Prestataire getPrestataire() {
         return this.prestataire;
+    }
+
+    public String getCommentaire() {
+        return commentaire;
+    }
+
+    public void setCommentaire(String commentaire) {
+        this.commentaire = commentaire;
     }
 
     public void setPrestataire(Prestataire prestataire) {

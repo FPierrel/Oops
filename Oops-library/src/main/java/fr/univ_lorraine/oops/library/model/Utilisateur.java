@@ -25,9 +25,12 @@ public abstract class Utilisateur implements Serializable {
     protected String groupe;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
+    /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Avis> avisSoumis;*/
         
     public Utilisateur() {
         this.adresses = new ArrayList<>();
+        //this.avisSoumis = new ArrayList<>() ; 
     }
 
     public String getLogin() {
@@ -124,5 +127,16 @@ public abstract class Utilisateur implements Serializable {
     public String toString() {
         return "Utilisateur{" + "login=" + login + ", nom=" + nom + ", prenom=" + prenom + ", motDePasse=" + motDePasse + ", mail=" + mail + ", numeroTelephone=" + numeroTelephone + '}';
     }   
+
+    /*public Collection<Avis> getAvisSoumis() {
+        return avisSoumis;
+    }
+
+    public void setAvisSoumis(Collection<Avis> avisSoumis) {
+        this.avisSoumis = avisSoumis;
+    }
     
+    public void addAvisSoumis( Avis a ) {
+        this.avisSoumis.add(a) ; 
+    }*/
 }

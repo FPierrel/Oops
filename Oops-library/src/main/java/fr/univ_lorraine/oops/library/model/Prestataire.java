@@ -21,7 +21,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     @OneToMany
     private Collection<Categorie> categories;    
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Avis> cAvis ;
+    private Collection<Avis> cAvis= new ArrayList<>() ; ;
     
     public Prestataire() {
         this.groupe = prestataire;

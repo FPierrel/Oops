@@ -24,8 +24,8 @@
                     <p:messages />
                     <div class="prestataire">
                         <h1><h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
-                        <!--<h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
-                        <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>-->
+                        <h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
+                        <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>
                         <h:outputText value="#{ficheBean.prestataire.description}" /><br/><br/>
                         
                         <h2>Informations : </h2><br/>
@@ -60,12 +60,12 @@
                                 <h:outputText value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
                                 <h:outputText value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
                         <h2>Evaluation : </h2><br/>
-                            <!--<h:form>
+                            <h:form>
                                 <h:outputText value="Communication : "/><p:rating value="#{ficheBean.noteGlobCom}" readonly="true"/><br/><br/>
                                 <h:outputText value="Qualité : "/><p:rating value="#{ficheBean.noteGlobQualite}" readonly="true"/><br/><br/>
                                 <h:outputText value="Prix : "/><p:rating value="#{ficheBean.noteGlobPrix}" readonly="true"/><br/><br/>
                                 <h:outputText value="Délai : "/><p:rating value="#{ficheBean.noteGlobDelai}" readonly="true"/><br/><br/><br/><br/>
-                            </h:form>-->
+                            </h:form>
                         <div id="avis">        
                                 <h:form rendered="#{request.remoteUser != null}">
                                     <h2>Donnez votre avis : </h2><br/>
@@ -82,26 +82,36 @@
                                                      id="opinion"  
                                                      required="true" requiredMessage="Veuillez renseigner un avis !">             
                                     </p:inputText><br/><br/>
-                                    <p:commandButton class="button" id="avis" value="Soumettre" action="#{ficheBean.saveOpinion()}" update=":lAvis"/>
-                                        <!--<f:ajax execute="@form" render="lAvisForm"/>
-                                    </h:commandButton>--><br/><br/><br/><br/>
+                                    <p:commandButton class="button" value="Soumettre" action="#{ficheBean.saveOpinion()}" actionListener="#{ficheBean.init()}"> 
+                                        <f:param name="faces-redirect" value="true"/>
+                                        <f:param name="page" value="#{ficheBean.prestataire.login}"/>
+                                    </p:commandButton><br/><br/><br/><br/>
                                 </h:form>
                         
                             <h2>Avis des clients: </h2>
                                 <h:form id="lAvis">
                                     <ul>
                                         <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis">
-                                            <li><h:outputText value="#{cAvis.pDate}" /><br/><br/>
+                                            <li><h:outputText value="#{cAvis.pDate}" /><br/><h:outputText value="#{cAvis.owner.login}" /><br/><br/>
                                                 <h:outputText value="Communication : "/>
-                                                <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" /><br/>
+                                                <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" readonly="true"/><br/>
                                                 <h:outputText value="Qualité : "/>
-                                                <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" /><br/>
+                                                <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" readonly="true"/><br/>
                                                 <h:outputText value="Prix : "/>
-                                                <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" /><br/>
+                                                <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" readonly="true"/><br/>
                                                 <h:outputText value="Délai : "/>
-                                                <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" /><br/><br/>
+                                                <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" readonly="true"/><br/><br/>
                                                 <h:outputText value="Commentaire : "/><br/>
-                                                <h:outputText value="#{cAvis.contenu}" /><br/><br/>
+                                                <h:outputText value="#{cAvis.contenu}" /><br/><br/>  
+                                                <h:panelGrid columns="1" cellpadding="5">
+                                                    <p:commandButton value="Commenter cet avis" type="button" onclick="PF('dialog').show();" />
+                                                </h:panelGrid>
+                                                <p:dialog header="Basic Dialog" widgetVar="dialog" modal="true" minHeight="40">
+                                                        <p:inputText value="#{ficheBean.commentaire}" id="commentaire"/><br/><br/>
+                                                        <f:facet name="footer">
+                                                            <p:commandButton value="Login" onclick="#{ficheBean.saveComment()}" oncomplete="PF('dialog').hide();"/>
+                                                        </f:facet>
+                                                </p:dialog>
                                             </li>
                                         </ui:repeat>
                                     </ul>

@@ -12,6 +12,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 import static javax.persistence.TemporalType.DATE;
 
 /**
@@ -26,7 +27,7 @@ public class Commentaire implements Serializable {
     private Long id;
 
     private String contenu ; 
-    @Temporal(DATE)
+    @Temporal(TemporalType.TIMESTAMP)
     private Date comDate ; 
     
     public Commentaire() {

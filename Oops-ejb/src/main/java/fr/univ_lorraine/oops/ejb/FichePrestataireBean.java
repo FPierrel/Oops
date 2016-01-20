@@ -9,6 +9,7 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
@@ -27,16 +28,15 @@ public class FichePrestataireBean {
     }
     
     public List<Avis> getPrestataireAvis(String login) {
-        String queryString = "SELECT p.cAvis "
+        String queryString = "SELECT DISTINCT p.cAvis "
                 + "FROM Prestataire p "
                 + "WHERE  p.login='"+login+"'"
-                /*+ "ORDER BY a.date"*/
                 ;
-        Query query = this.getEntityManager().createQuery(queryString, Avis.class);
+        TypedQuery<Avis> query = this.getEntityManager().createQuery(queryString, Avis.class);
         return query.getResultList();
     }
 
-    public double getNoteGlobCom(String login) {
+    /*public double getNoteGlobCom(String login) {
         String queryString = "SELECT AVG(CAST(a.noteCom as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 
         Query query = this.getEntityManager().createQuery(queryString, double.class);
         Double test = (Double) query.getSingleResult();
@@ -81,7 +81,7 @@ public class FichePrestataireBean {
         } else {
             return 0 ; 
         }
-    }
+    }*/
 
     
 }
