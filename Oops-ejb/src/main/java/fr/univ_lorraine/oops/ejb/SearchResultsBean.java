@@ -50,8 +50,9 @@ public class SearchResultsBean {
                 + searchPrestataireWithQuality(quality, "AND")
                 + searchPrestataireWithPrice(price, "AND")
                 + searchPrestataireWithValue(delay, "AND")
-                + searchPrestataireWithMoyenne(moyenne, "AND")
-                + searchPrestataireWithCategorie(categorie, "AND");
+                + searchPrestataireWithAverage(moyenne, "AND")
+                + searchPrestataireWithCategorie(categorie, "AND")
+                +" ORDER BY p.average DESC";
 
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
@@ -109,30 +110,25 @@ public class SearchResultsBean {
     }
     
     public String searchPrestataireWithCommunication(int communication, String operateur) {
-        return "";
-        //return " " + operateur + " p.communication >= " + communication;
+        return " " + operateur + " p.communication >= " + communication;
     }
-    
+
     public String searchPrestataireWithQuality(int quality, String operateur) {
-        return "";
-        //return " " + operateur + " p.quality >= " + quality;
+        return " " + operateur + " p.quality >= " + quality;
     }
-    
+
     public String searchPrestataireWithPrice(int price, String operateur) {
-        return "";
-        //return " " + operateur + " p.price >= " + price;
+        return " " + operateur + " p.price >= " + price;
     }
-    
+
     public String searchPrestataireWithValue(int delay, String operateur) {
-        return "";
-        //return " " + operateur + " p.delay >= " + delay;
+        return " " + operateur + " p.delay >= " + delay;
     }
-    
-    public String searchPrestataireWithMoyenne(int moyenne, String operateur) {
-        return "";
-        //return " " + operateur + " p.moyenne >= " + moyenne;
+
+    public String searchPrestataireWithAverage(int average, String operateur) {
+        return " " + operateur + " p.average >= " + average;
     }
-    
+
     private String searchPrestataireWithCategorie(String categorie, String operateur) {
         return " " + operateur + " c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles";
     }

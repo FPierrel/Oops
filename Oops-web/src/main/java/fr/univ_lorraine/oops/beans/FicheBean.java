@@ -5,7 +5,6 @@ import fr.univ_lorraine.oops.ejb.OpinionManagerBean;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
-import static java.lang.Math.round;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -26,7 +25,7 @@ public class FicheBean implements Serializable {
     private FichePrestataireBean fiche;
     @Inject
     OpinionManagerBean om ; 
-    
+
     private String page;
     private Prestataire prestataire;
     private List<Avis> lAvis ; 
@@ -37,13 +36,13 @@ public class FicheBean implements Serializable {
     private String opinion ; 
     private String commentaire ; 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-    private int noteGlobPrix = 0; 
-    private int noteGlobQualite = 0; 
-    private int noteGlobDelai = 0; 
-    private int noteGlobCom = 0; 
-    private int noteTotal = 0; 
-    private int nbAvis = 0; 
-    
+    private int noteGlobPrix = 0;
+    private int noteGlobQualite = 0;
+    private int noteGlobDelai = 0;
+    private int noteGlobCom = 0;
+    private int noteTotal = 0;
+    private int nbAvis = 0;
+
     /**
      * Creates a new instance of FicheBean
      */
@@ -53,48 +52,42 @@ public class FicheBean implements Serializable {
 
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if(this.page.isEmpty()) {
+        if (this.page.isEmpty()) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mauvaise requête ! Utilisez un lien correct !", null);
-            context.addMessage(null, message); 
-        }        
-        this.prestataire = this.fiche.getPrestataireLogin(this.page);        
-        if(this.prestataire == null && !(this.page.isEmpty())) {
+            context.addMessage(null, message);
+        }
+        this.prestataire = this.fiche.getPrestataireLogin(this.page);
+        if (this.prestataire == null && !(this.page.isEmpty())) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mauvaise requête ! Utilisez un lien correct !", null);
-            context.addMessage(null, message);            
-        }   
-        this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin()); 
-        
-        if (lAvis.get(0)!=null) { 
-            for (Avis a : lAvis) {
-                this.noteGlobCom += a.getNoteCom() ; 
-                this.noteGlobDelai += a.getNoteDelai() ; 
-                this.noteGlobPrix += a.getNotePrix() ; 
-                this.noteGlobQualite += a.getNoteQualite() ;     
-            }
-            this.noteTotal = round(( (this.noteGlobCom/lAvis.size()) + (this.noteGlobDelai/lAvis.size()) + (this.noteGlobPrix/lAvis.size()) + (this.noteGlobQualite)/lAvis.size()) /4) ;
-            this.noteGlobCom = (int) round(this.noteGlobCom/lAvis.size()) ;
-            this.noteGlobDelai = (int) round(this.noteGlobDelai/lAvis.size()) ;
-            this.noteGlobPrix = (int) round(this.noteGlobPrix/lAvis.size()) ;
-            this.noteGlobQualite = (int) round(this.noteGlobQualite/lAvis.size()) ;
-            this.nbAvis = this.lAvis.size() ; 
+            context.addMessage(null, message);
+        }
+        this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin());
+
+        if (lAvis.get(0) != null) {
+            this.noteTotal = this.prestataire.getAverage();
+            this.noteGlobCom = this.prestataire.getCommunication();
+            this.noteGlobDelai = this.prestataire.getDelay();
+            this.noteGlobPrix = this.prestataire.getPrice();
+            this.noteGlobQualite = this.prestataire.getQuality();
+            this.nbAvis = this.lAvis.size();
         } else {
             this.lAvis=new ArrayList<>() ; 
         }
     }
-    
+
     public void saveOpinion() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        Prestataire pres = this.fiche.getPrestataireLogin(this.page);   
+        Prestataire pres = this.fiche.getPrestataireLogin(this.page);
         this.om.saveOpinion(rate1, rate3, rate2, rate4, opinion, new Date(),pres,request.getRemoteUser()) ; 
     }
-    
+
     public void saveComment() {
         System.out.println("******************");
         System.out.println(this.commentaire+"****************************");
         this.om.saveComment(new Date(),this.prestataire.getLogin(),this.commentaire) ; 
     }
-    
+
     public Prestataire getPrestataire() {
         return this.prestataire;
     }
@@ -222,5 +215,5 @@ public class FicheBean implements Serializable {
     public void setNbAvis(int nbAvis) {
         this.nbAvis = nbAvis;
     }
- 
+
 }
