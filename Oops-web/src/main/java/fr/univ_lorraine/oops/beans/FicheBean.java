@@ -16,6 +16,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
@@ -65,7 +66,7 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);
         }
         this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin());
-        
+
         if (lAvis.get(0) != null) {
             this.noteTotal = this.prestataire.getAverage();
             this.noteGlobCom = this.prestataire.getCommunication();
@@ -89,16 +90,16 @@ public class FicheBean implements Serializable {
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez renseigner un avis !", null);
             context.addMessage(null, message);
-    }
+        }
         this.init();
     }
 
     public void saveComment() {
-        System.out.println("******************");
-        System.out.println(this.commentaire + "****************************");
-        this.om.saveComment(new Date(), this.prestataire.getLogin(), this.commentaire);
+        //System.out.println(this.commentaire);
+        //this.om.saveComment(new Date(), this.prestataire.getLogin(), this.commentaire);
+       this.init();
     }
-
+    
     public Prestataire getPrestataire() {
         return this.prestataire;
     }
