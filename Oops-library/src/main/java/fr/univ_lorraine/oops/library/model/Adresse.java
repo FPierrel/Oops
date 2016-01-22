@@ -17,7 +17,6 @@ public class Adresse implements Serializable {
     private String codePostal;
     private String complement;
     private String ville;
-    private String pays;
     
     public Adresse() {
         
@@ -71,14 +70,6 @@ public class Adresse implements Serializable {
         this.ville = ville;
     }
 
-    public String getPays() {
-        return pays;
-    }
-
-    public void setPays(String pays) {
-        this.pays = pays;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -101,7 +92,7 @@ public class Adresse implements Serializable {
 
     @Override
     public String toString() {
-        return "Adresse{" + "id=" + id + ", numero=" + numero + ", rue=" + rue + ", codePostal=" + codePostal + ", complement=" + complement + ", ville=" + ville + ", pays=" + pays + '}';
+        return "Adresse{" + "id=" + id + ", numero=" + numero + ", rue=" + rue + ", codePostal=" + codePostal + ", complement=" + complement + ", ville=" + ville + " }";
     }
     
 }

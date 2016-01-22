@@ -281,7 +281,7 @@ public class SearchResultsBean {
             resultat = statement.executeQuery(""
                     + "SELECT ville_nom, ville_code_postal "
                     + "FROM villes_france_free "
-                    + "WHERE ville_nom LIKE '" + search + "%' "
+                    + "WHERE ville_nom LIKE '%" + search + "%' "
                     + "OR ville_code_postal LIKE '" + search + "%' "
                     + "ORDER BY ville_nom ");
 
@@ -323,5 +323,109 @@ public class SearchResultsBean {
         Query query = em.createNamedQuery("Categorie.findByName");
         query.setParameter("name", "Toutes cat\u00e9gories");
         return (Categorie) query.getSingleResult();
+    }
+
+    public List<String> searchTownWithoutCode(String search) {
+        List<String> li = new ArrayList<>();
+        /* Connexion à la base de données */
+        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
+        String utilisateur = "root";
+        String motDePasse = "fakepwd88";
+        Connection connexion = null;
+        ResultSet resultat = null;
+        Statement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+            statement = connexion.createStatement();
+
+            /* Récupérer latitude longitude de la ville de référence */
+            resultat = statement.executeQuery(""
+                    + "SELECT ville_nom "
+                    + "FROM villes_france_free "
+                    + "WHERE ville_nom LIKE '%" + search + "%' ");
+
+            while (resultat.next()) {
+                li.add(resultat.getString("ville_nom"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connexion != null) {
+                try {
+                    connexion.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (resultat != null) {
+                try {
+                    resultat.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+
+        return li;
+    }
+
+    public List<String> searchCodes(String town) {
+        List<String> li = new ArrayList<>();
+        /* Connexion à la base de données */
+        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
+        String utilisateur = "root";
+        String motDePasse = "fakepwd88";
+        Connection connexion = null;
+        ResultSet resultat = null;
+        Statement statement = null;
+        try {
+            Class.forName("com.mysql.jdbc.Driver");
+            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
+            statement = connexion.createStatement();
+
+            /* Récupérer latitude longitude de la ville de référence */
+            resultat = statement.executeQuery(""
+                    + "SELECT ville_code_postal "
+                    + "FROM villes_france_free "
+                    + "WHERE ville_nom = '" + town + "' ");
+
+            while (resultat.next()) {
+                for(String code : resultat.getString("ville_code_postal").split("-")){
+                     li.add(code);
+                }             
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
+        } finally {
+            if (connexion != null) {
+                try {
+                    connexion.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (resultat != null) {
+                try {
+                    resultat.close();
+                } catch (SQLException ignore) {
+                }
+            }
+            if (statement != null) {
+                try {
+                    statement.close();
+                } catch (SQLException ignore) {
+                }
+            }
+        }
+
+        return li;
     }
 }

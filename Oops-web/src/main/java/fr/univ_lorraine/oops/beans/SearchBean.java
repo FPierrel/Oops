@@ -65,6 +65,10 @@ public class SearchBean implements Serializable {
     public List<String> searchTown(String query) {
         return this.searchResults.searchTest(query);
     }
+    
+    public List<String> searchTownWithoutCode(String query) {
+        return this.searchResults.searchTownWithoutCode(query);
+    }
 
     public String getLastnameSearch() {
         return lastnameSearch;

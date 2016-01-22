@@ -288,7 +288,6 @@ public class InitializationBean {
         adresse.setComplement(complement);
         adresse.setCodePostal(codePostal);
         adresse.setVille(ville);
-        adresse.setPays(pays);
         return adresse;
     }
 

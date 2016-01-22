@@ -1,11 +1,14 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -20,7 +23,11 @@ public class RegistrationBean implements Serializable {
     
     @Inject
     UserManagerBean userManager;
-
+    
+    @Inject
+    SearchResultsBean searchBean;
+    
+    private List<String> codes = new ArrayList<>();
     private String login, password, confirmPassword, email, phone, companyName, 
             lastname, firstname, user, number, street, code, complement, town, country;
     private int turnover, employee;
@@ -350,7 +357,6 @@ public class RegistrationBean implements Serializable {
         address.setComplement(this.complement);
         address.setCodePostal(this.code);
         address.setVille(this.town);
-        address.setPays(this.country);
         if(this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
             s.setLogin(this.login);
@@ -384,6 +390,22 @@ public class RegistrationBean implements Serializable {
             context.addMessage(null, message); 
             return "index.xhtml";
         }
+    }
+    
+    public List<String> searchCode(String town){
+        return this.searchBean.searchCodes(town);
+    }
+
+    public List<String> getCodes() {
+        return codes;
+    }
+
+    public void setCodes(List<String> codes) {
+        this.codes = codes;
+    }
+    
+    public void codesListener() {
+        codes = searchBean.searchCodes(this.town);
     }
     
 }
