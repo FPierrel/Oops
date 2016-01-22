@@ -51,8 +51,7 @@ public class SearchResultsBean {
                 + searchPrestataireWithPrice(price, "AND")
                 + searchPrestataireWithValue(delay, "AND")
                 + searchPrestataireWithAverage(moyenne, "AND")
-                + searchPrestataireWithCategorie(categorie, "AND")
-                +" ORDER BY p.average DESC";
+                + searchPrestataireWithCategorie(categorie, "AND");
 
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
@@ -62,6 +61,7 @@ public class SearchResultsBean {
             queryString += searchPrestataireWithTownName(where, postalCode,"AND");
         }
 
+        queryString += " ORDER BY p.average DESC";
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
         
         if (!this.villes.isEmpty()) {

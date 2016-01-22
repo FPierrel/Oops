@@ -109,9 +109,7 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public void setAverage(int average) {
         this.average = average;
-    }
-    
-    
+    }    
 
     public Collection<Categorie> getCategories() {
         return categories;
