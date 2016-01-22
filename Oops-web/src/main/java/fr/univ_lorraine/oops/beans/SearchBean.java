@@ -29,6 +29,8 @@ public class SearchBean implements Serializable {
     private String choix;
     private List<String> categories = new ArrayList<>();
     private String categorie;
+    private List<String> codes = new ArrayList<>();
+    private String code;
 
     private int communication, quality, price, delay, moyenne;
     /**
@@ -240,4 +242,26 @@ public class SearchBean implements Serializable {
     public void setCategorie(String categorie) {
         this.categorie = categorie;
     }
+
+    public List<String> getCodes() {
+        return codes;
+    }
+
+    public void setCodes(List<String> codes) {
+        this.codes = codes;
+    }
+    
+    public void codesListener() {
+        codes = this.searchResults.searchCodes(this.ou);
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+    
+    
 }

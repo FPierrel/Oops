@@ -1,10 +1,14 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
+import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.security.MessageDigest;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -17,9 +21,13 @@ public class ProfilBean implements Serializable {
 
     @Inject
     private UserManagerBean userManager;
+    
+    @Inject
+    private SearchResultsBean searchBean;
 
     private Utilisateur user;
     private String oldPassword, newPassword, newPasswordConfirm, newMail, newMailConfirm;
+    private List<String> codes = new ArrayList<>();
 
     public ProfilBean() {
 
@@ -124,4 +132,15 @@ public class ProfilBean implements Serializable {
         this.newMailConfirm = newMailConfirm;
     }
 
+    public List<String> getCodes() {
+        return codes;
+    }
+
+    public void setCodes(List<String> codes) {
+        this.codes = codes;
+    }
+
+    public void codesListener(Adresse a) {
+        codes = searchBean.searchCodes(a.getVille());
+    }
 }

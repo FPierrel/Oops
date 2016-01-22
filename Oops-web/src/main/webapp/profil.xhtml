@@ -70,13 +70,22 @@
                                             <h:outputText value="Rue : "/>
                                             <h:inputText value="#{address.rue}"/>             
                                             <h:outputText value="Complément : "/>
-                                            <h:inputText value="#{address.complement}"/>                  
-                                            <h:outputText value="Code Postal : "/>
+                                            <h:inputText value="#{address.complement}"/>       
+                                            
+                                            <!--<h:outputText value="Code Postal : "/>
                                             <h:inputText value="#{address.codePostal}"/>                  
                                             <h:outputText value="Ville : "/>
-                                            <h:inputText value="#{address.ville}"/>                  
-                                            <h:outputText value="Pays : "/>
-                                            <h:inputText value="#{address.pays}"/> 
+                                            <h:inputText value="#{address.ville}"/>-->
+                                            
+                                            <p:outputLabel for="town" value="Ville :"/>
+                                            <p:autoComplete id="town" forceSelection="true" value="#{address.ville}" completeMethod="#{searchBean.searchTownWithoutCode}" maxResults="5">
+                                                <p:ajax event="itemSelect" update="code" listener="#{profilBean.codesListener(address)}"/>
+                                            </p:autoComplete>
+
+                                            <p:outputLabel for="code" value="Code Postal :"/> 
+                                            <p:selectOneMenu id="code" value="#{address.codePostal}">
+                                                <f:selectItems value="#{profilBean.codes}" />
+                                            </p:selectOneMenu>
                                         </h:panelGrid>
                                     </h:column>
                                 </h:dataTable>
