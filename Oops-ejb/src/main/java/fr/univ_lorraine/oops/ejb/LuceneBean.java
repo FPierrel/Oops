@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.annotation.PostConstruct;
+import javax.annotation.PostConstruct; 
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -134,7 +134,7 @@ public class LuceneBean {
         Document d = new Document();
         d.add(new Field("id", p.getLogin(), Field.Store.YES, Field.Index.NOT_ANALYZED));
         d.add(new Field("nom", p.getNomEntreprise(), Field.Store.YES, Field.Index.ANALYZED));
-       // d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
+        d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.NO, Field.Index.ANALYZED));
         return d;
     }
 }

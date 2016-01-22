@@ -28,7 +28,7 @@ public class SimpleSearchTest {
     @Before
     public void setUp() {
         driver.get("http://localhost:8080/Oops-web/faces/index.xhtml");
-        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.name("searchForm:ou")).clear();
         driver.findElement(By.name("searchForm:quoi")).clear();
     }
