@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.enterprise.context.ConversationScoped;
+import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -18,23 +20,23 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "ficheBean")
-@ConversationScoped
+@RequestScoped
 public class FicheBean implements Serializable {
 
     @Inject
     private FichePrestataireBean fiche;
     @Inject
-    OpinionManagerBean om ; 
+    OpinionManagerBean om;
 
     private String page;
     private Prestataire prestataire;
-    private List<Avis> lAvis ; 
-    private int rate1 ; 
-    private int rate2 ; 
-    private int rate3 ; 
-    private int rate4 ; 
-    private String opinion ; 
-    private String commentaire ; 
+    private List<Avis> lAvis;
+    private int rate1;
+    private int rate2;
+    private int rate3;
+    private int rate4;
+    private String opinion;
+    private String commentaire;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private int noteGlobPrix = 0;
     private int noteGlobQualite = 0;
@@ -71,7 +73,7 @@ public class FicheBean implements Serializable {
             this.noteGlobQualite = this.prestataire.getQuality();
             this.nbAvis = this.lAvis.size();
         } else {
-            this.lAvis=new ArrayList<>() ; 
+            this.lAvis = new ArrayList<>();
         }
     }
 
@@ -79,13 +81,19 @@ public class FicheBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         Prestataire pres = this.fiche.getPrestataireLogin(this.page);
-        this.om.saveOpinion(rate1, rate3, rate2, rate4, opinion, new Date(),pres,request.getRemoteUser()) ; 
+        if (!this.opinion.isEmpty()) {
+            this.om.saveOpinion(rate1, rate3, rate2, rate4, opinion, new Date(), pres, request.getRemoteUser());
+        } else {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez renseigner un avis !", null);
+            context.addMessage(null, message);
+        }
+        this.init();
     }
 
     public void saveComment() {
         System.out.println("******************");
-        System.out.println(this.commentaire+"****************************");
-        this.om.saveComment(new Date(),this.prestataire.getLogin(),this.commentaire) ; 
+        System.out.println(this.commentaire + "****************************");
+        this.om.saveComment(new Date(), this.prestataire.getLogin(), this.commentaire);
     }
 
     public Prestataire getPrestataire() {
@@ -169,7 +177,7 @@ public class FicheBean implements Serializable {
     }
 
     public int getNoteGlobPrix() {
-        return (int)noteGlobPrix;
+        return (int) noteGlobPrix;
     }
 
     public void setNoteGlobPrix(int noteGlobPrix) {
@@ -177,7 +185,7 @@ public class FicheBean implements Serializable {
     }
 
     public int getNoteGlobQualite() {
-        return (int)noteGlobQualite;
+        return (int) noteGlobQualite;
     }
 
     public void setNoteGlobQualite(int noteGlobQualite) {
@@ -185,7 +193,7 @@ public class FicheBean implements Serializable {
     }
 
     public int getNoteGlobDelai() {
-        return (int)noteGlobDelai;
+        return (int) noteGlobDelai;
     }
 
     public void setNoteGlobDelai(int noteGlobDelai) {
@@ -193,7 +201,7 @@ public class FicheBean implements Serializable {
     }
 
     public int getNoteGlobCom() {
-        return (int)noteGlobCom;
+        return (int) noteGlobCom;
     }
 
     public void setNoteGlobCom(int noteGlobCom) {
