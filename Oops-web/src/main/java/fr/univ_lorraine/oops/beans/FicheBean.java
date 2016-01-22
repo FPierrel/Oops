@@ -30,13 +30,14 @@ public class FicheBean implements Serializable {
 
     private String page;
     private Prestataire prestataire;
-    private List<Avis> lAvis;
-    private int rate1;
-    private int rate2;
-    private int rate3;
-    private int rate4;
-    private String opinion;
-    private String commentaire;
+    private List<Avis> lAvis ; 
+    private List<String> categories ; 
+    private int rate1 ; 
+    private int rate2 ; 
+    private int rate3 ; 
+    private int rate4 ; 
+    private String opinion ; 
+    private String commentaire ; 
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private int noteGlobPrix = 0;
     private int noteGlobQualite = 0;
@@ -64,7 +65,7 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);
         }
         this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin());
-
+        
         if (lAvis.get(0) != null) {
             this.noteTotal = this.prestataire.getAverage();
             this.noteGlobCom = this.prestataire.getCommunication();
@@ -75,6 +76,8 @@ public class FicheBean implements Serializable {
         } else {
             this.lAvis = new ArrayList<>();
         }
+        
+        this.categories = this.fiche.getPrestataireCategoriesNames(this.prestataire.getLogin());
     }
 
     public void saveOpinion() {
@@ -86,7 +89,7 @@ public class FicheBean implements Serializable {
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez renseigner un avis !", null);
             context.addMessage(null, message);
-        }
+    }
         this.init();
     }
 
@@ -126,6 +129,14 @@ public class FicheBean implements Serializable {
 
     public void setlAvis(List<Avis> lAvis) {
         this.lAvis = lAvis;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
     }
 
     public int getRate1() {

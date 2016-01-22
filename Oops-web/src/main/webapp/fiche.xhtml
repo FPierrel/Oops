@@ -29,6 +29,10 @@
                         <h:outputText value="#{ficheBean.prestataire.description}" /><br/><br/>
                         
                         <h2>Informations : </h2><br/>
+                        <h3>Catégories</h3>
+                        <ui:repeat value="#{ficheBean.categories}" var="categorie">
+                            <h:outputText value="#{categorie}"/><br/>
+                        </ui:repeat>
                             <h3>Contacts : </h3>
                                 <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>
                                 <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">

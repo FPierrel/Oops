@@ -1,10 +1,12 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.List;
 import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
@@ -16,11 +18,17 @@ public class EditFicheBean implements Serializable {
 
     @Inject
     private UserManagerBean userManager;
+    
+    @Inject
+    private CategoriesBean categoriesB;
 
     private Prestataire prestataire;
     private String companyName, website, nbEmployee, turnover, description;
     private UIComponent companyNameComponent, websiteComponent, nbEmployeeComponent, turnoverNumberComponent, descriptionComponent;
 
+    private List<String> allCategories;
+    private List<String> categories;
+            
     public EditFicheBean() {
     }
 
@@ -32,6 +40,8 @@ public class EditFicheBean implements Serializable {
             this.nbEmployee = this.prestataire.getNbEmployes() + "";
             this.turnover = this.prestataire.getChiffreAffaire() + "";
             this.description = this.prestataire.getDescription();
+            this.allCategories = this.categoriesB.getListCategories();
+            this.categories = this.prestataire.getListCategories();
         }
     }
 
@@ -78,6 +88,7 @@ public class EditFicheBean implements Serializable {
             this.prestataire.setNbEmployes(nbEmployeeNumber);
             this.prestataire.setChiffreAffaire(turnoverNumber);
             this.prestataire.setDescription(this.description);
+            this.prestataire.setCategories(this.categoriesB.getCategoriesFromListString(categories));
             this.userManager.updateUser(this.prestataire);
         }
         return "ficheedit.xhtml";
@@ -170,4 +181,21 @@ public class EditFicheBean implements Serializable {
     public void setDescriptionComponent(UIComponent descriptionComponent) {
         this.descriptionComponent = descriptionComponent;
     }
+
+    public List<String> getAllCategories() {
+        return allCategories;
+    }
+
+    public void setAllCategories(List<String> allCategories) {
+        this.allCategories = allCategories;
+    }
+
+    public List<String> getCategories() {
+        return categories;
+    }
+
+    public void setCategories(List<String> categories) {
+        this.categories = categories;
+    }
+
 }

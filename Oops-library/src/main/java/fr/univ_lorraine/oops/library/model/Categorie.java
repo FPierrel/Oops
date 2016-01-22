@@ -83,7 +83,8 @@ public class Categorie implements Serializable{
     }
 
     public ArrayList<String> getListCategories(ArrayList<String> list, int depth) {
-        String s = new String(new char[depth * 2]).replace("\0", "-");
+        //String s = new String(new char[depth * 2]).replace("\0", "-");
+        String s = "";
         list.add(s + nom);
         for (Categorie c : sousCategories) {
             c.getListCategories(list, depth + 1);

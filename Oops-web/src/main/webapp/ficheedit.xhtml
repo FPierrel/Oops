@@ -35,6 +35,11 @@
                             <h:outputLabel for="turnoverNumber" value="Chiffre d'affaire : "/>
                             <h:inputText id="turnoverNumber" binding="#{editFicheBean.turnoverNumberComponent}" value="#{editFicheBean.turnover}"/>
                             <p:message for="turnoverNumber" />
+                            <h:outputLabel for="allCategories" value="Catégories : "/>
+                            <p:selectManyMenu id="allCategories" value="#{editFicheBean.categories}" filter="true" showCheckbox="true"> 
+                                <f:selectItems value="#{editFicheBean.allCategories}"/>
+                            </p:selectManyMenu>
+                            <h:outputLabel/>
                             <h:outputLabel for="description" value="Description : "/>
                             <h:inputTextarea id="description" binding="#{editFicheBean.descriptionComponent}" value="#{editFicheBean.description}" cols="30" rows="10"/>
                             <p:message for="description" />

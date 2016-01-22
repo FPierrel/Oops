@@ -35,6 +35,15 @@ public class FichePrestataireBean {
         TypedQuery<Avis> query = this.getEntityManager().createQuery(queryString, Avis.class);
         return query.getResultList();
     }
+    
+    public List<String> getPrestataireCategoriesNames(String login){
+         String queryString = "SELECT c.nom "
+                + "FROM Prestataire p, Categorie c "
+                + "WHERE  p.login='"+login+"' AND c MEMBER OF p.categories"
+                ;
+        TypedQuery<String> query = this.getEntityManager().createQuery(queryString, String.class);
+        return query.getResultList();
+    }
 
     /*public double getNoteGlobCom(String login) {
         String queryString = "SELECT AVG(CAST(a.noteCom as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 

@@ -1,7 +1,7 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
-import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -17,6 +17,9 @@ public class SearchBean implements Serializable {
 
     @Inject
     SearchResultsBean searchResults;
+    
+    @Inject
+    CategoriesBean categoriesB;
 
     private String lastnameSearch, firstnameSearch, raisonSocialeSearch, formeJuridiqueSearch, chiffreAffaireSearch;
     private String quoi, ou;
@@ -54,7 +57,7 @@ public class SearchBean implements Serializable {
         if (this.advanced) {
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie.replace("-", ""));
+             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie);
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
@@ -67,7 +70,7 @@ public class SearchBean implements Serializable {
     public List<String> searchTown(String query) {
         return this.searchResults.searchTest(query);
     }
-    
+
     public List<String> searchTownWithoutCode(String query) {
         return this.searchResults.searchTownWithoutCode(query);
     }
@@ -227,8 +230,7 @@ public class SearchBean implements Serializable {
             return "";
     }
     public List<String> getCategories() {
-        Categorie c = searchResults.getCategories();
-        return c.getListCategories(new ArrayList<String>(), 0);
+        return this.categoriesB.getListCategories();
     }
 
     public void setCategories(ArrayList<String> categories) {
@@ -245,7 +247,7 @@ public class SearchBean implements Serializable {
 
     public List<String> getCodes() {
         return codes;
-    }
+}
 
     public void setCodes(List<String> codes) {
         this.codes = codes;
