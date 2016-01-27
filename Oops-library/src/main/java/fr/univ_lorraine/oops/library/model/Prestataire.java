@@ -30,6 +30,9 @@ public class Prestataire extends Utilisateur implements Serializable {
     public Prestataire() {
         this.groupe = prestataire;
         this.categories = new ArrayList<>();
+        this.nomEntreprise = "";
+        this.description = "";
+        this.siteWeb = "";
     }
 
     public String getNomEntreprise() {
