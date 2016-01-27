@@ -2,6 +2,7 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
+import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ public class SearchBean implements Serializable {
     private String categorie;
     private List<String> codes = new ArrayList<>();
     private String code;
+    private List<Prestataire> listPrestataires;
 
     private int communication, quality, price, delay, moyenne;
     /**
@@ -264,6 +266,16 @@ public class SearchBean implements Serializable {
     public void setCode(String code) {
         this.code = code;
     }
+
+    public List<Prestataire> getListPrestataires() {
+        return this.searchResults.getCoordinates();
+    }
+
+    public void setListPrestataires(List<Prestataire> listPrestataires) {
+        this.listPrestataires = listPrestataires;
+    }
+
+
     
     
 }

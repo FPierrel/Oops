@@ -151,7 +151,7 @@ public class InitializationBean {
         //DEBUT AJOUTS DE PRESTATAIRES : (MODIFIER CI-DESSOUS)
         //----------------------------------------------
         ArrayList<Adresse> adressesJose = new ArrayList<>();
-        adressesJose.add(this.creerAdresse("10", "rue des OGM", "", "75000", "Paris", "France"));
+        adressesJose.add(this.creerAdresse("44", "Rue Rennequin", "", "75000", "Paris", "France"));
         Prestataire pres1 = this.creerPrestataire("jose", "Bové", "José", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "jose.bove@gmail.com",
                 "0123456789", "Jose Bove Enterprise", 999, 1500000, adressesJose);
         pres1.setDescription("Chez José Bové, il y a des josés !");
@@ -161,7 +161,7 @@ public class InitializationBean {
         liste.add(pres1);
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
-        adressesNoupi.add(this.creerAdresse("39", "rue de la colle", "", "57000", "Metz", "Allemagne"));
+        adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "Metz", "Allemagne"));
         Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
         pres2.setDescription("Ceci est un garenne...");
@@ -172,7 +172,7 @@ public class InitializationBean {
         liste.add(pres2);
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
-        adressesPhilippe.add(this.creerAdresse("99", "rue des héros", "", "57000", "Metz", "Allemagne"));
+        adressesPhilippe.add(this.creerAdresse("17", "Rue Saint-Pierre", "", "57000", "Metz", "Allemagne"));
         Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe);
         pres3.setDescription("Ceci est la description de Philippe ...");
@@ -182,7 +182,7 @@ public class InitializationBean {
         liste.add(pres3);
         //----------------------------------------------
         ArrayList<Adresse> adressesDemon = new ArrayList<>();
-        adressesDemon.add(this.creerAdresse("666", "avenue de l'enfer", "", "666 666", "Le four", "Enfer"));
+        adressesDemon.add(this.creerAdresse("7", "Quai des Iranees", "", "88250", "La Bresse", "Enfer"));
         Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon);
         pres4.setDescription("Il fait chaud la bas !");
@@ -192,7 +192,7 @@ public class InitializationBean {
         liste.add(pres4);
         //----------------------------------------------
         ArrayList<Adresse> adressesNeufchateau = new ArrayList<>();
-        adressesNeufchateau.add(this.creerAdresse("12", "Rue de la rue", "", "88300", "Neufchateau", "France"));
+        adressesNeufchateau.add(this.creerAdresse("3", "Rue de la comédie", "", "88300", "Neufchateau", "France"));
         Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr", 
                 "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
         pres5.setDescription("Jacky Tuning c'est le meilleur !");
@@ -202,7 +202,7 @@ public class InitializationBean {
         liste.add(pres5);
         //----------------------------------------------
         ArrayList<Adresse> adressesNancy = new ArrayList<>();
-        adressesNancy.add(this.creerAdresse("38", "avenue de oui", "", "54000", "Nancy", "France"));
+        adressesNancy.add(this.creerAdresse("18", "Cours Léopold", "", "54000", "Nancy", "France"));
         Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b", 
                 "0123456789", "Oooooh", 1, 126423, adressesNancy);
         pres6.setDescription("Ooooooooooooooooooooooooooooohhhhh la description !!!");
@@ -213,7 +213,7 @@ public class InitializationBean {
         liste.add(pres6);
         //----------------------------------------------
         ArrayList<Adresse> adressesOui = new ArrayList<>();
-        adressesOui.add(this.creerAdresse("Oui", "Oui", "", "88630", "Coussey", "France"));
+        adressesOui.add(this.creerAdresse("21", "Rue d'Alger", "", "88630", "Coussey", "France"));
         Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
                 "0123456789", "Oui", 1, 126423, adressesOui);
         pres7.setDescription("Oui oui oui oui oui oui oui oui...");

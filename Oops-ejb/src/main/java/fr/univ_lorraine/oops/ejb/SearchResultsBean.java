@@ -1,13 +1,13 @@
 package fr.univ_lorraine.oops.ejb;
 
-import com.mysql.jdbc.Connection;
+import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Resultat;
-import java.sql.DriverManager;
+import fr.univ_lorraine.oops.rest.Geocoding;
+import fr.univ_lorraine.oops.rest.MySQL;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashMap;
@@ -34,10 +34,11 @@ public class SearchResultsBean {
     public EntityManager getEntityManager() {
         return this.em;
     }
-   public List<Prestataire> search(String what, String where, String postalCode,String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, String categorie) {
-         String queryString = "SELECT DISTINCT p "
+
+    public List<Prestataire> search(String what, String where, String postalCode, String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, String categorie) {
+        String queryString = "SELECT DISTINCT p "
                 + "FROM Prestataire p"
-                + ((!where.isEmpty())?", Adresse a":"")
+                + ((!where.isEmpty()) ? ", Adresse a" : "")
                 + ", Categorie c "
                 + "WHERE 1 = 1"
                 + searchPrestataireWithLastname(lastname, "AND")
@@ -56,18 +57,18 @@ public class SearchResultsBean {
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
         }
-        
+
         if (!where.isEmpty()) {
-            queryString += searchPrestataireWithTownName(where, postalCode,"AND");
+            queryString += searchPrestataireWithTownName(where, postalCode, "AND");
         }
 
         queryString += " ORDER BY p.average DESC";
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-        
+
         if (!this.villes.isEmpty()) {
             query.setParameter("villes", this.villes);
         }
-       
+
         return query.getResultList();
     }
 
@@ -84,11 +85,11 @@ public class SearchResultsBean {
         }
         return " " + operateur + " UPPER(p.prenom) = '" + firstname.toUpperCase() + "'";
     }
-   
+
     public String searchPrestataireWithEmployee(int employee, String operateur) {
         return " " + operateur + " p.nbEmployes >= " + employee;
     }
-    
+
     public String searchPrestataireWithRaisonSociale(String raisonSociale, String operateur) {
         if (raisonSociale.isEmpty()) {
             return "";
@@ -104,11 +105,11 @@ public class SearchResultsBean {
         return "";
         //return " " + operateur + " UPPER(p.formeJuridique) = '" + formeJuridique.toUpperCase() + "'";
     }
-    
+
     public String searchPrestataireWithChiffreAffaire(int chiffreAffaire, String operateur) {
         return " " + operateur + " p.chiffreAffaire >= " + chiffreAffaire;
     }
-    
+
     public String searchPrestataireWithCommunication(int communication, String operateur) {
         return " " + operateur + " p.communication >= " + communication;
     }
@@ -135,7 +136,7 @@ public class SearchResultsBean {
 
     public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {
         ArrayList<Prestataire> results = new ArrayList<>();
-        
+
         //Si le champs quoi est pas renseigné on s'embete pas
         if (quoi.isEmpty() && !ou.isEmpty()) {
             String queryString = "Select p "
@@ -148,7 +149,7 @@ public class SearchResultsBean {
             }
             return query.getResultList();
         }
-        
+
         float scoreMin = 0.9f;
         //Liste des prestataires correspondant un minimum
         HashMap<String, Float> relevanceList = luceneBean.search(quoi);
@@ -159,7 +160,7 @@ public class SearchResultsBean {
         String queryString = "SELECT DISTINCT p.login "
                 + "FROM Prestataire p, Adresse a "
                 + "WHERE 1=1 "
-                + searchPrestataireWithTownName(ou, codePostal,"AND");
+                + searchPrestataireWithTownName(ou, codePostal, "AND");
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
         if (!this.villes.isEmpty()) {
             query.setParameter("villes", this.villes);
@@ -207,53 +208,23 @@ public class SearchResultsBean {
 
     public List<String> searchTownsByRadius(String ville, String codePostal, int radius) {
         List<String> li = new ArrayList<>();
-        /* Connexion à la base de données */
-        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
-        String utilisateur = "root";
-        String motDePasse = "fakepwd88";
-        Connection connexion = null;
-        ResultSet resultat = null;
-        Statement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
-            statement = connexion.createStatement();
 
-            resultat = statement.executeQuery("CALL geodist('"+ville+"','"+codePostal+"',"+radius+")");
+        try {
+            String query = "CALL geodist('" + ville + "','" + codePostal + "'," + radius + ")";
+            ResultSet resultat = MySQL.getInstance().search(query);
 
             while (resultat.next()) {
                 String nom = resultat.getString("ville_nom");
                 li.add(nom);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connexion != null) {
-                try {
-                    connexion.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (resultat != null) {
-                try {
-                    resultat.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ignore) {
-                }
-            }
         }
 
         return li;
     }
 
-    private String searchPrestataireWithTownName(String ou, String codePostal,String operateur) {
+    private String searchPrestataireWithTownName(String ou, String codePostal, String operateur) {
         this.villes = this.searchTownsByRadius(ou, codePostal, 20);
 
         if (this.villes.isEmpty()) {
@@ -264,59 +235,29 @@ public class SearchResultsBean {
     }
 
     public List<String> searchTest(String search) {
-        List<String> li = new ArrayList<>();
-        /* Connexion à la base de données */
-        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
-        String utilisateur = "root";
-        String motDePasse = "fakepwd88";
-        Connection connexion = null;
-        ResultSet resultat = null;
-        Statement statement = null;
         try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
-            statement = connexion.createStatement();
-
-            /* Récupérer latitude longitude de la ville de référence */
-            resultat = statement.executeQuery(""
+            List<String> li = new ArrayList<>();
+            String query = ""
                     + "SELECT ville_nom, ville_code_postal "
                     + "FROM villes_france_free "
                     + "WHERE ville_nom LIKE '%" + search + "%' "
                     + "OR ville_code_postal LIKE '" + search + "%' "
-                    + "ORDER BY ville_nom ");
+                    + "ORDER BY ville_nom ";
+
+            ResultSet resultat = MySQL.getInstance().search(query);
 
             while (resultat.next()) {
                 StringBuilder sb = new StringBuilder();
-                sb.append(resultat.getString("ville_nom") + " ");
-                sb.append("("+ resultat.getString("ville_code_postal") + ")");
+                sb.append(resultat.getString("ville_nom")).append(" ");
+                sb.append("(").append(resultat.getString("ville_code_postal")).append(")");
                 li.add(sb.toString());
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connexion != null) {
-                try {
-                    connexion.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (resultat != null) {
-                try {
-                    resultat.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ignore) {
-                }
-            }
-        }
 
-        return li;
+            return li;
+        } catch (SQLException ex) {
+            Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
     }
 
     public Categorie getCategories() {
@@ -327,50 +268,21 @@ public class SearchResultsBean {
 
     public List<String> searchTownWithoutCode(String search) {
         List<String> li = new ArrayList<>();
-        /* Connexion à la base de données */
-        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
-        String utilisateur = "root";
-        String motDePasse = "fakepwd88";
-        Connection connexion = null;
-        ResultSet resultat = null;
-        Statement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
-            statement = connexion.createStatement();
 
+        try {
             /* Récupérer latitude longitude de la ville de référence */
-            resultat = statement.executeQuery(""
+            String query = ""
                     + "SELECT ville_nom "
                     + "FROM villes_france_free "
-                    + "WHERE ville_nom LIKE '%" + search + "%' ");
+                    + "WHERE ville_nom LIKE '%" + search + "%' ";
+
+            ResultSet resultat = MySQL.getInstance().search(query);
 
             while (resultat.next()) {
                 li.add(resultat.getString("ville_nom"));
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connexion != null) {
-                try {
-                    connexion.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (resultat != null) {
-                try {
-                    resultat.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ignore) {
-                }
-            }
         }
 
         return li;
@@ -378,54 +290,45 @@ public class SearchResultsBean {
 
     public List<String> searchCodes(String town) {
         List<String> li = new ArrayList<>();
-        /* Connexion à la base de données */
-        String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
-        String utilisateur = "root";
-        String motDePasse = "fakepwd88";
-        Connection connexion = null;
-        ResultSet resultat = null;
-        Statement statement = null;
-        try {
-            Class.forName("com.mysql.jdbc.Driver");
-            connexion = (Connection) DriverManager.getConnection(url, utilisateur, motDePasse);
-            statement = connexion.createStatement();
 
-            /* Récupérer latitude longitude de la ville de référence */
-            resultat = statement.executeQuery(""
+        try {
+            String query = ""
                     + "SELECT ville_code_postal "
                     + "FROM villes_france_free "
-                    + "WHERE ville_nom = '" + town + "' ");
+                    + "WHERE ville_nom = '" + town + "' ";
+
+            ResultSet resultat = MySQL.getInstance().search(query);
 
             while (resultat.next()) {
-                for(String code : resultat.getString("ville_code_postal").split("-")){
-                     li.add(code);
-                }             
+                for (String code : resultat.getString("ville_code_postal").split("-")) {
+                    li.add(code);
+                }
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        } catch (ClassNotFoundException ex) {
+        } catch (SQLException ex) {
             Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
-        } finally {
-            if (connexion != null) {
-                try {
-                    connexion.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (resultat != null) {
-                try {
-                    resultat.close();
-                } catch (SQLException ignore) {
-                }
-            }
-            if (statement != null) {
-                try {
-                    statement.close();
-                } catch (SQLException ignore) {
-                }
-            }
         }
 
         return li;
+    }
+
+    public List<Prestataire> getCoordinates() {
+        ArrayList<String[]> results = new ArrayList<>();
+        Geocoding geo = new Geocoding();
+
+        String queryString = "Select p "
+                + "FROM Prestataire p";
+
+        Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+        List<Prestataire> pres = (List<Prestataire>) query.getResultList();
+
+        for (Prestataire p : pres) {
+            for (Adresse a : p.getAdresses()) {
+                String[] coords = geo.callGetCoordinates(a.getNumero() + " " + a.getRue() + " " + a.getVille());
+                a.setLatitude(coords[0]);
+                a.setLongitude(coords[1]);
+            }
+        }
+
+        return pres;
     }
 }

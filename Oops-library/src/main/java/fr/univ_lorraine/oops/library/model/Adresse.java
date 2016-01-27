@@ -17,6 +17,8 @@ public class Adresse implements Serializable {
     private String codePostal;
     private String complement;
     private String ville;
+    private String latitude;
+    private String longitude;
     
     public Adresse() {
         
@@ -92,7 +94,34 @@ public class Adresse implements Serializable {
 
     @Override
     public String toString() {
-        return "Adresse{" + "id=" + id + ", numero=" + numero + ", rue=" + rue + ", codePostal=" + codePostal + ", complement=" + complement + ", ville=" + ville + " }";
+        return "Adresse{" + 
+                "id=" + id + 
+                ", numero=" + numero + 
+                ", rue=" + rue + 
+                ", codePostal=" + codePostal + 
+                ", complement=" + complement + 
+                ", ville=" + ville + 
+                ", latitude=" + latitude +
+                ", longitude=" + longitude +
+                " }";
     }
+
+    public String getLatitude() {
+        return latitude;
+    }
+
+    public void setLatitude(String latitude) {
+        this.latitude = latitude;
+    }
+
+    public String getLongitude() {
+        return longitude;
+    }
+
+    public void setLongitude(String longitude) {
+        this.longitude = longitude;
+    }
+    
+    
     
 }
