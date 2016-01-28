@@ -11,7 +11,7 @@
     </servlet>
     <servlet-mapping>
         <servlet-name>Faces Servlet</servlet-name>
-        <url-pattern>/faces/*</url-pattern>
+        <url-pattern>*.xhtml</url-pattern>
     </servlet-mapping>
     <context-param>
         <param-name>facelets.SKIP_COMMENTS</param-name>
@@ -23,13 +23,12 @@
         </session-timeout>
     </session-config>
     <welcome-file-list>
-        <welcome-file>faces/index.xhtml</welcome-file>
+        <welcome-file>index.xhtml</welcome-file>
     </welcome-file-list>
     <security-constraint>
         <web-resource-collection>
             <web-resource-name>admin-pages</web-resource-name>
             <description>Pages d'administration</description>
-            <url-pattern>/faces/admin/*</url-pattern>
             <url-pattern>/admin/*</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -49,7 +48,6 @@
         <web-resource-collection>
             <web-resource-name>profil-page</web-resource-name>
             <description>Page de profil</description>
-            <url-pattern>/faces/profil.xhtml</url-pattern>
             <url-pattern>/profil.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -71,7 +69,6 @@
         <web-resource-collection>
             <web-resource-name>ficheedit-page</web-resource-name>
             <description>Page d'édition de fiche</description>
-            <url-pattern>/faces/ficheedit.xhtml</url-pattern>
             <url-pattern>/ficheedit.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
@@ -90,8 +87,8 @@
         <auth-method>FORM</auth-method>
         <realm-name>oops_realm</realm-name>
         <form-login-config>
-            <form-login-page>/faces/login.xhtml</form-login-page>
-            <form-error-page>/faces/login.xhtml?failed=true</form-error-page>
+            <form-login-page>/login.xhtml</form-login-page>
+            <form-error-page>/login.xhtml?failed=true</form-error-page>
         </form-login-config>
     </login-config>
     <security-role>
