@@ -26,13 +26,13 @@
                         </c:choose>
 
                         <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
-                        <li class="${cssSigninLink}"><h:link class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li class="${cssSigninLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Inscription" outcome="inscription"/></li>
                         <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
                         <li>
                             <p:menuButton id="username" class = "menuElement" rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
                                 <p:menuitem id="fiche" value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
                                 <p:menuitem id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
-                                <p:menuitem id="profil" value="Editer mon profil" outcome="profil"/>
+                                <p:menuitem id="profil" value="Editer mon profil" outcome="/profil"/>
                                 <p:menuitem id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/>
                             </p:menuButton>
                         </li>

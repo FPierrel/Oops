@@ -2,12 +2,14 @@ package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Administrateur;
 import fr.univ_lorraine.oops.library.model.Adresse;
+import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Date;
 import javax.annotation.PostConstruct;
 import javax.ejb.DependsOn;
 import javax.ejb.Singleton;
@@ -22,12 +24,13 @@ import javax.persistence.PersistenceContext;
 @DependsOn("LuceneBean")
 @LocalBean
 public class InitializationBean {
+
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+
     @Inject
     private LuceneBean luceneBean;
-    
+
     @PostConstruct
     public void init() {
         this.addPrestataires();
@@ -35,13 +38,14 @@ public class InitializationBean {
     }
 
     /**
-     * 1 login, 1 motDePasse, 1 mail, 1 telephone, 1 nomEntreprise et 1 adresse : OBLIGATOIRES !
+     * 1 login, 1 motDePasse, 1 mail, 1 telephone, 1 nomEntreprise et 1 adresse
+     * : OBLIGATOIRES !
      */
-      private void addPrestataires() {
-          
+    private void addPrestataires() {
+
         Categorie tout = new Categorie();
         tout.setNom("Toutes cat\u00e9gories");
-        
+
         Categorie c1 = new Categorie();
         c1.setNom("BTP, Construction");
 
@@ -60,13 +64,13 @@ public class InitializationBean {
         Categorie c1d = new Categorie();
         c1d.setNom("Architecture");
         c1.addSousCategorie(c1d);
-        
+
         tout.addSousCategorie(c1);
         //---------------------------------------------------
 
         Categorie c2 = new Categorie();
         c2.setNom("Banque, Finance, Gestion");
-        
+
         Categorie c2a = new Categorie();
         c2a.setNom("Banque");
         c2.addSousCategorie(c2a);
@@ -78,7 +82,7 @@ public class InitializationBean {
         Categorie c2c = new Categorie();
         c2c.setNom("Conseil financier");
         c2.addSousCategorie(c2c);
-        
+
         tout.addSousCategorie(c2);
         //----------------------------------------------------
 
@@ -100,7 +104,7 @@ public class InitializationBean {
         Categorie c3d = new Categorie();
         c3d.setNom("Livraison \u00e0 domicile");
         c3.addSousCategorie(c3d);
-        
+
         tout.addSousCategorie(c3);
         //---------------------------------------------------------
         Categorie c4 = new Categorie();
@@ -121,7 +125,7 @@ public class InitializationBean {
         Categorie c4d = new Categorie();
         c4d.setNom("Garage");
         c4.addSousCategorie(c4d);
-        
+
         tout.addSousCategorie(c4);
         //----------------------------------------------------------
         Categorie c5 = new Categorie();
@@ -142,10 +146,10 @@ public class InitializationBean {
         Categorie c5d = new Categorie();
         c5d.setNom("Vente de mat\u00e9riel");
         c5.addSousCategorie(c5d);
-        
+
         tout.addSousCategorie(c5);
-        
-          em.persist(tout);
+
+        em.persist(tout);
 
         ArrayList<Prestataire> liste = new ArrayList<>();
         //DEBUT AJOUTS DE PRESTATAIRES : (MODIFIER CI-DESSOUS)
@@ -162,28 +166,58 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
         adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "Metz", "Allemagne"));
-        Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com", 
+        Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com",
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
         pres2.setDescription("Ceci est un garenne...");
         Collection<Categorie> col2 = new ArrayList<>();
         col2.add(c4d);
         col2.add(c4c);
         pres2.setCategories(col2);
+        Avis avis1 = new Avis();
+        avis1.setContenu("Bonjour");
+        avis1.setOwner(pres1);
+        avis1.setNoteCom(1);
+        avis1.setNoteDelai(3);
+        avis1.setNotePrix(2);
+        avis1.setpDate(new Date());
+        avis1.setNoteQualite(5);
+        avis1.setLoginPrestaire("noupi");
+        pres2.addAvis(avis1);
         liste.add(pres2);
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
         adressesPhilippe.add(this.creerAdresse("17", "Rue Saint-Pierre", "", "57000", "Metz", "Allemagne"));
-        Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com", 
+        Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com",
                 "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe);
         pres3.setDescription("Ceci est la description de Philippe ...");
         Collection<Categorie> col3 = new ArrayList<>();
         col3.add(c1);
         pres3.setCategories(col3);
+        Avis avis2 = new Avis();
+        avis2.setContenu("Bonjour les amis");
+        avis2.setOwner(pres1);
+        avis2.setNoteCom(1);
+        avis2.setNoteDelai(3);
+        avis2.setNotePrix(2);
+        avis2.setpDate(new Date());
+        avis2.setNoteQualite(5);
+        avis2.setLoginPrestaire("philippe");
+        pres3.addAvis(avis2);
+        Avis avis3 = new Avis();
+        avis3.setContenu("Bonsoir !");
+        avis3.setOwner(pres2);
+        avis3.setNoteCom(4);
+        avis3.setNoteDelai(3);
+        avis3.setNotePrix(0);
+        avis3.setpDate(new Date());
+        avis3.setNoteQualite(3);
+        avis3.setLoginPrestaire("philippe");
+        pres3.addAvis(avis3);
         liste.add(pres3);
         //----------------------------------------------
         ArrayList<Adresse> adressesDemon = new ArrayList<>();
         adressesDemon.add(this.creerAdresse("7", "Quai des Iranees", "", "88250", "La Bresse", "Enfer"));
-        Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer", 
+        Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer",
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon);
         pres4.setDescription("Il fait chaud la bas !");
         Collection<Categorie> col4 = new ArrayList<>();
@@ -193,7 +227,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesNeufchateau = new ArrayList<>();
         adressesNeufchateau.add(this.creerAdresse("3", "Rue de la comédie", "", "88300", "Neufchateau", "France"));
-        Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr", 
+        Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr",
                 "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
         pres5.setDescription("Jacky Tuning c'est le meilleur !");
         Collection<Categorie> col5 = new ArrayList<>();
@@ -203,7 +237,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesNancy = new ArrayList<>();
         adressesNancy.add(this.creerAdresse("18", "Cours Léopold", "", "54000", "Nancy", "France"));
-        Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b", 
+        Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b",
                 "0123456789", "Oooooh", 1, 126423, adressesNancy);
         pres6.setDescription("Ooooooooooooooooooooooooooooohhhhh la description !!!");
         Collection<Categorie> col6 = new ArrayList<>();
@@ -214,7 +248,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesOui = new ArrayList<>();
         adressesOui.add(this.creerAdresse("21", "Rue d'Alger", "", "88630", "Coussey", "France"));
-        Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui", 
+        Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui",
                 "0123456789", "Oui", 1, 126423, adressesOui);
         pres7.setDescription("Oui oui oui oui oui oui oui oui...");
         Collection<Categorie> col7 = new ArrayList<>();
@@ -223,7 +257,6 @@ public class InitializationBean {
         liste.add(pres7);
         //----------------------------------------------
 
-        
         //FIN AJOUTS DE PRESTATAIRE.
         for (Prestataire p : liste) {
             this.em.persist(p);
@@ -231,9 +264,10 @@ public class InitializationBean {
             luceneBean.indexPrestataire(p);
         }
     }
-    
+
     /**
-     * 1 login, 1 motDePasse, 1 mail, 1 nom, 1 prenom et 1 adresse : OBLIGATOIRES !
+     * 1 login, 1 motDePasse, 1 mail, 1 nom, 1 prenom et 1 adresse :
+     * OBLIGATOIRES !
      */
     private void addSoumissionaires() {
         ArrayList<Soumissionnaire> liste = new ArrayList<>();
@@ -241,7 +275,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesJohn = new ArrayList<>();
         adressesJohn.add(this.creerAdresse("22", "rue de la zappette", "", "54000", "Nancy", "France"));
-        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "123456", "john.siffleur@nenette.fr", 
+        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "123456", "john.siffleur@nenette.fr",
                 "0123456789", adressesJohn));
         //----------------------------------------------
         //FIN AJOUTS DE SOUMISSIONNAIRES.
@@ -249,8 +283,8 @@ public class InitializationBean {
             this.em.persist(s);
         }
     }
-    
-    private Prestataire creerPrestataire(String login, String nom, String prenom, String motDePasse, String mail, 
+
+    private Prestataire creerPrestataire(String login, String nom, String prenom, String motDePasse, String mail,
             String telephone, String nomEntreprise, int nbEmployes, int chiffreAffaire, ArrayList<Adresse> adresses) {
         Prestataire prestataire = new Prestataire();
         prestataire.setLogin(login);
@@ -263,11 +297,12 @@ public class InitializationBean {
         prestataire.setNbEmployes(nbEmployes);
         prestataire.setChiffreAffaire(chiffreAffaire);
         prestataire.setAdresses(adresses);
-        if(login == "jose")
+        if (login == "jose") {
             prestataire.setGroupe(Administrateur.administrateur);
+        }
         return prestataire;
     }
-    
+
     private Soumissionnaire creerSoumissionnaire(String login, String nom, String prenom, String motDePasse, String mail,
             String telephone, ArrayList<Adresse> adresses) {
         Soumissionnaire soumissionnaire = new Soumissionnaire();
@@ -280,7 +315,7 @@ public class InitializationBean {
         soumissionnaire.setAdresses(adresses);
         return soumissionnaire;
     }
-    
+
     private Adresse creerAdresse(String numero, String rue, String complement, String codePostal, String ville, String pays) {
         Adresse adresse = new Adresse();
         adresse.setNumero(numero);

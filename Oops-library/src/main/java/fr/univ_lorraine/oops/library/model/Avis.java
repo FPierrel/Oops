@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
@@ -15,15 +10,10 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
-/**
- *
- * @author Thibaut
- */
 @Entity
 public class Avis implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -40,10 +30,13 @@ public class Avis implements Serializable {
     private Collection<Commentaire> commentaires;
     @Temporal(TemporalType.TIMESTAMP)
     private Date pDate ; 
-    private Utilisateur owner ; 
+    private Utilisateur owner ;
+    private String loginPrestaire;
+    private boolean moderated;
             
     public Avis () {
         this.commentaires = new ArrayList<>() ; 
+        this.moderated = false;
     }
     
     public Avis (int nC, int nP, int nQ, int nD, String contenu) {
@@ -88,7 +81,6 @@ public class Avis implements Serializable {
         return "fr.univ_lorraine.oops.library.model.Avis[ id=" + id + " ]";
     }
 
-
     public int getNotePrix() {
         return notePrix;
     }
@@ -113,15 +105,12 @@ public class Avis implements Serializable {
         this.commentaires.add(com);
     }
 
-
     public int getNoteQualite() {
         return noteQualite;
     }
     public int getNoteDelai() {
         return noteDelai;
-    }
-
-  
+    }  
 
     public Date getpDate() {
         return pDate;
@@ -139,11 +128,9 @@ public class Avis implements Serializable {
         this.noteCom = noteCom;
     }
 
-
     public void setNotePrix(int notePrix) {
         this.notePrix = notePrix;
     }
-
 
     public void setNoteQualite(int noteQualite) {
         this.noteQualite = noteQualite;
@@ -162,6 +149,20 @@ public class Avis implements Serializable {
         this.owner = owner;
     }
 
- 
+    public boolean isModerated() {
+        return moderated;
+    }
+
+    public void setModerated(boolean moderated) {
+        this.moderated = moderated;
+    } 
+
+    public String getLoginPrestaire() {
+        return loginPrestaire;
+    }
+
+    public void setLoginPrestaire(String loginPrestaire) {
+        this.loginPrestaire = loginPrestaire;
+    }
     
 }

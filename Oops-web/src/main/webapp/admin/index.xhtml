@@ -11,11 +11,30 @@
     </h:head>
     <h:body>
         <ui:include src="../header.xhtml"/>
-        <ui:include src="../search.xhtml"/>
         <div id="featured-wrapper">
             <div id ="content">
                 <div id="featured" class="container">
                     Bienvenue sur la page d'administration !
+                    <h3>Avis non vérifié(s) :</h3>
+                    <h:form>
+                        <h:dataTable value="#{adminBean.listeAvisNonVerifies}" var="avis">
+                            <h:column>
+                                <h:outputText value="#{avis.owner.login}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{avis.pDate}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{avis.contenu}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Valider" action="#{adminBean.checkAvis(avis)}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Supprimer" action="#{adminBean.removeAvis(avis)}"/>
+                            </h:column>
+                        </h:dataTable>
+                    </h:form>
                 </div>
             </div>
         </div>

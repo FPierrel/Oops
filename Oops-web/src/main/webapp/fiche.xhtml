@@ -31,9 +31,9 @@
                         <h2>Informations : </h2><br/>
                         <h3>Catégories</h3>
                         <span id="categories">
-                        <ui:repeat value="#{ficheBean.categories}" var="categorie">
-                            <h:outputText value="#{categorie}"/><br/>
-                        </ui:repeat>
+                            <ui:repeat value="#{ficheBean.categories}" var="categorie">
+                                <h:outputText value="#{categorie}"/><br/>
+                            </ui:repeat>
                         </span>
                         <h3>Contacts : </h3>
                         <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>

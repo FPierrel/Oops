@@ -1,0 +1,322 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 6 déc. 2015, 20:25:30
+    Author     : thomas
+*/
+
+html, body {
+    height: 100%;
+}
+
+
+body {
+    margin: 0px;
+
+    background: #ffffff;
+    font-family: 'Arial', sans-serif;
+    font-size: 13px;
+}
+
+
+h1, h2, h3 {
+    margin: 0;
+    padding: 0;
+}
+
+
+/** CONTAINER */
+
+.container{
+    width:1100px;
+    margin: 0px auto;
+}
+
+
+.clearfix{
+    clear: both;
+}
+
+/** HEADER */
+
+
+#header-wrapper
+
+{
+    overflow: hidden;
+    background: #3b3b3b;
+}
+
+
+#header
+
+{
+    overflow: hidden;
+    height: 100px;
+}
+
+
+/** LOGO */
+
+
+#logo
+
+{
+    float: left;
+    width: 400;
+}
+
+
+#logo hi a 
+
+{
+    display: block;
+    line-height: 100px;
+    text-decoration: none;
+    font-family: 'Kavoon', cursive;
+    font-size: 60px;
+    color: #FFFFFF;
+}
+
+
+/** MENU */
+
+
+#menu
+{
+    float: right;
+    width: 700px;
+}
+
+
+#menu ul
+{
+    float: right;
+    margin: 0px;
+    padding: 35px 0px 0px 0px;
+    list-style: none;
+    line-height: normal;
+}
+
+
+#menu li
+{
+    float: left;
+    margin-left: 10px;
+}
+
+
+#menu a
+{
+    display: block;
+    padding: 10px 20px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.menuElement
+{
+    display: block;
+    padding: 10px 20px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+
+#menu .active a
+{
+    background: #00d9a9;
+    border-radius: 5px;
+    color: #FFFFFF;
+}
+
+
+#menu .active a:hover
+{
+    background-color: #00a987;
+}
+
+#menu .active a:active
+{
+    background-color: #20e1b6;
+}
+
+#menu a:hover
+{
+    text-decoration: none;
+}
+
+/** CONTENT */
+
+
+#featured-wrapper
+{
+    overflow: hidden;
+    padding: 40px 0px;
+    background-color: #20e1b6;
+    border-top: 1px solid #E7E7E7;
+    text-align: center;
+}
+
+#featured header
+{
+    display: block;
+    margin-bottom: 30px;
+    letter-spacing: -1px;
+    font-size: 30px;
+    font-weight: 400;
+    color: #333333;
+}
+
+/** BUTTON STYLING */
+/*
+.button
+{
+    display: inline-block;
+    margin: 0px 10px;
+    padding: 10px 30px;
+    background: #20e1b6;
+    -moz-transition: background-color .25s ease-in-out;
+    -webkit-transition: background-color .25s ease-in-out;
+    -o-transition: background-color .25s ease-in-out;
+    -ms-transition: background-color .25s ease-in-out;
+    transition: background-color .25s ease-in-out;
+    border-radius: 5px;
+    box-shadow: 0px 0px 0px 5px rgba(255,255,255, 1);
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 15px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+.button:hover
+{
+    background-color: #00ad87;
+}
+
+.button:active
+{
+    background-color: #20e1b6;
+}
+
+.button-alt
+{
+    background: #20e1b6;
+
+}
+
+.button-alt:hover
+{
+    background-color: #00ad87;
+}
+
+.button-alt:active
+{
+    background-color: #FC3F68;
+}
+
+.button-small
+{
+    margin: 5px 0px;
+    box-shadow: none;
+    font-size: 6px;
+    color: #FFFFFF;
+}*/
+
+.dark form{
+	width:900px;
+	margin: auto;
+}
+.search { 
+	padding:6px 15px 6px 30px;
+	margin:2px; 
+}
+
+input[type=text]{
+	color:#222222;
+}
+
+.button {
+  background: #3498db;
+  background-image: -webkit-linear-gradient(top, #3498db, #2980b9);
+  background-image: -moz-linear-gradient(top, #3498db, #2980b9);
+  background-image: -ms-linear-gradient(top, #3498db, #2980b9);
+  background-image: -o-linear-gradient(top, #3498db, #2980b9);
+  background-image: linear-gradient(to bottom, #3498db, #2980b9);
+  -webkit-border-radius: 28;
+  -moz-border-radius: 28;
+  border-radius: 7px;
+  font-family: Arial;
+  color: #ffffff;
+  padding: 5px 10px 5px 10px;
+  text-decoration: none;
+}
+
+.button:hover {
+  background: #3cb0fd;
+  text-decoration: none;
+}
+
+#title h1{
+    font-size: 50px;
+    text-align: center;
+    color:#000000;
+    margin-top: 10px;
+    margin-bottom: 30px;
+}
+
+#f {
+    width : 440px;
+    margin : auto;
+}
+
+html, body, #container { height: 100%; }
+
+body > #container { height: auto; min-height: 100%; }
+
+#footer {
+ clear: both;
+ position: relative;
+ z-index: 10;
+ height: 8em;
+ margin-top: -8em;
+ background-color: #3b3b3b;
+}
+
+#footer a{
+    display: block;
+    padding: 10px 20px;
+    letter-spacing: 2px;
+    text-decoration: none;
+    text-transform: uppercase;
+    font-family: 'Archivo Narrow', sans-serif;
+    font-size: 12px;
+    font-weight: 600;
+    color: #FFFFFF;
+}
+
+#content { padding-bottom: 3em; }
+
+#container{    
+    padding-top: 5%;
+}
+
+#advanced_search{
+    
+}

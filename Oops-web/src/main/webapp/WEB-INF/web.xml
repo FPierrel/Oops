@@ -29,7 +29,7 @@
         <web-resource-collection>
             <web-resource-name>admin-pages</web-resource-name>
             <description>Pages d'administration</description>
-            <url-pattern>/admin/*</url-pattern>
+            <url-pattern>/admin/index.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>
