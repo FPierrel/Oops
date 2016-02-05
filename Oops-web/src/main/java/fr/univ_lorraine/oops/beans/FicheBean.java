@@ -17,11 +17,12 @@ import javax.inject.Named;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "ficheBean")
-@RequestScoped
+@ViewScoped
 public class FicheBean implements Serializable {
 
     @Inject
@@ -31,14 +32,15 @@ public class FicheBean implements Serializable {
 
     private String page;
     private Prestataire prestataire;
-    private List<Avis> lAvis ; 
-    private List<String> categories ; 
-    private int rate1 ; 
-    private int rate2 ; 
-    private int rate3 ; 
-    private int rate4 ; 
-    private String opinion ; 
-    private String commentaire ; 
+    private List<Avis> lAvis;
+    private List<String> categories;
+    private String[] commentaires;
+    private int rate1;
+    private int rate2;
+    private int rate3;
+    private int rate4;
+    private String opinion;
+    private String commentaire;
     private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
     private int noteGlobPrix = 0;
     private int noteGlobQualite = 0;
@@ -68,6 +70,7 @@ public class FicheBean implements Serializable {
         this.lAvis = this.fiche.getPrestataireAvis(this.prestataire.getLogin());
 
         if (lAvis.get(0) != null) {
+            this.commentaires = new String[lAvis.size()];
             this.noteTotal = this.prestataire.getAverage();
             this.noteGlobCom = this.prestataire.getCommunication();
             this.noteGlobDelai = this.prestataire.getDelay();
@@ -77,7 +80,7 @@ public class FicheBean implements Serializable {
         } else {
             this.lAvis = new ArrayList<>();
         }
-        
+
         this.categories = this.fiche.getPrestataireCategoriesNames(this.prestataire.getLogin());
     }
 
@@ -94,12 +97,25 @@ public class FicheBean implements Serializable {
         this.init();
     }
 
-    public void saveComment() {
-        //System.out.println(this.commentaire);
-        //this.om.saveComment(new Date(), this.prestataire.getLogin(), this.commentaire);
-       this.init();
+   
+
+    public void saveComment(int i) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        Prestataire pres = this.fiche.getPrestataireLogin(this.page);
+        
+        
+        
+        String com = request.getParameter("co" + i);
+        
+
+        if (com != null && !com.equals("")) {
+            this.om.saveComment(new Date(), request.getRemoteUser(), this.lAvis.get(i), com);
+        }
+
+        this.init();
     }
-    
+
     public Prestataire getPrestataire() {
         return this.prestataire;
     }
@@ -236,4 +252,11 @@ public class FicheBean implements Serializable {
         this.nbAvis = nbAvis;
     }
 
+    public String[] getCommentaires() {
+        return commentaires;
+    }
+
+    public void setCommentaires(String[] commentaires) {
+        this.commentaires = commentaires;
+    }
 }

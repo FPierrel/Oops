@@ -6,6 +6,7 @@
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Avis;
+import fr.univ_lorraine.oops.library.model.Commentaire;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.Date;
@@ -26,14 +27,14 @@ public class OpinionManagerBean {
     // "Insert Code > Add Business Method")
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
-    public EntityManager getEntityManager() { 
-        return this.em; 
+
+    public EntityManager getEntityManager() {
+        return this.em;
     }
-    
+
     public void saveOpinion(int nC, int nP, int nQ, int nD, String contenu, Date d, Prestataire p, String loginPoseurAvis) {
         Utilisateur user = this.getEntityManager().find(Utilisateur.class, loginPoseurAvis);
-        Avis a = new Avis() ; 
+        Avis a = new Avis();
         a.setNoteCom(nC);
         a.setNotePrix(nP);
         a.setNoteQualite(nQ);
@@ -46,8 +47,15 @@ public class OpinionManagerBean {
         //this.getEntityManager().merge(user) ; 
         this.getEntityManager().merge(p);
     }
-    
-    public void saveComment(Date d, String login, String message) {
-        System.out.println(message);
+
+    public void saveComment(Date d, String login, Avis avis, String message) {
+        Avis a = this.getEntityManager().find(Avis.class, avis.getId());
+        Commentaire c = new Commentaire();
+        c.setComDate(d);
+        c.setContenu(message);
+        c.setProfil(login);
+        a.addCommentaire(c);
+        
+        this.getEntityManager().merge(a);
     }
 }

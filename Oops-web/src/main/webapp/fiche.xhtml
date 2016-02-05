@@ -23,16 +23,18 @@
                 <div id="featured" class="container">
                     <p:messages />
                     <div class="prestataire">
-                        <h1><h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
+                        <h1><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
                         <h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
                         <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>
-                        <h:outputText value="#{ficheBean.prestataire.description}" /><br/><br/>
+                        <h:outputText id="description" value="#{ficheBean.prestataire.description}" /><br/><br/>
 
                         <h2>Informations : </h2><br/>
                         <h3>Catégories</h3>
+                        <span id="categories">
                         <ui:repeat value="#{ficheBean.categories}" var="categorie">
                             <h:outputText value="#{categorie}"/><br/>
                         </ui:repeat>
+                        </span>
                         <h3>Contacts : </h3>
                         <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>
                         <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">
@@ -54,12 +56,12 @@
                         </h:dataTable>
                         <h:outputText value="Téléphone : #{ficheBean.prestataire.numeroTelephone} " />
                         <h:outputText value="E-mail : #{ficheBean.prestataire.mail} " />
-                        <h:outputText value="Site Web : #{ficheBean.prestataire.siteWeb} " />
+                        <h:outputText id="website" value="Site Web : #{ficheBean.prestataire.siteWeb} " />
                         <h3>A propos de :</h3>
                         <h:outputText value="Raison sociale : A DEFINIR ! " /><br/>
                         <h:outputText value="Forme juridique : A DEFINIR ! " /><br/>
-                        <h:outputText value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
-                        <h:outputText value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
+                        <h:outputText id="employeeNumber" value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
+                        <h:outputText id="turnover" value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
                         <h2>Evaluation : </h2><br/>
                         <h:form>
                             <h:outputText value="Communication : "/><p:rating value="#{ficheBean.noteGlobCom}" readonly="true"/><br/><br/>
@@ -84,47 +86,49 @@
                             </h:form>
                             <h:panelGroup id="panelAvis">
                                 <h2>Avis des clients: </h2>
-                                <h:form id="lAvis">
-                                    <ul>
-                                        <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
-                                            <li><h:outputText value="#{cAvis.pDate}" /><br/><h:outputText value="#{cAvis.owner.login}" /><br/><br/>
-                                                <h:outputText value="Communication : "/>
-                                                <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" readonly="true"/><br/>
-                                                <h:outputText value="Qualité : "/>
-                                                <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" readonly="true"/><br/>
-                                                <h:outputText value="Prix : "/>
-                                                <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" readonly="true"/><br/>
-                                                <h:outputText value="Délai : "/>
-                                                <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" readonly="true"/><br/><br/>
+
+                                <ul>
+                                    <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
+
+                                        <h:form id="lAvis#{loop.index}">
+                                            <p:fieldset legend="Par #{cAvis.owner.login} le #{cAvis.pDate}" style="margin-bottom:20px">
+                                                <h:panelGrid columns="4" cellpadding="5">                                                          
+                                                    <h:outputText value="Communication : "/>
+                                                    <h:outputText value="Qualité : "/>
+                                                    <h:outputText value="Prix : "/>
+                                                    <h:outputText value="Délai : "/>
+                                                    <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" readonly="true"/>
+                                                    <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" readonly="true"/>
+                                                    <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" readonly="true"/>
+                                                    <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" readonly="true"/>
+                                                </h:panelGrid>
+
+
+
                                                 <h:outputText value="Commentaire : "/><br/>
                                                 <h:outputText value="#{cAvis.contenu}" /><br/><br/>  
-                                                <h:panelGrid columns="1" cellpadding="5">
-                                                    <p:commandButton value="Commenter cet avis" type="button" onclick="PF('dialog').show();" />
+
+                                                Réponses : <br/><br/>
+
+                                                <ui:repeat value="#{cAvis.commentaires}" var="comm" varStatus="i">
+                                                    <p:fieldset legend="Par #{comm.profil} le #{comm.comDate}" style="margin-bottom:20px">
+                                                        <h:panelGrid columns="2" cellpadding="5">                                                          
+                                                            <h:outputText value="#{comm.contenu}"/> 
+                                                        </h:panelGrid>
+                                                    </p:fieldset>               
+                                                </ui:repeat>
+
+                                                <h:panelGrid columns="2" cellpadding="5">
+                                                    <input type="text" id="co#{loop.index}" name="co#{loop.index}" />
+                                                    <p:commandButton value="Commenter cet avis" action="#{ficheBean.saveComment(loop.index)}" update="@all" />
                                                 </h:panelGrid>
-                                                <p:dialog header="Basic Dialog" widgetVar="dialog" modal="true" minHeight="40">
-                                                    <h:inputText value="#{cAvis.commentaires[loop.index]}" id="commentaire"/><br/><br/>
-                                                    <p:commandButton value="Commenter" action="#{ficheBean.saveComment()}" onclick="PF('dialog').hide();" update="@all"/>
-                                                </p:dialog>
-                                                <h:outputText value="#{cAvis.commentaires[loop.index]} "/>
-                                                <!--><h:panelGrid columns="1" cellpadding="5">
-                                                    <p:commandButton value="Commenter cet avis" type="button" onclick="PF('dialog').show();" />
-                                                </h:panelGrid>
 
-                                                <p:dialog header="Basic Dialog" widgetVar="dialog" modal="true" minHeight="40">
+                                            </p:fieldset>
+                                        </h:form>
 
-                                                    <p:inputText value="#{testBean.item}" id="commentaire"/><br/><br/>
-                                                    <p:commandButton value="test" action="#{testBean.maj()}" oncomplete="PF('dialog').hide();" update="results"/>
+                                    </ui:repeat>
+                                </ul>
 
-
-                                                </p:dialog> 
-
-                                                <h:panelGroup id="results">
-                                                    
-                                                </h:panelGroup>-->
-                                            </li>
-                                        </ui:repeat>
-                                    </ul>
-                                </h:form>
                             </h:panelGroup>
                         </div>
                     </div>    

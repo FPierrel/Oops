@@ -108,6 +108,10 @@ public class Avis implements Serializable {
     public void setCommentaires(Collection<Commentaire> commentaires) {
         this.commentaires = commentaires;
     }
+    
+    public void addCommentaire(Commentaire com){
+        this.commentaires.add(com);
+    }
 
 
     public int getNoteQualite() {

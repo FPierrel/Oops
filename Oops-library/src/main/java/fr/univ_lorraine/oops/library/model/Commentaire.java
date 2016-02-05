@@ -29,6 +29,7 @@ public class Commentaire implements Serializable {
     private String contenu ; 
     @Temporal(TemporalType.TIMESTAMP)
     private Date comDate ; 
+    private String profil;
     
     public Commentaire() {
         
@@ -81,6 +82,14 @@ public class Commentaire implements Serializable {
 
     public void setComDate(Date comDate) {
         this.comDate = comDate;
+    }
+
+    public String getProfil() {
+        return profil;
+    }
+
+    public void setProfil(String profil) {
+        this.profil = profil;
     }
 
    
