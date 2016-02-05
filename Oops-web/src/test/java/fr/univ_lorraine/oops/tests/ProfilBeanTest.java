@@ -54,7 +54,7 @@ public class ProfilBeanTest {
     public void testEditProfilSuccess() {
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Modification(s) enregistrée(s) !";
-        assertEquals(driver.findElement(By.className("ui-messages-info")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-info")).getText());
     }
 
     @Test
@@ -62,7 +62,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:oldPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe incorrect !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -71,7 +71,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe trop petit (inférieur à 6), veuillez recommencer !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -81,7 +81,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPasswordConfirm")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation du nouveau mot de passe incorrecte !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMail")).sendKeys("a@a");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Adresse mail non valide, veuillez recommencer !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -98,6 +98,6 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMailConfirm")).sendKeys("hello@hello.fr");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation de la nouvelle adresse mail incorrecte !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 }
