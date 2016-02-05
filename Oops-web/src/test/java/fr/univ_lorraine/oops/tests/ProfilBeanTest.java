@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -23,13 +24,13 @@ public class ProfilBeanTest {
     @BeforeClass
     public static void setUpClass() {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        driver = new PhantomJSDriver(capabilities);
+        driver = new PhantomJSDriver(capabilities);        
         driver.manage().window().setSize(new Dimension(1440, 768));
-        driver.get("http://localhost:8080/Oops-web/faces/profil.xhtml");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
-        driver.findElement(By.name("j_username")).sendKeys("noupi");
-        driver.findElement(By.name("j_password")).sendKeys("123456");
-        driver.findElement(By.name("submit")).click();
+        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.findElement(By.id("username")).sendKeys("noupi");
+        driver.findElement(By.id("password")).sendKeys("123456");
+        driver.findElement(By.id("login")).click();
     }
 
     @AfterClass
@@ -39,8 +40,8 @@ public class ProfilBeanTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/faces/profil.xhtml");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.id("profilForm:newMail")).clear();
         driver.findElement(By.id("profilForm:newMailConfirm")).clear();
     }
