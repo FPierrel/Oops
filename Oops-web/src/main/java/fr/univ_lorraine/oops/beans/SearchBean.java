@@ -57,6 +57,7 @@ public class SearchBean implements Serializable {
         }
 
         if (this.advanced) {
+            this.advanced = false;
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
              this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie);
@@ -132,7 +133,14 @@ public class SearchBean implements Serializable {
     public void setAdvanced(boolean advanced) {
         this.advanced = advanced;
     }
+    
+    public void switchAdvanced(){
+        this.advanced = !this.advanced;
+    }
 
+    public void cancelAdvanced(){
+        this.advanced = false;
+    }
     public List<Prestataire> getPrestataires() {
         return prestataires;
     }

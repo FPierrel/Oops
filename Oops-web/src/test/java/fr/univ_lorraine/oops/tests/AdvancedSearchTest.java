@@ -50,10 +50,9 @@ public class AdvancedSearchTest {
     public void setUp() {
         driver.get("http://localhost:8080/Oops-web/index.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-
-        //      driver.findElement(By.id("searchForm:advanced_checkbox")).click();
+        driver.findElement(By.id("searchForm:buttonAdvancedSearch")).click();
         try {
-            Thread.sleep(5000);
+            Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(AdvancedSearchTest.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,7 +66,7 @@ public class AdvancedSearchTest {
 
     @After
     public void tearDown() {
-        //    driver.findElement(By.id("searchForm:advanced_checkbox")).click();
+        
     }
 
     @Test
@@ -115,7 +114,7 @@ public class AdvancedSearchTest {
     @Test
     public void testAdvancedSearchWithCategorieRestauration() {
         Select sel = new Select(driver.findElement(By.id("searchForm:categorie")));
-        sel.selectByVisibleText("--Restauration");
+        sel.selectByVisibleText("Restauration");
         driver.findElement(By.id("searchForm:go")).click();
         Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
@@ -123,7 +122,7 @@ public class AdvancedSearchTest {
     @Test
     public void testAdvancedSearchWithCategorieAudit() {
         Select sel = new Select(driver.findElement(By.id("searchForm:categorie")));
-        sel.selectByVisibleText("----Audit");
+        sel.selectByVisibleText("Audit");
         driver.findElement(By.id("searchForm:go")).click();
         Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }

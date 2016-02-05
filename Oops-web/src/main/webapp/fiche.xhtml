@@ -70,24 +70,24 @@
                             <h:outputText value="Délai : "/><p:rating value="#{ficheBean.noteGlobDelai}" readonly="true"/><br/><br/><br/><br/>
                         </h:form>
                         <div id="avis">
-                            <h:form rendered="#{request.remoteUser != null}">
+                            <h:form id="formOpinion" rendered="#{request.remoteUser != null}">
                                 <h2>Donnez votre avis : </h2><br/>
                                 <h:outputText value="Communication : "/>
-                                <p:rating value="#{ficheBean.rate1}" stars="5" cancel="false" /><br/><br/>
+                                <p:rating id="rate1" value="#{ficheBean.rate1}" stars="5" cancel="false" /><br/><br/>
                                 <h:outputText value="Qualité : "/>
-                                <p:rating value="#{ficheBean.rate2}" stars="5" cancel="false" /><br/><br/>
+                                <p:rating id="rate2" value="#{ficheBean.rate2}" stars="5" cancel="false" /><br/><br/>
                                 <h:outputText value="Prix : "/>
-                                <p:rating value="#{ficheBean.rate3}" stars="5" cancel="false" /><br/><br/>
+                                <p:rating id="rate3" value="#{ficheBean.rate3}" stars="5" cancel="false" /><br/><br/>
                                 <h:outputText value="Délai : "/>
-                                <p:rating value="#{ficheBean.rate4}" stars="5" cancel="false" /><br/><br/>
+                                <p:rating id="rate4" value="#{ficheBean.rate4}" stars="5" cancel="false" /><br/><br/>
                                 <h:outputText value="Laissez un commentaire sur la prestation : "/><br/><br/>
                                 <p:inputText value="#{ficheBean.opinion}" id="opinion"/><br/><br/>
-                                <p:commandButton class="button" value="Soumettre" action="#{ficheBean.saveOpinion()}" update="@all"/><br/><br/>                                
+                                <p:commandButton id="opinionButton" class="button" value="Soumettre" action="#{ficheBean.saveOpinion()}" update="@all"/><br/><br/>                                
                             </h:form>
                             <h:panelGroup id="panelAvis">
                                 <h2>Avis des clients: </h2>
 
-                                <ul>
+                                <ul id="opinions">
                                     <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
 
                                         <h:form id="lAvis#{loop.index}">
@@ -106,7 +106,7 @@
 
 
                                                 <h:outputText value="Commentaire : "/><br/>
-                                                <h:outputText value="#{cAvis.contenu}" /><br/><br/>  
+                                                <h:outputText id="contenu" value="#{cAvis.contenu}" /><br/><br/>  
 
                                                 Réponses : <br/><br/>
 

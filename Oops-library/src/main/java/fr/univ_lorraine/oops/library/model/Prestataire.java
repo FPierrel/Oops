@@ -114,7 +114,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setAverage(int average) {
         this.average = average;
     }
-    
+
     public Collection<Categorie> getCategories() {
         return categories;
     }
@@ -122,7 +122,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setCategories(Collection<Categorie> categories) {
         this.categories = categories;
     }
-    
+
     public List<String> getListCategories(){
         List<String> l = new ArrayList<>();
         for (Categorie c : categories) {
@@ -143,7 +143,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setcAvis(Collection<Avis> cAvis) {
         this.cAvis = cAvis;
     }
-    
+
     public int getNbAvis(){
         return cAvis.size();
     }
@@ -168,11 +168,19 @@ public class Prestataire extends Utilisateur implements Serializable {
             noteGlobPrix += a.getNotePrix();
             noteGlobDelai += a.getNoteDelai();
         }
-        this.average = round(((noteGlobCom / cAvis.size()) + (noteGlobDelai / cAvis.size()) + (noteGlobPrix / cAvis.size()) + (noteGlobQualite) / cAvis.size()) / 4);
-        this.communication = (int) round(noteGlobCom / cAvis.size());
-        this.quality = (int) round(noteGlobQualite / cAvis.size());
-        this.price = (int) round(noteGlobPrix / cAvis.size());
-        this.delay = (int) round(noteGlobDelai / cAvis.size());
+        if (cAvis.size() > 0) {
+            this.average = round(((noteGlobCom / cAvis.size()) + (noteGlobDelai / cAvis.size()) + (noteGlobPrix / cAvis.size()) + (noteGlobQualite) / cAvis.size()) / 4);
+            this.communication = (int) round(noteGlobCom / cAvis.size());
+            this.quality = (int) round(noteGlobQualite / cAvis.size());
+            this.price = (int) round(noteGlobPrix / cAvis.size());
+            this.delay = (int) round(noteGlobDelai / cAvis.size());
+        } else {
+            this.average = 0;
+            this.communication = 0;
+            this.quality = 0;
+            this.price = 0;
+            this.delay = 0;
+        }
     }
 
     public void removeAvis(Avis avis) {

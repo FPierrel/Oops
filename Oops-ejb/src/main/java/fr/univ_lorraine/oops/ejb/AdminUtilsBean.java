@@ -38,6 +38,7 @@ public class AdminUtilsBean {
         p.removeAvis(avis);
         this.getEntityManager().merge(p);
         this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
+        p.recalculateMarks();
     }
 
 }
