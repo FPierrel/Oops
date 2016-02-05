@@ -183,6 +183,16 @@ public class InitializationBean {
         avis1.setNoteQualite(5);
         avis1.setLoginPrestaire("noupi");
         pres2.addAvis(avis1);
+        Avis avis22 = new Avis();
+        avis22.setContenu("Bonjour satan");
+        avis22.setOwner(pres1);
+        avis22.setNoteCom(0);
+        avis22.setNoteDelai(0);
+        avis22.setNotePrix(0);
+        avis22.setpDate(new Date());
+        avis22.setNoteQualite(0);
+        avis22.setLoginPrestaire("jose");
+        pres2.addAvis(avis22);
         liste.add(pres2);
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
