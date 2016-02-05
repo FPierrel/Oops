@@ -55,7 +55,7 @@ public class LuceneBean {
     @PostConstruct
     public void init() {
        try {
-            //Chargement des prestataires
+            //Chargement des prestataires  
             List<Prestataire> liste = em.createQuery("SELECT p FROM Prestataire p").getResultList();
             for (Prestataire p : liste) {
                 iwriter.addDocument(prestataireToDocument(p));

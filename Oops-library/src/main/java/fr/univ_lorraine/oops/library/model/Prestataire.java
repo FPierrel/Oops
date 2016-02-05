@@ -175,4 +175,7 @@ public class Prestataire extends Utilisateur implements Serializable {
         this.delay = (int) round(noteGlobDelai / cAvis.size());
     }
 
+    public void removeAvis(Avis avis) {
+        this.cAvis.remove(avis);
+    }
 }

@@ -41,6 +41,7 @@ public class OpinionManagerBean {
         a.setContenu(contenu);
         a.setpDate(d);
         a.setOwner(user);
+        a.setLoginPrestaire(p.getLogin());
         p.addAvis(a);
         //user.addAvisSoumis(a);
         //this.getEntityManager().merge(user) ; 

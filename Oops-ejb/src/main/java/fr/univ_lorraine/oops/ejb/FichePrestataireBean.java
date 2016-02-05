@@ -28,7 +28,7 @@ public class FichePrestataireBean {
     }
     
     public List<Avis> getPrestataireAvis(String login) {
-        String queryString = "SELECT DISTINCT p.cAvis "
+        String queryString = "SELECT p.cAvis "
                 + "FROM Prestataire p "
                 + "WHERE  p.login='"+login+"'"
                 ;
