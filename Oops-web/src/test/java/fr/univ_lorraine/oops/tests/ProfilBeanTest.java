@@ -10,6 +10,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -23,7 +24,7 @@ public class ProfilBeanTest {
     @BeforeClass
     public static void setUpClass() {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        driver = new PhantomJSDriver(capabilities);
+        driver = new PhantomJSDriver(capabilities);        
         driver.manage().window().setSize(new Dimension(1440, 768));
         driver.get("http://localhost:8080/Oops-web/profil.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
@@ -53,7 +54,7 @@ public class ProfilBeanTest {
     public void testEditProfilSuccess() {
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Modification(s) enregistrée(s) !";
-        assertEquals(driver.findElement(By.className("ui-messages-info")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-info")).getText());
     }
 
     @Test
@@ -61,7 +62,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:oldPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe incorrect !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -70,7 +71,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe trop petit (inférieur à 6), veuillez recommencer !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -80,7 +81,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPasswordConfirm")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation du nouveau mot de passe incorrecte !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -88,7 +89,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMail")).sendKeys("a@a");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Adresse mail non valide, veuillez recommencer !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -97,6 +98,6 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMailConfirm")).sendKeys("hello@hello.fr");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation de la nouvelle adresse mail incorrecte !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
     }
 }

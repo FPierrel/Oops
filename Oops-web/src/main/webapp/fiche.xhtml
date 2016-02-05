@@ -23,16 +23,18 @@
                 <div id="featured" class="container">
                     <p:messages />
                     <div class="prestataire">
-                        <h1><h:outputText value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
+                        <h1><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
                         <h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
                         <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>
-                        <h:outputText value="#{ficheBean.prestataire.description}" /><br/><br/>
+                        <h:outputText id="description" value="#{ficheBean.prestataire.description}" /><br/><br/>
 
                         <h2>Informations : </h2><br/>
                         <h3>Catégories</h3>
-                        <ui:repeat value="#{ficheBean.categories}" var="categorie">
-                            <h:outputText value="#{categorie}"/><br/>
-                        </ui:repeat>
+                        <span id="categories">
+                            <ui:repeat value="#{ficheBean.categories}" var="categorie">
+                                <h:outputText value="#{categorie}"/><br/>
+                            </ui:repeat>
+                        </span>
                         <h3>Contacts : </h3>
                         <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>
                         <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">
@@ -54,12 +56,12 @@
                         </h:dataTable>
                         <h:outputText value="Téléphone : #{ficheBean.prestataire.numeroTelephone} " />
                         <h:outputText value="E-mail : #{ficheBean.prestataire.mail} " />
-                        <h:outputText value="Site Web : #{ficheBean.prestataire.siteWeb} " />
+                        <h:outputText id="website" value="Site Web : #{ficheBean.prestataire.siteWeb} " />
                         <h3>A propos de :</h3>
                         <h:outputText value="Raison sociale : A DEFINIR ! " /><br/>
                         <h:outputText value="Forme juridique : A DEFINIR ! " /><br/>
-                        <h:outputText value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
-                        <h:outputText value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
+                        <h:outputText id="employeeNumber" value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
+                        <h:outputText id="turnover" value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
                         <h2>Evaluation : </h2><br/>
                         <h:form>
                             <h:outputText value="Communication : "/><p:rating value="#{ficheBean.noteGlobCom}" readonly="true"/><br/><br/>
