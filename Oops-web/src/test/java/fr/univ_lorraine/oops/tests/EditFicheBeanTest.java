@@ -5,6 +5,7 @@
  */
 package fr.univ_lorraine.oops.tests;
 
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 import org.junit.After;
 import org.junit.AfterClass;
@@ -15,6 +16,7 @@ import static org.junit.Assert.*;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -149,6 +151,33 @@ public class EditFicheBeanTest {
         driver.findElement(By.id("ficheForm:save")).click();
         driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("description")).getText(), val);
+    }
+
+    @Test
+    public void testEditFicheCategories() {
+        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        assertFalse(driver.findElement(By.id("categories")).getText().contains("Audit"));
+        driver.get("http://localhost:8080/Oops-web/ficheedit.xhtml");
+        List<WebElement> l = driver.findElements(By.xpath("//ul/li"));
+        for (WebElement w : l) {
+            if (w.getText().equals("Audit")) {
+                w.findElement(By.xpath("div/div/span")).click();
+
+            }
+        }
+        driver.findElement(By.id("ficheForm:save")).click();
+        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        assertTrue(driver.findElement(By.id("categories")).getText().contains("Audit"));
+        
+        driver.get("http://localhost:8080/Oops-web/ficheedit.xhtml");
+        l = driver.findElements(By.xpath("//ul/li"));
+        for (WebElement w : l) {
+            if (w.getText().equals("Audit")) {
+                w.findElement(By.xpath("div/div/span")).click();
+
+            }
+        }
+        driver.findElement(By.id("ficheForm:save")).click();
     }
 
 }
