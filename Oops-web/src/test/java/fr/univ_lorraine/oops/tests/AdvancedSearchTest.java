@@ -48,7 +48,7 @@ public class AdvancedSearchTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/faces/index.xhtml");
+        driver.get("http://localhost:8080/Oops-web/index.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
 
         //      driver.findElement(By.id("searchForm:advanced_checkbox")).click();

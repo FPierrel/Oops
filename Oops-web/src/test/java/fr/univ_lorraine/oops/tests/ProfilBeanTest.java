@@ -25,8 +25,8 @@ public class ProfilBeanTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
-        driver.get("http://localhost:8080/Oops-web/faces/profil.xhtml");
-        driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
+        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).sendKeys("noupi");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
@@ -39,7 +39,7 @@ public class ProfilBeanTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/faces/profil.xhtml");
+        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.id("profilForm:newMail")).clear();
         driver.findElement(By.id("profilForm:newMailConfirm")).clear();

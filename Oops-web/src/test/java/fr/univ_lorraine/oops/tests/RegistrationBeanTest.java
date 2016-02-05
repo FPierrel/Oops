@@ -89,8 +89,8 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:number")).sendKeys("12");
         driver.findElement(By.id("form_signin:street")).sendKeys("laRue");
         driver.findElement(By.id("form_signin:complement")).sendKeys("3e étage");
-        driver.findElement(By.id("form_signin:code")).sendKeys("92000");
-        driver.findElement(By.id("form_signin:town")).sendKeys("laVille");
+        driver.findElement(By.id("form_signin:code")).sendKeys("57150");
+        driver.findElement(By.id("form_signin:town")).sendKeys("Creutzwald");
     }
 
     public int randomLogin() {
@@ -106,13 +106,13 @@ public class RegistrationBeanTest {
     @Test
     public void testRegistrationSuccess() throws InterruptedException {
         int log = this.randomLogin();
-        driver.findElement(By.id("form_signin:login")).sendKeys(log + "");
+        driver.findElement(By.id("form_signin:login")).sendKeys(log + "Test");
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:email")).sendKeys(log + "@jose.jose");
         driver.findElement(By.name("form_signin:register")).click();
         String str = "Inscription réussie !";
-        driver.wait(5000);
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         assertEquals(str, driver.findElement(By.className("ui-messages-info-detail")).getText());
     }
 
@@ -218,7 +218,6 @@ public class RegistrationBeanTest {
     public void testRegistrationTownMiss() {
         driver.findElement(By.id("form_signin:town")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("form_signin:town")).sendKeys(Keys.DELETE);
-        driver.findElement(By.id("form_signin:email")).sendKeys("jose@jose.jose");
         driver.findElement(By.name("form_signin:register")).click();
         String str = "Veuillez renseigner votre ville !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
