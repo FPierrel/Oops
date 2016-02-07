@@ -130,7 +130,6 @@ public class LuceneBean {
         return result;
     }
     
-
     private Document prestataireToDocument(Prestataire p) {
         Document d = new Document();
         d.add(new Field("id", p.getLogin(), Field.Store.YES, Field.Index.NOT_ANALYZED));
