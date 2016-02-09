@@ -191,7 +191,7 @@ public class InitializationBean {
         avis22.setNotePrix(0);
         avis22.setpDate(new Date());
         avis22.setNoteQualite(0);
-        avis22.setLoginPrestaire("jose");
+        avis22.setLoginPrestaire("noupi");
         pres2.addAvis(avis22);
         liste.add(pres2);
         //----------------------------------------------

@@ -47,7 +47,12 @@ public class AvisGestionTest {
 
     @AfterClass
     public static void tearDownClass() {
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=satan");
+        driver.quit();
+    }
+
+    public void initialisation(String s) {
+        /* Création d'un avis propre à ce test */ 
+        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         driver.findElement(By.id("formOpinion:opinion")).clear();
         int notes[] = {0, 0, 0, 0};
@@ -55,51 +60,89 @@ public class AvisGestionTest {
         driver.findElement(By.id("formOpinion:rate2")).findElements(By.xpath("div")).get(notes[1]).click();
         driver.findElement(By.id("formOpinion:rate3")).findElements(By.xpath("div")).get(notes[2]).click();
         driver.findElement(By.id("formOpinion:rate4")).findElements(By.xpath("div")).get(notes[3]).click();
-        String comment = "Bonjour satan";
-        driver.findElement(By.id("formOpinion:opinion")).sendKeys(comment);
+        driver.findElement(By.id("formOpinion:opinion")).sendKeys(s);
         driver.findElement(By.id("formOpinion:opinionButton")).click();
-        driver.quit();
+        driver.get("http://localhost:8080/Oops-web/");
+        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=Oui");
     }
-
-    @Before
-    public void setUp() {
+    
+    public void cloture(String s, int i) {
+        /* Suppression de l'avis pour garantir l'isolation */
         driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-    }
-
-    @After
-    public void tearDown() {
+        driver.findElement(By.id("avisEnAttente:datatable:"+i+":supprimer")).click();
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
     }
 
     @Test
     public void testNumberOfAvisInWaiting() {
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr")).size();
-        assertTrue(bonjour > 0);
+        /* Initialisation */ 
+        this.initialisation("testNumberOfAvisInWaiting");
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        /* Test du nombre d'avis */
+        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size()-1;
+        assertTrue(bonjour>0);
+        /* Cloture */
+        this.cloture("testNumberOfAvisInWaiting",bonjour);
+        //assertFalse(driver.findElement(By.xpath(".//form//table//tr//td")).getText().contains("testNumberOfAvisInWaiting")) ;         
     }
 
     @Test
     public void testAvisExisting() {
-        assertTrue(driver.findElement(By.id("avisEnAttente:datatable")).getText().contains("jose"));
+        /* Initialisation */ 
+        this.initialisation("testAvisExisting");
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        /* Test */
+        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size()-1;
+        assertTrue(driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":contenu")).getText().contains("testAvisExisting")) ;
+        /* Cloture */
+        this.cloture("testAvisExisting",bonjour);
     }
 
     @Test
     public void testAvisNotExisting() {
-        assertFalse(driver.findElement(By.id("avisEnAttente:datatable")).getText().contains("jbvskjbvljbl564bgdsr1b"));
+        /* Initialisation */ 
+        this.initialisation("testNotAvisExisting");
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        /* Test */
+        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size()-1;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":contenu")).getText().contains("hjfkhjuk5454k54d")) ;
+        /* Cloture */
+        this.cloture("testNotAvisExisting",bonjour);
     }
 
     @Test
     public void testValidation() {
-        driver.findElement(By.id("avisEnAttente:datatable:0:valider")).click();
-        assertFalse(driver.findElement(By.id("avisEnAttente:datatable")).getText().contains("Bonjour les amis"));
+        /* Initialisation */ 
+        this.initialisation("testValidation");
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size()-1;
+        /* Validation */ 
+        driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":valider")).click();
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        /* Test du nombre d'avis */
+        bonjour -- ;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":contenu")).getText().contains("testValidation")) ;
     }
 
     @Test
     public void testSuppression() {
-        //driver.findElement(By.name("avisEnAttente:datatable:0:supprimer")).click();
-        /*driver.get("http://localhost:8080/Oops-web/");
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        /* Initialisation */ 
+        this.initialisation("testSuppression");
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/legend")).getText().contains("Bonjour satan"));*/
-        //assertFalse(driver.findElement(By.id("avisEnAttente:datatable")).getText().contains("Bonjour satan"));
+        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size()-1;
+        /* Suppression */ 
+        driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":supprimer")).click();
+        driver.get("http://localhost:8080/Oops-web/admin/index.xhtml");
+        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        /* Test du nombre d'avis */
+        bonjour -- ;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:"+bonjour+":contenu")).getText().contains("testSuppression")) ;
     }
 }
