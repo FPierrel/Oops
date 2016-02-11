@@ -5,6 +5,7 @@
  */
 package fr.univ_lorraine.oops.tests;
 
+import fr.univ_lorraine.oops.ejb.LuceneBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
@@ -53,11 +54,14 @@ public class RegistrationTest {
         p1.setLogin("José");
 
         EntityManager em = Mockito.mock(EntityManager.class);
+
         Mockito.when(em.find(Utilisateur.class, p1.getLogin())).thenReturn(null);
 
         UserManagerBean umb = Mockito.mock(UserManagerBean.class);
+        
         Mockito.when(umb.registerUser(p1)).thenCallRealMethod();
         Mockito.when(umb.getEntityManager()).thenReturn(em);
+        
 
         Assert.assertSame(umb.registerUser(p1), p1);
     }

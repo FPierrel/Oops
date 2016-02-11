@@ -28,7 +28,7 @@ public class SearchBean implements Serializable {
     private boolean advanced;
     private int note = 3;
     /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
-    private List<Prestataire> prestataires;
+    private List<Prestataire> prestataires = new ArrayList<>();;
     private List<String> villes = new ArrayList<>();
     private String choix;
     private List<String> categories = new ArrayList<>();
@@ -282,8 +282,5 @@ public class SearchBean implements Serializable {
     public void setListPrestataires(List<Prestataire> listPrestataires) {
         this.listPrestataires = listPrestataires;
     }
-
-
-    
     
 }

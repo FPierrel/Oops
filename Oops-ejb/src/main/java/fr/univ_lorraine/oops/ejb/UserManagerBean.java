@@ -11,32 +11,33 @@ import javax.persistence.PersistenceContext;
 @Stateless
 @LocalBean
 public class UserManagerBean {
-    
+
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+
     @Inject
     private LuceneBean luceneBean;
-    
-    public EntityManager getEntityManager() { 
-        return this.em; 
+
+    public EntityManager getEntityManager() {
+        return this.em;
     }
-    
+
     public Utilisateur registerUser(Utilisateur u) {
         Utilisateur user = this.getEntityManager().find(Utilisateur.class, u.getLogin());
-        if(user == null) {
+        if (user == null) {
             this.getEntityManager().persist(u);
-            if (u instanceof Prestataire)
-                luceneBean.indexPrestataire((Prestataire)u);
+            if (u instanceof Prestataire) {
+                luceneBean.indexPrestataire(((Prestataire) u));
+            }
             return u;
         }
         return null;
     }
-    
+
     public Utilisateur searchByLogin(String login) {
         return this.getEntityManager().find(Utilisateur.class, login);
     }
-    
+
     public void updateUser(Utilisateur user) {
         this.getEntityManager().merge(user);
     }
