@@ -2,6 +2,8 @@ package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Report;
+import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -40,5 +42,19 @@ public class AdminUtilsBean {
         this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
         p.recalculateMarks();
     }
+
+    public void updateReport(Report report) {
+       this.getEntityManager().merge(report);
+    }
+
+    public List<ReportFichePrestataire> getUnverifiedReport() {
+         String queryString = "SELECT r "
+                + "FROM Report r "
+                + "WHERE  r.moderated='" + false + "'";
+        TypedQuery<ReportFichePrestataire> query = this.getEntityManager().createQuery(queryString, ReportFichePrestataire.class);
+        return query.getResultList();
+    }
+    
+    
 
 }

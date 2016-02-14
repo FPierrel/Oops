@@ -35,6 +35,44 @@
                             </h:column>
                         </h:dataTable>
                     </h:form>
+
+                    <h3>Signalement de profils non vérifiés :</h3>
+                    <h:form id="signalementFicheEnAttente">
+
+                        <h:dataTable id="datatableReport" value="#{adminBean.listUnverifiedReport}" var="report">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Signalant" />
+                                </f:facet>
+                                <h:outputText id="reportingLogin" value="#{report.userReporting.login}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Date" />
+                                </f:facet>
+                                <h:outputText id="reportingDate" value="#{report.reportingDate}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Signalé" />
+                                </f:facet>
+                                <h:outputText id="reportedLogin" value="#{report.prestataire.login}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Motif" />
+                                </f:facet>
+                                <h:outputText id="reason" value="#{report.reason}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton value="Voir" action="#{adminBean.seeFiche(report)}"/>
+                            </h:column>
+                            <h:column>
+                                <h:commandButton id="dismiss" value="Traité" action="#{adminBean.dismissReport(report)}"/>
+                            </h:column>
+
+                        </h:dataTable>
+                    </h:form>
                 </div>
             </div>
         </div>

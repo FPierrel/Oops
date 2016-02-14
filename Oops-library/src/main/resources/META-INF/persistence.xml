@@ -12,6 +12,8 @@
     <class>fr.univ_lorraine.oops.library.model.Categorie</class>
     <class>fr.univ_lorraine.oops.library.model.Avis</class>
     <class>fr.univ_lorraine.oops.library.model.Commentaire</class>
+    <class>fr.univ_lorraine.oops.library.model.Report</class>
+    <class>fr.univ_lorraine.oops.library.model.ReportFichePrestataire</class>
     <properties>
       <property name="javax.persistence.jdbc.url" value="jdbc:derby://localhost:1527/OOPS"/>
       <property name="javax.persistence.jdbc.password" value="OOPS"/>

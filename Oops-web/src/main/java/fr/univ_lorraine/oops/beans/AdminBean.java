@@ -2,6 +2,8 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.AdminUtilsBean;
 import fr.univ_lorraine.oops.library.model.Avis;
+import fr.univ_lorraine.oops.library.model.Report;
+import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -14,12 +16,14 @@ import javax.inject.Inject;
 public class AdminBean implements Serializable {
 
     private List<Avis> listeAvisNonVerifies;
+    private List<ReportFichePrestataire> listUnverifiedReport;
 
     @Inject
     private AdminUtilsBean admin;
 
     public AdminBean() {
         this.listeAvisNonVerifies = new ArrayList<>();
+        this.listUnverifiedReport = new ArrayList<>();
     }
 
     public String checkAvis(Avis avis) {
@@ -41,5 +45,25 @@ public class AdminBean implements Serializable {
     public void setListeAvisNonVerifies(List<Avis> listeAvisNonVerifies) {
         this.listeAvisNonVerifies = listeAvisNonVerifies;
     }   
+    
+     public void dismissReport(Report report) {
+        report.setModerated(true);
+        this.admin.updateReport(report);
+            }
+   
+    public List<ReportFichePrestataire> getListUnverifiedReport() {
+        this.listUnverifiedReport = this.admin.getUnverifiedReport();
+        return listUnverifiedReport;
+    }
+
+    public void setListUnverifiedReport(List<ReportFichePrestataire> listUnverifiedReport) {
+        this.listUnverifiedReport = listUnverifiedReport;
+    }
+    
+    public String seeFiche(ReportFichePrestataire report){
+        return "/fiche.xhtml?page="+report.getPrestataire().getLogin()+"&faces-redirect=true";
+    }
+    
+    
     
 }
