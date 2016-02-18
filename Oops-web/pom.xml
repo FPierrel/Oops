@@ -131,7 +131,7 @@
                             <cargo.remote.username>admin</cargo.remote.username>
                             <cargo.remote.password>super_password</cargo.remote.password>
                             <cargo.remote.port>8080</cargo.remote.port>
-                            <cargo.glassfish.domain.name>/oops</cargo.glassfish.domain.name>
+                            <cargo.glassfish.domain.name>/Oops-web</cargo.glassfish.domain.name>
                         </properties>
                     </configuration>
                     <deployables>
@@ -140,7 +140,7 @@
                             <artifactId>${project.artifactId}</artifactId>
                             <type>war</type>
                             <properties>
-                                <context>/oops</context>
+                                <context>/Oops-web</context>
                             </properties>
                         </deployable>
                     </deployables>
