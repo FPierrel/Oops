@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.tests;
 
 import java.util.concurrent.TimeUnit;
@@ -21,13 +16,10 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.Select;
 
-/**
- *
- * @author Romain
- */
 public class AdvancedSearchTest {
 
     private static WebDriver driver;
+    private static String host;
 
     public AdvancedSearchTest() {
 
@@ -38,7 +30,7 @@ public class AdvancedSearchTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
-
+        host = System.getProperty(("glassfishHost"));
     }
 
     @AfterClass
@@ -48,7 +40,7 @@ public class AdvancedSearchTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/index.xhtml");
+        driver.get(host + "/index.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.id("searchForm:buttonAdvancedSearch")).click();
         try {
@@ -66,7 +58,7 @@ public class AdvancedSearchTest {
 
     @After
     public void tearDown() {
-        
+
     }
 
     @Test

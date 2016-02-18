@@ -1,31 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE sun-web-app PUBLIC "-//Sun Microsystems, Inc.//DTD GlassFish Application Server 3.0 Servlet 3.0//EN" "http://www.sun.com/software/appserver/dtds/sun-web-app_3_0-0.dtd">
 <sun-web-app error-url="">
-    <class-loader delegate="true"/>
-    <jsp-config>
-        <property name="keepgenerated" value="true">
-            <description>Keep a copy of the generated servlet class' java code.</description>
-        </property>
-    </jsp-config>
-    <security-role-mapping>
-        <role-name>ADMINISTRATEUR</role-name>
-        <group-name>ADMINISTRATEUR</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>MODERATEUR</role-name>
-        <group-name>MODERATEUR</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>PRESTATAIRE</role-name>
-        <group-name>PRESTATAIRE</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>SOUMISSIONNAIRE</role-name>
-        <group-name>SOUMISSIONNAIRE</group-name>
-    </security-role-mapping>
-    <security-role-mapping>
-        <role-name>DEFAUT</role-name>
-        <group-name>DEFAUT</group-name>
-    </security-role-mapping>
+  <class-loader delegate="true"/>
+  <jsp-config>
+    <property name="keepgenerated" value="true">
+      <description>Keep a copy of the generated servlet class' java code.</description>
+    </property>
+  </jsp-config>
+  <security-role-mapping>
+    <role-name>ADMINISTRATEUR</role-name>
+    <group-name>ADMINISTRATEUR</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>MODERATEUR</role-name>
+    <group-name>MODERATEUR</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>PRESTATAIRE</role-name>
+    <group-name>PRESTATAIRE</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>SOUMISSIONNAIRE</role-name>
+    <group-name>SOUMISSIONNAIRE</group-name>
+  </security-role-mapping>
+  <security-role-mapping>
+    <role-name>DEFAUT</role-name>
+    <group-name>DEFAUT</group-name>
+  </security-role-mapping>
 </sun-web-app>
-
