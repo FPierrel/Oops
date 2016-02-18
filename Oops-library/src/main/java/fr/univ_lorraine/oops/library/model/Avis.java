@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -33,6 +34,8 @@ public class Avis implements Serializable {
     private Utilisateur owner ;
     private String loginPrestaire;
     private boolean moderated;
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+
             
     public Avis () {
         this.commentaires = new ArrayList<>() ; 
@@ -54,6 +57,10 @@ public class Avis implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+    
+    public void removeCom(Commentaire c) {
+        this.commentaires.remove(c); 
     }
 
     @Override
@@ -99,6 +106,14 @@ public class Avis implements Serializable {
 
     public void setCommentaires(Collection<Commentaire> commentaires) {
         this.commentaires = commentaires;
+    }
+
+    public String getDateFormat() {
+        return dateFormat.format(pDate);
+    }
+
+    public void setDateFormat(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
     }
     
     public void addCommentaire(Commentaire com){

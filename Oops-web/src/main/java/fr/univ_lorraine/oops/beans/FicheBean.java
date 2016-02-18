@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.beans;
 import fr.univ_lorraine.oops.ejb.FichePrestataireBean;
 import fr.univ_lorraine.oops.ejb.OpinionManagerBean;
 import fr.univ_lorraine.oops.library.model.Avis;
+import fr.univ_lorraine.oops.library.model.Commentaire;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.text.DateFormat;
@@ -40,8 +41,7 @@ public class FicheBean implements Serializable {
     private int rate3;
     private int rate4;
     private String opinion;
-    private String commentaire;
-    private DateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+    private String commentaire;    
     private int noteGlobPrix = 0;
     private int noteGlobQualite = 0;
     private int noteGlobDelai = 0;
@@ -103,16 +103,20 @@ public class FicheBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         Prestataire pres = this.fiche.getPrestataireLogin(this.page);
-        
-        
-        
         String com = request.getParameter("co" + i);
-        
-
         if (com != null && !com.equals("")) {
             this.om.saveComment(new Date(), request.getRemoteUser(), this.lAvis.get(i), com);
         }
-
+        this.init();
+    }
+    
+    public void removeOpinion(Avis a) {
+        this.om.removeOpinion(a);
+        this.init();
+    }
+    
+    public void removeComment(Commentaire c, int i) {
+        this.om.removeComment(c, this.lAvis.get(i));
         this.init();
     }
 
@@ -194,14 +198,6 @@ public class FicheBean implements Serializable {
 
     public void setOpinion(String opinion) {
         this.opinion = opinion;
-    }
-
-    public DateFormat getDateFormat() {
-        return dateFormat;
-    }
-
-    public void setDateFormat(DateFormat dateFormat) {
-        this.dateFormat = dateFormat;
     }
 
     public int getNoteGlobPrix() {
