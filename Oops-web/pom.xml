@@ -130,7 +130,7 @@
                             <cargo.hostname>pi-r-l.ovh</cargo.hostname>
                             <cargo.remote.username>admin</cargo.remote.username>
                             <cargo.remote.password>super_password</cargo.remote.password>
-                            <cargo.remote.port>50447</cargo.remote.port>
+                            <cargo.remote.port>8080</cargo.remote.port>
                             <cargo.glassfish.domain.name>/oops</cargo.glassfish.domain.name>
                         </properties>
                     </configuration>
