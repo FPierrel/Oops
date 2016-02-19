@@ -7,6 +7,8 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.ReportManagerBean;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -25,7 +27,9 @@ public class ReportBean implements Serializable {
     ReportManagerBean report;
 
     private String page;
+    private List<String> reasons = new ArrayList<>();
     private String reason;
+    private String complement;
 
     /**
      * Creates a new instance of ReportBean
@@ -36,15 +40,15 @@ public class ReportBean implements Serializable {
     public void reportFiche() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        report.reportFichePrestataire(request.getRemoteUser(), page, reason);
+        report.reportFichePrestataire(request.getRemoteUser(), page, reason, complement);
     }
 
-    public String getReason() {
-        return reason;
+    public String getComplement() {
+        return complement;
     }
 
-    public void setReason(String reason) {
-        this.reason = reason;
+    public void setComplement(String complement) {
+        this.complement = complement;
     }
 
     public String getPage() {
@@ -54,5 +58,23 @@ public class ReportBean implements Serializable {
     public void setPage(String page) {
         this.page = page;
     }
+
+    public List<String> getReasons() {
+        return report.getReasons();
+    }
+
+    public void setReasons(List<String> reasons) {
+        this.reasons = reasons;
+    }
+
+    public String getReason() {
+        return reason;
+    }
+
+    public void setReason(String reasonChosen) {
+        this.reason = reasonChosen;
+    }
+    
+   
 
 }

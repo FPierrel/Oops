@@ -1,0 +1,70 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+  
+    <h:head>
+        
+        <title>Oops | Ajouter les photos</title> 
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+        
+    </h:head>
+    <h:body> 
+     
+          <ui:include src="header.xhtml"/>
+         <ui:include src="search.xhtml"/>
+           <div id="featured-wrapper">
+                <div id ="content">
+                     <div id="featured" class="container">
+                    <h1>Ajouter une photo à l'album :</h1>
+                
+                    <h:form enctype="multipart/form-data" >
+                    <table> 
+                    <tr>
+                        <td><img id="myImg" src="picture/nopicture.gif" alt="your image"  width="100px" height="100px" /></td>
+                    </tr>
+                    <tr>
+                        <td>  <p:outputLabel  value="Ajouer une photo :"/> </td>
+                        <td> <h:inputFile id="file" value="#{albumControllerBean.file}" /></td>
+                    </tr>
+                        <tr>
+                           <td>  <p:outputLabel  value="Nom de photo :"/> </td>
+                           
+                            <td> <h:inputText  value="#{albumControllerBean.nomPhoto}" required="true"/></td>
+                    </tr>
+                       <tr>
+                           <td>  <p:outputLabel  value="Upload:"/> </td>
+                            
+                            <td> <h:commandButton value="Upload" action="#{albumControllerBean.addPhoto()}"/></td>
+                    </tr>  
+                     </table>
+                 </h:form>
+                        </div>
+                 </div>
+             </div>
+        <script>
+            $(function () { 
+                 $(":file").change(function () {
+         
+                    var reader = new FileReader();
+                     reader.onload = imageIsLoaded;
+                    reader.readAsDataURL(this.files[0]);
+   
+                });
+            });
+
+            function imageIsLoaded(e) {
+     
+             $('#myImg').attr('src', e.target.result);
+    
+            };
+
+            </script>
+     <ui:include src="footer.xhtml"/>
+    </h:body>
+</html>

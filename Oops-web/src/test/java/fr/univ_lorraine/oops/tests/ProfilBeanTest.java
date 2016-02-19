@@ -15,8 +15,8 @@ import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 public class ProfilBeanTest {
-
     private static WebDriver driver;
+    private static String host;
 
     public ProfilBeanTest() {
     }
@@ -24,9 +24,10 @@ public class ProfilBeanTest {
     @BeforeClass
     public static void setUpClass() {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
-        driver = new PhantomJSDriver(capabilities);        
+        driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
-        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
+        host = System.getProperty(("glassfishHost"));
+        driver.get(host + "/profil.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).sendKeys("noupi");
         driver.findElement(By.name("j_password")).sendKeys("123456");
@@ -40,7 +41,7 @@ public class ProfilBeanTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/profil.xhtml");
+        driver.get(host + "/profil.xhtml");
         driver.manage().timeouts().implicitlyWait(20, TimeUnit.SECONDS);
         driver.findElement(By.id("profilForm:newMail")).clear();
         driver.findElement(By.id("profilForm:newMailConfirm")).clear();
@@ -54,7 +55,7 @@ public class ProfilBeanTest {
     public void testEditProfilSuccess() {
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Modification(s) enregistrée(s) !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-info")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-info")).getText());
     }
 
     @Test
@@ -62,7 +63,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:oldPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe incorrect !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -71,7 +72,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPassword")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Mot de passe trop petit (inférieur à 6), veuillez recommencer !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -81,7 +82,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newPasswordConfirm")).sendKeys("0000");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation du nouveau mot de passe incorrecte !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -89,7 +90,7 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMail")).sendKeys("a@a");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Adresse mail non valide, veuillez recommencer !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-error")).getText());
     }
 
     @Test
@@ -98,6 +99,6 @@ public class ProfilBeanTest {
         driver.findElement(By.id("profilForm:newMailConfirm")).sendKeys("hello@hello.fr");
         driver.findElement(By.id("profilForm:save")).click();
         String message = "Confirmation de la nouvelle adresse mail incorrecte !";
-        assertEquals(message,driver.findElement(By.className("ui-messages-error")).getText());
+        assertEquals(message, driver.findElement(By.className("ui-messages-error")).getText());
     }
 }

@@ -31,12 +31,12 @@ public class AdminBean implements Serializable {
         this.admin.updateAvis(avis);
         return "admin/index.xhtml";
     }
-    
+
     public String removeAvis(Avis avis) {
         this.admin.removeAvis(avis);
         return "admin/index.xhtml";
     }
-    
+
     public List<Avis> getListeAvisNonVerifies() {
         this.listeAvisNonVerifies = this.admin.getAvisNotVerified();
         return listeAvisNonVerifies;
@@ -44,13 +44,16 @@ public class AdminBean implements Serializable {
 
     public void setListeAvisNonVerifies(List<Avis> listeAvisNonVerifies) {
         this.listeAvisNonVerifies = listeAvisNonVerifies;
-    }   
-    
-     public void dismissReport(Report report) {
-        report.setModerated(true);
-        this.admin.updateReport(report);
-            }
-   
+    }
+
+    public void dismissReport(Report report) {
+        this.admin.dismissReport(report);
+    }
+
+    public void acceptReport(Report report) {
+        this.admin.acceptReport(report);
+    }
+
     public List<ReportFichePrestataire> getListUnverifiedReport() {
         this.listUnverifiedReport = this.admin.getUnverifiedReport();
         return listUnverifiedReport;
@@ -59,11 +62,9 @@ public class AdminBean implements Serializable {
     public void setListUnverifiedReport(List<ReportFichePrestataire> listUnverifiedReport) {
         this.listUnverifiedReport = listUnverifiedReport;
     }
-    
-    public String seeFiche(ReportFichePrestataire report){
-        return "/fiche.xhtml?page="+report.getPrestataire().getLogin()+"&faces-redirect=true";
+
+    public String seeFiche(ReportFichePrestataire report) {
+        return "/fiche.xhtml?page=" + report.getPrestataire().getLogin() + "&faces-redirect=true";
     }
-    
-    
-    
+
 }

@@ -1,7 +1,6 @@
 package fr.univ_lorraine.oops.tests;
 
 import fr.univ_lorraine.oops.beans.RegistrationBean;
-import static fr.univ_lorraine.oops.tests.RegistrationBeanTest.driver;
 import java.util.concurrent.TimeUnit;
 import org.junit.Assert;
 import org.junit.Before;
@@ -19,6 +18,7 @@ import org.openqa.selenium.support.ui.WebDriverWait;
 public class SimpleSearchTest {
 
     private static WebDriver driver;
+    private static String host;
 
     @BeforeClass
     public static void setUpClass() {
@@ -26,11 +26,12 @@ public class SimpleSearchTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
+        host = System.getProperty(("glassfishHost"));
     }
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/index.xhtml");
+        driver.get(host + "/index.xhtml");
         driver.manage().timeouts().implicitlyWait(40, TimeUnit.SECONDS);
         driver.findElement(By.id("searchForm:ou")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("searchForm:ou")).sendKeys(Keys.DELETE);

@@ -21,13 +21,17 @@ public class UserManagerBean {
     public EntityManager getEntityManager() {
         return this.em;
     }
+    
+    public LuceneBean getLuceneBean(){
+        return this.luceneBean;
+    }
 
     public Utilisateur registerUser(Utilisateur u) {
         Utilisateur user = this.getEntityManager().find(Utilisateur.class, u.getLogin());
         if (user == null) {
             this.getEntityManager().persist(u);
             if (u instanceof Prestataire) {
-                luceneBean.indexPrestataire(((Prestataire) u));
+                getLuceneBean().indexPrestataire(((Prestataire) u));
             }
             return u;
         }

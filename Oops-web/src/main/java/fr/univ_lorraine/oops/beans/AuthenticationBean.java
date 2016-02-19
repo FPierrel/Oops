@@ -1,16 +1,21 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.ReportManagerBean;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ComponentSystemEvent;
+import javax.inject.Inject;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "authenticationBean")
 @RequestScoped
 public class AuthenticationBean {
+    
+    @Inject
+    ReportManagerBean rMB;
     
     public AuthenticationBean() {
     }
@@ -26,6 +31,8 @@ public class AuthenticationBean {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Votre session a expirée !", null));
         } else if (request.getParameter("logout") != null && request.getParameter("logout").equalsIgnoreCase("true")) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Déconnexion réussie !", null));
+        }else if (request.getParameter("blocked") != null && request.getParameter("blocked").equalsIgnoreCase("true")){
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Votre compte a été bloqué par un administrateur !", null));
         }
     }
 
@@ -41,5 +48,5 @@ public class AuthenticationBean {
         }
         return page;
     }
-
+   
 }

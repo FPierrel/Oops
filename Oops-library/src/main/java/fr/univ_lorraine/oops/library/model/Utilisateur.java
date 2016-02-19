@@ -3,13 +3,13 @@ package fr.univ_lorraine.oops.library.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 
 @Entity
 public abstract class Utilisateur implements Serializable {
@@ -23,13 +23,19 @@ public abstract class Utilisateur implements Serializable {
     private String mail;
     private String numeroTelephone;
     protected String groupe;
+    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
+    private List<Album> albums= new ArrayList<Album>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Report> reports;
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Avis> avisSoumis;*/
         
+    
     public Utilisateur() {
         this.adresses = new ArrayList<>();
+        this.reports = new ArrayList<>();
         //this.avisSoumis = new ArrayList<>() ; 
     }
 
@@ -93,12 +99,32 @@ public abstract class Utilisateur implements Serializable {
         this.adresses.add(adresse);
     }
 
+    public Collection<Report> getReports() {
+        return reports;
+    }
+
+    public void setReports(Collection<Report> reports) {
+        this.reports = reports;
+    }
+    
+    public void addReport(Report report){
+        reports.add(report);
+    }
+    
     public String getGroupe() {
         return groupe;
     }
 
     public void setGroupe(String groupe) {
         this.groupe = groupe;
+    }
+    
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
     }
     
     @Override

@@ -43,18 +43,22 @@ public class AdminUtilsBean {
         p.recalculateMarks();
     }
 
-    public void updateReport(Report report) {
-       this.getEntityManager().merge(report);
+    public void dismissReport(Report report) {
+        report.setModerated(true);
+        this.getEntityManager().merge(report);
+    }
+
+    public void acceptReport(Report report) {
+        report.setModerated(true);
+        report.setJustified(true);
+        this.getEntityManager().merge(report);
     }
 
     public List<ReportFichePrestataire> getUnverifiedReport() {
-         String queryString = "SELECT r "
+        String queryString = "SELECT r "
                 + "FROM Report r "
                 + "WHERE  r.moderated='" + false + "'";
         TypedQuery<ReportFichePrestataire> query = this.getEntityManager().createQuery(queryString, ReportFichePrestataire.class);
         return query.getResultList();
     }
-    
-    
-
 }
