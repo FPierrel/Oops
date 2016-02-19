@@ -58,7 +58,7 @@ public class AdvancedSearchTest {
 
     @After
     public void tearDown() {
-        
+
     }
 
     @Test

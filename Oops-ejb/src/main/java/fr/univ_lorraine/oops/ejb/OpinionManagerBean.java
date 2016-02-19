@@ -63,7 +63,7 @@ public class OpinionManagerBean {
         this.getEntityManager().merge(p);
         this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
         p.recalculateMarks();
-}
+    }
     
     public void removeComment(Commentaire c, Avis avis) {
         Avis a = (Avis) this.getEntityManager().find(Avis.class,avis.getId()) ; 
