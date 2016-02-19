@@ -40,14 +40,6 @@ public class LoginFilter implements Filter {
     public LoginFilter() {
     }
 
-    private void doBeforeProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-    }
-
-    private void doAfterProcessing(ServletRequest request, ServletResponse response)
-            throws IOException, ServletException {
-    }
-
     /**
      *
      * @param request The servlet request we are processing
@@ -61,13 +53,6 @@ public class LoginFilter implements Filter {
             FilterChain chain)
             throws IOException, ServletException {
 
-        if (debug) {
-            log("LoginFilter:doFilter()");
-        }
-
-        doBeforeProcessing(request, response);
-
-        Throwable problem = null;
         try {
             HttpServletRequest httpRequest = (HttpServletRequest) request;
             HttpServletResponse httpResponse = (HttpServletResponse) response;
@@ -82,22 +67,10 @@ public class LoginFilter implements Filter {
             }
             chain.doFilter(request, response);
 
-        } catch (Throwable t) {
-            problem = t;
-            t.printStackTrace();
+        } catch (Exception e) {
+            
         }
 
-        doAfterProcessing(request, response);
-
-        if (problem != null) {
-            if (problem instanceof ServletException) {
-                throw (ServletException) problem;
-            }
-            if (problem instanceof IOException) {
-                throw (IOException) problem;
-            }
-            sendProcessingError(problem, response);
-        }
     }
 
     /**
