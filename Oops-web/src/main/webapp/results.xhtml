@@ -60,7 +60,9 @@
                     <ui:repeat value="#{searchBean.prestataires}" var="pres">
                         <h:inputHidden id="p" value="#{pres.nomEntreprise}" />
                         <p> 
+                            
                             <ui:repeat value="#{pres.adresses}" var="adresse">
+                                
                                 <h:inputHidden id="name" value="#{pres.nomEntreprise}"/>
                                 <script>
                                     var template = "<h1>#{pres.nomEntreprise}</h1><p>#{pres.description}</p><ul>";

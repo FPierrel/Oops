@@ -69,7 +69,10 @@ public class SearchResultsBean {
             query.setParameter("villes", this.villes);
         }
 
-        return query.getResultList();
+        List<Prestataire> l = query.getResultList();
+        this.setCoordinates(l);
+
+        return l;
     }
 
     public String searchPrestataireWithLastname(String lastname, String operateur) {
@@ -147,7 +150,10 @@ public class SearchResultsBean {
             if (!this.villes.isEmpty()) {
                 query.setParameter("villes", this.villes);
             }
-            return query.getResultList();
+
+            List<Prestataire> l = query.getResultList();
+            this.setCoordinates(l);
+            return l;
         }
 
         float scoreMin = 0.9f;
@@ -184,7 +190,9 @@ public class SearchResultsBean {
             results.add(em.find(Prestataire.class, r.getId()));
         }
 
-        return results;
+        List<Prestataire> l = results;
+        this.setCoordinates(l);
+        return l;
     }
 
     private String searchPrestataireWithEnterprisename(String quoi, String operateur) {
@@ -240,7 +248,7 @@ public class SearchResultsBean {
             String query = ""
                     + "SELECT ville_nom, ville_code_postal "
                     + "FROM villes_france_free "
-                    + "WHERE ville_nom LIKE '%" + search + "%' "
+                    + "WHERE ville_nom LIKE '" + search + "%' "
                     + "OR ville_code_postal LIKE '" + search + "%' "
                     + "ORDER BY ville_nom ";
 
@@ -311,15 +319,8 @@ public class SearchResultsBean {
         return li;
     }
 
-    public List<Prestataire> getCoordinates() {
-        ArrayList<String[]> results = new ArrayList<>();
+    public void setCoordinates(List<Prestataire> pres) {
         Geocoding geo = new Geocoding();
-
-        String queryString = "Select p "
-                + "FROM Prestataire p";
-
-        Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-        List<Prestataire> pres = (List<Prestataire>) query.getResultList();
 
         for (Prestataire p : pres) {
             for (Adresse a : p.getAdresses()) {
@@ -328,7 +329,5 @@ public class SearchResultsBean {
                 a.setLongitude(coords[1]);
             }
         }
-
-        return pres;
     }
 }
