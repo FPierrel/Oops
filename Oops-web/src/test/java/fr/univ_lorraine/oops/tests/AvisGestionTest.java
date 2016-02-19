@@ -73,10 +73,10 @@ public class AvisGestionTest {
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /* Test du nombre d'avis */
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
-        assertTrue(bonjour > 0);
+        int nb_avis = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
+        assertTrue(nb_avis > 0);
         /* Cloture */
-        this.cloture("testNumberOfAvisInWaiting", bonjour);
+        this.cloture("testNumberOfAvisInWaiting", nb_avis);
         //assertFalse(driver.findElement(By.xpath(".//form//table//tr//td")).getText().contains("testNumberOfAvisInWaiting")) ;         
     }
 
@@ -87,10 +87,10 @@ public class AvisGestionTest {
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /* Test */
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
-        assertTrue(driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":contenu")).getText().contains("testAvisExisting"));
+        int nb_avis = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
+        assertTrue(driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":contenu")).getText().contains("testAvisExisting"));
         /* Cloture */
-        this.cloture("testAvisExisting", bonjour);
+        this.cloture("testAvisExisting", nb_avis);
     }
 
     @Test
@@ -100,10 +100,10 @@ public class AvisGestionTest {
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /* Test */
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
-        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":contenu")).getText().contains("hjfkhjuk5454k54d"));
+        int nb_avis = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":contenu")).getText().contains("hjfkhjuk5454k54d"));
         /* Cloture */
-        this.cloture("testNotAvisExisting", bonjour);
+        this.cloture("testNotAvisExisting", nb_avis);
     }
 
     @Test
@@ -112,14 +112,14 @@ public class AvisGestionTest {
         this.initialisation("testValidation");
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
+        int nb_avis = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
         /* Validation */
-        driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":valider")).click();
+        driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":valider")).click();
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /* Test du nombre d'avis */
-        bonjour--;
-        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":contenu")).getText().contains("testValidation"));
+        nb_avis--;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":contenu")).getText().contains("testValidation"));
     }
 
     @Test
@@ -128,13 +128,13 @@ public class AvisGestionTest {
         this.initialisation("testSuppression");
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
-        int bonjour = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
+        int nb_avis = driver.findElements(By.xpath(".//form//table//tr//td//span")).size() - 1;
         /* Suppression */
-        driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":supprimer")).click();
+        driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":supprimer")).click();
         driver.get(host + "/admin/index.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         /* Test du nombre d'avis */
-        bonjour--;
-        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + bonjour + ":contenu")).getText().contains("testSuppression"));
+        nb_avis--;
+        assertFalse(driver.findElement(By.id("avisEnAttente:datatable:" + nb_avis + ":contenu")).getText().contains("testSuppression"));
     }
 }
