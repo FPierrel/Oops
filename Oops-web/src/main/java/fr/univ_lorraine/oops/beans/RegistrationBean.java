@@ -382,7 +382,7 @@ public class RegistrationBean implements Serializable {
             user = this.userManager.registerUser(p);
         }
         if(user == null) {
-            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login déjà  utilisé, veuillez en choisir un nouveau !", null);
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login déjà utilisé, veuillez en choisir un nouveau !", null);
             context.addMessage(this.loginComponent.getClientId(), message); 
             return "inscription.xhtml";
         } else {

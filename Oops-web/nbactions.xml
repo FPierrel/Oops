@@ -184,7 +184,7 @@
                 <goal>test</goal>
             </goals>
             <properties>
-                <glassfishHost>"http://localhost:8080/Oops-web"</glassfishHost>
+                <glassfishHost>http://localhost:8080/Oops-web</glassfishHost>
             </properties>
         </action>
         <action>
@@ -198,7 +198,7 @@
             </goals>
             <properties>
                 <test>${packageClassName}</test>
-                <glassfishHost>"http://localhost:8080/Oops-web"</glassfishHost>
+                <glassfishHost>http://localhost:8080/Oops-web</glassfishHost>
             </properties>
         </action>
     </actions>

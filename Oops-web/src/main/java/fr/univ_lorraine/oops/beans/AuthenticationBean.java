@@ -32,7 +32,7 @@ public class AuthenticationBean {
         } else if (request.getParameter("logout") != null && request.getParameter("logout").equalsIgnoreCase("true")) {
             context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Déconnexion réussie !", null));
         }else if (request.getParameter("blocked") != null && request.getParameter("blocked").equalsIgnoreCase("true")){
-            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Votre compte a été bloqué par un administrateur !", null));
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Votre compte a été bloqué par un administrateur !", null));
         }
     }
 

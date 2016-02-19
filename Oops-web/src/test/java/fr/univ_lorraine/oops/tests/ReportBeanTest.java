@@ -48,22 +48,23 @@ public class ReportBeanTest {
 
     @Before
     public void setUp() {
-        driver.get(host+"/login.xhtml");
+        driver.get(host + "/login.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        driver.findElement(By.name("j_username")).sendKeys("noupi");
+        driver.findElement(By.name("j_username")).sendKeys("jose");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
-        driver.get(host+"/fiche.xhtml?page=jose");
-        driver.findElement(By.id("reportFiche:reportFiche")).click();
+        driver.get(host + "/fiche.xhtml?page=noupi");
+
     }
 
     @After
     public void tearDown() {
-        driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).findElement(By.xpath("tbody/tr[last()]/td[last()]/input[last()]")).click();
+
     }
 
     @Test
     public void reportFichePrestataire() {
+        driver.findElement(By.id("reportFiche:reportFiche")).click();
         Select sel = new Select(driver.findElement(By.id("reportFiche:reasons")));
         sel.selectByVisibleText("Autre");
         try {
@@ -74,12 +75,14 @@ public class ReportBeanTest {
 
         driver.findElement(By.id("reportFiche:reportFicheReason")).sendKeys("Test_report");
         driver.findElement(By.id("reportFiche:reportFicheButton")).click();
-        driver.get(host+"/login.xhtml");
-        driver.findElement(By.name("j_username")).sendKeys("jose");
-        driver.findElement(By.name("j_password")).sendKeys("123456");
-        driver.findElement(By.name("submit")).click();
-        driver.get(host+"/admin/index.xhtml");
+        /*  driver.get(host + "/login.xhtml");
+         driver.findElement(By.name("j_username")).sendKeys("jose");
+         driver.findElement(By.name("j_password")).sendKeys("123456");
+         driver.findElement(By.name("submit")).click();*/
+        driver.get(host + "/admin/index.xhtml");
         assertTrue((driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).getText()).contains("Test_report"));
+        driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).findElement(By.xpath("tbody/tr[last()]/td[last()]/input")).click();
 
     }
-}
+
+}   
