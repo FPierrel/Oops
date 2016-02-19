@@ -1,53 +1,44 @@
-<?xml version='1.0' encoding='UTF-8' ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:f="http://java.sun.com/jsf/core"
                 xmlns:h="http://java.sun.com/jsf/html"
                 xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:p="http://primefaces.org/ui">
 
-    <header class="navbar navbar-inverse navbar-fixed-top wet-asphalt" role="banner">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.xhtml"><img src="images/logo.png" alt="logo"/></a>
+    <div id="header-wrapper">
+        <div id="header" class="container">
+            <div id="logo">
+                <h1><h:link outcome="index">Oops</h:link></h1>
             </div>
-            <c:choose>
-                <c:when test="#{view.viewId == '/index.xhtml'}">
-                    <c:set value="active" var="cssIndexLink"/>
-                </c:when>
-                <c:when test="#{view.viewId == '/inscription.xhtml'}">
-                    <c:set value="active" var="cssSigninLink"/>
-                </c:when>
-                <c:when test="#{view.viewId == '/login.xhtml'}">
-                    <c:set value="active" var="cssLoginLink"/>
-                </c:when>
-            </c:choose>
-            <div class="collapse navbar-collapse">
-                <ul class="nav navbar-nav navbar-right">
-                    <li class="${cssIndexLink}"><h:link value="Accueil" outcome="index"/></li>
-                    <li class="${cssSigninLink}"><h:link rendered="#{request.remoteUser == null}" value="Inscription" outcome="inscription"/></li>
-                    <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" value="Connexion" outcome="login"/></li>
-                    <li class="dropdown" id="username">
-                        <c:if test="#{request.remoteUser != null}">
-                            <a href="#" class="dropdown-toggle" data-toggle="dropdown">#{request.remoteUser} <i class="icon-angle-down"></i></a>
-                        </c:if>
-                        <ul class="dropdown-menu">
-                            <li><h:link id="fiche" value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
-                            <c:if test="#{request.isUserInRole('PRESTATAIRE')}"><li class="divider"></li></c:if>
-                            <li><h:link id="profil" value="Editer mon profil" outcome="profil"/></li>
-                            <li><h:link id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
-                            <li class="divider"></li>
-                            <li><h:link id="deconnexion" value="Déconnexion" onclick="#{authenticationBean.logout()}"/></li>
-                        </ul>
-                    </li>
-                </ul>
+            <div id="menu">
+                <h:form id="headerForm">
+                    <ul>
+                        <c:choose>
+                            <c:when test="#{view.viewId == '/index.xhtml'}">
+                                <c:set value="active" var="cssIndexLink"/>
+                            </c:when>
+                            <c:when test="#{view.viewId == '/inscription.xhtml'}">
+                                <c:set value="active" var="cssSigninLink"/>
+                            </c:when>
+                            <c:when test="#{view.viewId == '/login.xhtml'}">
+                                <c:set value="active" var="cssLoginLink"/>
+                            </c:when>
+                        </c:choose>
+
+                        <li class="${cssIndexLink}"><h:link class = "menuElement" value="Accueil" outcome="index"/></li>
+                        <li class="${cssSigninLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Inscription" outcome="inscription"/></li>
+                        <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" class = "menuElement" value="Connexion" outcome="login"/></li>
+                        <li>
+                            <p:menuButton id="username" class = "menuElement" rendered="#{request.remoteUser != null}" value="#{request.remoteUser}">
+                                <p:menuitem id="fiche" value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
+                                <p:menuitem id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/>
+                                <p:menuitem id="profil" value="Editer mon profil" outcome="/profil"/>
+                                <p:menuitem id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/>
+                            </p:menuButton>
+                        </li>
+                    </ul>
+                </h:form>
             </div>
-        </div>
-    </header><!--/header-->
+        </div>                 
+    </div>
 </ui:composition>
-
