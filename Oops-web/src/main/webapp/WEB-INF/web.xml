@@ -67,6 +67,60 @@
     </security-constraint>
     <security-constraint>
         <web-resource-collection>
+            <web-resource-name>addAlbum-page</web-resource-name>
+            <description>Page ajouter un album</description>
+            <url-pattern>/addAlbum.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder à la page ajouter un album</description>
+            <role-name>PRESTATAIRE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>addPhoto-page</web-resource-name>
+            <description>Page ajouter une photo</description>
+            <url-pattern>/addPhoto.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder à la page ajouter un album</description>
+            <role-name>PRESTATAIRE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>allAlbum-page</web-resource-name>
+            <description>Page des albums</description>
+            <url-pattern>/allAlbum.xhtml</url-pattern>
+            <http-method>GET</http-method>
+            <http-method>POST</http-method>
+            <http-method>HEAD</http-method>
+            <http-method>PUT</http-method>
+            <http-method>OPTIONS</http-method>
+            <http-method>TRACE</http-method>
+            <http-method>DELETE</http-method>
+        </web-resource-collection>
+        <auth-constraint>
+            <description>Rôles autorisés à acceder à la page ajouter un album</description>
+            <role-name>PRESTATAIRE</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
             <web-resource-name>ficheedit-page</web-resource-name>
             <description>Page d'édition de fiche</description>
             <url-pattern>/ficheedit.xhtml</url-pattern>

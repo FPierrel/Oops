@@ -6,6 +6,7 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -21,20 +22,22 @@ import static javax.persistence.TemporalType.DATE;
  */
 @Entity
 public class Commentaire implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private String contenu ; 
+    private String contenu;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date comDate ; 
+    private Date comDate;
     private String profil;
-    
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+
     public Commentaire() {
-        
+
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -67,6 +70,10 @@ public class Commentaire implements Serializable {
     public String toString() {
         return "fr.univ_lorraine.oops.library.model.Commentaire[ id=" + id + " ]";
     }
+    
+    public String getDateFormat() {
+        return dateFormat.format(comDate);
+    }
 
     public String getContenu() {
         return contenu;
@@ -92,6 +99,4 @@ public class Commentaire implements Serializable {
         this.profil = profil;
     }
 
-   
-    
 }

@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.tests;
 
 import java.util.List;
@@ -20,13 +15,10 @@ import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-/**
- *
- * @author romain
- */
 public class EditFicheBeanTest {
 
     private static WebDriver driver;
+    private static String host;
 
     public EditFicheBeanTest() {
     }
@@ -36,7 +28,8 @@ public class EditFicheBeanTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
-        driver.get("http://localhost:8080/Oops-web/login.xhtml");
+        host = System.getProperty(("glassfishHost"));
+        driver.get(host + "/login.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).sendKeys("noupi");
         driver.findElement(By.name("j_password")).sendKeys("123456");
@@ -50,7 +43,7 @@ public class EditFicheBeanTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/ficheedit.xhtml");
+        driver.get(host + "/ficheedit.xhtml");
         driver.findElement(By.name("ficheForm:companyName")).clear();
         driver.findElement(By.name("ficheForm:companyName")).sendKeys("aaaaa");
         driver.findElement(By.id("ficheForm:website")).clear();
@@ -82,7 +75,7 @@ public class EditFicheBeanTest {
         driver.findElement(By.name("ficheForm:companyName")).clear();
         driver.findElement(By.name("ficheForm:companyName")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("companyName")).getText(), val);
     }
 
@@ -92,7 +85,7 @@ public class EditFicheBeanTest {
         driver.findElement(By.id("ficheForm:website")).clear();
         driver.findElement(By.id("ficheForm:website")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("website")).getText(), "Site Web : " + val);
     }
 
@@ -111,7 +104,7 @@ public class EditFicheBeanTest {
         String val = "69874";
         driver.findElement(By.id("ficheForm:nbEmployee")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("employeeNumber")).getText(), "Nombre d'employé(s) : " + val);
     }
 
@@ -130,7 +123,7 @@ public class EditFicheBeanTest {
         String val = "123456789";
         driver.findElement(By.id("ficheForm:turnoverNumber")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("turnover")).getText(), "Chiffre d'affaire : " + val + " €");
     }
 
@@ -149,15 +142,15 @@ public class EditFicheBeanTest {
         String val = "Ceci est une description de test";
         driver.findElement(By.id("ficheForm:description")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertEquals(driver.findElement(By.id("description")).getText(), val);
     }
 
     @Test
     public void testEditFicheCategories() {
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertFalse(driver.findElement(By.id("categories")).getText().contains("Audit"));
-        driver.get("http://localhost:8080/Oops-web/ficheedit.xhtml");
+        driver.get(host + "/ficheedit.xhtml");
         List<WebElement> l = driver.findElements(By.xpath("//ul/li"));
         for (WebElement w : l) {
             if (w.getText().equals("Audit")) {
@@ -166,10 +159,10 @@ public class EditFicheBeanTest {
             }
         }
         driver.findElement(By.id("ficheForm:save")).click();
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=noupi");
+        driver.get(host + "/fiche.xhtml?page=noupi");
         assertTrue(driver.findElement(By.id("categories")).getText().contains("Audit"));
-        
-        driver.get("http://localhost:8080/Oops-web/ficheedit.xhtml");
+
+        driver.get(host + "/ficheedit.xhtml");
         l = driver.findElements(By.xpath("//ul/li"));
         for (WebElement w : l) {
             if (w.getText().equals("Audit")) {

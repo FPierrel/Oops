@@ -26,13 +26,16 @@ public class Report implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Utilisateur userReporting;
+    
+    private String userReporting;
     private String reason;
+    private String complement;
     @Temporal(TemporalType.TIMESTAMP)
     private Date reportingDate;
     private boolean moderated;
+    private boolean justified;
 
+    
     public Report() {
        
     }
@@ -45,11 +48,11 @@ public class Report implements Serializable {
         this.id = id;
     }
 
-    public Utilisateur getUserReporting() {
+    public String getUserReporting() {
         return userReporting;
     }
 
-    public void setUserReporting(Utilisateur userReporting) {
+    public void setUserReporting(String userReporting) {
         this.userReporting = userReporting;
     }
 
@@ -76,5 +79,23 @@ public class Report implements Serializable {
     public boolean isModerated() {
         return moderated;
     }
+
+    public boolean isJustified() {
+        return justified;
+    }
+
+    public void setJustified(boolean justified) {
+        this.justified = justified;
+    }
+    
+    public String getComplement() {
+        return complement;
+    }
+
+    public void setComplement(String complement) {
+        this.complement = complement;
+    }
+    
+    
 
 }

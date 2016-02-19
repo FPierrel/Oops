@@ -44,8 +44,6 @@ public class OpinionManagerBean {
         a.setOwner(user);
         a.setLoginPrestaire(p.getLogin());
         p.addAvis(a);
-        //user.addAvisSoumis(a);
-        //this.getEntityManager().merge(user) ; 
         this.getEntityManager().merge(p);
     }
 
@@ -56,7 +54,21 @@ public class OpinionManagerBean {
         c.setContenu(message);
         c.setProfil(login);
         a.addCommentaire(c);
-        
         this.getEntityManager().merge(a);
+    }
+    
+    public void removeOpinion(Avis avis) {
+        Prestataire p = (Prestataire) this.getEntityManager().find(Utilisateur.class, avis.getLoginPrestaire());
+        p.removeAvis(avis);
+        this.getEntityManager().merge(p);
+        this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
+        p.recalculateMarks();
+}
+    
+    public void removeComment(Commentaire c, Avis avis) {
+        Avis a = (Avis) this.getEntityManager().find(Avis.class,avis.getId()) ; 
+        a.removeCom(c);
+        this.getEntityManager().merge(a) ; 
+        this.getEntityManager().remove(this.getEntityManager().find(Commentaire.class, c.getId()));
     }
 }

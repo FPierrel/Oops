@@ -19,7 +19,7 @@
                 <div id="featured" class="container">
                     <f:event listener="#{authenticationBean.checkErrors}" type="preRenderView"/>
                     <p:messages />
-                    <form id="loginForm" method="post" action="j_security_check">
+                    <form id="loginForm" method="post" action="login">
                         <h:panelGrid columns="2">
                             <h:outputLabel value="Identifiant : " />
                             <input id="username" type="text" name="j_username" required="true"/>

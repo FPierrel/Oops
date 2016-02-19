@@ -30,9 +30,13 @@
                         <h:outputText id="description" value="#{ficheBean.prestataire.description}" /><br/><br/>
                        
                         <h:form id="reportFiche" rendered="#{request.remoteUser != null}"> 
-                            <p:commandLink id="buttonReportFiche" onclick="PF('toggleReportFiche').toggle()" value="Signaler cette fiche"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre signalement sera bientôt traité par un administrateur</p:panel>
+                            <p:commandLink id="reportFiche" onclick="PF('toggleReportFiche').toggle()" value="Signaler cette fiche"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre signalement sera bientôt traité par un administrateur</p:panel>
                             <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleReportFiche">
-                                <p:inputText value="#{reportBean.reason}" id="reportFicheReason" placeholder="Raison du signalement" required="true"/> <p:commandButton value="Signaler" id="reportFicheButton" onclick="PF('toggleReportFiche').toggle();PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
+                                <h:selectOneMenu id="reasons" value="#{reportBean.reason}" required = "true" > 
+                                    <f:selectItems value="#{reportBean.reasons}"/>
+                                </h:selectOneMenu><br/>
+                                <p:inputTextarea value="#{reportBean.complement}" id="reportFicheReason" placeholder="Complément"/>
+                                <br/><p:commandButton value="Signaler" id="reportFicheButton" onclick="PF('toggleReportFiche').toggle();PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
                             </p:panel>
                         </h:form>
                         <h2>Informations : </h2><br/>
@@ -91,6 +95,7 @@
                                 <p:inputText value="#{ficheBean.opinion}" id="opinion"/><br/><br/>
                                 <p:commandButton id="opinionButton" class="button" value="Soumettre" action="#{ficheBean.saveOpinion()}" update="@all"/><br/><br/>                                
                             </h:form>
+
                             <h:panelGroup id="panelAvis">
                                 <h2>Avis des clients: </h2>
 
@@ -98,7 +103,12 @@
                                     <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
 
                                         <h:form id="lAvis#{loop.index}">
-                                            <p:fieldset legend="Par #{cAvis.owner.login} le #{cAvis.pDate}" style="margin-bottom:20px">
+                                            <p:fieldset legend="Par #{cAvis.owner.login} le #{cAvis.dateFormat}" style="margin-bottom:20px">
+                                                <div  align="right" id="removeOpinion">
+                                                    <h:form rendered="#{request.remoteUser == cAvis.owner.login}">
+                                                        <p:commandButton id="removeButton" value="Supprimer votre avis" action="#{ficheBean.removeOpinion(cAvis)}" update="@all"/>
+                                                    </h:form>
+                                                </div>
                                                 <h:panelGrid columns="4" cellpadding="5">                                                          
                                                     <h:outputText value="Communication : "/>
                                                     <h:outputText value="Qualité : "/>
@@ -118,7 +128,10 @@
                                                 Réponses : <br/><br/>
 
                                                 <ui:repeat value="#{cAvis.commentaires}" var="comm" varStatus="i">
-                                                    <p:fieldset legend="Par #{comm.profil} le #{comm.comDate}" style="margin-bottom:20px">
+                                                    <p:fieldset legend="Par #{comm.profil} le #{comm.dateFormat}" style="margin-bottom:20px">
+                                                        <div align="right" id="removeCom">
+                                                            <p:commandButton rendered="#{request.remoteUser == comm.profil}" id="removeComButton" value="Supprimer votre commentaire" action="#{ficheBean.removeComment(comm,loop.index)}" update="@all"/>
+                                                        </div>
                                                         <h:panelGrid columns="2" cellpadding="5">                                                          
                                                             <h:outputText value="#{comm.contenu}"/> 
                                                         </h:panelGrid>

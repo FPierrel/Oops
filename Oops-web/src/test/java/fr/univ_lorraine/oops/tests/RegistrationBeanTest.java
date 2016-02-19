@@ -22,10 +22,10 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class RegistrationBeanTest {
-
-    RegistrationBean rb;
-    static WebDriver driver;
-    Time time;
+    private RegistrationBean rb;
+    private static WebDriver driver;
+    private Time time;
+    private static String host;
 
     public RegistrationBeanTest() {
     }
@@ -36,12 +36,13 @@ public class RegistrationBeanTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
+        host = System.getProperty(("glassfishHost"));
     }
 
     @Before
     public void setUp() {
         rb = new RegistrationBean();
-        driver.get("http://localhost:8080/Oops-web/inscription.xhtml");
+        driver.get(host + "/inscription.xhtml");
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         this.fillFields();
     }
@@ -88,7 +89,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:email")).sendKeys("jose@jose.jose");
         driver.findElement(By.id("form_signin:number")).sendKeys("12");
         driver.findElement(By.id("form_signin:street")).sendKeys("laRue");
-        driver.findElement(By.id("form_signin:complement")).sendKeys("3e étage");
+        driver.findElement(By.id("form_signin:complement")).sendKeys("3e Ã©tage");
         driver.findElement(By.id("form_signin:code")).sendKeys("57150");
         driver.findElement(By.id("form_signin:town")).sendKeys("Creutzwald");
     }
@@ -111,7 +112,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:email")).sendKeys(log + "@jose.jose");
         driver.findElement(By.name("form_signin:register")).click();
-        String str = "Inscription réussie !";
+        String str = "Inscription rÃ©ussie !";
         driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
         assertEquals(str, driver.findElement(By.className("ui-messages-info-detail")).getText());
     }
@@ -124,14 +125,14 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:email")).sendKeys(log + "@jose.jose");
         driver.findElement(By.name("form_signin:register")).click();
-        driver.get("http://localhost:8080/Oops-web/inscription.xhtml");
+        driver.get(host +"/inscription.xhtml");
         this.fillFields();
         driver.findElement(By.id("form_signin:login")).sendKeys(log + "");
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("form_signin:email")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:email")).sendKeys("Jose@Jose.fr");
         driver.findElement(By.name("form_signin:register")).click();
-        String str = "Login déjà  utilisé, veuillez en choisir un nouveau !";
+        String str = "Login dÃ©jÃ   utilisÃ©, veuillez en choisir un nouveau !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
     }
 
@@ -145,7 +146,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:confirmPassword")).sendKeys("Jose");
         driver.findElement(By.id("form_signin:email")).sendKeys("jose@jose.jose");
         driver.findElement(By.name("form_signin:register")).click();
-        String str = "Mot de passe trop petit (inférieur à 6), veuillez recommencer !";
+        String str = "Mot de passe trop petit (infÃ©rieur Ã  6), veuillez recommencer !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
     }
 
@@ -160,7 +161,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:town_input")).sendKeys("EPINAL");
         driver.findElement(By.className("ui-autocomplete-query")).click();
         driver.findElement(By.name("form_signin:register")).click();
-        String str = "Mot de passe différent, veuillez recommencer !";
+        String str = "Mot de passe diffÃ©rent, veuillez recommencer !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
     }
 
@@ -200,7 +201,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:firstname")).sendKeys(Keys.DELETE);
         driver.findElement(By.name("form_signin:register")).click();
         driver.findElement(By.id("form_signin:email")).sendKeys("jose@jose.jose");
-        String str = "Veuillez renseigner votre prénom !";
+        String str = "Veuillez renseigner votre prÃ©nom !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
     }
 

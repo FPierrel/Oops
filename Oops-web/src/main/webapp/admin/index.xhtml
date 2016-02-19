@@ -22,7 +22,7 @@
                                 <h:outputText value="#{avis.owner.login}"/>
                             </h:column>
                             <h:column>
-                                <h:outputText value="#{avis.pDate}"/>
+                                <h:outputText value="#{avis.dateFormat}"/>
                             </h:column>
                             <h:column>
                                 <h:outputText id="contenu" value="#{avis.contenu}"/>
@@ -44,7 +44,7 @@
                                 <f:facet name="header">
                                     <h:outputText value="Signalant" />
                                 </f:facet>
-                                <h:outputText id="reportingLogin" value="#{report.userReporting.login}"/>
+                                <h:outputText id="reportingLogin" value="#{report.userReporting}"/>
                             </h:column>
                             <h:column>
                                 <f:facet name="header">
@@ -65,11 +65,21 @@
                                 <h:outputText id="reason" value="#{report.reason}"/>
                             </h:column>
                             <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Complément" />
+                                </f:facet>
+                                <h:outputText id="complement" value="#{report.complement}"/>
+                            </h:column>
+                            <h:column>
                                 <h:commandButton value="Voir" action="#{adminBean.seeFiche(report)}"/>
                             </h:column>
                             <h:column>
-                                <h:commandButton id="dismiss" value="Traité" action="#{adminBean.dismissReport(report)}"/>
+                                <h:commandButton id="warn" value="Justifié" action="#{adminBean.acceptReport(report)}"/>
                             </h:column>
+                            <h:column>
+                                <h:commandButton id="dismiss" value="Injustifié" action="#{adminBean.dismissReport(report)}"/>
+                            </h:column>
+                            
 
                         </h:dataTable>
                     </h:form>

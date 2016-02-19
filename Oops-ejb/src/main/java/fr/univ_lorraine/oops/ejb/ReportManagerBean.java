@@ -6,13 +6,16 @@
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
-import fr.univ_lorraine.oops.library.model.Utilisateur;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.TypedQuery;
 
 /**
  *
@@ -29,14 +32,35 @@ public class ReportManagerBean {
         return this.em;
     }
 
-    public void reportFichePrestataire(String loginReporting, String loginFicheReported, String reason) {
-        Utilisateur user = this.getEntityManager().find(Utilisateur.class, loginReporting);
+    public void reportFichePrestataire(String loginReporting, String loginFicheReported, String reason, String complement) {
         Prestataire pres = this.getEntityManager().find(Prestataire.class, loginFicheReported);
         ReportFichePrestataire report = new ReportFichePrestataire();
         report.setReason(reason);
         report.setPrestataire(pres);
-        report.setUserReporting(user);
+        report.setUserReporting(loginReporting);
         report.setReportingDate(new Date());
-        this.getEntityManager().persist(report);
+        report.setComplement(complement);
+        pres.addReport(report);
+        this.getEntityManager().merge(pres);
+    }
+
+    public List<String> getReasons() {
+        ArrayList<String> reasons = new ArrayList<>();
+        reasons.add("Informations incorrectes");
+        reasons.add("Usurpation d'indentité");
+        reasons.add("Autre");
+        return reasons;
+    }
+
+    public boolean isUserBanished(String login) {
+        String queryString = "SELECT r "
+                + "FROM Report r, Utilisateur u "
+                + "WHERE r.justified='" + true + "' "
+                + "AND u.login = '"+login+"'"
+                + "AND r MEMBER OF u.reports";
+
+        TypedQuery<Report> query = this.getEntityManager().createQuery(queryString, Report.class);
+        int nb = query.getResultList().size();
+        return nb >= 3;
     }
 }

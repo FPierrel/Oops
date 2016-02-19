@@ -27,6 +27,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class FicheAvisTest {
 
     private static WebDriver driver;
+    private static String host;
 
     public FicheAvisTest() {
     }
@@ -36,7 +37,8 @@ public class FicheAvisTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
-        driver.get("http://localhost:8080/Oops-web/login.xhtml");
+        host = System.getProperty(("glassfishHost"));
+        driver.get(host +"/login.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).sendKeys("noupi");
         driver.findElement(By.name("j_password")).sendKeys("123456");
@@ -50,7 +52,7 @@ public class FicheAvisTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=satan");
+        driver.get(host + "/fiche.xhtml?page=satan");
         driver.findElement(By.id("formOpinion:opinion")).clear();
     }
 
@@ -68,29 +70,30 @@ public class FicheAvisTest {
         String comment = "Ceci est un avis de test";
         driver.findElement(By.id("formOpinion:opinion")).sendKeys(comment);
         driver.findElement(By.id("formOpinion:opinionButton")).click();
-        driver.get("http://localhost:8080/Oops-web/");
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=satan");
+        driver.get(host);
+        driver.get(host + "/fiche.xhtml?page=satan");
         assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/legend")).getText().contains("noupi"));
-        
+
         List<WebElement> l = driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table")).findElements(By.xpath(".//input"));
         for (int i = 0; i <= 3; i++) {
             assertEquals(l.get(i).getAttribute("value"), notes[i] + "");
         }
         assertEquals(driver.findElement(By.id("opinions")).findElement(By.xpath("form[last()]/fieldset/div/span")).getText(), comment);
     }
-    
+
     @Test
-    public void testFicheAvisCommentMissing(){
-         driver.findElement(By.id("formOpinion:opinionButton")).click();
-         assertEquals(driver.findElement(By.className("ui-messages-error-summary")).getText(), "Veuillez renseigner un avis !");
-            }
+    public void testFicheAvisCommentMissing() {
+        driver.findElement(By.id("formOpinion:opinionButton")).click();
+        assertEquals(driver.findElement(By.className("ui-messages-error-summary")).getText(), "Veuillez renseigner un avis !");
+    }
+
     @Test
-    public void testFicheAvisResponse(){
+    public void testFicheAvisResponse() {
         String msg = "Ceci est un commentaire en réponse à un avis";
         driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//input")).sendKeys(msg);
         driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//button")).click();
-        driver.get("http://localhost:8080/Oops-web/");
-        driver.get("http://localhost:8080/Oops-web/fiche.xhtml?page=satan");
+        driver.get(host);
+        driver.get(host + "/fiche.xhtml?page=satan");
         assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/fieldset/legend")).getText().contains("noupi"));
         assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/fieldset/div")).getText().contains(msg));
     }

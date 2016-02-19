@@ -9,17 +9,13 @@ import fr.univ_lorraine.oops.ejb.LuceneBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
-import javax.inject.Inject;
 import javax.persistence.EntityManager;
-import javax.xml.registry.infomodel.User;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import static org.junit.Assert.*;
-import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
@@ -54,13 +50,15 @@ public class RegistrationTest {
         p1.setLogin("José");
 
         EntityManager em = Mockito.mock(EntityManager.class);
-
+        LuceneBean lB = Mockito.mock(LuceneBean.class);
+        
         Mockito.when(em.find(Utilisateur.class, p1.getLogin())).thenReturn(null);
 
         UserManagerBean umb = Mockito.mock(UserManagerBean.class);
         
         Mockito.when(umb.registerUser(p1)).thenCallRealMethod();
         Mockito.when(umb.getEntityManager()).thenReturn(em);
+        Mockito.when(umb.getLuceneBean()).thenReturn(lB);
         
 
         Assert.assertSame(umb.registerUser(p1), p1);
@@ -80,10 +78,4 @@ public class RegistrationTest {
 
         Assert.assertNull(umb.registerUser(p1));
     }
-
-    // TODO add test methods here.
-    // The methods must be annotated with annotation @Test. For example:
-    //
-    // @Test
-    // public void hello() {}
 }

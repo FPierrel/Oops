@@ -15,6 +15,7 @@ import org.openqa.selenium.remote.DesiredCapabilities;
 public class AuthentificationBeanTest {
 
     private static WebDriver driver;
+    private static String host;
 
     public AuthentificationBeanTest() {
     }
@@ -24,6 +25,7 @@ public class AuthentificationBeanTest {
         DesiredCapabilities capabilities = DesiredCapabilities.phantomjs();
         driver = new PhantomJSDriver(capabilities);
         driver.manage().window().setSize(new Dimension(1440, 768));
+        host = System.getProperty(("glassfishHost"));
     }
 
     @AfterClass
@@ -33,7 +35,7 @@ public class AuthentificationBeanTest {
 
     @Before
     public void setUp() {
-        driver.get("http://localhost:8080/Oops-web/login.xhtml");
+        driver.get(host + "/login.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).clear();
     }
@@ -55,12 +57,12 @@ public class AuthentificationBeanTest {
         String message = "Connexion échoué !";
         assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
     }
-    
+
     @Test
     public void testDeconnectionSuccess() {
         driver.findElement(By.id("headerForm:username_button")).click();
         driver.findElement(By.id("headerForm:deconnexion")).click();
         String message = "Déconnexion réussie !";
         assertEquals(driver.findElement(By.className("ui-messages-info")).getText(), message);
-    }    
+    }
 }
