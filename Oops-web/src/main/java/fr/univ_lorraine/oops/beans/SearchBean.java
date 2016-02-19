@@ -275,12 +275,6 @@ public class SearchBean implements Serializable {
         this.code = code;
     }
 
-    public List<Prestataire> getListPrestataires() {
-        return this.searchResults.getCoordinates();
-    }
-
-    public void setListPrestataires(List<Prestataire> listPrestataires) {
-        this.listPrestataires = listPrestataires;
-    }
+   
     
 }
