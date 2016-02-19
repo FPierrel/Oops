@@ -1,0 +1,77 @@
+<!DOCTYPE html><html><head><meta charset="utf-8"><title>Untitled Document.md</title><style></style></head><body id="preview">
+<h1><a id="Manuel_dinstallation_du_projet_Oops_0"></a>Manuel d’installation du projet Oops:</h1>
+<h2><a id="Rcuperation_du_dpot_git_2"></a>Récuperation du dépot git:</h2>
+<pre><code class="language-sh">$ git <span class="hljs-built_in">clone</span> http://vps212426.ovh.net/plugins/git/oops/oops.git
+</code></pre>
+<p>login: guest <br>
+pass: Fowler54</p>
+<h2><a id="Installation_et_configuration_du_serveur_dapplication_8"></a>Installation et configuration du serveur d’application</h2>
+<h3><a id="Installation_du_serveur_glassfish_9"></a>Installation du serveur glassfish</h3>
+<pre><code class="language-sh">$ wget http://download.java.net/glassfish/<span class="hljs-number">4.1</span>.<span class="hljs-number">1</span>/release/glassfish-<span class="hljs-number">4.1</span>.<span class="hljs-number">1</span>.zip
+$ unzip glassfish-<span class="hljs-number">4.1</span>.<span class="hljs-number">1</span>.zip ~/glassfish
+$ <span class="hljs-built_in">cd</span> ~/glassfish/glassfish4/bin
+$ ./asadmin start-domain domain1
+<span class="hljs-comment">#### Activation de l'administration à distance : ###</span>
+$ ./asadmin change-admin-password
+$ ./asadmin <span class="hljs-built_in">enable</span>-secure-admin
+$ ./asadmin restart-domain domain1
+</code></pre>
+<h3><a id="Dmarrage_de_la_base_de_donnes_20"></a>Démarrage de la base de données</h3>
+<pre><code class="language-sh">$ <span class="hljs-built_in">cd</span> ~/glassfish/glassfish4/bin
+$ ./asadmin start-database
+</code></pre>
+<h3><a id="Cration_de_la_base_de_donnes_26"></a>Création de la base de données</h3>
+<pre><code class="language-sh">    $ <span class="hljs-built_in">cd</span> ~/glassfish/glassfish4/javadb/bin
+    $ ./ij
+    ij&gt; connect <span class="hljs-string">'jdbc:derby://localhost:1527/OOPS;create=true;user=OOPS;password=OOPS;'</span>;
+</code></pre>
+<h3><a id="Configuration_des_ressources_JDBC_de_glassfish_32"></a>Configuration des ressources JDBC de glassfish</h3>
+<ul>
+<li>Se rendre sur la page d’administration (<a href="http://localhost:4848">http://localhost:4848</a>)  \</li>
+<li>Sur la page Resources cliquer sur le bouton Add Resources \</li>
+<li>Charger le fichier Oops-ear/src/main/setup/glassfish-resources.xml</li>
+</ul>
+<h3><a id="Paramtrage_de_glassfish_pour_lauthentification_des_utilisateurs_37"></a>Paramétrage de glassfish pour l’authentification des utilisateurs</h3>
+<p>Se rendre sur la page Configuration-&gt;server-config-&gt;Security-&gt;Realms <br>
+Ajouter un realms: \</p>
+<ul>
+<li>Name: oops_realm</li>
+<li>Class Name: com.sun.enterprise.security.auth.realm.jdbc.JDBCRealm</li>
+<li>JAAS Context : jdbcRealm</li>
+<li>JNDI: jdbc/oops</li>
+<li>User Table: UTILISATEUR</li>
+<li>User Name Column: LOGIN</li>
+<li>Password Column: MOTDEPASSE</li>
+<li>Group Table: UTILISATEUR</li>
+<li>Group Name Column: GROUPE</li>
+<li>Password Encryption Algorithm: SHA-256</li>
+<li>Database User: OOPS</li>
+<li>Database Password: OOPS</li>
+<li>Digest Algorithm: SHA-256</li>
+<li>Charset: UTF-8</li>
+</ul>
+<h2><a id="Build_de_lapplication_55"></a>Build de l’application</h2>
+<p>Le serveur d’application est maintenant correctement configuré pour deployer l’application
+Pour générer les packages:</p>
+<pre><code class="language-sh">$ mvn clean install -DskipTests=<span class="hljs-literal">true</span>
+</code></pre>
+<h2><a id="Deploiement_de_lapplication_61"></a>Deploiement de l’application</h2>
+<p>Le deploiement peut s’effectuer soit à partir d’un IDE soit avec maven et le plugin Cargo. Pour déployer l’application avec maven il faut modifier le fichier pom.xml pour enregistrer les paramètres du serveur: <br>
+Dans la partie &lt;profils&gt;, créer ou modifier un profil pour enregistrer les parametres.</p>
+<p>Exemple de commande pour deployer l’application avec les paramètres du profil local:</p>
+<pre><code class="language-sh">$ mvn -pl Oops-web package cargo:redeploy -DskipTests=<span class="hljs-literal">true</span> -P <span class="hljs-built_in">local</span>
+</code></pre>
+<h2><a id="Lancement_des_tests_69"></a>Lancement des tests</h2>
+<p>Pour pouvoir lancer tous les tests l’application doit être deployée (pour les tests selenium) et il est nécessaire d’installer phantomjs, il s’agit d’une application permettant de simuler un navigateur web. La procédure d’installation se situe sur cette page: <a href="http://phantomjs.org/build.html">http://phantomjs.org/build.html</a></p>
+<p>Commande pour lancer les tests :</p>
+<pre><code class="language-sh">$ mvn <span class="hljs-built_in">test</span> -DglassfishHost=http://localhost:<span class="hljs-number">8080</span>/Oops-web
+</code></pre>
+<p>Le paramétre -DglassfishHost sert à indiquer l’adresse où l’application est déployer, cette adresse est utilisée pour les tests selenium.</p>
+<h2><a id="Analyse_du_code_78"></a>Analyse du code</h2>
+<p>Si un serveur SonarQube est installer en local il est possible de lancer une analyse avec la commande. L’adresse et le port du serveur SonarQube sont configurés dans le fichier /conf/settings.xml</p>
+<pre><code class="language-sh">$ mvn clean install sonar:sonar -DskipTests=<span class="hljs-literal">true</span>
+``
+
+</code></pre>
+
+</body></html>
