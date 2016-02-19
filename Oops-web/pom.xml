@@ -191,9 +191,12 @@
                 </property>
             </activation>
             <properties>
+                <!-- L'administration a distance doit etre activé sur le serveur
+                    ./asadmin enable-secure-admin
+                -->
                 <remote.hostname>localhost</remote.hostname>
                 <remote.username>admin</remote.username>
-                <remote.password></remote.password>
+                <remote.password>super_password</remote.password>
                 <remote.port>8080</remote.port>
                 <remote.glassfish.domain.name>/Oops-web</remote.glassfish.domain.name>
             </properties>
