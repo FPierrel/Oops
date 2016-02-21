@@ -11,7 +11,6 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -34,7 +33,7 @@ public class Report implements Serializable {
     private Date reportingDate;
     private boolean moderated;
     private boolean justified;
-
+    private String userReported;
     
     public Report() {
        
@@ -95,7 +94,13 @@ public class Report implements Serializable {
     public void setComplement(String complement) {
         this.complement = complement;
     }
-    
-    
 
+    public String getUserReported() {
+        return userReported;
+    }
+
+    public void setUserReported(String userReported) {
+        this.userReported = userReported;
+    }
+    
 }

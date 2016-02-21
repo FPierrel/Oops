@@ -5,6 +5,7 @@
  */
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.ejb.ReportManagerBean;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -30,6 +31,10 @@ public class LoginFilter implements Filter {
 
     @Inject
     ReportManagerBean rMB;
+    
+    @Inject
+    BanishmentBean bB;
+    
     private static final boolean debug = false;
 
     // The filter configuration object we are associated with.  If
@@ -59,16 +64,15 @@ public class LoginFilter implements Filter {
             String username = httpRequest.getParameter("j_username");
             String password = httpRequest.getParameter("j_password");
 
-            if (rMB.isUserBanished(username)) {
+            if (bB.isUserBanished(username)) {
                 httpResponse.sendRedirect("/Oops-web/login.xhtml?blocked=true");
 
             } else {
                 httpResponse.sendRedirect("j_security_check?j_username=" + username + "&j_password=" + password);
             }
-            chain.doFilter(request, response);
-
+           
         } catch (Exception e) {
-            
+           e.printStackTrace();
         }
 
     }

@@ -32,6 +32,8 @@ public abstract class Utilisateur implements Serializable {
     /*@OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Avis> avisSoumis;*/
         
+    private int adminWarnings;
+    private boolean banished;
     
     public Utilisateur() {
         this.adresses = new ArrayList<>();
@@ -126,7 +128,23 @@ public abstract class Utilisateur implements Serializable {
     public void setAlbums(List<Album> albums) {
         this.albums = albums;
     }
-    
+
+    public int getAdminWarnings() {
+        return adminWarnings;
+    }
+
+    public void setAdminWarnings(int adminWarnings) {
+        this.adminWarnings = adminWarnings;
+    }
+
+    public boolean isBanished() {
+        return banished;
+    }
+
+    public void setBanished(boolean banished) {
+        this.banished = banished;
+    }
+
     @Override
     public int hashCode() {
         int hash = 5;

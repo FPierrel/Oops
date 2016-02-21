@@ -15,7 +15,7 @@ import javax.persistence.ManyToOne;
  */
 @Entity
 public class ReportFichePrestataire extends Report implements Serializable {
-
+/*
     private static final long serialVersionUID = 1L;
 
     @ManyToOne
@@ -31,5 +31,5 @@ public class ReportFichePrestataire extends Report implements Serializable {
     public void setPrestataire(Prestataire prestataire) {
         this.prestataire = prestataire;
     }
-
+*/
 }

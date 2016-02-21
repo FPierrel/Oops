@@ -8,6 +8,7 @@ package fr.univ_lorraine.oops.ejb;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
+import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -36,7 +37,7 @@ public class ReportManagerBean {
         Prestataire pres = this.getEntityManager().find(Prestataire.class, loginFicheReported);
         ReportFichePrestataire report = new ReportFichePrestataire();
         report.setReason(reason);
-        report.setPrestataire(pres);
+        report.setUserReported(loginFicheReported);
         report.setUserReporting(loginReporting);
         report.setReportingDate(new Date());
         report.setComplement(complement);
@@ -50,17 +51,5 @@ public class ReportManagerBean {
         reasons.add("Usurpation d'indentité");
         reasons.add("Autre");
         return reasons;
-    }
-
-    public boolean isUserBanished(String login) {
-        String queryString = "SELECT r "
-                + "FROM Report r, Utilisateur u "
-                + "WHERE r.justified='" + true + "' "
-                + "AND u.login = '"+login+"'"
-                + "AND r MEMBER OF u.reports";
-
-        TypedQuery<Report> query = this.getEntityManager().createQuery(queryString, Report.class);
-        int nb = query.getResultList().size();
-        return nb >= 3;
     }
 }

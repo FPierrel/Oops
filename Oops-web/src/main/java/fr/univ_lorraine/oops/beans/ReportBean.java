@@ -5,6 +5,7 @@
  */
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.ejb.ReportManagerBean;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -25,6 +26,9 @@ public class ReportBean implements Serializable {
 
     @Inject
     ReportManagerBean report;
+
+    @Inject
+    BanishmentBean ban;
 
     private String page;
     private List<String> reasons = new ArrayList<>();
@@ -75,6 +79,15 @@ public class ReportBean implements Serializable {
         this.reason = reasonChosen;
     }
     
+    public void banishPrestataire(){
+        ban.banishUser(page);
+    }
    
-
+    public void redeemPrestataire(){
+        ban.redeemUser(page);
+    }
+    
+    public boolean isBanished(){
+        return ban.isUserBanished(page);
+    }
 }

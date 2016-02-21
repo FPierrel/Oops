@@ -51,12 +51,20 @@ public class AdminUtilsBean {
     public void acceptReport(Report report) {
         report.setModerated(true);
         report.setJustified(true);
+        Utilisateur u = (Utilisateur) this.getEntityManager().find(Utilisateur.class, report.getUserReported());
+        int nbWarnings = u.getAdminWarnings();
+        nbWarnings++;
+        u.setAdminWarnings(nbWarnings);
+        if(nbWarnings>= 3){
+            u.setBanished(true);
+        }
         this.getEntityManager().merge(report);
+        this.getEntityManager().merge(u);
     }
 
     public List<ReportFichePrestataire> getUnverifiedReport() {
         String queryString = "SELECT r "
-                + "FROM Report r "
+                + "FROM ReportFichePrestataire r "
                 + "WHERE  r.moderated='" + false + "'";
         TypedQuery<ReportFichePrestataire> query = this.getEntityManager().createQuery(queryString, ReportFichePrestataire.class);
         return query.getResultList();
