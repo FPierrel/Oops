@@ -70,59 +70,28 @@ public class AuthentificationBeanTest {
     }
 
     @Test
-    public void userBlockedTest() {
+    public void testBlockedByAdmin() {
         driver.get(host + "/login.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.name("j_username")).sendKeys("jose");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         driver.get(host + "/fiche.xhtml?page=satan");
-        driver.findElement(By.id("reportFiche:reportFiche")).click();
-        Select sel = new Select(driver.findElement(By.id("reportFiche:reasons")));
-        sel.selectByVisibleText("Autre");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ReportBeanTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        driver.findElement(By.id("reportFiche:reportFicheReason")).sendKeys("Test_report1");
-        driver.findElement(By.id("reportFiche:reportFicheButton")).click();
-
-        driver.findElement(By.id("reportFiche:reportFiche")).click();
-        sel = new Select(driver.findElement(By.id("reportFiche:reasons")));
-        sel.selectByVisibleText("Autre");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ReportBeanTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        driver.findElement(By.id("reportFiche:reportFicheReason")).clear();
-        driver.findElement(By.id("reportFiche:reportFicheReason")).sendKeys("Test_report2");
-        driver.findElement(By.id("reportFiche:reportFicheButton")).click();
-
-        driver.findElement(By.id("reportFiche:reportFiche")).click();
-        sel = new Select(driver.findElement(By.id("reportFiche:reasons")));
-        sel.selectByVisibleText("Autre");
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException ex) {
-            Logger.getLogger(ReportBeanTest.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        driver.findElement(By.id("reportFiche:reportFicheReason")).clear();
-        driver.findElement(By.id("reportFiche:reportFicheReason")).sendKeys("Test_report3");
-        driver.findElement(By.id("reportFiche:reportFicheButton")).click();
-
-        driver.get(host + "/admin/index.xhtml");
-
-        driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).findElement(By.xpath("tbody/tr[last()]/td[last()-1]/input")).click();
-        driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).findElement(By.xpath("tbody/tr[last()]/td[last()-1]/input")).click();
-        driver.findElement(By.id("signalementFicheEnAttente:datatableReport")).findElement(By.xpath("tbody/tr[last()]/td[last()-1]/input")).click();
-
+        driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
+     
         driver.get(host + "/login.xhtml");
         driver.findElement(By.name("j_username")).sendKeys("satan");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         String message = "Votre compte a été bloqué par un administrateur !";
         assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
+        
+        driver.get(host + "/login.xhtml");
+        driver.findElement(By.name("j_username")).sendKeys("jose");
+        driver.findElement(By.name("j_password")).sendKeys("123456");
+        driver.findElement(By.name("submit")).click();
+        driver.get(host + "/admin/index.xhtml");
+        driver.findElement(By.id("bannis:datatableReport")).findElement(By.xpath(".//td[last()]/input")).click();
+        assertTrue(true);
     }
 }

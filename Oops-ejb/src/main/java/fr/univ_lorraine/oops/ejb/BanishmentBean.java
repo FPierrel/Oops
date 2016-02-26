@@ -38,7 +38,7 @@ public class BanishmentBean {
 
     public boolean isUserBanished(String login) {
         Utilisateur u = (Utilisateur) this.getEntityManager().find(Utilisateur.class, login);
-        return u.isBanished();
+        return (u==null)?false:u.isBanished();
     }
 
     public void redeemUser(String login) {
