@@ -38,6 +38,8 @@ public class LuceneBean {
 
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    
 
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
     private Analyzer analyzer;
