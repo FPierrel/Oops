@@ -57,7 +57,7 @@ public class AuthentificationBeanTest {
         driver.findElement(By.name("j_username")).sendKeys("noupi");
         driver.findElement(By.name("j_password")).sendKeys("0000");
         driver.findElement(By.name("submit")).click();
-        String message = "Connexion échoué !";
+        String message = "Connexion échouée !";
         assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
     }
 

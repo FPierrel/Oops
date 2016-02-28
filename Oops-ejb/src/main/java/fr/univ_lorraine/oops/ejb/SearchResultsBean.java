@@ -282,7 +282,7 @@ public class SearchResultsBean {
             String query = ""
                     + "SELECT ville_nom "
                     + "FROM villes_france_free "
-                    + "WHERE ville_nom LIKE '%" + search + "%' ";
+                    + "WHERE ville_nom LIKE '" + search + "%' ";
 
             ResultSet resultat = MySQL.getInstance().search(query);
 

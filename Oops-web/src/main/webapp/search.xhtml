@@ -1,74 +1,153 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
-                xmlns:f="http://java.sun.com/jsf/core"
-                xmlns:h="http://java.sun.com/jsf/html"
-                xmlns:ui="http://java.sun.com/jsf/facelets"
-                xmlns:p="http://primefaces.org/ui">
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core"   
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+                xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
 
-    <div id="banner-wrapper">
-        <center>
-            <h:form id="searchForm">
-                <h:panelGrid id="simple_search" columns ="3" >
-                    <p:inputText  id="quoi" placeholder="Quoi ?" value="#{searchBean.quoi}"/>
+    <section id="services" class="emerald">
+        <div class="container">
+            <h:form id="searchForm" role="form" class="form-inline center">
+                <br/>
+                <div class="form-group">
+                    <h:inputText id="quoi" class="form-control" autocomplete="off" pt:placeholder="Quoi ?" value="#{searchBean.quoi}" />
+                </div>
+                <div class="form-group">
                     <p:autoComplete id="ou" forceSelection="true" placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
-                    <p:commandButton class="button" id="go" value="Rechercher" action="#{searchBean.search()}"/>
-                    <h:outputText/><h:outputText/>
-                    <p:commandButton id="buttonAdvancedSearch" onstart="#{searchBean.cancelAdvanced()}" onclick="PF('toggleAdvanced').toggle()" actionListener="#{searchBean.switchAdvanced()}" value="Recherche avancée"/> 
-
-                </h:panelGrid>
-
-                <p:panel style="background-color:#20E1B6; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleAdvanced">
-                <h:panelGrid id="advanced_search" columns="5" cellpadding="5" >
-                    <!-- -->
-                    <h:outputLabel value = "Nom : " />                    
-                    <p:inputText value="#{searchBean.lastnameSearch}" id="lastnameSearch" />
-                    <h:message for="lastnameSearch"></h:message>
-
-                    <h:selectOneMenu id="categorie" value="#{searchBean.categorie}" required = "true" > 
-                        <f:selectItems value="#{searchBean.categories}"/>
-                    </h:selectOneMenu>
-                    <p:outputLabel/>
-
-                    <!-- -->
-                    <h:outputLabel value = "Prénom : " />
-                    <p:inputText value="#{searchBean.firstnameSearch}" id="firstnameSearch" />
-                    <h:message for="firstnameSearch"></h:message>
-                    <h:outputText value="Communication : " />
-                    <p:rating value="#{searchBean.communication}" />
-
-                    <!-- -->
-                    <h:outputLabel value = "Nombre d'employés minimum : " />
-                    <p:inputText value="#{searchBean.employeeSearch}" id="employeeSearch"  converterMessage="Le nombre d'employés doit être un nombre !">
-                        <f:convertNumber type="number" integerOnly="true" />
-                    </p:inputText>
-                    <h:message for="employeeSearch"></h:message>
-                    <h:outputText value="Qualité : " />
-                    <p:rating value="#{searchBean.quality}" />
-
-                    <!-- -->
-                    <h:outputLabel value = "Raison sociale : " />
-                    <p:inputText value="#{searchBean.raisonSocialeSearch}" id="raisonSocialeSearch" />
-                    <h:message for="raisonSocialeSearch"></h:message>
-                    <h:outputText value="Prix : " />
-                    <p:rating value="#{searchBean.price}" />
-
-                    <!-- -->
-                    <h:outputLabel value = "Forme juridique : " />
-                    <p:inputText  value="#{searchBean.formeJuridiqueSearch}" id="formeJuridiqueSearch" />
-                    <h:message for="formeJuridiqueSearch"></h:message>
-                    <h:outputText value="Délai : " />
-                    <p:rating value="#{searchBean.delay}" />
-
-                    <!-- -->
-                    <h:outputLabel value = "Chiffre d'affaire minimum : " />
-                    <p:inputText  value="#{searchBean.chiffreAffaireSearch}" id="chiffreAffaireSearch"  converterMessage="Le chiffre d'affaire doit être un nombre !">
-                        <f:convertNumber type="number" integerOnly="true" />
-                    </p:inputText>
-                    <h:message for="chiffreAffaireSearch"></h:message>
-                    <h:outputText value="Moyenne : " />
-                    <p:rating value="#{searchBean.moyenne}" />
-                </h:panelGrid>
-                </p:panel>
+                </div>
+                <div class="btn-group">
+                    <h:commandLink id="go" class="btn btn-danger" action="#{searchBean.search()}"><i class="icon-search"></i> Rechercher</h:commandLink>
+                    <h:commandLink id="buttonAdvancedSearch" class="btn btn-danger" actionListener="#{searchBean.switchAdvanced()}">
+                        <f:ajax execute="@form" render="@all" />
+                        <c:if test="#{!searchBean.advanced}">
+                            <i id="button-search" class="icon-chevron-down"></i>
+                        </c:if>
+                        <c:if test="#{searchBean.advanced}">
+                            <i id="button-search" class="icon-chevron-up"></i>
+                        </c:if>
+                    </h:commandLink>
+                </div>
+                <c:if test="#{searchBean.advanced}">
+                    <div id="div-advanced-search">
+                        <div class='row'>
+                            <br/>
+                            <div class='col-sm-3 col-sm-offset-2'>
+                                <div class='form-group'>
+                                    <h:inputText id="lastnameSearch" class="form-control" pt:placeholder="Nom" value="#{searchBean.lastnameSearch}"/>
+                                </div>
+                                <div class='form-group'>
+                                    <h:inputText id="firstnameSearch" class="form-control" pt:placeholder="Prénom" value="#{searchBean.firstnameSearch}"/>
+                                </div>
+                                <div class='form-group'>    
+                                    <h:inputText id="employeeSearch" class="form-control" pt:placeholder="Nbre d'employé min." value="#{searchBean.employeeSearch}" converterMessage="Le nombre d'employés doit être un nombre !">
+                                        <f:convertNumber type="number" integerOnly="true"/>
+                                    </h:inputText>
+                                </div>
+                                <div class='form-group'>
+                                    <h:inputText id="raisonSocialeSearch" class="form-control" pt:placeholder="Raison sociale" value="#{searchBean.raisonSocialeSearch}"/>
+                                </div>
+                                <div class='form-group'>
+                                    <h:inputText id="formeJuridiqueSearch" class="form-control" pt:placeholder="Forme juridique" value="#{searchBean.formeJuridiqueSearch}"/>
+                                </div>
+                                <div class='form-group'>
+                                    <h:inputText id="chiffreAffaireSearch" class="form-control" pt:placeholder="Chiffre d'affaire min." value="#{searchBean.chiffreAffaireSearch}" converterMessage="Le chiffre d'affaire doit être un nombre !">
+                                        <f:convertNumber type="number" integerOnly="true"/>
+                                    </h:inputText>
+                                </div>
+                            </div>
+                            <div class='col-sm-4 col-sm-offset-1'>
+                                <div class="form-group">
+                                    <h:selectOneMenu id="categorie" class="form-control" value="#{searchBean.categorie}" required = "true" > 
+                                        <f:selectItems value="#{searchBean.categories}"/>
+                                    </h:selectOneMenu>
+                                </div>
+                                <div class="form-group">
+                                    <br/>
+                                    <table>
+                                        <tr>
+                                            <td>Moyenne :</td>
+                                            <h:inputHidden id="moyenne" value="#{searchBean.moyenne}"/> 
+                                            <td><div class='starrr' id="star1"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Communication :</td>
+                                            <h:inputHidden id="communication" value="#{searchBean.communication}"/>
+                                            <td><div class='starrr' id="star2"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Délai :</td>
+                                            <h:inputHidden id="delai" value="#{searchBean.delay}"/>
+                                            <td><div class='starrr' id="star3"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Prix :</td>
+                                            <h:inputHidden id="prix" value="#{searchBean.price}"/>
+                                            <td><div class='starrr' id="star4"/></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Qualité :</td>
+                                            <h:inputHidden id="qualite" value="#{searchBean.quality}"/>
+                                            <td><div class='starrr' id="star5"/></td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </c:if>
             </h:form>
-        </center>
-    </div>
+        </div>
+    </section><!--/#services-->
+    <script src="js/starrr.js"></script>
+    <script>
+        $('#star1').starrr({
+            change: function (e, value) {
+                if (value) {
+                    document.getElementById('searchForm:moyenne').value = value;
+                } else {
+                    document.getElementById('searchForm:moyenne').value = 0;
+                }
+            }
+        });
+        $('#star2').starrr({
+            change: function (e, value) {
+                if (value) {
+                    document.getElementById('searchForm:communication').value = value;
+                } else {
+                    document.getElementById('searchForm:communication').value = 0;
+                }
+            }
+        });
+        $('#star3').starrr({
+            change: function (e, value) {
+                if (value) {
+                    document.getElementById('searchForm:delai').value = value;
+                } else {
+                    document.getElementById('searchForm:delai').value = 0;
+                }
+            }
+        });
+        $('#star4').starrr({
+            change: function (e, value) {
+                if (value) {
+                    document.getElementById('searchForm:prix').value = value;
+                } else {
+                    document.getElementById('searchForm:prix').value = 0;
+                }
+            }
+        });
+        $('#star5').starrr({
+            change: function (e, value) {
+                if (value) {
+                    document.getElementById('searchForm:qualite').value = value;
+                } else {
+                    document.getElementById('searchForm:qualite').value = 0;
+                }
+            }
+        });
+    </script>
 </ui:composition>
+

@@ -4,7 +4,9 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <f:metadata>
         <f:viewParam name="page" value="#{ficheBean.page}" />
         <f:viewParam name="page" value="#{reportBean.page}" />
@@ -12,152 +14,357 @@
     </f:metadata>
     <h:head>
         <title>Oops | #{ficheBean.prestataire.nomEntreprise}</title>
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
-        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="css/prettyPhoto.css" rel="stylesheet"/>
+        <link href="css/animate.css" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <link href="css/starrr.css" rel="stylesheet"/>
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
     </h:head>
     <h:body>
         <ui:include src="header.xhtml"/>
         <ui:include src="search.xhtml"/>
-        <div id="featured-wrapper">
-            <div id ="content">
-                <div id="featured" class="container">
-                    <p:messages />
-                    <div class="prestataire">
-                        <h1><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h1>
-                        <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
-                            <p:commandButton rendered="#{!reportBean.banished}" actionListener="#{reportBean.banishPrestataire()}" value="Bannir" ><f:ajax render="@all"/></p:commandButton> <p:commandButton rendered="#{reportBean.banished}" actionListener="#{reportBean.redeemPrestataire()}" value="Gracier" ><f:ajax render="@all"/></p:commandButton>
-                        </h:form>
-                        <h:form><p:rating value="#{ficheBean.noteTotal}" readonly="true"/></h:form>
-                        <div id="rating"><a href="#avis">#{ficheBean.nbAvis} avis</a></div><br/><br/>
-                        <h:outputText id="description" value="#{ficheBean.prestataire.description}" /><br/><br/>
 
-                        <h:form id="reportFiche" rendered="#{request.remoteUser != null}"> 
-                            <p:commandLink id="reportFiche" onclick="PF('toggleReportFiche').toggle()" value="Signaler cette fiche"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre signalement sera bientôt traité par un administrateur</p:panel>
-                            <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleReportFiche">
-                                <h:selectOneMenu id="reasons" value="#{reportBean.reason}" required = "true" > 
-                                    <f:selectItems value="#{reportBean.reasons}"/>
-                                </h:selectOneMenu><br/>
-                                <p:inputTextarea value="#{reportBean.complement}" id="reportFicheReason" placeholder="Complément"/>
-                                <br/><p:commandButton value="Signaler" id="reportFicheButton" onclick="PF('toggleReportFiche').toggle();PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
-                            </p:panel>
-                        </h:form>
-                        <h2>Informations : </h2><br/>
+
+        <section id="blog" class="container">
+            <div class="row">
+                <p:messages />
+                <aside class="col-sm-4 col-sm-push-8">
+
+                    <div class="widget tags">
                         <h3>Catégories</h3>
-                        <span id="categories">
-                            <ui:repeat value="#{ficheBean.categories}" var="categorie">
-                                <h:outputText value="#{categorie}"/><br/>
-                            </ui:repeat>
-                        </span>
-                        <h3>Contacts : </h3>
-                        <h:outputText value="Représentant : #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}" /><br/>
-                        <h:dataTable value="#{ficheBean.prestataire.adresses}" var="address">
-                            <h:column>
-                                <h:outputText value="#{address.numero}, "/>                  
-                            </h:column>
-                            <h:column>
-                                <h:outputText value="#{address.rue}"/>             
-                            </h:column>
-                            <h:column>
-                                <h:outputText value="#{address.complement}"/>                  
-                            </h:column>
-                            <h:column>
-                                <h:outputText value="#{address.codePostal}"/>                  
-                            </h:column>
-                            <h:column>
-                                <h:outputText value="#{address.ville}, "/>                  
-                            </h:column>
-                        </h:dataTable>
-                        <h:outputText value="Téléphone : #{ficheBean.prestataire.numeroTelephone} " />
-                        <h:outputText value="E-mail : #{ficheBean.prestataire.mail} " />
-                        <h:outputText id="website" value="Site Web : #{ficheBean.prestataire.siteWeb} " />
-                        <h3>A propos de :</h3>
-                        <h:outputText value="Raison sociale : A DEFINIR ! " /><br/>
-                        <h:outputText value="Forme juridique : A DEFINIR ! " /><br/>
-                        <h:outputText id="employeeNumber" value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} " /><br/>
-                        <h:outputText id="turnover" value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € " /><br/><br/><br/>
-                        <h2>Evaluation : </h2><br/>
-                        <h:form>
-                            <h:outputText value="Communication : "/><p:rating value="#{ficheBean.noteGlobCom}" readonly="true"/><br/><br/>
-                            <h:outputText value="Qualité : "/><p:rating value="#{ficheBean.noteGlobQualite}" readonly="true"/><br/><br/>
-                            <h:outputText value="Prix : "/><p:rating value="#{ficheBean.noteGlobPrix}" readonly="true"/><br/><br/>
-                            <h:outputText value="Délai : "/><p:rating value="#{ficheBean.noteGlobDelai}" readonly="true"/><br/><br/><br/><br/>
-                        </h:form>
-                        <div id="avis">
-                            <h:form id="formOpinion" rendered="#{request.remoteUser != null}">
-                                <h2>Donnez votre avis : </h2><br/>
-                                <h:outputText value="Communication : "/>
-                                <p:rating id="rate1" value="#{ficheBean.rate1}" stars="5" cancel="false" /><br/><br/>
-                                <h:outputText value="Qualité : "/>
-                                <p:rating id="rate2" value="#{ficheBean.rate2}" stars="5" cancel="false" /><br/><br/>
-                                <h:outputText value="Prix : "/>
-                                <p:rating id="rate3" value="#{ficheBean.rate3}" stars="5" cancel="false" /><br/><br/>
-                                <h:outputText value="Délai : "/>
-                                <p:rating id="rate4" value="#{ficheBean.rate4}" stars="5" cancel="false" /><br/><br/>
-                                <h:outputText value="Laissez un commentaire sur la prestation : "/><br/><br/>
-                                <p:inputText value="#{ficheBean.opinion}" id="opinion"/><br/><br/>
-                                <p:commandButton id="opinionButton" class="button" value="Soumettre" action="#{ficheBean.saveOpinion()}" update="@all"/><br/><br/>                                
-                            </h:form>
+                        <ul class="tag-cloud">
+                            <span id="categories">
+                                <br/>
+                                <ui:repeat value="#{ficheBean.categories}" var="categorie">
+                                    <li><a class="btn btn-xs btn-primary" href="#">#{categorie}</a></li>
+                                </ui:repeat>
+                            </span>
+                        </ul>
+                    </div><!--/.tags-->
 
-                            <h:panelGroup id="panelAvis">
-                                <h2>Avis des clients: </h2>
+                    <div class="widget ads">
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#"><img class="img-responsive img-rounded" src="images/ads/ad1.png" alt=""/></a>
+                            </div>
 
-                                <ul id="opinions">
-                                    <ui:repeat value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
-
-                                        <h:form id="lAvis#{loop.index}">
-                                            <p:fieldset legend="Par #{cAvis.owner.login} le #{cAvis.dateFormat}" style="margin-bottom:20px">
-                                                <div  align="right" id="removeOpinion">
-                                                    <h:form rendered="#{request.remoteUser == cAvis.owner.login}">
-                                                        <p:commandButton id="removeButton" value="Supprimer votre avis" action="#{ficheBean.removeOpinion(cAvis)}" update="@all"/>
-                                                    </h:form>
-                                                </div>
-                                                <h:panelGrid columns="4" cellpadding="5">                                                          
-                                                    <h:outputText value="Communication : "/>
-                                                    <h:outputText value="Qualité : "/>
-                                                    <h:outputText value="Prix : "/>
-                                                    <h:outputText value="Délai : "/>
-                                                    <p:rating value="#{cAvis.noteCom}" stars="5" cancel="false" readonly="true"/>
-                                                    <p:rating value="#{cAvis.noteQualite}" stars="5" cancel="false" readonly="true"/>
-                                                    <p:rating value="#{cAvis.notePrix}" stars="5" cancel="false" readonly="true"/>
-                                                    <p:rating value="#{cAvis.noteDelai}" stars="5" cancel="false" readonly="true"/>
-                                                </h:panelGrid>
-
-
-
-                                                <h:outputText value="Commentaire : "/><br/>
-                                                <h:outputText id="contenu" value="#{cAvis.contenu}" /><br/><br/>  
-
-                                                Réponses : <br/><br/>
-
-                                                <ui:repeat value="#{cAvis.commentaires}" var="comm" varStatus="i">
-                                                    <p:fieldset legend="Par #{comm.profil} le #{comm.dateFormat}" style="margin-bottom:20px">
-                                                        <div align="right" id="removeCom">
-                                                            <p:commandButton rendered="#{request.remoteUser == comm.profil}" id="removeComButton" value="Supprimer votre commentaire" action="#{ficheBean.removeComment(comm,loop.index)}" update="@all"/>
-                                                        </div>
-                                                        <h:panelGrid columns="2" cellpadding="5">                                                          
-                                                            <h:outputText value="#{comm.contenu}"/> 
-                                                        </h:panelGrid>
-                                                    </p:fieldset>               
-                                                </ui:repeat>
-
-                                                <h:panelGrid columns="2" cellpadding="5">
-                                                    <input type="text" id="co#{loop.index}" name="co#{loop.index}" />
-                                                    <p:commandButton value="Commenter cet avis" action="#{ficheBean.saveComment(loop.index)}" update="@all" />
-                                                </h:panelGrid>
-
-                                            </p:fieldset>
-                                        </h:form>
-
-                                    </ui:repeat>
-                                </ul>
-
-                            </h:panelGroup>
+                            <div class="col-xs-6">
+                                <a href="#"><img class="img-responsive img-rounded" src="images/ads/ad2.png" alt=""/></a>
+                            </div>
                         </div>
-                    </div>    
-                </div>
-            </div>
-        </div>
+                        <p> </p>
+                        <div class="row">
+                            <div class="col-xs-6">
+                                <a href="#"><img class="img-responsive img-rounded" src="images/jose.jpg" alt=""/></a>
+                            </div>
+
+                            <div class="col-xs-6">
+                                <a href="#"><img class="img-responsive img-rounded" src="images/ads/ad4.png" alt=""/></a>
+                            </div>
+                        </div>
+                    </div><!--/.ads--> 
+
+                    <div class="widget">
+                        <h3>Contacts</h3>
+                        <div class="widget-content">
+                            <h4><h:outputText value="#{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}"/></h4>
+                            <ui:repeat value="#{ficheBean.prestataire.adresses}" var="address">
+                                <h:column>
+                                    <p>
+                                        <h:outputText value="#{address.numero}, "/>                  
+                                        <h:outputText value="#{address.rue}"/><br/>         
+                                        <c:if test="!#{address.complement}.isEmpty()"><h:outputText value="#{address.complement}"/><br/></c:if>       
+                                        <h:outputText value="#{address.codePostal} "/>                  
+                                        <h:outputText value="#{address.ville}"/>
+                                    </p>                
+                                </h:column>
+                            </ui:repeat>
+                            <p>
+                                <h:outputText value="Téléphone : #{ficheBean.prestataire.numeroTelephone}"/><br/>
+                                <h:outputText value="E-mail : #{ficheBean.prestataire.mail}"/><br/>
+                                <h:outputText id="website" value="Site Web : #{ficheBean.prestataire.siteWeb}"/><br/>
+                            </p>
+                        </div>
+
+                        <div class="widget">
+                            <h3>Informations supplémentaires</h3>
+                            <div class="widget-content">
+                                <p>
+                                    <h:outputText value="Raison sociale : A DEFINIR ! "/><br/>
+                                    <h:outputText value="Forme juridique : A DEFINIR ! "/><br/>
+                                    <h:outputText id="employeeNumber" value="Nombre d'employé(s) : #{ficheBean.prestataire.nbEmployes} "/><br/>
+                                    <h:outputText id="turnover" value="Chiffre d'affaire : #{ficheBean.prestataire.chiffreAffaire} € "/>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </aside>        
+                <div class="col-sm-8 col-sm-pull-4">
+                    <div class="blog">
+                        <div class="blog-item">
+                            <img class="img-responsive img-blog" src="images/blog/blog2.jpg" width="100%" alt="" />
+                            <div class="blog-content">
+
+                                <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
+                                    <p:commandButton rendered="#{!reportBean.banished}" actionListener="#{reportBean.banishPrestataire()}" value="Bannir" ><f:ajax render="@all"/></p:commandButton> <p:commandButton rendered="#{reportBean.banished}" actionListener="#{reportBean.redeemPrestataire()}" value="Gracier" ><f:ajax render="@all"/></p:commandButton>
+                                </h:form>
+
+                                <h:form id="reportFiche" rendered="#{request.remoteUser != null}"> 
+                                    <p:commandLink id="reportFiche" onclick="PF('toggleReportFiche').toggle()" value="Signaler cette fiche"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre signalement sera bientôt traité par un administrateur</p:panel>
+                                    <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleReportFiche">
+                                        <h:selectOneMenu id="reasons" value="#{reportBean.reason}" required = "true" > 
+                                            <f:selectItems value="#{reportBean.reasons}"/>
+                                        </h:selectOneMenu><br/>
+                                        <p:inputTextarea value="#{reportBean.complement}" id="reportFicheReason" placeholder="Complément"/>
+                                        <br/><p:commandButton value="Signaler" id="reportFicheButton" onclick="PF('toggleReportFiche').toggle();
+                                                PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
+                                    </p:panel>
+                                </h:form>
+
+                                <h:form id="formNotes">
+                                    <h3><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h3>
+                                    <div class='starrr' id="star_moyenne"></div><h:outputText value=" (#{ficheBean.noteTotal})"/>
+                                    <div class="entry-meta">
+                                        <span><i class="icon-user"></i><h:outputText value=" #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}"/></span>
+                                        <span><i class="icon-calendar"></i> DATE D'INSCRIPTION</span>
+                                        <span><i class="icon-comment"></i> <a href="#comments">#{ficheBean.nbAvis} Avis</a></span>
+                                    </div>
+                                    <fieldset>
+                                        <legend>Description</legend>
+                                        <p class="lead"><h:outputText id="description" value="#{ficheBean.prestataire.description}"/></p>
+                                    </fieldset>
+                                    <fieldset>
+                                        <legend>Evaluation</legend>
+                                        <h:inputHidden id="moyenne" value="#{ficheBean.noteTotal}"/>
+                                        <p>Moyenne : </p><div class='starrr' id="eval_moyenne"/><h:outputText value=" (#{ficheBean.noteTotal})"/>
+                                        <h:inputHidden id="communication" value="#{ficheBean.noteGlobCom}"/>
+                                        <p>Communication : </p><div class='starrr' id="eval_communication"></div><h:outputText value=" (#{ficheBean.noteGlobCom})"/>
+                                        <h:inputHidden id="delai" value="#{ficheBean.noteGlobDelai}"/>
+                                        <p>Délai : </p><div class='starrr' id="eval_delai"></div><h:outputText value=" (#{ficheBean.noteGlobDelai})"/>
+                                        <h:inputHidden id="prix" value="#{ficheBean.noteGlobPrix}"/>
+                                        <p>Prix : </p><div class='starrr' id="eval_prix"></div><h:outputText value=" (#{ficheBean.noteGlobPrix})"/>
+                                        <h:inputHidden id="qualite" value="#{ficheBean.noteGlobQualite}"/>
+                                        <p>Qualité : </p><div class='starrr' id="eval_qualite"></div><h:outputText value=" (#{ficheBean.noteGlobQualite})"/>
+                                    </fieldset>
+                                    <br/>
+                                </h:form>
+                                <fieldset>
+                                    <legend>Avis</legend>
+                                </fieldset>
+                                <div id="comments">
+                                    <div id="comments-list">
+                                        <h3>#{ficheBean.nbAvis} Avis</h3>
+                                        <ui:repeat id="ravis" value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
+                                            <h:form id="lAvis#{loop.index}">
+                                                <div class="media">
+                                                    <div class="pull-left">
+                                                        <img class="avatar img-circle" src="images/blog/avatar1.png" alt=""/>
+                                                    </div>
+                                                    <div class="media-body">
+                                                        <div class="well well-avis">
+                                                            <div class="media-heading">
+                                                                <strong>#{cAvis.owner.login}</strong>&nbsp; <small>#{cAvis.dateFormat}</small>
+                                                                <h:commandLink id="removeButton" class="pull-right" action="#{ficheBean.removeOpinion(cAvis)}" rendered="#{request.remoteUser == cAvis.owner.login}">
+                                                                    <i class="icon-remove"></i> Supprimer
+                                                                    <f:ajax execute="@form" render="@all" />
+                                                                </h:commandLink>
+                                                                <h:outputText class="pull-right" value=" &nbsp; "/>
+                                                                <a class="pull-right" href="#repondre_avis" onclick="showRepondre('repondre_avis#{loop.index}')"><i class="icon-repeat"></i> Répondre</a>
+                                                            </div>
+                                                            <h:inputHidden id="a_comm" value="#{cAvis.noteCom}"/>
+                                                            <p>Communication :<div class='starrr' id="avis_comm#{loop.index}"/><h:outputText value=" (#{cAvis.noteCom})"/></p>
+                                                            <h:inputHidden id="a_delai" value="#{cAvis.noteDelai}"/>
+                                                            <p>Délai : <div class='starrr' id="avis_delai#{loop.index}"/><h:outputText value=" (#{cAvis.noteDelai})"/></p>
+                                                            <h:inputHidden id="a_prix" value="#{cAvis.notePrix}"/>
+                                                            <p>Prix : <div class='starrr' id="avis_prix#{loop.index}"/><h:outputText value=" (#{cAvis.notePrix})"/></p>
+                                                            <h:inputHidden id="a_qual" value="#{cAvis.noteQualite}"/>
+                                                            <p>Qualité : <div class='starrr' id="avis_qualite#{loop.index}"/><h:outputText value=" (#{cAvis.noteQualite})"/></p>
+                                                            <hr/>
+                                                            <p><h:outputText id="contenu" value="#{cAvis.contenu}"/></p>
+                                                        </div>
+                                                        <ui:repeat value="#{cAvis.commentaires}" var="comm" varStatus="i">
+                                                            <div class="media">
+                                                                <div class="pull-left">
+                                                                    <img class="avatar img-circle" src="images/blog/avatar3.png" alt=""/>
+                                                                </div>
+                                                                <div class="media-body">
+                                                                    <div class="well">
+                                                                        <div class="media-heading">
+                                                                            <strong>#{comm.profil}</strong>&nbsp; <small>#{comm.dateFormat}</small>
+                                                                            <h:commandLink rendered="#{request.remoteUser == comm.profil}" id="removeComButton" class="pull-right" action="#{ficheBean.removeComment(comm,loop.index)}">
+                                                                                <i class="icon-remove"></i> Supprimer
+                                                                                <f:ajax execute="@form" render="@all" />
+                                                                            </h:commandLink>
+                                                                        </div>
+                                                                        <p><h:outputText value="#{comm.contenu}"/></p>
+                                                                    </div>
+                                                                </div>
+                                                            </div><!--/.media-->
+                                                        </ui:repeat>
+                                                        <div id="repondre_avis#{loop.index}" style="display: none">
+                                                            <div class="form-group">
+                                                                <input class="form-control" type="text" id="co#{loop.index}" name="co#{loop.index}" placeholder="Réponse"/>
+                                                                <h:commandLink class="btn btn-default btn-md btn-block" action="#{ficheBean.saveComment(loop.index)}">
+                                                                    Répondre
+                                                                    <f:ajax execute="@form" render="@all" />
+                                                                </h:commandLink>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div><!--/.media-->
+                                                <script>
+                                                    $('#avis_comm#{loop.index}').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('ravis:#{loop.index}:lAvis:a_comm').value
+                                                    });
+                                                    $('#avis_delai#{loop.index}').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('ravis:#{loop.index}:lAvis:a_delai').value
+                                                    });
+                                                    $('#avis_prix#{loop.index}').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('ravis:#{loop.index}:lAvis:a_prix').value
+                                                    });
+                                                    $('#avis_qualite#{loop.index}').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('ravis:#{loop.index}:lAvis:a_qual').value
+                                                    });
+                                                </script>
+                                            </h:form>
+                                        </ui:repeat>
+                                    </div><!--/#comments-list-->  
+
+                                    <div id="comment-form">
+                                        <h3>Donnez votre avis</h3>
+                                        <c:if test="#{request.remoteUser == null}">
+                                            <h:outputText value="Connectez-vous pour laisser un avis !"/>
+                                        </c:if>
+                                        <h:form id="formOpinion" class="form-horizontal" rendered="#{request.remoteUser != null}">
+                                            <div class="form-group">
+                                                <div class="col-sm-6">
+                                                    <h:inputHidden id="new_a_delai" value="#{ficheBean.rate4}"/>
+                                                    <div class='starrr' id="s_new_a_delai"/> (Délai)
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h:inputHidden id="new_a_comm" value="#{ficheBean.rate1}"/>
+                                                    <div class='starrr' id="s_new_a_comm"/> (Communication)
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h:inputHidden id="new_a_prix" value="#{ficheBean.rate3}"/>
+                                                    <div class='starrr' id="s_new_a_prix"/> (Prix)
+                                                </div>
+                                                <div class="col-sm-6">
+                                                    <h:inputHidden id="new_a_qual" value="#{ficheBean.rate2}"/>
+                                                    <div class='starrr' id="s_new_a_qual"/> (Qualité)
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <div class="col-sm-12">
+                                                    <h:inputTextarea value="#{ficheBean.opinion}" id="opinion" rows="8" class="form-control" pt:placeholder="Commentaire sur la prestation..."/>
+                                                </div>
+                                            </div>
+                                            <h:commandButton id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}">
+                                                <f:ajax execute="@form" render="@all" />
+                                            </h:commandButton>
+                                        </h:form>
+                                    </div><!--/#comment-form-->
+                                </div><!--/#comments-->
+                            </div>
+                        </div><!--/.blog-item-->
+                    </div>
+                </div><!--/.col-md-8-->
+            </div><!--/.row-->
+        </section><!--/#blog-->
+
         <ui:include src="footer.xhtml"/>
+
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.prettyPhoto.js"></script>
+        <script src="js/main.js"></script>
+        <script src="js/starrr.js"></script>
+        <script>
+                                                    $('#star_moyenne').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:moyenne').value
+                                                    });
+                                                    $('#eval_moyenne').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:moyenne').value
+                                                    });
+                                                    $('#eval_communication').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:communication').value
+                                                    });
+                                                    $('#eval_delai').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:delai').value
+                                                    });
+                                                    $('#eval_prix').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:prix').value
+                                                    });
+                                                    $('#eval_qualite').starrr({
+                                                        readOnly: true,
+                                                        rating: document.getElementById('formNotes:qualite').value
+                                                    });
+                                                    $('#s_new_a_delai').starrr({
+                                                        change: function (e, value) {
+                                                            if (value) {
+                                                                document.getElementById('formOpinion:new_a_delai').value = value;
+                                                            } else {
+                                                                document.getElementById('formOpinion:new_a_delai').value = 0;
+                                                            }
+                                                        }
+                                                    });
+                                                    $('#s_new_a_comm').starrr({
+                                                        change: function (e, value) {
+                                                            if (value) {
+                                                                document.getElementById('formOpinion:new_a_comm').value = value;
+                                                            } else {
+                                                                document.getElementById('formOpinion:new_a_comm').value = 0;
+                                                            }
+                                                        }
+                                                    });
+                                                    $('#s_new_a_prix').starrr({
+                                                        change: function (e, value) {
+                                                            if (value) {
+                                                                document.getElementById('formOpinion:new_a_prix').value = value;
+                                                            } else {
+                                                                document.getElementById('formOpinion:new_a_prix').value = 0;
+                                                            }
+                                                        }
+                                                    });
+                                                    $('#s_new_a_qual').starrr({
+                                                        change: function (e, value) {
+                                                            if (value) {
+                                                                document.getElementById('formOpinion:new_a_qual').value = value;
+                                                            } else {
+                                                                document.getElementById('formOpinion:new_a_qual').value = 0;
+                                                            }
+                                                        }
+                                                    });
+        </script>
+        <script>
+            function showRepondre(box) {
+                if (document.getElementById(box).style.display === "none") {
+                    vis = "block";
+                } else {
+                    vis = "none";
+                }
+                document.getElementById(box).style.display = vis;
+            }
+        </script>
     </h:body>
 </html>
