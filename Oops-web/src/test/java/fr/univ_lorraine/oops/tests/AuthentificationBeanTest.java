@@ -49,7 +49,7 @@ public class AuthentificationBeanTest {
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         String username = "noupi";
-        assertEquals(driver.findElement(By.id("headerForm:username_button")).getText().toLowerCase(), username.toLowerCase());
+        assertEquals(driver.findElement(By.id("username_button")).getText().toLowerCase(), username.toLowerCase());
     }
 
     @Test
@@ -63,7 +63,7 @@ public class AuthentificationBeanTest {
 
     @Test
     public void testDeconnectionSuccess() {
-        driver.findElement(By.id("headerForm:username_button")).click();
+        driver.findElement(By.id("username_button")).click();
         driver.findElement(By.id("headerForm:deconnexion")).click();
         String message = "Déconnexion réussie !";
         assertEquals(driver.findElement(By.className("ui-messages-info")).getText(), message);
