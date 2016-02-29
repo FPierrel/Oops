@@ -4,128 +4,224 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"          
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"> 
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <h:head>
         <title>Oops | Page d'inscription</title>
-        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
-        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/animate.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
     </h:head>
     <h:body> 
         <ui:include src="header.xhtml"/>
-        <ui:include src="search.xhtml"/>
-        <div id="featured-wrapper">
-            <div id="content">
-                <div id="featured" class="container">
-                    <h1>Inscrivez-vous !</h1>
-                    <h:form id="form_signin">
-                        <h:panelGroup id="inputs">
-                            <p:selectOneRadio value="#{registrationBean.user}"  >
-                                <f:selectItem itemValue="Soumissionnaire" itemLabel="Soumissionnaire"/>
-                                <f:selectItem itemValue="Prestataire" itemLabel="Prestataire"/>
-                                <f:ajax render="inputs"/>
-                            </p:selectOneRadio>
-                            <table><tr><td>
-                                        <h:panelGrid id="grid" columns="3" cellpadding="5">
-                                            <p:outputLabel for="login" value="Login :"/> 
-                                            <p:inputText value="#{registrationBean.login}" 
-                                                         id="login" binding="#{registrationBean.loginComponent}" 
-                                                         required="true" requiredMessage="Veuillez renseigner un login !">             
-                                            </p:inputText>
-                                            <p:message for="login"/>
-                                            <p:outputLabel for="password" value="Mot de passe :"/> 
-                                            <p:password value="#{registrationBean.password}"
-                                                        id="password" binding="#{registrationBean.passwordComponent}" 
-                                                        required="true" requiredMessage="Veuillez renseigner un mot de passe !">             
-                                            </p:password>
-                                            <p:message for="password"/>
-                                            <p:outputLabel for="confirmPassword" value="Confirmation du mot de passe :"/> 
-                                            <p:password value="#{registrationBean.confirmPassword}" 
-                                                        id="confirmPassword" binding="#{registrationBean.confirmPasswordComponent}" 
-                                                        required="true" requiredMessage="Veuillez confirmer votre mot de passe !">             
-                                            </p:password>
-                                            <p:message for="confirmPassword"/>
-                                            <p:outputLabel for="email" value="Adresse mail :"/>
-                                            <p:inputText value="#{registrationBean.email}" 
-                                                         id="email" binding="#{registrationBean.emailComponent}" 
-                                                         required="true" requiredMessage="Veuillez renseigner votre adresse mail !">             
-                                            </p:inputText>
-                                            <p:message for="email"/>
-                                            <p:outputLabel for="companyName" rendered="#{registrationBean.prestataire}" value="Nom du Prestataire :"/> 
-                                            <p:inputText value="#{registrationBean.companyName}" binding="#{registrationBean.companyNameComponent}" 
-                                                         id="companyName" required="#{registrationBean.prestataire}"
-                                                         rendered="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre nom de prestataire !">             
-                                            </p:inputText>
-                                            <p:message rendered="#{registrationBean.prestataire}" for="companyName"/>
-                                            <p:outputLabel for="nbEmployee" rendered="#{registrationBean.prestataire}" value="Nombre d'employé(s) :"/> 
-                                            <p:inputText value="#{registrationBean.employee}" binding="#{registrationBean.employeeComponent}" 
-                                                         id="nbEmployee" rendered="#{registrationBean.prestataire}" converterMessage="Le nombre d'employé(s) doit être un nombre !">             
-                                                <f:convertNumber type="number" integerOnly="true" />
-                                            </p:inputText>
-                                            <p:message rendered="#{registrationBean.prestataire}" for="nbEmployee"/>
-                                            <p:outputLabel for="turnoverNumber" rendered="#{registrationBean.prestataire}" value="Chiffre d'affaire :"/> 
-                                            <p:inputText value="#{registrationBean.turnover}" binding="#{registrationBean.turnoverComponent}" 
-                                                         id="turnoverNumber" rendered="#{registrationBean.prestataire}" converterMessage="Le chiffre d'affaire doit être un nombre !">             
-                                                <f:convertNumber type="number" integerOnly="true"/>
-                                            </p:inputText>
-                                            <p:message rendered="#{registrationBean.prestataire}" for="turnoverNumber"/>
-                                            <p:outputLabel for="lastname" value="Nom :"/>
-                                            <p:inputText value="#{registrationBean.lastname}" 
-                                                         id="lastname" binding="#{registrationBean.lastnameComponent}" 
-                                                         required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre nom !">             
-                                            </p:inputText>
-                                            <p:message for="lastname"/>
-                                            <p:outputLabel for="firstname" value="Prénom :"/> 
-                                            <p:inputText value="#{registrationBean.firstname}" 
-                                                         id="firstname" binding="#{registrationBean.firstnameComponent}" 
-                                                         required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre prénom !">             
-                                            </p:inputText>
-                                            <p:message for="firstname"/>
-                                            <p:outputLabel for="phone" value="Téléphone :"/> 
-                                            <p:inputText value="#{registrationBean.phone}" 
-                                                         id="phone" binding="#{registrationBean.phoneComponent}" 
-                                                         required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de téléphone !">             
-                                            </p:inputText>
-                                            <p:message for="phone"/>
-                                            <h:commandButton class="button" id="register" value="S'inscrire" 
-                                                             action="#{registrationBean.registration()}"/>
-                                        </h:panelGrid>
-                                    </td><td>
-                                        <h:panelGrid id="grid2" columns="3" cellpadding="5">
-                                            <p:outputLabel for="number" value="Numéro :"/> 
-                                            <p:inputText value="#{registrationBean.number}" 
-                                                         id="number" binding="#{registrationBean.numberComponent}"
-                                                         required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de rue !">             
-                                            </p:inputText>
-                                            <p:message for="number"/>
-                                            <p:outputLabel for="street" value="Rue :"/> 
-                                            <p:inputText value="#{registrationBean.street}" 
-                                                         id="street" binding="#{registrationBean.streetComponent}"
-                                                         required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre rue !">             
-                                            </p:inputText>
-                                            <p:message for="street"/>
-                                            <p:outputLabel for="complement" value="Complément :"/> 
-                                            <p:inputText value="#{registrationBean.complement}" 
-                                                         id="complement" binding="#{registrationBean.complementComponent}">             
-                                            </p:inputText>
-                                            <p:message for="complement"/>
 
-                                            <p:outputLabel for="town" value="Ville :"/>
-                                            <p:autoComplete id="town" required = "true" requiredMessage="Veuillez renseigner votre ville !" forceSelection="true" placeholder="Où ?" value="#{registrationBean.town}" completeMethod="#{searchBean.searchTownWithoutCode}" maxResults="5">
-                                                <p:ajax event="itemSelect" update="code" listener="#{registrationBean.codesListener}" />
-                                            </p:autoComplete>
-                                            <p:message for="town"/>
+        <section id="title" class="emerald">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Inscription</h1>
+                        <p>Inscrivez-vous et créez un compte permettant l'accès au contenu complet du site.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="breadcrumb pull-right">
+                            <li><a href="index.xhtml">Accueil</a></li>
+                            <li class="active">Inscription</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section><!--/#title-->    
 
-                                            <p:outputLabel for="code" value="Code Postal :"/> 
-                                            <p:selectOneMenu id="code" value="#{registrationBean.code}">
-                                                <f:selectItems value="#{registrationBean.codes}" />
-                                            </p:selectOneMenu>
-                                            <p:message for="code"/>
-
-                                        </h:panelGrid></td></tr></table>
-                        </h:panelGroup>
-                    </h:form>
-                </div></div></div>
+        <section id="registration" class="container">
+            <h:form id="form_signin">
+                <h:panelGroup id="inputs">
+                    <div class="row">
+                        <div class="col-sm-3 col-sm-offset-3">
+                            <label class="control-label">Vous êtes un : </label>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <h:selectOneMenu id="select" class="form-control" value="#{registrationBean.user}">
+                                    <f:selectItem itemValue="Soumissionnaire" itemLabel="Soumissionnaire"/>
+                                    <f:selectItem itemValue="Prestataire" itemLabel="Prestataire"/>
+                                    <f:ajax render="inputs"/>
+                                </h:selectOneMenu>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Informations du compte</legend>
+                                <div class="form-group">
+                                    <h:inputText id="login" value="#{registrationBean.login}" 
+                                                 binding="#{registrationBean.loginComponent}" 
+                                                 pt:placeholder="Login" class="form-control" 
+                                                 required="true" requiredMessage="Veuillez renseigner un login !"/>
+                                    <p:message for="form_signin:login"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputSecret id="password" value="#{registrationBean.password}" 
+                                                   binding="#{registrationBean.passwordComponent}" 
+                                                   pt:placeholder="Mot de passe" class="form-control" 
+                                                   required="true" requiredMessage="Veuillez renseigner un mot de passe !"/>
+                                    <p:message for="form_signin:password"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputSecret id="confirmPassword" value="#{registrationBean.confirmPassword}" 
+                                                   binding="#{registrationBean.confirmPasswordComponent}"
+                                                   pt:placeholder="Confirmation du mot de passe" class="form-control"
+                                                   required="true" requiredMessage="Veuillez confirmer votre mot de passe !"/>
+                                    <p:message for="form_signin:confirmPassword"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="email" value="#{registrationBean.email}" 
+                                                 binding="#{registrationBean.emailComponent}"
+                                                 pt:placeholder="E-mail" class="form-control"
+                                                 required="true" requiredMessage="Veuillez renseigner votre adresse mail !"/>
+                                    <p:message for="form_signin:email"/>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Informations personnelles</legend>
+                                <div class="form-group">
+                                    <h:inputText id="lastname" value="#{registrationBean.lastname}" 
+                                                 binding="#{registrationBean.lastnameComponent}"
+                                                 pt:placeholder="Nom" class="form-control"
+                                                 required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre nom !"/>
+                                    <p:message for="form_signin:lastname"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="firstname" value="#{registrationBean.firstname}" 
+                                                 binding="#{registrationBean.firstnameComponent}" 
+                                                 pt:placeholder="Prénom" class="form-control"
+                                                 required="#{registrationBean.soumissionnaire}" requiredMessage="Veuillez renseigner votre prénom !"/>
+                                    <p:message for="form_signin:firstname"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="phone" value="#{registrationBean.phone}" 
+                                                 binding="#{registrationBean.phoneComponent}"
+                                                 pt:placeholder="Téléphone" class="form-control"
+                                                 required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de téléphone !"/>
+                                    <p:message for="form_signin:phone"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="number" value="#{registrationBean.number}" 
+                                                 binding="#{registrationBean.numberComponent}"
+                                                 pt:placeholder="Numéro de rue" class="form-control"
+                                                 required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre numéro de rue !"/>
+                                    <p:message for="form_signin:number"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="street" value="#{registrationBean.street}" 
+                                                 binding="#{registrationBean.streetComponent}"
+                                                 pt:placeholder="Rue, Avenue..." class="form-control"
+                                                 required="#{registrationBean.prestataire}" requiredMessage="Veuillez renseigner votre rue !"/>
+                                    <p:message for="form_signin:street"/>
+                                </div>
+                                <div class="form-group">
+                                    <h:inputText id="complement" value="#{registrationBean.complement}" 
+                                                 binding="#{registrationBean.complementComponent}"
+                                                 pt:placeholder="Complément" class="form-control"/>
+                                    <p:message for="form_signin:complement"/>
+                                </div>
+                                <div class="form-group">
+                                    <!--<input type="text" placeholder="Ville" class="form-control"/>-->
+                                    <p:autoComplete id="town" value="#{registrationBean.town}"
+                                                    required = "true" requiredMessage="Veuillez renseigner votre ville !" 
+                                                    forceSelection="true" placeholder="Où ?" 
+                                                    completeMethod="#{searchBean.searchTownWithoutCode}" maxResults="5">
+                                        <p:ajax event="itemSelect" update="code" listener="#{registrationBean.codesListener}" />
+                                    </p:autoComplete>
+                                    <p:message for="form_signin:town"/>
+                                </div>
+                                <div class="form-group">
+                                    <!--<input type="text" placeholder="Code postal" class="form-control"/>-->
+                                    <p:selectOneMenu id="code" value="#{registrationBean.code}">
+                                        <f:selectItems value="#{registrationBean.codes}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="form_signin:code"/>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <h:panelGroup rendered="#{registrationBean.prestataire}">
+                        <div class="row" id="infosPrestataire">
+                            <div class="col-sm-4 col-sm-offset-4">
+                                <fieldset>
+                                    <legend>Informations du prestataire</legend>
+                                    <div class="form-group">
+                                        <h:inputText id="companyName" value="#{registrationBean.companyName}" 
+                                                     binding="#{registrationBean.companyNameComponent}"
+                                                     pt:placeholder="Nom du prestataire" class="form-control"
+                                                     required="true" requiredMessage="Veuillez renseigner votre nom de prestataire !"/>
+                                        <p:message for="form_signin:companyName"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Raison sociale" class="form-control"/>
+                                        <!---->
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Forme juridique" class="form-control"/>
+                                        <!---->
+                                    </div>
+                                    <div class="form-group">
+                                        <h:inputText id="nbEmployee" value="#{registrationBean.employee}" 
+                                                     binding="#{registrationBean.employeeComponent}" 
+                                                     pt:placeholder="Nombre d'employé" class="form-control"
+                                                     converterMessage="Le nombre d'employé(s) doit être un nombre !">             
+                                            <f:convertNumber type="number" integerOnly="true" />
+                                        </h:inputText>
+                                        <p:message for="form_signin:nbEmployee"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <h:inputText id="turnoverNumber" value="#{registrationBean.turnover}" 
+                                                     binding="#{registrationBean.turnoverComponent}" 
+                                                     pt:placeholder="Chiffre d'affaire" class="form-control"
+                                                     converterMessage="Le chiffre d'affaire doit être un nombre !">             
+                                            <f:convertNumber type="number" integerOnly="true"/>
+                                        </h:inputText>
+                                        <p:message for="form_signin:turnoverNumber"/>
+                                    </div>
+                                    <div class="form-group">
+                                        <input type="text" placeholder="Site Web" class="form-control"/>
+                                        <!---->
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div>
+                    </h:panelGroup>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="form-group">
+                                <h:commandButton id="register" value="S'inscrire"
+                                                 class="btn btn-success btn-md btn-block"
+                                                 action="#{registrationBean.registration()}"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:panelGroup>
+            </h:form>
+        </section><!--/#registration-->
         <ui:include src="footer.xhtml"/>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/main.js"></script>
     </h:body>
 </html>
 

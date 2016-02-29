@@ -76,7 +76,7 @@ public class EditFicheBeanTest {
         driver.findElement(By.name("ficheForm:companyName")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
         driver.get(host + "/fiche.xhtml?page=noupi");
-        assertEquals(driver.findElement(By.id("companyName")).getText(), val);
+        assertEquals(driver.findElement(By.id("formNotes:companyName")).getText(), val);
     }
 
     @Test
@@ -143,7 +143,7 @@ public class EditFicheBeanTest {
         driver.findElement(By.id("ficheForm:description")).sendKeys(val);
         driver.findElement(By.id("ficheForm:save")).click();
         driver.get(host + "/fiche.xhtml?page=noupi");
-        assertEquals(driver.findElement(By.id("description")).getText(), val);
+        assertEquals(driver.findElement(By.id("formNotes:description")).getText(), val);
     }
 
     @Test
