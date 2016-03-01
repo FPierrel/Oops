@@ -4,94 +4,91 @@
  * and open the template in the editor.
  */
 package fr.univ_lorraine.oops.library.model;
- 
+
 import java.io.Serializable;
-import java.sql.Blob;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
 import javax.persistence.CascadeType;
- 
- 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
- 
+
 /**
  *
- * @author Administrateur
+ * @author Thomas
  */
 @Entity
 public class Album implements Serializable {
- 
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String nomAlbum; 
-    @Lob
-    private byte[] photo;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    @JoinColumn(name = "LOGIN", referencedColumnName = "LOGIN",updatable = true, insertable = true)
-    private Utilisateur user ;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "album")
-    private List<Photo> photos= new ArrayList<Photo>();
-     
-    public Album() {
-    }
- 
-    public Album(Long id, String nomAlbum, byte[] photo) {
-        this.id = id;
-        this.nomAlbum = nomAlbum;
-        this.photo = photo;
-    }
- 
-  
+    private String nom;
+    private String login;
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    private Collection<Photo> photos;
+    
+
     public Long getId() {
         return id;
     }
- 
+
     public void setId(Long id) {
         this.id = id;
     }
- 
-    public String getNomAlbum() {
-        return nomAlbum;
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (id != null ? id.hashCode() : 0);
+        return hash;
     }
- 
-    public void setNomAlbum(String nomAlbum) {
-        this.nomAlbum = nomAlbum;
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof Album)) {
+            return false;
+        }
+        Album other = (Album) object;
+        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
+            return false;
+        }
+        return true;
     }
- 
-    public byte[] getPhoto() {
-        return photo;
+
+    @Override
+    public String toString() {
+        return "fr.univ_lorraine.oops.library.model.Album[ id=" + id + " ]";
     }
- 
-    public void setPhoto(byte[] photo) {
-        this.photo = photo;
+
+    public String getNom() {
+        return nom;
     }
- 
-    public Utilisateur getUser() {
-        return user;
+
+    public void setNom(String nom) {
+        this.nom = nom;
     }
- 
-    public void setUser(Utilisateur user) {
-        this.user = user;
-    }
- 
-    public List<Photo> getPhotos() {
+
+    public Collection<Photo> getPhotos() {
         return photos;
     }
- 
-    public void setPhotos(List<Photo> photos) {
+
+    public void setPhotos(Collection<Photo> photos) {
         this.photos = photos;
     }
-    
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
     
     
 }
+

@@ -7,6 +7,7 @@ package fr.univ_lorraine.oops.ejb;
  
 import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Photo;
+import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -33,12 +34,10 @@ public class AlbumEntityManager {
         return this.em;
     }
     
-    public Album addAlbum(Album album,String login){
-        
-        Utilisateur user= userEM.searchByLogin(login);
-        album.setUser(user);
-        user.getAlbums().add(album); 
-        getEntityManager().persist(album);
+    public Album addAlbum(Album album,String login){       
+        Prestataire user = (Prestataire)userEM.searchByLogin(login);
+        user.addAlbum(album);
+        this.getEntityManager().merge(user);
         return album;
     }
     
@@ -51,7 +50,7 @@ public class AlbumEntityManager {
      }
      
      public List<Album> getAllAlbumsUser(String login){
-         return userEM.searchByLogin(login).getAlbums();
+         return ((Prestataire)userEM.searchByLogin(login)).getAlbums();
      }
      
      public  List<Photo> getAllPhotoAlbum(Long idAlbum){
@@ -66,3 +65,4 @@ public class AlbumEntityManager {
          
      }
 }
+

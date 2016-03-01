@@ -49,7 +49,7 @@ public class Photo implements Serializable {
     
     public String getPhotoBase64() {
         
-        return "data:image/png;base64,"+new sun.misc.BASE64Encoder().encode(photo);
+        return this.photoBase64;
     }
  
     public void setPhotoBase64(String photoBase64) {
@@ -79,8 +79,10 @@ public class Photo implements Serializable {
  
     public void setPhoto(byte[] photo) {
         this.photo = photo;
+        this.photoBase64 = "data:image/png;base64," + new sun.misc.BASE64Encoder().encode(photo); 
     }
  
     
     
 }
+

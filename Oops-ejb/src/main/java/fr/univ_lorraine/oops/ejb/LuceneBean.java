@@ -40,6 +40,8 @@ public class LuceneBean {
     private EntityManager em;
     
     
+    
+    
 
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
     private Analyzer analyzer;

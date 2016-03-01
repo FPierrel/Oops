@@ -1,0 +1,61 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+    <f:metadata>
+        <f:viewAction action="#{albumBean.init}" />
+    </f:metadata>
+    <h:head>
+        <title>Oops | Gestion des albums</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
+        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+    </h:head>
+    <h:body>
+        <ui:include src="header.xhtml"/>
+        <ui:include src="search.xhtml"/>
+        <div id="featured-wrapper">
+            <div id ="content">
+                <div id="featured" class="container">
+                    <div id="list">
+                        <h:dataTable value="#{albumBean.albums}" var="album" border="1" cellpadding="10">
+                            <h:column>
+                                <h:outputText value="#{album.nom}"/>
+                            </h:column>
+                            <h:column>
+                                <h:outputText value="#{album.photos.size()} photo(s)"/>
+                            </h:column>
+                            <h:column>
+                                <p:commandButton action="#{albumBean.setAlbum(album)}" value="Accéder à l'album" update="@all"/>
+                            </h:column>
+                        </h:dataTable>
+                    </div>
+
+                    <h:panelGroup rendered="#{albumBean.isAlbum()}">
+                        <ui:repeat value="#{albumBean.photos}" var="photo">
+                            <img src="#{photo.photoBase64}" width="20%" height="20%"/>
+                        </ui:repeat>
+                        <h:form>
+                            <p:fileUpload fileUploadListener="#{albumBean.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                          sizeLimit="1000000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+                        </h:form>
+                    </h:panelGroup>
+
+                    <h:form style="margin-top: 5%;">
+                        <h:inputText value="#{albumBean.nomAlbum}"/>
+                        <p:commandButton value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="@all"/>
+                    </h:form>
+                </div>
+            </div>
+        </div>
+        <ui:include src="footer.xhtml"/>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.prettyPhoto.js"></script>
+        <script src="js/main.js"></script>
+    </h:body>
+</html>
+

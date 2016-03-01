@@ -13,9 +13,9 @@ import javax.persistence.OneToMany;
 
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Prestataire.findNomPrenom", query = "SELECT p FROM Prestataire p WHERE p.nom = :nom AND p.prenom = :prenom"),
-})
+    @NamedQuery(name = "Prestataire.findNomPrenom", query = "SELECT p FROM Prestataire p WHERE p.nom = :nom AND p.prenom = :prenom"),})
 public class Prestataire extends Utilisateur implements Serializable {
+
     private static final long serialVersionUID = 1L;
     public final static String prestataire = "PRESTATAIRE";
     private String nomEntreprise, description, siteWeb;
@@ -23,7 +23,9 @@ public class Prestataire extends Utilisateur implements Serializable {
     @OneToMany
     private Collection<Categorie> categories;
     @OneToMany(cascade = CascadeType.ALL)
-    private Collection<Avis> cAvis= new ArrayList<>() ; ;
+    private Collection<Avis> cAvis = new ArrayList<>();
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Album> albums = new ArrayList<Album>();
 
     private int communication, quality, price, delay, average;
 
@@ -123,7 +125,7 @@ public class Prestataire extends Utilisateur implements Serializable {
         this.categories = categories;
     }
 
-    public List<String> getListCategories(){
+    public List<String> getListCategories() {
         List<String> l = new ArrayList<>();
         for (Categorie c : categories) {
             l.add(c.getNom());
@@ -144,7 +146,7 @@ public class Prestataire extends Utilisateur implements Serializable {
         this.cAvis = cAvis;
     }
 
-    public int getNbAvis(){
+    public int getNbAvis() {
         return cAvis.size();
     }
 
@@ -185,5 +187,17 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     public void removeAvis(Avis avis) {
         this.cAvis.remove(avis);
+    }
+
+    public List<Album> getAlbums() {
+        return albums;
+    }
+
+    public void setAlbums(List<Album> albums) {
+        this.albums = albums;
+    }
+
+    public void addAlbum(Album b) {
+        this.albums.add(b);
     }
 }

@@ -23,8 +23,6 @@ public abstract class Utilisateur implements Serializable {
     private String mail;
     private String numeroTelephone;
     protected String groupe;
-    @OneToMany(cascade = CascadeType.ALL,mappedBy = "user")
-    private List<Album> albums= new ArrayList<Album>();
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
@@ -119,14 +117,6 @@ public abstract class Utilisateur implements Serializable {
 
     public void setGroupe(String groupe) {
         this.groupe = groupe;
-    }
-    
-    public List<Album> getAlbums() {
-        return albums;
-    }
-
-    public void setAlbums(List<Album> albums) {
-        this.albums = albums;
     }
 
     public int getAdminWarnings() {
