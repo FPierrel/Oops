@@ -6,11 +6,15 @@
       xmlns:p="http://primefaces.org/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
-      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:pe="http://primefaces.org/ui/extensions">>
     <f:metadata>
         <f:viewParam name="page" value="#{ficheBean.page}" />
         <f:viewParam name="page" value="#{reportBean.page}" />
+        <f:viewParam name="page" value="#{photoBean.page}" />
         <f:viewAction action="#{ficheBean.init}" />
+
+        <f:viewAction action="#{photoBean.initAlternative}" />
     </f:metadata>
     <h:head>
         <title>Oops | #{ficheBean.prestataire.nomEntreprise}</title>
@@ -287,6 +291,16 @@
                 </div><!--/.col-md-8-->
             </div><!--/.row-->
         </section><!--/#blog-->
+
+        <c:if test="#{photoBean.photos != null}">        
+                    <pe:fluidGrid value="#{photoBean.photosGrid}" var="photo" hasImages="true">  
+                        <pe:fluidGridItem class="col-md-4">   
+                            <a href="#" class="thumbnail" style="margin-top: 10px; margin-left: 10px">
+                                <img src="#{photo}"/>
+                            </a>
+                        </pe:fluidGridItem>  
+                    </pe:fluidGrid>  
+        </c:if>
 
         <ui:include src="footer.xhtml"/>
 

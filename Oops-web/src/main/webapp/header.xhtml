@@ -41,6 +41,7 @@
                                     <c:if test="#{request.isUserInRole('PRESTATAIRE')}"><li class="divider"></li></c:if>
                                     <li><h:link id="profil" value="Editer mon profil" outcome="profil"/></li>
                                     <li><h:link id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="manageAlbum" value="Gérer mes albums" outcome="albums" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
                                     <li class="divider"></li>
                                     <li><h:commandLink id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/></li>
                                 </ul>

@@ -40,6 +40,7 @@ public class AlbumBean implements Serializable {
     @Inject
     private AlbumEntityManager albumEM;
 
+    private Long id;
     private String nomAlbum;
     private Collection<Album> albums;
     private Album album;
@@ -56,6 +57,21 @@ public class AlbumBean implements Serializable {
         String login = request.getRemoteUser();
 
         this.albums = this.albumEM.getAllAlbumsUser(login);
+    }
+
+    public void init2() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+
+        this.album = this.albumEM.getAlbum(this.id);
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 
     public String getNomAlbum() {
@@ -101,6 +117,14 @@ public class AlbumBean implements Serializable {
         this.album = album;
     }
 
+    public void deleteAlbum(Album album) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String login = request.getRemoteUser();
+
+        albumEM.deleteAlbum(album, login);
+    }
+
     public boolean isAlbum() {
         return this.album == null ? false : true;
     }
@@ -114,9 +138,10 @@ public class AlbumBean implements Serializable {
     }
 
     public void handleFileUpload(FileUploadEvent event) {
+        System.out.println(this.album.getId() + " PD " + event.getFile().getFileName());
         Photo p = new Photo();
         p.setAlbum(this.album);
-        p.setNomPhoto("");
+        p.setNomPhoto(event.getFile().getFileName());
         p.setPhoto(event.getFile().getContents());
 
         this.albumEM.addPhoto(p, this.album.getId());

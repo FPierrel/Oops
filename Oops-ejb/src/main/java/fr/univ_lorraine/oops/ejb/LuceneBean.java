@@ -43,6 +43,7 @@ public class LuceneBean {
     
     
 
+    
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
     private Analyzer analyzer;
     private IndexWriter iwriter;

@@ -88,6 +88,10 @@ public class Album implements Serializable {
     public void setLogin(String login) {
         this.login = login;
     }
+
+    public void addPhoto(Photo photo) {
+        this.photos.add(photo);
+    }
     
     
 }

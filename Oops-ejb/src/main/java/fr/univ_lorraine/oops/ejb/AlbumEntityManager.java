@@ -42,10 +42,10 @@ public class AlbumEntityManager {
     }
     
      public Photo addPhoto(Photo photo,Long idAlbum){ 
-         Album album =this.getEntityManager().find(Album.class, idAlbum);
+         Album album = this.getEntityManager().find(Album.class, idAlbum);
          photo.setAlbum(album);
-         album.getPhotos().add(photo);
-         this.getEntityManager().persist(photo); 
+         album.addPhoto(photo);
+         this.getEntityManager().merge(album); 
          return photo;
      }
      
@@ -57,6 +57,10 @@ public class AlbumEntityManager {
          return this.getEntityManager().createNamedQuery("findPhotoByPKalbum").setParameter("idAlbum", idAlbum).getResultList();
      }
      
+     public Album getAlbum(Long id){
+          return this.getEntityManager().find(Album.class, id);
+     }
+     
      public void deleteAlbum(Long idAlbum){
   
           Album album =this.getEntityManager().find(Album.class, idAlbum);
@@ -64,5 +68,17 @@ public class AlbumEntityManager {
          this.getEntityManager().remove(album);
          
      }
+
+    public void deleteAlbum(Album album, String login) {
+        Prestataire user = (Prestataire)userEM.searchByLogin(login);
+        user.deleteAlbum(album);
+        this.getEntityManager().merge(user);
+    }
+
+    public Album getDefault(String login) {
+        Prestataire user = (Prestataire)userEM.searchByLogin(login);
+        
+        return user.getAlbums().size() == 0 ? new Album() : user.getAlbums().get(0);
+    }
 }
 

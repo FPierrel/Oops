@@ -200,4 +200,8 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void addAlbum(Album b) {
         this.albums.add(b);
     }
+
+    public void deleteAlbum(Album album) {
+        this.albums.remove(album);
+    }
 }
