@@ -2,6 +2,7 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Oops | Moderation</title>
@@ -15,92 +16,98 @@
             <div id ="content">
                 <div id="featured" class="container">
                     Bienvenue sur la page d'administration !
-                    <h3>Avis non vérifié(s) :</h3>
                     <h:form id="avisEnAttente">
-                        <h:dataTable id="datatable" value="#{adminBean.listeAvisNonVerifies}" var="avis">
-                            <h:column>
-                                <h:outputText value="#{avis.owner.login}"/>
-                            </h:column>
-                            <h:column>
-                                <h:outputText value="#{avis.dateFormat}"/>
-                            </h:column>
-                            <h:column>
-                                <h:outputText id="contenu" value="#{avis.contenu}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton id="valider" value="Valider" action="#{adminBean.checkAvis(avis)}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton id="supprimer" value="Supprimer" action="#{adminBean.removeAvis(avis)}"/>
-                            </h:column>
-                        </h:dataTable>
-                    </h:form>
+                        <p:tabView>
+                            <p:tab title="Avis non vérifié(s)">
 
-                    <h3>Signalement de profils non vérifiés :</h3>
-                    <h:form id="signalementFicheEnAttente">
+                                <h:dataTable id="datatable" value="#{adminBean.listeAvisNonVerifies}" var="avis">
+                                    <h:column>
+                                        <h:outputText value="#{avis.owner.login}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText value="#{avis.dateFormat}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:outputText id="contenu" value="#{avis.contenu}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="valider" value="Valider" action="#{adminBean.checkAvis(avis)}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="supprimer" value="Supprimer" action="#{adminBean.removeAvis(avis)}"/>
+                                    </h:column>
+                                </h:dataTable>
 
-                        <h:dataTable id="datatableReport" value="#{adminBean.listUnverifiedReport}" var="report">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Signalant" />
-                                </f:facet>
-                                <h:outputText id="reportingLogin" value="#{report.userReporting}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Date" />
-                                </f:facet>
-                                <h:outputText id="reportingDate" value="#{report.reportingDate}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Signalé" />
-                                </f:facet>
-                                <h:outputText id="reportedLogin" value="#{report.userReported}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Motif" />
-                                </f:facet>
-                                <h:outputText id="reason" value="#{report.reason}"/>
-                            </h:column>
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Complément" />
-                                </f:facet>
-                                <h:outputText id="complement" value="#{report.complement}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton value="Voir" action="#{adminBean.seeFiche(report.userReported)}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton id="warn" value="Justifié" action="#{adminBean.acceptReport(report)}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton id="dismiss" value="Injustifié" action="#{adminBean.dismissReport(report)}"/>
-                            </h:column>
-                            
+                            </p:tab>
+                            <p:tab title="Signalements de profils non vérifié(s)">
 
-                        </h:dataTable>
-                    </h:form>
-                  
-                    <h3>Utilisateur bannis:</h3>
-                    <h:form id="bannis">
 
-                        <h:dataTable id="datatableReport" value="#{adminBean.listBanishedUser}" var="user">
-                            <h:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Utilisateur" />
-                                </f:facet>
-                                <h:outputText id="login" value="#{user.login}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton value="Voir" action="#{adminBean.seeFiche(user.login)}"/>
-                            </h:column>
-                            <h:column>
-                                <h:commandButton id="redeem" value="Gracier" action="#{adminBean.redeemPrestataire(user.login)}"/>
-                            </h:column>
-                        </h:dataTable>
+                                <h:dataTable cellpadding="10"   id="datatableReport2" value="#{adminBean.listUnverifiedReport}" var="report">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Signalant" />
+                                        </f:facet>
+                                        <h:outputText id="reportingLogin" value="#{report.userReporting}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date" />
+                                        </f:facet>
+                                        <h:outputText id="reportingDate" value="#{report.reportingDate}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Signalé" />
+                                        </f:facet>
+                                        <h:outputText id="reportedLogin" value="#{report.userReported}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Motif" />
+                                        </f:facet>
+                                        <h:outputText id="reason" value="#{report.reason}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Complément" />
+                                        </f:facet>
+                                        <h:outputText id="complement" value="#{report.complement}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton value="Voir" action="#{adminBean.seeFiche(report.userReported)}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="warn" value="Justifié" action="#{adminBean.acceptReport(report)}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="dismiss" value="Injustifié" action="#{adminBean.dismissReport(report)}"/>
+                                    </h:column>
+
+
+                                </h:dataTable>
+
+                            </p:tab>
+
+                            <p:tab title="Utilisateurs bannis">
+
+
+                                <h:dataTable id="datatableReport3" value="#{adminBean.listBanishedUser}" var="user">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Utilisateur" />
+                                        </f:facet>
+                                        <h:outputText id="login" value="#{user.login}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton value="Voir" action="#{adminBean.seeFiche(user.login)}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="redeem" value="Gracier" action="#{adminBean.redeemPrestataire(user.login)}"/>
+                                    </h:column>
+                                </h:dataTable>
+
+                            </p:tab>
+                        </p:tabView>
                     </h:form>
                 </div>
             </div>
