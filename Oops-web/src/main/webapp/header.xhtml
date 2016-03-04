@@ -37,12 +37,12 @@
                             <li class="dropdown" id="username">
                                 <a href="#" class="dropdown-toggle" id="username_button" data-toggle="dropdown">#{request.remoteUser} <i class="icon-angle-down"></i></a>
                                 <ul class="dropdown-menu">
-                                    <li><h:link id="fiche" value="Voir ma fiche" outcome="fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="fiche" value="Voir ma fiche" outcome="/fiche?page=#{request.remoteUser}" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
                                     <c:if test="#{request.isUserInRole('PRESTATAIRE')}"><li class="divider"></li></c:if>
-                                    <li><h:link id="profil" value="Editer mon profil" outcome="profil"/></li>
-                                    <li><h:link id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
-                                    <li><h:link id="manageAlbum" value="Gérer mes albums" outcome="albums" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
-                                    <li><h:link id="invite" value="Inviter à devenir Soumissionnaire" outcome="invite" rendered="#{request.isUserInRole('SOUMISSIONNAIRE') or request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="profil" value="Editer mon profil" outcome="/profil"/></li>
+                                    <li><h:link id="ficheedit" value="Editer ma fiche" outcome="/ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="manageAlbum" value="Gérer mes albums" outcome="/albums" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="invite" value="Inviter à devenir Soumissionnaire" outcome="/invite" rendered="#{request.isUserInRole('SOUMISSIONNAIRE') or request.isUserInRole('PRESTATAIRE')}"/></li>
                                     <li><h:link id="admin" value="Page d'administration" outcome="/admin/index" rendered="#{request.isUserInRole('ADMINISTRATEUR')}"/></li>
                                     <li class="divider"></li>
                                     <li><h:commandLink id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/></li>
