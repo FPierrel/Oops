@@ -137,16 +137,6 @@ public class AlbumBean implements Serializable {
         this.file = file;
     }
 
-    public void handleFileUpload(FileUploadEvent event) {
-        System.out.println(this.album.getId() + " PD " + event.getFile().getFileName());
-        Photo p = new Photo();
-        p.setAlbum(this.album);
-        p.setNomPhoto(event.getFile().getFileName());
-        p.setPhoto(event.getFile().getContents());
-
-        this.albumEM.addPhoto(p, this.album.getId());
-    }
-
     public Collection<Photo> getPhotos() {
         return this.album.getPhotos();
     }

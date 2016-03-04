@@ -25,7 +25,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     @OneToMany(cascade = CascadeType.ALL)
     private Collection<Avis> cAvis = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
-    private List<Album> albums = new ArrayList<Album>();
+    private List<Album> albums = new ArrayList<>();
 
     private int communication, quality, price, delay, average;
 
