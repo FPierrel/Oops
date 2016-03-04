@@ -17,40 +17,40 @@ import javax.persistence.TemporalType;
 
 @Entity
 public class Avis implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
-    private int noteCom ; 
-    private int notePrix ; 
-    private int noteQualite ; 
-    private int noteDelai ; 
-    private String contenu ; 
+    private int noteCom;
+    private int notePrix;
+    private int noteQualite;
+    private int noteDelai;
+    private String contenu;
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Commentaire> commentaires;
     @Temporal(TemporalType.TIMESTAMP)
-    private Date pDate ; 
-    private Utilisateur owner ;
+    private Date pDate;
+    private Utilisateur owner;
     private String loginPrestaire;
     private boolean moderated;
-    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT,DateFormat.SHORT);
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
-            
-    public Avis () {
-        this.commentaires = new ArrayList<>() ; 
+    public Avis() {
+        this.commentaires = new ArrayList<>();
         this.moderated = false;
     }
-    
-    public Avis (int nC, int nP, int nQ, int nD, String contenu) {
-        this.commentaires = new ArrayList<>() ; 
-        this.noteCom=nC;
-        this.notePrix=nP;
-        this.noteQualite=nQ;
-        this.noteDelai=nD;
-        this.contenu=contenu;
+
+    public Avis(int nC, int nP, int nQ, int nD, String contenu) {
+        this.commentaires = new ArrayList<>();
+        this.noteCom = nC;
+        this.notePrix = nP;
+        this.noteQualite = nQ;
+        this.noteDelai = nD;
+        this.contenu = contenu;
     }
-    
+
     public Long getId() {
         return id;
     }
@@ -58,9 +58,9 @@ public class Avis implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
-    
+
     public void removeCom(Commentaire c) {
-        this.commentaires.remove(c); 
+        this.commentaires.remove(c);
     }
 
     @Override
@@ -115,17 +115,18 @@ public class Avis implements Serializable {
     public void setDateFormat(DateFormat dateFormat) {
         this.dateFormat = dateFormat;
     }
-    
-    public void addCommentaire(Commentaire com){
+
+    public void addCommentaire(Commentaire com) {
         this.commentaires.add(com);
     }
 
     public int getNoteQualite() {
         return noteQualite;
     }
+
     public int getNoteDelai() {
         return noteDelai;
-    }  
+    }
 
     public Date getpDate() {
         return pDate;
@@ -151,7 +152,6 @@ public class Avis implements Serializable {
         this.noteQualite = noteQualite;
     }
 
-
     public void setNoteDelai(int noteDelai) {
         this.noteDelai = noteDelai;
     }
@@ -170,7 +170,7 @@ public class Avis implements Serializable {
 
     public void setModerated(boolean moderated) {
         this.moderated = moderated;
-    } 
+    }
 
     public String getLoginPrestaire() {
         return loginPrestaire;
@@ -179,5 +179,8 @@ public class Avis implements Serializable {
     public void setLoginPrestaire(String loginPrestaire) {
         this.loginPrestaire = loginPrestaire;
     }
-    
+
+    public double getNoteMoyenne() {
+        return (noteCom+noteDelai+notePrix+noteQualite)/4.0;
+    }
 }

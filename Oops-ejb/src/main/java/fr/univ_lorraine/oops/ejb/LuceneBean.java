@@ -36,7 +36,6 @@ import org.apache.lucene.store.RAMDirectory;
 @Startup
 @LocalBean
 public class LuceneBean {
-
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;    
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
@@ -128,7 +127,7 @@ public class LuceneBean {
             Logger.getLogger(LuceneBean.class.getName()).log(Level.SEVERE, null, ex);
         }
         return result;
-    }
+    }   
     
     private Document prestataireToDocument(Prestataire p) {
         Document d = new Document();
@@ -142,5 +141,5 @@ public class LuceneBean {
     @PreDestroy
     public void close(){
         em.close();
-    }
+    }    
 }

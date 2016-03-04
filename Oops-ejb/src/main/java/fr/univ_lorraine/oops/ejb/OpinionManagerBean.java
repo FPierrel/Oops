@@ -1,30 +1,21 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Commentaire;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-/**
- *
- * @author Thibaut
- */
 @Stateless
 @LocalBean
 public class OpinionManagerBean {
 
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -56,7 +47,7 @@ public class OpinionManagerBean {
         a.addCommentaire(c);
         this.getEntityManager().merge(a);
     }
-    
+
     public void removeOpinion(Avis avis) {
         Prestataire p = (Prestataire) this.getEntityManager().find(Utilisateur.class, avis.getLoginPrestaire());
         p.removeAvis(avis);
@@ -64,11 +55,17 @@ public class OpinionManagerBean {
         this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
         p.recalculateMarks();
     }
-    
+
     public void removeComment(Commentaire c, Avis avis) {
-        Avis a = (Avis) this.getEntityManager().find(Avis.class,avis.getId()) ; 
+        Avis a = (Avis) this.getEntityManager().find(Avis.class, avis.getId());
         a.removeCom(c);
-        this.getEntityManager().merge(a) ; 
+        this.getEntityManager().merge(a);
         this.getEntityManager().remove(this.getEntityManager().find(Commentaire.class, c.getId()));
     }
+
+    public List<Avis> getLastOpinions() {
+        String query = "SELECT a FROM Avis a ORDER BY a.id desc";
+        return em.createQuery(query).setMaxResults(4).getResultList();
+    }
+
 }
