@@ -8,6 +8,7 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct; 
+import javax.annotation.PreDestroy;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -37,13 +38,7 @@ import org.apache.lucene.store.RAMDirectory;
 public class LuceneBean {
 
     @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
-    
-    
-    
-    
-
-    
+    private EntityManager em;    
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
     private Analyzer analyzer;
     private IndexWriter iwriter;
@@ -142,5 +137,10 @@ public class LuceneBean {
         d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.YES, Field.Index.ANALYZED));
         d.add(new Field("description",p.getDescription(),Field.Store.YES, Field.Index.ANALYZED));
         return d;
+    }
+    
+    @PreDestroy
+    public void close(){
+        em.close();
     }
 }
