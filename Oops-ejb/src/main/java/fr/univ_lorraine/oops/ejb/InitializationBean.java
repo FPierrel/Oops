@@ -237,7 +237,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesNeufchateau = new ArrayList<>();
         adressesNeufchateau.add(this.creerAdresse("3", "Rue de la comédie", "", "88300", "Neufchateau", "France"));
-        Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "jacky@tuning.fr",
+        Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "thomas.pagelot8@etu.univ-lorraine.fr",
                 "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
         pres5.setDescription("Jacky Tuning c'est le meilleur !");
         Collection<Categorie> col5 = new ArrayList<>();
@@ -258,7 +258,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesOui = new ArrayList<>();
         adressesOui.add(this.creerAdresse("21", "Rue d'Alger", "", "88630", "Coussey", "France"));
-        Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "Oui@Oui.Oui",
+        Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "thibaut.humbert5@etu.univ-lorraine.fr",
                 "0123456789", "Oui", 1, 126423, adressesOui);
         pres7.setDescription("Oui oui oui oui oui oui oui oui...");
         Collection<Categorie> col7 = new ArrayList<>();
@@ -285,7 +285,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesJohn = new ArrayList<>();
         adressesJohn.add(this.creerAdresse("22", "rue de la zappette", "", "54000", "Nancy", "France"));
-        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "john.siffleur@nenette.fr",
+        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "romain.bailloux8@etu.univ-lorraine.fr",
                 "0123456789", adressesJohn));
         //----------------------------------------------
         //FIN AJOUTS DE SOUMISSIONNAIRES.

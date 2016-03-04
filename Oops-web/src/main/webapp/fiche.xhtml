@@ -12,6 +12,7 @@
         <f:viewParam name="page" value="#{ficheBean.page}" />
         <f:viewParam name="page" value="#{reportBean.page}" />
         <f:viewParam name="page" value="#{photoBean.page}" />
+        <f:viewParam name="page" value="#{askOpinionBean.page}" />
         <f:viewAction action="#{ficheBean.init}" />
 
         <f:viewAction action="#{photoBean.initAlternative}" />
@@ -136,7 +137,14 @@
                                                 PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
                                     </p:panel>
                                 </h:form>
-
+                                <h:form id="askOpinion" rendered="#{request.remoteUser != null}"> 
+                                    <p:commandLink id="askOpinion" onclick="PF('toggleAskOpinion').toggle()" value="Inviter un soumissionnaire à donner son avis"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre message a été envoyé</p:panel>
+                                    <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleAskOpinion">
+                                            <p:inputText value="#{askOpinionBean.mail}" id="askOpinionMail" placeholder="Adresse mail"/>
+                                        <br/><p:commandButton value="Envoyer la demande" id="askOpinionButton" onclick="PF('toggleAskOpinion').toggle();
+                                                PF('toggleReported').toggle()" actionListener="#{askOpinionBean.send()}"/>
+                                    </p:panel>
+                                </h:form>
                                 <h:form id="formNotes">
                                     <h3><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h3>
                                     <div class='starrr' id="star_moyenne"></div><h:outputText value=" (#{ficheBean.noteTotal})"/>
