@@ -1,0 +1,62 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <h:head>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <title>Oops | Invitation</title>
+        <link href="css/bootstrap.min.css" rel="stylesheet"/>
+        <link href="css/font-awesome.min.css" rel="stylesheet"/>
+        <link href="css/prettyPhoto.css" rel="stylesheet"/>
+        <link href="css/animate.css" rel="stylesheet"/>
+        <link href="css/main.css" rel="stylesheet"/>
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+    </h:head><!--/head-->
+    <h:body>
+        <ui:include src="header.xhtml"/>
+
+        <section id="title" class="emerald">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Invitation</h1>
+                       
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="invite" class="container">
+ <p>Inviter l'une de vos connaissances à rejoindre OOPS</p>
+            <p:messages />
+
+            <h:form id="inviteForm" class="center" role="form">
+                <p:inputText value="#{inviteBean.mail}" id ="email" placeholder="Adresse mail"
+                             binding="#{inviteBean.emailComponent}"/> <br/>                 
+                <p:inputTextarea value="#{inviteBean.message}" id ="message" placeholder="Entrer votre message"/><br/>
+                <p:commandButton value="Inviter" id="button" actionListener="#{inviteBean.send()}" update="@all"/>
+
+            </h:form>
+            <h:outputText value="#{inviteBean.feedback}"/>
+        </section><!--/#login-->
+
+        <ui:include src="footer.xhtml"/>
+
+        <script src="js/jquery.js"></script>
+        <script src="js/bootstrap.min.js"></script>
+        <script src="js/jquery.prettyPhoto.js"></script>
+        <script src="js/main.js"></script>
+    </h:body><!--/body-->
+</html>

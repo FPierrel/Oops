@@ -122,7 +122,7 @@
                             <div class="blog-content">
 
                                 <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
-                                    <p:commandButton rendered="#{!reportBean.banished}" actionListener="#{reportBean.banishPrestataire()}" value="Bannir" ><f:ajax render="@all"/></p:commandButton> <p:commandButton rendered="#{reportBean.banished}" actionListener="#{reportBean.redeemPrestataire()}" value="Gracier" ><f:ajax render="@all"/></p:commandButton>
+                                    <p:commandButton rendered="#{!reportBean.banished}" actionListener="#{reportBean.banishPrestataire()}" value="Bannir" ><f:ajax render="banish"/></p:commandButton> <p:commandButton rendered="#{reportBean.banished}" actionListener="#{reportBean.redeemPrestataire()}" value="Gracier" ><f:ajax render="banish"/></p:commandButton>
                                 </h:form>
 
                                 <h:form id="reportFiche" rendered="#{request.remoteUser != null}"> 

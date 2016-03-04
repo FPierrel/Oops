@@ -250,7 +250,7 @@ public class SearchResultsBean {
                     + "FROM villes_france_free "
                     + "WHERE ville_nom LIKE '" + search + "%' "
                     + "OR ville_code_postal LIKE '" + search + "%' "
-                    + "ORDER BY ville_nom ";
+                    + "ORDER BY ville_nom LIMIT 5 ";
 
             ResultSet resultat = MySQL.getInstance().search(query);
 

@@ -285,7 +285,7 @@ public class InitializationBean {
         //----------------------------------------------
         ArrayList<Adresse> adressesJohn = new ArrayList<>();
         adressesJohn.add(this.creerAdresse("22", "rue de la zappette", "", "54000", "Nancy", "France"));
-        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "123456", "john.siffleur@nenette.fr",
+        liste.add(this.creerSoumissionnaire("john", "Siffleur", "John", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "john.siffleur@nenette.fr",
                 "0123456789", adressesJohn));
         //----------------------------------------------
         //FIN AJOUTS DE SOUMISSIONNAIRES.

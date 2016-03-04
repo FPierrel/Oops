@@ -2,14 +2,12 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
-import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 
 @Named(value = "searchBean")
@@ -18,7 +16,7 @@ public class SearchBean implements Serializable {
 
     @Inject
     SearchResultsBean searchResults;
-    
+
     @Inject
     CategoriesBean categoriesB;
 
@@ -26,9 +24,8 @@ public class SearchBean implements Serializable {
     private String quoi, ou;
     private String employeeSearch;
     private boolean advanced;
-    private int note = 3;
-    /* A RETIRER QUAND LES NOTES DES AVIS SERONT FAITES ! */
-    private List<Prestataire> prestataires = new ArrayList<>();;
+    private List<Prestataire> prestataires = new ArrayList<>();
+    ;
     private List<String> villes = new ArrayList<>();
     private String choix;
     private List<String> categories = new ArrayList<>();
@@ -38,9 +35,7 @@ public class SearchBean implements Serializable {
     private List<Prestataire> listPrestataires;
 
     private int communication, quality, price, delay, moyenne;
-    /**
-     * Creates a new instance of SearchBean
-     */
+
     public SearchBean() {
 
     }
@@ -48,7 +43,7 @@ public class SearchBean implements Serializable {
     public String search() {
         String ville = "";
         String codePostal = "";
-        
+
         try {
             ville = this.choix.split(" ")[0];
             codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
@@ -60,7 +55,7 @@ public class SearchBean implements Serializable {
             this.advanced = false;
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-             this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie);
+            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie);
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
@@ -68,10 +63,27 @@ public class SearchBean implements Serializable {
     }
 
     /*public void searchTown(AjaxBehaviorEvent event) {
-        this.villes = this.searchResults.searchTest(this.ou);
-    }*/
+     this.villes = this.searchResults.searchTest(this.ou);
+     }*/
     public List<String> searchTown(String query) {
         return this.searchResults.searchTest(query);
+    }
+
+    public String toJavascriptArray(String query) {
+        String[] arr = searchTown(query).toArray(new String[0]);
+        for(String s : arr) {
+            System.out.print(s + " ");
+        }
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < arr.length; i++) {
+            sb.append("\"").append(arr[i]).append("\"");
+            if (i + 1 < arr.length) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
     }
 
     public List<String> searchTownWithoutCode(String query) {
@@ -133,28 +145,21 @@ public class SearchBean implements Serializable {
     public void setAdvanced(boolean advanced) {
         this.advanced = advanced;
     }
-    
-    public void switchAdvanced(){
+
+    public void switchAdvanced() {
         this.advanced = !this.advanced;
     }
 
-    public void cancelAdvanced(){
+    public void cancelAdvanced() {
         this.advanced = false;
     }
+
     public List<Prestataire> getPrestataires() {
         return prestataires;
     }
 
     public void setPrestataires(List<Prestataire> prestataires) {
         this.prestataires = prestataires;
-    }
-
-    public int getNote() {
-        return note;
-    }
-
-    public void setNote(int note) {
-        this.note = note;
     }
 
     public String getQuoi() {
@@ -226,19 +231,22 @@ public class SearchBean implements Serializable {
     }
 
     public void setChoix(String choix) {
+        System.out.println("Bonjour : " + choix);
         this.choix = choix;
     }
-    
-    public String getNbResult(){
-        if (this.prestataires.size() == 0)
+
+    public String getNbResult() {
+        if (this.prestataires.isEmpty()) {
             return "Aucun résultat";
-        else if (this.prestataires.size() == 1)
+        } else if (this.prestataires.size() == 1) {
             return "1 Résultat :";
-        else if (this.prestataires.size() > 0)
+        } else if (this.prestataires.size() > 0) {
             return "" + this.prestataires.size() + " Résultats :";
-        else
+        } else {
             return "";
+        }
     }
+
     public List<String> getCategories() {
         return this.categoriesB.getListCategories();
     }
@@ -257,12 +265,12 @@ public class SearchBean implements Serializable {
 
     public List<String> getCodes() {
         return codes;
-}
+    }
 
     public void setCodes(List<String> codes) {
         this.codes = codes;
     }
-    
+
     public void codesListener() {
         codes = this.searchResults.searchCodes(this.ou);
     }
@@ -275,6 +283,4 @@ public class SearchBean implements Serializable {
         this.code = code;
     }
 
-   
-    
 }
