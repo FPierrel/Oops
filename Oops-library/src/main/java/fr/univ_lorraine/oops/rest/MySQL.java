@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.rest;
 
 import java.sql.Connection;
@@ -14,20 +9,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-/**
- *
- * @author Thomas
- */
 public class MySQL {
 
     private final String url = "jdbc:mysql://test.pi-r-l.ovh:3306/oops";
     private final String utilisateur = "root";
     private final String motDePasse = "fakepwd88";
     private Connection connexion;
-    private ResultSet resultat;
     private Statement statement;
 
-    private static MySQL instance = new MySQL();
+    private static MySQL instance;
 
     private MySQL() {
         try {
@@ -40,11 +30,15 @@ public class MySQL {
     }
 
     public static MySQL getInstance() {
+        if (instance == null){
+            synchronized(MySQL.class){
+                if (instance == null){
+                    instance = new MySQL();
+                }
+            }
+        }
         return instance;
     }
-
-    // Add business logic below. (Right-click in editor and choose
-    // "Insert Code > Add Business Method")
 
     public ResultSet search(String query) {
         try {
