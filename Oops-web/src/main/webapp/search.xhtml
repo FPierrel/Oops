@@ -15,12 +15,7 @@
                     <h:inputText id="quoi" class="form-control" autocomplete="off" pt:placeholder="Quoi ?" value="#{searchBean.quoi}" />
                 </div>
                 <div class="form-group">
-                    <!--<p:autoComplete id="ou" forceSelection="true" placeholder="Où ?" value="#{searchBean.choix}" completeMethod="#{searchBean.searchTown}" maxResults="5"/>
-                    -->
-                    <!--<h:inputHidden id="bonjour" value="#{searchBean.toJavascriptArray(searchBean.choix)}"/>-->
-                    <h:inputText class="typeahead form-control" pt:placeholder="Où ?" autocomplete="off" value="#{searchBean.choix}">
-                        <!--<f:ajax event="keyup" listener="#{searchBean.toJavascriptArray(searchBean.choix)}"/>-->
-                    </h:inputText>
+                    <h:inputText id="ou" class="typeahead form-control" pt:placeholder="Où ?" autocomplete="off" value="#{searchBean.choix}"/>
                 </div>
                 <div class="btn-group">
                     <h:commandLink id="go" class="btn btn-danger" action="#{searchBean.search()}"><i class="icon-search"></i> Rechercher</h:commandLink>
@@ -36,7 +31,6 @@
                 </div>
                 <h:panelGroup id="advanced">
                     <h:panelGroup rendered="#{searchBean.advanced}">
-                    <!--<c:if test="#{searchBean.advanced}">-->
                         <div id="div-advanced-search">
                             <div class='row'>
                                 <br/>
@@ -103,7 +97,6 @@
                                 </div>
                             </div>
                         </div>
-                        <!--</c:if>-->
                     </h:panelGroup>
                     <script src="js/jquery.js"></script>
                     <script src="js/starrr.js"></script>
