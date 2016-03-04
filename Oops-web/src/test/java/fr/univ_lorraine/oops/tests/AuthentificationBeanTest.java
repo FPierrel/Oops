@@ -78,20 +78,19 @@ public class AuthentificationBeanTest {
         driver.findElement(By.name("submit")).click();
         driver.get(host + "/fiche.xhtml?page=satan");
         driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
-     
+
         driver.get(host + "/login.xhtml");
         driver.findElement(By.name("j_username")).sendKeys("satan");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         String message = "Votre compte a été bloqué par un administrateur !";
-        assertEquals(driver.findElement(By.className("ui-messages-error")).getText(), message);
-        
+        assertEquals(driver.findElement(By.className("ui-messages-error-summary")).getText(), message);
+
         driver.get(host + "/login.xhtml");
         driver.findElement(By.name("j_username")).sendKeys("jose");
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
-        driver.get(host + "/admin/index.xhtml");
-        driver.findElement(By.id("bannis:datatableReport")).findElement(By.xpath(".//td[last()]/input")).click();
-        assertTrue(true);
+        driver.get(host + "/fiche.xhtml?page=satan");
+        driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
     }
 }

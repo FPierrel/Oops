@@ -16,9 +16,9 @@
             <div id ="content">
                 <div id="featured" class="container">
                     Bienvenue sur la page d'administration !
-                    <h:form id="avisEnAttente">
-                        <p:tabView>
-                            <p:tab title="Avis non vérifié(s)">
+                    <h:form id="form">
+                        <p:tabView id="tabs">
+                            <p:tab id="avis" title="Avis non vérifié(s)">
 
                                 <h:dataTable id="datatable" value="#{adminBean.listeAvisNonVerifies}" var="avis">
                                     <h:column>
@@ -39,9 +39,7 @@
                                 </h:dataTable>
 
                             </p:tab>
-                            <p:tab title="Signalements de profils non vérifié(s)">
-
-
+                            <p:tab id="signalements" title="Signalement(s) de profil non vérifié(s)">
                                 <h:dataTable cellpadding="10"   id="datatableReport2" value="#{adminBean.listUnverifiedReport}" var="report">
                                     <h:column>
                                         <f:facet name="header">
@@ -87,10 +85,7 @@
                                 </h:dataTable>
 
                             </p:tab>
-
-                            <p:tab title="Utilisateurs bannis">
-
-
+                            <p:tab id="bannis" title="Utilisateur(s) banni(s)">
                                 <h:dataTable id="datatableReport3" value="#{adminBean.listBanishedUser}" var="user">
                                     <h:column>
                                         <f:facet name="header">

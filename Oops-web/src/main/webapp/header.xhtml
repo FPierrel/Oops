@@ -30,7 +30,7 @@
             <h:form id="headerForm">
                 <div class="collapse navbar-collapse">
                     <ul class="nav navbar-nav navbar-right">
-                        <li class="${cssIndexLink}"><h:link value="Accueil" outcome="index"/></li>
+                        <li class="${cssIndexLink}"><h:link value="Accueil" outcome="/index"/></li>
                         <li class="${cssSigninLink}"><h:link rendered="#{request.remoteUser == null}" value="Inscription" outcome="inscription"/></li>
                         <li class="${cssLoginLink}"><h:link rendered="#{request.remoteUser == null}" value="Connexion" outcome="login"/></li>
                         <c:if test="#{request.remoteUser != null}">
@@ -43,6 +43,7 @@
                                     <li><h:link id="ficheedit" value="Editer ma fiche" outcome="ficheedit" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
                                     <li><h:link id="manageAlbum" value="Gérer mes albums" outcome="albums" rendered="#{request.isUserInRole('PRESTATAIRE')}"/></li>
                                     <li><h:link id="invite" value="Inviter à devenir Soumissionnaire" outcome="invite" rendered="#{request.isUserInRole('SOUMISSIONNAIRE') or request.isUserInRole('PRESTATAIRE')}"/></li>
+                                    <li><h:link id="admin" value="Page d'administration" outcome="/admin/index" rendered="#{request.isUserInRole('ADMINISTRATEUR')}"/></li>
                                     <li class="divider"></li>
                                     <li><h:commandLink id="deconnexion" value="Déconnexion" action="#{authenticationBean.logout()}"/></li>
                                 </ul>
