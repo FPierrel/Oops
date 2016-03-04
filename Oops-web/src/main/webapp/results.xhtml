@@ -7,85 +7,112 @@
       xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Oops | Résultats</title>
-        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
-        <link href="style/style2.css" rel="stylesheet" type="text/css" />
-         <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+        <meta charset="utf-8"/>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/prettyPhoto.css"/>
+        <link rel="stylesheet" href="css/animate.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/starrr.css"/>
+        <link rel="stylesheet" href="css/typeahead.css"/>
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+        <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css"/>
+        <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"/>
     </h:head>
     <h:body>   
         <ui:include src="header.xhtml"/>
         <ui:include src="search.xhtml"/>
-        <div id="featured-wrapper">
-            <div id ="content">
-                <div id="featured" class="container">
-                    <h:messages />
-                    <header>
-                        <h:outputText id="nbResult" value="#{searchBean.nbResult}" />
-                     </header>
-                    <ui:repeat value="#{searchBean.prestataires}" var="pres">
-                        <div class="prestataire">    
-                                <h:form>
-                                    <h:link outcome="fiche.xhtml">
-                                        <f:param name="page" value="#{pres.login}"/>
-                                        <h:outputText value="#{pres.nomEntreprise}"/>
-                                    </h:link>
-                                </h:form>
-                            
-                            <h:form><p:rating value="#{pres.average}" readonly="true"/></h:form>
-                            <div id="rating"><a href="#">#{pres.nbAvis} avis</a></div><br/><br/>|
-                                    
-                                <ui:repeat value="#{pres.adresses}" var="address">
-                                    <h:column>
-                                        <h:outputText value="#{address.ville}" style="font-weight: bold"/>
-                                        <h:outputText value=" (#{address.codePostal}) |"/>                  
-                                    </h:column>
-                                </ui:repeat>
-                            <br/><br/>
-                            <h:outputText value="Description : #{pres.description}" />
-                        </div>
-                    </ui:repeat>
-                </div>
-                
-                <div id="map" style="width: 100%; height: 600px; margin-top: 5%"></div>
-
-                <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
-                <script>
-                    var access = 'pk.eyJ1IjoiamVzdXNib3ZlIiwiYSI6ImNpajR2czhlYzAwMjB3M20zOHk2dnBjcWoifQ.PUlh2thCN1c5zl3setgtTQ';
-                    var mapboxTiles = L.tileLayer('https://api.mapbox.com/v4/mapbox.streets-basic/{z}/{x}/{y}.png256?access_token=' + access, {
-                        attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
-                    });
-                    var map = L.map('map').addLayer(mapboxTiles).setView([46.92026, 3.16406], 5);</script>
-
-                <h:form id="m">
-                    <ui:repeat value="#{searchBean.prestataires}" var="pres">
-                        <h:inputHidden id="p" value="#{pres.nomEntreprise}" />
-                        <p> 
-                            
-                            <ui:repeat value="#{pres.adresses}" var="adresse">
-                                
-                                <h:inputHidden id="name" value="#{pres.nomEntreprise}"/>
-                                <script>
-                                    var template = "<h1>#{pres.nomEntreprise}</h1><p>#{pres.description}</p><ul>";
-                                    <ui:repeat value = "#{pres.categories}" var = "cat">
-                                        template += "<li> #{cat.nom} </li>";
-                                    </ui:repeat>
-
-                                    template += "</ul>";
-                                    L.marker([#{adresse.latitude}, #{adresse.longitude}]).addTo(map).bindPopup(template).on('click', function (e) {
-                                        document.location.href = "fiche.xhtml?page=#{pres.login}";
-                                    }).on('mouseover', function (e) {
-                                        this.openPopup();
-                                    }).on('mouseout', function (e) {
-                                        this.closePopup();
-                                    });
-                                </script> 
-                            </ui:repeat>
-                        </p>
-                    </ui:repeat>
-                </h:form>
-
-                <br/>
+        <div class="container">
+            <p:messages/>
+            <div class="row">
+                <h1><h:outputText id="nbResult" value="#{searchBean.nbResult}" /></h1>
             </div>
+            <ui:repeat id="rep" value="#{searchBean.prestataires}" var="pres" varStatus="loop"> 
+                <div class="prestataire">
+                    <h:form id="prestaForm">
+                        <h:link outcome="fiche.xhtml">
+                            <f:param name="page" value="#{pres.login}"/>
+                            <h:outputText value="#{pres.nomEntreprise}"/>
+                        </h:link>
+                        <br/>
+                        <h:inputHidden id="moyenne" value="#{pres.average}"/>
+                        <div class='starrr' id="star_moyenne#{loop.index}"></div><h:outputText value=" (#{pres.average})"/>
+                        <div id="rating">
+                            <h:link outcome="fiche.xhtml">
+                                <f:param name="page" value="#{pres.login}"/>
+                                <h:outputText value="#{pres.nbAvis} avis"/>
+                            </h:link>
+                        </div>
+                                    <span id="categories">
+                                        <br/>
+                                        <ui:repeat value="#{pres.categories}" var="categorie">
+                                            <span class="label label-primary">#{categorie.nom}</span>
+                                        </ui:repeat>
+                                    </span>
+                        <br/>|
+
+                        <ui:repeat value="#{pres.adresses}" var="address">
+                            <h:column>
+                                <h:outputText value="#{address.ville}" style="font-weight: bold"/>
+                                <h:outputText value=" (#{address.codePostal}) |"/>                  
+                            </h:column>
+                        </ui:repeat>
+                        <br/>
+                        <h:outputText value="Description : #{pres.description}" />
+                        <script src="js/starrr.js"></script>
+                        <script>
+                            $('#star_moyenne#{loop.index}').starrr({
+                                readOnly: true,
+                                rating: document.getElementById('rep:#{loop.index}:prestaForm:moyenne').value
+                            });
+                        </script>
+                    </h:form>
+                </div>
+            </ui:repeat>
+            <div id="map" style="width: 100%; height: 600px; margin-top: 5%"></div>
+
+            <script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"/>
+            <script>
+                            var access = 'pk.eyJ1IjoiamVzdXNib3ZlIiwiYSI6ImNpajR2czhlYzAwMjB3M20zOHk2dnBjcWoifQ.PUlh2thCN1c5zl3setgtTQ';
+                            var mapboxTiles = L.tileLayer('https://api.mapbox.com/v4/mapbox.streets-basic/{z}/{x}/{y}.png256?access_token=' + access, {
+                                attribution: '<a href="http://www.mapbox.com/about/maps/" target="_blank">Terms &amp; Feedback</a>'
+                            });
+                            var map = L.map('map').addLayer(mapboxTiles).setView([46.92026, 3.16406], 5);
+            </script>
+            <h:form id="m">
+                <ui:repeat value="#{searchBean.prestataires}" var="pres">
+                    <h:inputHidden id="p" value="#{pres.nomEntreprise}" />
+                    <p> 
+                        <ui:repeat value="#{pres.adresses}" var="adresse">
+                            <h:inputHidden id="name" value="#{pres.nomEntreprise}"/>
+                            <script>
+                                var template = "<h1>#{pres.nomEntreprise}</h1><p>#{pres.description}</p><ul>";
+                                        <ui:repeat value = "#{pres.categories}" var = "cat">
+                                        template += "<li> #{cat.nom} </li>";
+                                        </ui:repeat>
+
+                                        template += "</ul>";
+                                L.marker([#{adresse.latitude}, #{adresse.longitude}]).addTo(map).bindPopup(template).on('click', function (e) {
+                                    document.location.href = "fiche.xhtml?page=#{pres.login}";
+                                }).on('mouseover', function (e) {
+                                    this.openPopup();
+                                }).on('mouseout', function (e) {
+                                    this.closePopup();
+                                });
+                            </script> 
+                        </ui:repeat>
+                    </p>
+                </ui:repeat>
+            </h:form>
         </div>
         <ui:include src="footer.xhtml"/>
     </h:body>

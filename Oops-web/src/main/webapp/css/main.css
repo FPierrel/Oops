@@ -5,6 +5,54 @@
 .well-avis {
   background: #ebebeb;
 }
+.prestataire 
+{
+	padding: 10px 20px;
+	margin: 1px 20px;
+	border-width:1px;
+	border-color: #DFDFDF;
+	border-style:solid;
+}
+
+.prestataire:hover
+{
+	box-shadow: 0px 0px 0px 5px #DFDFDF;
+}
+
+.prestataire a 
+{
+	text-decoration: none;
+	font-family: Arial, sans-serif;
+	font-size: 20px;
+	font-weight: 600;
+	color: #2980b9;	
+}
+
+.prestataire a:hover
+{
+	text-decoration: underline;
+}
+
+.prestataire #rating
+{
+	display: inline;
+}
+
+.prestataire #rating a
+{
+	text-decoration: none;
+	font-family: Arial, sans-serif;
+	font-size: 14px;
+	font-weight: 600;
+	color: #2980b9;
+        margin-left: 10px;
+        vertical-align: bottom;
+}
+
+.prestataire #rating a:hover
+{
+	text-decoration: underline;
+}
 .clearfix:before,
 .clearfix:after {
   display: table;
