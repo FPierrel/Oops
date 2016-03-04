@@ -6,6 +6,7 @@
 package fr.univ_lorraine.oops.ejb;
  
 import fr.univ_lorraine.oops.library.model.Album;
+import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Photo;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
@@ -43,7 +44,6 @@ public class AlbumEntityManager {
     
      public Photo addPhoto(Photo photo,Long idAlbum){ 
          Album album = this.getEntityManager().find(Album.class, idAlbum);
-         photo.setAlbum(album);
          album.addPhoto(photo);
          this.getEntityManager().merge(album); 
          return photo;
@@ -73,12 +73,33 @@ public class AlbumEntityManager {
         Prestataire user = (Prestataire)userEM.searchByLogin(login);
         user.deleteAlbum(album);
         this.getEntityManager().merge(user);
+        this.getEntityManager().remove(this.getEntityManager().find(Album.class, album.getId()));
     }
 
     public Album getDefault(String login) {
         Prestataire user = (Prestataire)userEM.searchByLogin(login);
         
         return user.getAlbums().size() == 0 ? new Album() : user.getAlbums().get(0);
+    }
+
+    public Album getAlbum(long idAlbum, String login) {
+        Prestataire user = (Prestataire)userEM.searchByLogin(login);
+        
+        for(Album b : user.getAlbums()){
+            if(b.getId() == idAlbum){
+                return b;
+            }
+        }
+        
+        return new Album();
+    }
+
+    public void deletePhoto(Album album, long id) {
+        Photo p = this.getEntityManager().find(Photo.class, id);
+        Album al = this.getEntityManager().find(Album.class, album.getId());
+        al.deletePhoto(p);
+        this.getEntityManager().merge(al);
+        this.getEntityManager().remove(p);
     }
 }
 

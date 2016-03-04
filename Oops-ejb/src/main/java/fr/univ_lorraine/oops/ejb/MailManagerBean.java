@@ -48,15 +48,13 @@ public class MailManagerBean {
         String from = "oops@pi-r-l.ovh";
         final String username = "oops@pi-r-l.ovh";
         final String password = "oops_password";
-
         String host = "smtp.pi-r-l.ovh";
-
         Properties props = new Properties();
         props.put("mail.smtp.auth", "true");
-        props.put("mail.smtp.starttls.enable", "true");
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "25");
 
+        System.out.println("target mail : " + targetMail);
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -65,20 +63,11 @@ public class MailManagerBean {
                 });
 
         try {
-            // Create a default MimeMessage object.
             Message message = new MimeMessage(session);
-
-            // Set From: header field of the header.
             message.setFrom(new InternetAddress(from));
-
-            // Set To: header field of the header.
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(targetMail));
-
-            // Set Subject: header field
             message.setSubject("Rejoignez OOPS");
-
-            // Now set the actual message
             String msg = "Vous avez reçu une invitation de " + user + "\n"
                     + "Rejoignez l'annuaire de prestataires ultime : Opinion On Provider of Services !\n"
                     + "http://pi-r-l.ovh:8080/Oops-web/ \n"
@@ -86,8 +75,6 @@ public class MailManagerBean {
                     + userMessage;
 
             message.setText(msg);
-
-            // Send message
             Transport.send(message);
             return true;
 
@@ -95,5 +82,48 @@ public class MailManagerBean {
             throw new RuntimeException(e);
         }
 
+    }
+
+    public boolean sendAskOpinion(String user, String targetMail, String url) {
+        String queryString = "SELECT u.mail "
+                + "FROM Utilisateur u "
+                + "WHERE u.mail = '" + targetMail + "'";
+        TypedQuery<String> query = this.getEntityManager().createQuery(queryString, String.class);
+        List<String> l = query.getResultList();
+        if (l.size() > 0) {
+            System.out.println("SessionBean : mail ok ");
+            String from = "oops@pi-r-l.ovh";
+            final String username = "oops@pi-r-l.ovh";
+            final String password = "oops_password";
+            String host = "smtp.pi-r-l.ovh";
+            Properties props = new Properties();
+            props.put("mail.smtp.auth", "true");
+            props.put("mail.smtp.host", host);
+            props.put("mail.smtp.port", "25");
+            Session session = Session.getInstance(props,
+                    new javax.mail.Authenticator() {
+                        protected PasswordAuthentication getPasswordAuthentication() {
+                            return new PasswordAuthentication(username, password);
+                        }
+                    });
+
+            try {
+                Message message = new MimeMessage(session);
+                message.setFrom(new InternetAddress(from));
+                message.setRecipients(Message.RecipientType.TO,
+                        InternetAddress.parse(targetMail));
+                message.setSubject("Laissez votre avis sur un prestataire OOPS");
+                String msg = "L'utilisateur " + user + " vous invite à laisser un message sur ce prestataire !\n"
+                        + url + "\n\nCordialement\n" + "L'équipe OOPS";
+                message.setText(msg);
+                Transport.send(message);
+                return true;
+
+            } catch (MessagingException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        System.out.println("SessionBean : mail pas ok ");
+        return false ;
     }
 }

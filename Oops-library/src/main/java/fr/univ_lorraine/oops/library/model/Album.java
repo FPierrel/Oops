@@ -92,7 +92,9 @@ public class Album implements Serializable {
     public void addPhoto(Photo photo) {
         this.photos.add(photo);
     }
-    
-    
+
+    public void deletePhoto(Photo p) {
+        this.photos.remove(p);
+    }  
 }
 

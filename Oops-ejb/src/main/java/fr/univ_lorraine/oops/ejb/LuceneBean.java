@@ -50,6 +50,7 @@ public class LuceneBean {
         this.config = new IndexWriterConfig(analyzer);
         this.iwriter = new IndexWriter(directory, config);
     }
+    
 
     @PostConstruct
     public void init() {

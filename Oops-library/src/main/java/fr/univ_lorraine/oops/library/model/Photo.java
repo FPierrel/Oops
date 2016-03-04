@@ -23,7 +23,6 @@ import javax.persistence.Transient;
  * @author Administrateur
  */
 @Entity
-@NamedQueries({@NamedQuery(name = "findPhotoByPKalbum", query = "SELECT p FROM Photo p WHERE p.album.id = :idAlbum")})
 public class Photo implements Serializable {
  
     private static final long serialVersionUID = 1L;
@@ -33,8 +32,6 @@ public class Photo implements Serializable {
     private String nomPhoto;
     @Lob
     private byte[] photo;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
-    private Album album;
     @Transient
     private String photoBase64;
     
@@ -53,15 +50,6 @@ public class Photo implements Serializable {
  
     public void setPhotoBase64(String photoBase64) {
         this.photoBase64 = photoBase64;
-    }
- 
-    
-    public Album getAlbum() {
-        return album;
-    }
- 
-    public void setAlbum(Album album) {
-        this.album = album;
     }
  
     public String getNomPhoto() {
