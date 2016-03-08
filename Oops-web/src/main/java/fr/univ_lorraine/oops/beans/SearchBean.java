@@ -25,7 +25,6 @@ public class SearchBean implements Serializable {
     private String employeeSearch;
     private boolean advanced;
     private List<Prestataire> prestataires = new ArrayList<>();
-    ;
     private List<String> villes = new ArrayList<>();
     private String choix;
     private List<String> categories = new ArrayList<>();
@@ -43,12 +42,9 @@ public class SearchBean implements Serializable {
     public String search() {
         String ville = "";
         String codePostal = "";
-
-        try {
+        if(this.choix != null) {
             ville = this.choix.split(" ")[0];
             codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
-        } catch (NullPointerException e) {
-
         }
 
         if (this.advanced) {
