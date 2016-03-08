@@ -65,9 +65,6 @@ public class SearchBean implements Serializable {
 
     public String toJavascriptArray(String query) {
         String[] arr = searchTown(query).toArray(new String[0]);
-        for(String s : arr) {
-            System.out.print(s + " ");
-        }
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < arr.length; i++) {

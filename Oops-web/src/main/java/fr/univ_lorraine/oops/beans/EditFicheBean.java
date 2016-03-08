@@ -18,7 +18,7 @@ public class EditFicheBean implements Serializable {
 
     @Inject
     private UserManagerBean userManager;
-    
+
     @Inject
     private CategoriesBean categoriesB;
 
@@ -28,7 +28,7 @@ public class EditFicheBean implements Serializable {
 
     private List<String> allCategories;
     private List<String> categories;
-            
+
     public EditFicheBean() {
     }
 
@@ -198,4 +198,18 @@ public class EditFicheBean implements Serializable {
         this.categories = categories;
     }
 
+    public String toJavascriptArray() {
+        String[] arr = this.categories.toArray(new String[0]);
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < arr.length; i++) {
+            sb.append("\"").append(arr[i]).append("\"");
+            if (i + 1 < arr.length) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
+    
 }

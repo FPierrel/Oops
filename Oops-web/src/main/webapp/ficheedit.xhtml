@@ -4,57 +4,154 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://java.sun.com/jsf/core"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
     <f:metadata>
         <f:viewAction action="#{editFicheBean.init(request.remoteUser)}" />
     </f:metadata>
     <h:head>
-        <title>Oops | Modifier la fiche</title>
+        <title>Oops | Edition de la fiche</title>
+        <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href='https://fonts.googleapis.com/css?family=Kavoon' rel='stylesheet' type='text/css'/>
-        <link href="style/style2.css" rel="stylesheet" type="text/css" />
+        <link rel="stylesheet" href="css/bootstrap.min.css"/>
+        <link rel="stylesheet" href="css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/animate.css"/>
+        <link rel="stylesheet" href="css/main.css"/>
+        <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <!--[if lt IE 9]>
+        <script src="js/html5shiv.js"></script>
+        <script src="js/respond.min.js"></script>
+        <![endif]-->       
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="images/ico/apple-touch-icon-144-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
+        <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css"/>
     </h:head>
     <h:body>
         <ui:include src="header.xhtml"/>
-        <ui:include src="search.xhtml"/>
-        <div id="featured-wrapper">
-            <div id ="content">
-                <div id="featured" class="container">
-                    <p:messages/>
-                    <h:form id="ficheForm">
-                        <h:panelGrid id="grid" columns="3" cellpadding="5">
-                            <h:outputLabel for="companyName" value="Nom de l'entreprise : "/>
-                            <h:inputText id="companyName" binding="#{editFicheBean.companyNameComponent}" value="#{editFicheBean.companyName}"/>
-                            <p:message for="companyName" />
-                            <h:outputLabel for="website" value="Site Web : "/>
-                            <h:inputText id="website" binding="#{editFicheBean.websiteComponent}" value="#{editFicheBean.website}"/>
-                            <p:message for="website" />
-                            <h:outputLabel for="nbEmployee" value="Nombre d'employé(s) : "/>
-                            <h:inputText id="nbEmployee" binding="#{editFicheBean.nbEmployeeComponent}" value="#{editFicheBean.nbEmployee}"/>
-                            <p:message for="nbEmployee" />
-                            <h:outputLabel for="turnoverNumber" value="Chiffre d'affaire : "/>
-                            <h:inputText id="turnoverNumber" binding="#{editFicheBean.turnoverNumberComponent}" value="#{editFicheBean.turnover}"/>
-                            <p:message for="turnoverNumber" />
-                            <h:outputLabel for="allCategories" value="Catégories : "/>
-                            <p:selectManyMenu id="allCategories" value="#{editFicheBean.categories}" filter="true" showCheckbox="true"> 
-                                <f:selectItems value="#{editFicheBean.allCategories}"/>
-                            </p:selectManyMenu>
-                            <h:outputLabel/>
-                            <h:outputLabel for="description" value="Description : "/>
-                            <h:inputTextarea id="description" binding="#{editFicheBean.descriptionComponent}" value="#{editFicheBean.description}" cols="30" rows="10"/>
-                            <p:message for="description" />
-                            <h:outputLabel /><h:outputLabel /><h:outputLabel />
-                            <h:panelGroup>
-                                <h:button id="cancel" value="Annuler" outcome="index"/>
-                                <h:commandButton id="save" value="Enregistrer" action="#{editFicheBean.update()}"/>
-                            </h:panelGroup>
-                            <h:outputLabel /><h:outputLabel />
-                        </h:panelGrid>
-                    </h:form>
+
+        <section id="title" class="emerald">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6">
+                        <h1>Edition de la fiche</h1>
+                        <p>Modifiez vos informations concernant vos prestations.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="breadcrumb pull-right">
+                            <li><a href="index.xhtml">Accueil</a></li>
+                            <li class="active">Edition de la fiche</li>
+                        </ul>
+                    </div>
                 </div>
             </div>
-        </div>
+        </section><!--/#title--> 
+
+        <section id="registration" class="container">
+            <p:messages/>
+            <h:form id="ficheForm">
+                <div class="row">
+                    <div class="col-sm-4 col-sm-offset-4">
+                        <fieldset>
+                            <legend>Informations du prestataire</legend>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-user"></i></span>
+                                    <h:inputText id="companyName" 
+                                                 pt:placeholder="Nom du prestataire" class="form-control"
+                                                 binding="#{editFicheBean.companyNameComponent}" value="#{editFicheBean.companyName}"/>
+                                </div>
+                                <p:message for="companyName"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-list-alt"></i></span>
+                                    <h:inputText id="raisonSociale" 
+                                                 pt:placeholder="Raison sociale" class="form-control"
+                                                 disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-list-alt"></i></span>
+                                    <h:inputText id="formeJuridique" 
+                                                 pt:placeholder="Forme juridique" class="form-control"
+                                                 disabled="true"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-group"></i></span>
+                                    <h:inputText id="nbEmployee" 
+                                                 pt:placeholder="Nombre d'employé" class="form-control"
+                                                 binding="#{editFicheBean.nbEmployeeComponent}" value="#{editFicheBean.nbEmployee}"/>
+                                </div>
+                                <p:message for="nbEmployee"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-euro"></i></span>
+                                    <h:inputText id="turnoverNumber" 
+                                                 pt:placeholder="Chiffre d'affaire" class="form-control"
+                                                 binding="#{editFicheBean.turnoverNumberComponent}" value="#{editFicheBean.turnover}"/>
+                                </div>
+                                <p:message for="turnoverNumber"/>
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-globe"></i></span>
+                                    <h:inputText id="website" 
+                                                 pt:placeholder="Site Web" class="form-control"
+                                                 binding="#{editFicheBean.websiteComponent}" value="#{editFicheBean.website}"/>
+                                </div>
+                                <p:message for="website"/>
+                            </div>
+                            <div class="form-group">
+                                <h:selectManyMenu id="allCategories" class="selectpicker" value="#{editFicheBean.categories}"
+                                                  pt:multiple="" pt:data-live-search="true" pt:data-selected-text-format="count > 3"
+                                                  pt:data-width="100%" pt:title="Catégories">
+                                    <f:selectItems value="#{editFicheBean.allCategories}"/>
+                                </h:selectManyMenu>                                
+                            </div>
+                            <div class="form-group">
+                                <div class="input-group">
+                                    <span class="input-group-addon"><i class="icon-info"></i></span>
+                                    <h:inputTextarea id="description" style="resize:none"
+                                                     pt:placeholder="Description..." class="form-control"
+                                                     binding="#{editFicheBean.descriptionComponent}" value="#{editFicheBean.description}" cols="30" rows="10"/>
+                                </div>
+                                <p:message for="description"/>
+                            </div>
+                        </fieldset>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3 col-sm-offset-3">
+                        <div class="form-group">
+                            <h:link id="cancel" class="btn btn-danger btn-md btn-block" outcome="index"><i class="icon-remove"></i> Annuler</h:link>
+                        </div>
+                    </div>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <h:commandLink id="save" class="btn btn-success btn-md btn-block" action="#{editFicheBean.update()}"><i class="icon-ok"></i> Modifier</h:commandLink>
+                        </div>
+                    </div>
+                </div>
+            </h:form>
+        </section>
         <ui:include src="footer.xhtml"/>
     </h:body>
+    <script src="js/jquery.js"/>
+    <script src="js/bootstrap.min.js"/>
+    <script src="js/main.js"/>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"/>
+    <script>
+        $('.selectpicker').val(#{editFicheBean.toJavascriptArray()});
+        $('.selectpicker').selectpicker({
+            style: 'btn-default',
+            size: 6
+        });
+    </script>
 </html>
 
