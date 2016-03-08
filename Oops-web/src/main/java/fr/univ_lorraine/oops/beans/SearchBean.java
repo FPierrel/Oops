@@ -42,7 +42,8 @@ public class SearchBean implements Serializable {
     public String search() {
         String ville = "";
         String codePostal = "";
-        if(this.choix != null) {
+        
+        if(this.choix != null && !this.choix.isEmpty()) {
             ville = this.choix.split(" ")[0];
             codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
         }
