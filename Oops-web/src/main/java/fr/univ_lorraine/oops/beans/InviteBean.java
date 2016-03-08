@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.MailManagerBean;
@@ -16,10 +11,7 @@ import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- *
- * @author romain
- */
+
 @Named(value = "inviteBean")
 @RequestScoped
 public class InviteBean implements Serializable {
@@ -32,9 +24,6 @@ public class InviteBean implements Serializable {
 
     private UIComponent emailComponent;
 
-    /**
-     * Creates a new instance of InviteBean
-     */
     public InviteBean() {
     }
 

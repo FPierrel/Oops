@@ -43,54 +43,5 @@ public class FichePrestataireBean {
                 ;
         TypedQuery<String> query = this.getEntityManager().createQuery(queryString, String.class);
         return query.getResultList();
-    }
-
-    /*public double getNoteGlobCom(String login) {
-        String queryString = "SELECT AVG(CAST(a.noteCom as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 
-        Query query = this.getEntityManager().createQuery(queryString, double.class);
-        Double test = (Double) query.getSingleResult();
-        if (test != null) {
-            System.out.println(test.doubleValue());
-            return test.doubleValue() ;
-        } else {
-            return 0 ; 
-        }
-    }
-    
-    public double getNoteGlobDelai(String login) {
-        String queryString = "SELECT AVG(CAST(a.noteDelai as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 
-        Query query = this.getEntityManager().createQuery(queryString, double.class);
-        Double test = (Double) query.getSingleResult();
-        if (test != null) {
-            return test.doubleValue() ;
-        } else {
-            return 0 ; 
-        }
-    }
-    
-    public double getNoteGlobQualite(String login) {
-        String queryString = "SELECT AVG(CAST(a.noteQualite as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 
-        Query query = this.getEntityManager().createQuery(queryString, double.class);
-        Double test = (Double) query.getSingleResult();
-        if (test != null) {
-            System.out.println(test.doubleValue());
-            return test.doubleValue() ;
-        } else {
-            return 0 ; 
-        }
-    }
-    
-    public double getNoteGlobPrix(String login) {
-        String queryString = "SELECT AVG(CAST(a.notePrix as double)) FROM Avis a WHERE a.pLogin='"+login+"'" ; 
-        Query query = this.getEntityManager().createQuery(queryString, double.class);
-        Double test = (Double) query.getSingleResult();
-        if (test != null) {
-            System.out.println(test.doubleValue());
-            return test.doubleValue() ;
-        } else {
-            return 0 ; 
-        }
-    }*/
-
-    
+    }    
 }

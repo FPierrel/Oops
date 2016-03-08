@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.library.model;
  
 import java.io.Serializable;
@@ -18,10 +13,6 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Transient;
  
-/**
- *
- * @author Administrateur
- */
 @Entity
 public class Photo implements Serializable {
  
@@ -41,8 +32,7 @@ public class Photo implements Serializable {
  
     public void setId(Long id) {
         this.id = id;
-    }
- 
+    } 
     
     public String getPhotoBase64() {
         return "data:image/png;base64," + new sun.misc.BASE64Encoder().encode(photo); 
@@ -68,8 +58,5 @@ public class Photo implements Serializable {
         this.photo = photo;
         this.photoBase64 = "data:image/png;base64," + new sun.misc.BASE64Encoder().encode(photo); 
     }
- 
-    
-    
 }
 

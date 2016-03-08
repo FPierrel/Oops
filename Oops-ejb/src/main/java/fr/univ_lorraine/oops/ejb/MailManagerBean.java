@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.ejb;
 
 import java.util.List;
@@ -20,10 +15,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 
-/**
- *
- * @author romain
- */
 @Stateless
 @LocalBean
 public class MailManagerBean {
@@ -124,6 +115,6 @@ public class MailManagerBean {
             }
         }
         System.out.println("SessionBean : mail pas ok ");
-        return false ;
+        return false;
     }
 }

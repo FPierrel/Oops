@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.BanishmentBean;
@@ -16,10 +11,6 @@ import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
-/**
- *
- * @author Romain
- */
 @Named(value = "reportBean")
 @ViewScoped
 public class ReportBean implements Serializable {
@@ -35,9 +26,6 @@ public class ReportBean implements Serializable {
     private String reason;
     private String complement;
 
-    /**
-     * Creates a new instance of ReportBean
-     */
     public ReportBean() {
     }
 

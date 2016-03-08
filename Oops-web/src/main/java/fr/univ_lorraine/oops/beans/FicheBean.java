@@ -49,9 +49,6 @@ public class FicheBean implements Serializable {
     private int noteTotal = 0;
     private int nbAvis = 0;
 
-    /**
-     * Creates a new instance of FicheBean
-     */
     public FicheBean() {
 
     }
@@ -95,9 +92,7 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);
         }
         this.init();
-    }
-
-   
+    }  
 
     public void saveComment(int i) {
         FacesContext context = FacesContext.getCurrentInstance();

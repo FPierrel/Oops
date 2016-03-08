@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.BanishmentBean;
@@ -22,10 +17,6 @@ import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-/**
- *
- * @author Romain
- */
 @WebFilter(filterName = "LoginFilter", urlPatterns = {"/login", "/admin/login"})
 public class LoginFilter implements Filter {
 

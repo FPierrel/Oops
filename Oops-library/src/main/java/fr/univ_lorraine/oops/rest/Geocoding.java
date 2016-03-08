@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.rest;
 
 import com.sun.jersey.api.client.Client;
@@ -21,10 +16,6 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
-/**
- *
- * @author Thomas
- */
 public class Geocoding {
 
     private WebResource service;
@@ -63,12 +54,6 @@ public class Geocoding {
 
                 String latitude = reponse.split(",")[1];
                 String longitude = reponse.split(",")[0];
-
-                /*System.out.println("Latitude : " + latitude);
-                System.out.println("Longitude : " + longitude);
-                System.out.println("http://www.google.fr/maps/search/" + latitude + "," + longitude);*/
-
-                //openWebpage("http://www.google.fr/maps/search/" + latitude + "," + longitude);
 
                 latLon = new String[]{latitude, longitude};
             }
