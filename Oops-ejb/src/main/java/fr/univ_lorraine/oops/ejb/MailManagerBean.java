@@ -1,9 +1,11 @@
 package fr.univ_lorraine.oops.ejb;
 
+import dal.UtilisateurDAL;
 import java.util.List;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
+import javax.inject.Inject;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.PasswordAuthentication;
@@ -11,31 +13,19 @@ import javax.mail.Session;
 import javax.mail.Transport;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
 public class MailManagerBean {
 
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
-
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
+    @Inject
+    UtilisateurDAL ud;
 
     public boolean sendInviteMail(String user, String targetMail, String userMessage) {
-        String queryString = "SELECT u.mail "
-                + "FROM Utilisateur u "
-                + "WHERE u.mail = '" + targetMail + "'";
-
-        TypedQuery<String> query = this.getEntityManager().createQuery(queryString, String.class);
-        List<String> l = query.getResultList();
-        if (l.size() > 0) {
+        if (ud.mailExist(targetMail)) {
             return false;
         }
+        
         String from = "oops@pi-r-l.ovh";
         final String username = "oops@pi-r-l.ovh";
         final String password = "oops_password";
@@ -76,12 +66,7 @@ public class MailManagerBean {
     }
 
     public boolean sendAskOpinion(String user, String targetMail, String url) {
-        String queryString = "SELECT u.mail "
-                + "FROM Utilisateur u "
-                + "WHERE u.mail = '" + targetMail + "'";
-        TypedQuery<String> query = this.getEntityManager().createQuery(queryString, String.class);
-        List<String> l = query.getResultList();
-        if (l.size() > 0) {
+        if (ud.mailExist(targetMail)) {
             System.out.println("SessionBean : mail ok ");
             String from = "oops@pi-r-l.ovh";
             final String username = "oops@pi-r-l.ovh";

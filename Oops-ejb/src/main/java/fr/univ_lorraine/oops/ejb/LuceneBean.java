@@ -1,5 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
+import dal.PrestataireDAL;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.IOException;
 import java.util.HashMap;
@@ -12,6 +13,7 @@ import javax.annotation.PreDestroy;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import org.apache.lucene.analysis.Analyzer;
@@ -36,13 +38,15 @@ import org.apache.lucene.store.RAMDirectory;
 @Startup
 @LocalBean
 public class LuceneBean {
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;    
+    @Inject
+    PrestataireDAL pd;
+    
     private final Set stopWordsSet = FrenchAnalyzer.getDefaultStopSet();
     private Analyzer analyzer;
     private IndexWriter iwriter;
     private IndexWriterConfig config;
-    private Directory directory;
+    private Directory directory;    
+    
 
     public LuceneBean() throws IOException {
         this.analyzer = new FrenchAnalyzer();
@@ -55,7 +59,7 @@ public class LuceneBean {
     public void init() {
        try {
             //Chargement des prestataires  
-            List<Prestataire> liste = em.createQuery("SELECT p FROM Prestataire p").getResultList();
+            List<Prestataire> liste = pd.getAll();
             for (Prestataire p : liste) {
                 iwriter.addDocument(prestataireToDocument(p));
             }
@@ -136,10 +140,6 @@ public class LuceneBean {
         d.add(new Field("categorie", p.getLuceneCategorieDescription(), Field.Store.YES, Field.Index.ANALYZED));
         d.add(new Field("description",p.getDescription(),Field.Store.YES, Field.Index.ANALYZED));
         return d;
-    }
-    
-    @PreDestroy
-    public void close(){
-        em.close();
     }    
+
 }

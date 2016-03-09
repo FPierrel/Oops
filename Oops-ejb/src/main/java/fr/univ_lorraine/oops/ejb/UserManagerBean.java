@@ -1,5 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
+import dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import javax.ejb.Stateless;
@@ -12,26 +13,30 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class UserManagerBean {
 
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    @Inject
+    LuceneBean luceneBean;
 
     @Inject
-    private LuceneBean luceneBean;
+    UtilisateurDAL ud;
 
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
+    /*  @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
+     private EntityManager em;
+
+
+
+     public EntityManager getEntityManager() {
+     return this.em;
+     }
     
-    public LuceneBean getLuceneBean(){
-        return this.luceneBean;
-    }
-
+     public LuceneBean getLuceneBean(){
+     return this.luceneBean;
+     }*/
     public Utilisateur registerUser(Utilisateur u) {
-        Utilisateur user = this.getEntityManager().find(Utilisateur.class, u.getLogin());
+        Utilisateur user = ud.get(u.getLogin());
         if (user == null) {
-            this.getEntityManager().persist(u);
+            ud.add(user);
             if (u instanceof Prestataire) {
-                getLuceneBean().indexPrestataire(((Prestataire) u));
+                luceneBean.indexPrestataire(((Prestataire) u));
             }
             return u;
         }
@@ -39,10 +44,12 @@ public class UserManagerBean {
     }
 
     public Utilisateur searchByLogin(String login) {
-        return this.getEntityManager().find(Utilisateur.class, login);
+        return ud.get(login);
     }
 
     public void updateUser(Utilisateur user) {
-        this.getEntityManager().merge(user);
+        ud.update(user);
     }
+
 }
+     

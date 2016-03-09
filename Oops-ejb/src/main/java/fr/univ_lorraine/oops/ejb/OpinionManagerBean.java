@@ -1,5 +1,8 @@
 package fr.univ_lorraine.oops.ejb;
 
+import dal.AvisDAL;
+import dal.CommentaireDAL;
+import dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Commentaire;
 import fr.univ_lorraine.oops.library.model.Prestataire;
@@ -9,6 +12,7 @@ import java.util.Date;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
@@ -16,15 +20,17 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class OpinionManagerBean {
 
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
-
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
-
+    @Inject
+    UtilisateurDAL ud;
+    
+    @Inject
+    AvisDAL ad;
+    
+    @Inject
+    CommentaireDAL cd;
+    
     public void saveOpinion(int nC, int nP, int nQ, int nD, String contenu, Date d, Prestataire p, String loginPoseurAvis) {
-        Utilisateur user = this.getEntityManager().find(Utilisateur.class, loginPoseurAvis);
+        Utilisateur user = ud.get(loginPoseurAvis);
         Avis a = new Avis();
         a.setNoteCom(nC);
         a.setNotePrix(nP);
@@ -35,37 +41,36 @@ public class OpinionManagerBean {
         a.setOwner(user);
         a.setLoginPrestaire(p.getLogin());
         p.addAvis(a);
-        this.getEntityManager().merge(p);
+
+        ud.update(p);;
     }
 
     public void saveComment(Date d, String login, Avis avis, String message) {
-        Avis a = this.getEntityManager().find(Avis.class, avis.getId());
+        Avis a = ad.get(avis.getId());
         Commentaire c = new Commentaire();
         c.setComDate(d);
         c.setContenu(message);
         c.setProfil(login);
         a.addCommentaire(c);
-        this.getEntityManager().merge(a);
+        ad.update(a);
     }
 
     public void removeOpinion(Avis avis) {
-        Prestataire p = (Prestataire) this.getEntityManager().find(Utilisateur.class, avis.getLoginPrestaire());
+        Prestataire p = (Prestataire) ud.get(avis.getLoginPrestaire());
         p.removeAvis(avis);
-        this.getEntityManager().merge(p);
-        this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
+        ud.update(p);
+        ad.delete(avis);
         p.recalculateMarks();
     }
 
     public void removeComment(Commentaire c, Avis avis) {
-        Avis a = (Avis) this.getEntityManager().find(Avis.class, avis.getId());
-        a.removeCom(c);
-        this.getEntityManager().merge(a);
-        this.getEntityManager().remove(this.getEntityManager().find(Commentaire.class, c.getId()));
+        avis.removeCom(c);
+        ad.update(avis);
+        cd.delete(c);
     }
 
     public List<Avis> getLastOpinions() {
-        String query = "SELECT a FROM Avis a ORDER BY a.id desc";
-        return em.createQuery(query).setMaxResults(4).getResultList();
+        return ad.getLastAvis(4);
     }
 
 }

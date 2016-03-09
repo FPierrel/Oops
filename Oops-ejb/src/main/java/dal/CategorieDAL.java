@@ -52,4 +52,11 @@ public class CategorieDAL {
         query.setParameter("name", "Toutes cat\u00e9gories");
         return (Categorie) query.getSingleResult();
     }
+
+    public List<Categorie> getCategoriesOfPrestataire(String login) {
+        String queryString = "SELECT c "
+                + "FROM Prestataire p, Categorie c "
+                + "WHERE  p.login='" + login + "' AND c MEMBER OF p.categories";
+        return em.createQuery(queryString, Categorie.class).getResultList();
+    }
 }

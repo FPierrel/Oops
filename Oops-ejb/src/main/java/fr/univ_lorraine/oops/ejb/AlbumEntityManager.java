@@ -1,5 +1,9 @@
 package fr.univ_lorraine.oops.ejb;
  
+import dal.AlbumDAL;
+import dal.PhotoDAL;
+import dal.PrestataireDAL;
+import dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Photo;
@@ -16,67 +20,62 @@ import javax.persistence.PersistenceContext;
 @LocalBean
 public class AlbumEntityManager {
 
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    @Inject
+    PrestataireDAL presd;
       
     @Inject
-    private UserManagerBean userEM;
+    AlbumDAL ad;
     
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
+    @Inject
+    PhotoDAL pd;
     
     public Album addAlbum(Album album,String login){       
-        Prestataire user = (Prestataire)userEM.searchByLogin(login);
-        user.addAlbum(album);
-        this.getEntityManager().merge(user);
+        Prestataire pres = presd.get(login);
+        pres.addAlbum(album);
+        presd.update(pres);
         return album;
     }
     
      public Photo addPhoto(Photo photo,Long idAlbum){ 
-         Album album = this.getEntityManager().find(Album.class, idAlbum);
+         Album album = ad.get(idAlbum);
          album.addPhoto(photo);
-         this.getEntityManager().merge(album); 
+         ad.update(album);
          return photo;
      }
      
      public List<Album> getAllAlbumsUser(String login){
-         return ((Prestataire)userEM.searchByLogin(login)).getAlbums();
+         return presd.get(login).getAlbums();
      }
      
      public  List<Photo> getAllPhotoAlbum(Long idAlbum){
-         return this.getEntityManager().createNamedQuery("findPhotoByPKalbum").setParameter("idAlbum", idAlbum).getResultList();
+         return ad.photosOfAlbum(idAlbum);
+         
      }
      
      public Album getAlbum(Long id){
-          return this.getEntityManager().find(Album.class, id);
+          return ad.get(id);
      }
      
      public void deleteAlbum(Long idAlbum){
-  
-          Album album =this.getEntityManager().find(Album.class, idAlbum);
-        
-         this.getEntityManager().remove(album);
-         
+         Album a = ad.get(idAlbum);
+         ad.delete(a);
      }
 
     public void deleteAlbum(Album album, String login) {
-        Prestataire user = (Prestataire)userEM.searchByLogin(login);
-        user.deleteAlbum(album);
-        this.getEntityManager().merge(user);
-        this.getEntityManager().remove(this.getEntityManager().find(Album.class, album.getId()));
+        Prestataire pres = presd.get(login);        
+        pres.deleteAlbum(album);
+        presd.update(pres);
+        ad.delete(album);
     }
 
     public Album getDefault(String login) {
-        Prestataire user = (Prestataire)userEM.searchByLogin(login);
-        
-        return user.getAlbums().size() == 0 ? new Album() : user.getAlbums().get(0);
+        Prestataire pres = presd.get(login);        
+        return pres.getAlbums().size() == 0 ? new Album() : pres.getAlbums().get(0);
     }
 
     public Album getAlbum(long idAlbum, String login) {
-        Prestataire user = (Prestataire)userEM.searchByLogin(login);
-        
-        for(Album b : user.getAlbums()){
+        Prestataire pres = presd.get(login);        
+        for(Album b : pres.getAlbums()){
             if(b.getId() == idAlbum){
                 return b;
             }
@@ -86,11 +85,10 @@ public class AlbumEntityManager {
     }
 
     public void deletePhoto(Album album, long id) {
-        Photo p = this.getEntityManager().find(Photo.class, id);
-        Album al = this.getEntityManager().find(Album.class, album.getId());
-        al.deletePhoto(p);
-        this.getEntityManager().merge(al);
-        this.getEntityManager().remove(p);
+        Photo p = pd.get(id);
+        album.deletePhoto(p);
+        ad.update(album);
+        pd.delete(p);
     }
 }
 

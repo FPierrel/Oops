@@ -1,6 +1,7 @@
 package dal;
 
 import fr.univ_lorraine.oops.library.model.Album;
+import fr.univ_lorraine.oops.library.model.Photo;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -35,4 +36,8 @@ public class AlbumDAL {
     public void delete(Album a){
         em.remove(a);
     }
+    
+    public List<Photo> photosOfAlbum(Long id){
+        return em.createNamedQuery("findPhotoByPKalbum").setParameter("idAlbum", id).getResultList();
+}
 }

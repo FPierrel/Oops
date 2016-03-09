@@ -1,5 +1,6 @@
 package dal;
 
+import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Photo;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -35,4 +36,5 @@ public class PhotoDAL {
     public void delete(Photo p){
         em.remove(p);
     }
+    
 }

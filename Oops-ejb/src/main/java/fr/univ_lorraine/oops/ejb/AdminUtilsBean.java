@@ -1,5 +1,9 @@
 package fr.univ_lorraine.oops.ejb;
 
+import dal.AvisDAL;
+import dal.ReportDAL;
+import dal.ReportFichePrestataireDAL;
+import dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Report;
@@ -8,6 +12,7 @@ import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
+import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -16,57 +21,55 @@ import javax.persistence.TypedQuery;
 @LocalBean
 public class AdminUtilsBean {
 
-    @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-    private EntityManager em;
+    @Inject
+    UtilisateurDAL ud;
 
-    public EntityManager getEntityManager() {
-        return this.em;
-    }
+    @Inject
+    AvisDAL ad;
 
-    public List<Avis> getAvisNotVerified() {
-        String queryString = "SELECT a "
-                + "FROM Avis a "
-                + "WHERE  a.moderated='" + false + "'";
-        TypedQuery<Avis> query = this.getEntityManager().createQuery(queryString, Avis.class);
-        return query.getResultList();
-    }
+    @Inject
+    ReportDAL rd;
 
-    public void updateAvis(Avis avis) {
-        this.getEntityManager().merge(avis);
-    }
+    @Inject
+    ReportFichePrestataireDAL rfd;
 
     public void removeAvis(Avis avis) {
-        Prestataire p = (Prestataire) this.getEntityManager().find(Utilisateur.class, avis.getLoginPrestaire());
+        Prestataire p = (Prestataire) ud.get(avis.getLoginPrestaire());
         p.removeAvis(avis);
-        this.getEntityManager().merge(p);
-        this.getEntityManager().remove(this.getEntityManager().find(Avis.class, avis.getId()));
+
+        ud.update(p);
+        ad.delete(avis);
         p.recalculateMarks();
     }
 
     public void dismissReport(Report report) {
         report.setModerated(true);
-        this.getEntityManager().merge(report);
+        rd.update(report);
     }
 
     public void acceptReport(Report report) {
         report.setModerated(true);
         report.setJustified(true);
-        Utilisateur u = (Utilisateur) this.getEntityManager().find(Utilisateur.class, report.getUserReported());
+        Utilisateur u = ud.get(report.getUserReported());
         int nbWarnings = u.getAdminWarnings();
         nbWarnings++;
         u.setAdminWarnings(nbWarnings);
-        if(nbWarnings>= 3){
+        if (nbWarnings >= 3) {
             u.setBanished(true);
         }
-        this.getEntityManager().merge(report);
-        this.getEntityManager().merge(u);
+        rd.update(report);
+        ud.update(u);
     }
 
     public List<ReportFichePrestataire> getUnverifiedReport() {
-        String queryString = "SELECT r "
-                + "FROM ReportFichePrestataire r "
-                + "WHERE  r.moderated='" + false + "'";
-        TypedQuery<ReportFichePrestataire> query = this.getEntityManager().createQuery(queryString, ReportFichePrestataire.class);
-        return query.getResultList();
+        return rfd.getAllUnverified();
+    }
+    
+    public List<Avis> getAvisNotVerified(){
+        return ad.getAllUnverified();
+}
+    
+    public Avis updateAvis(Avis a){
+        return ad.update(a);
     }
 }

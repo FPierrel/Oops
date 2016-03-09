@@ -38,4 +38,20 @@ public class AvisDAL {
     public Avis update(Avis a) {
         return em.merge(a);
     }
+
+    public void delete(Avis a) {
+        em.remove(a);
+    }
+
+    public List<Avis> getAvisPrestatire(String loginPrestataire) {
+        String queryString = "SELECT p.cAvis "
+                + "FROM Prestataire p "
+                + "WHERE  p.login='" + loginPrestataire + "'";
+        return em.createQuery(queryString, Avis.class).getResultList();
+    }
+
+    public List<Avis> getLastAvis(int number) {
+        String query = "SELECT a FROM Avis a ORDER BY a.id desc";
+        return em.createQuery(query).setMaxResults(number).getResultList();
+    }
 }
