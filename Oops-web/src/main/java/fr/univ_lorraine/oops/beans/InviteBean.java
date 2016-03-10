@@ -67,8 +67,6 @@ public class InviteBean implements Serializable {
             context.addMessage(this.emailComponent.getClientId(), fM);
             return "invite.xhtml";
         }
-        System.out.println("mail = " + mail);
-        System.out.println("message = " + message);
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         if (mMB.sendInviteMail(request.getRemoteUser(), mail, message)) {
             feedback = "Message envoyé";

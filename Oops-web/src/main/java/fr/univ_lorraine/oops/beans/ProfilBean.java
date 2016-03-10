@@ -1,12 +1,12 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.PasswordManagerBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.security.MessageDigest;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
@@ -25,6 +25,9 @@ public class ProfilBean implements Serializable {
 
     @Inject
     private SearchResultsBean searchBean;
+    
+    @Inject
+    PasswordManagerBean pMB;
 
     private Utilisateur user;
     private String oldPassword, newPassword, newPasswordConfirm, newMail, newMailConfirm, town;
@@ -44,7 +47,7 @@ public class ProfilBean implements Serializable {
     public String update() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message;
-        if (!this.oldPassword.isEmpty() && !sha256(this.oldPassword).equals(this.user.getMotDePasse())) {
+        if (!this.oldPassword.isEmpty() && !pMB.sha256(this.oldPassword).equals(this.user.getMotDePasse())) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe incorrect !", null);
         } else if (!this.oldPassword.isEmpty() && this.newPassword.length() < 6) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit (inférieur à 6), veuillez recommencer !", null);
@@ -62,7 +65,7 @@ public class ProfilBean implements Serializable {
                 this.user.setMail(this.newMail);
             }
             if (!this.newPassword.isEmpty()) {
-                this.user.setMotDePasse(sha256(this.newPassword));
+                this.user.setMotDePasse(pMB.sha256(this.newPassword));
             }
             Collection<Adresse> address = this.user.getAdresses();
             Adresse a = (address.toArray(new Adresse[0]))[0];
@@ -74,25 +77,7 @@ public class ProfilBean implements Serializable {
         return "profil.xhtml";
     }
 
-    public static String sha256(String base) {
-        try {
-            MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            byte[] hash = digest.digest(base.getBytes("UTF-8"));
-            StringBuffer hexString = new StringBuffer();
-
-            for (int i = 0; i < hash.length; i++) {
-                String hex = Integer.toHexString(0xff & hash[i]);
-                if (hex.length() == 1) {
-                    hexString.append('0');
-                }
-                hexString.append(hex);
-            }
-
-            return hexString.toString();
-        } catch (Exception ex) {
-            throw new RuntimeException(ex);
-        }
-    }
+  
 
     public Utilisateur getUser() {
         return user;
@@ -154,12 +139,12 @@ public class ProfilBean implements Serializable {
         codes = searchBean.searchCodes(a.getVille());
     }
 
-    public String getTown() {
+   public String getTown() {
         return town;
     }
-
+ 
     public void setTown(String town) {
         this.town = town;
     }
-
+ 
 }

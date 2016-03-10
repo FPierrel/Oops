@@ -41,6 +41,13 @@ public class UtilisateurDAL {
                 + "WHERE  u.banished='" + true + "'";
         return em.createQuery(queryString, Utilisateur.class).getResultList();
     }
+    
+    public Utilisateur getUserByEmail(String mail){
+        String queryString = "SELECT u "
+                + "FROM Utilisateur u "
+                + "WHERE  u.mail='" + mail+ "'";
+        return em.createQuery(queryString, Utilisateur.class).getSingleResult();
+    }
 
     public boolean mailExist(String mail) {
         String queryString = "SELECT u.mail "
