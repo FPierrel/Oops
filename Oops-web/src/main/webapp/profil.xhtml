@@ -18,6 +18,7 @@
         <link rel="stylesheet" href="css/animate.css"/>
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/typeahead.css"/>
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -144,17 +145,9 @@
                                     <div class="form-group">
                                         <div class="input-group">
                                             <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <p:autoComplete id="town" placeholder="Ville" forceSelection="true" value="#{address.ville}" completeMethod="#{searchBean.searchTownWithoutCode}" maxResults="5">
-                                                <p:ajax event="itemSelect" update="code" listener="#{profilBean.codesListener(address)}"/>
-                                            </p:autoComplete>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <p:selectOneMenu id="code" value="#{address.codePostal}">
-                                                <f:selectItems value="#{profilBean.codes}" />
-                                            </p:selectOneMenu>
+                                            <h:inputText id="town" value="#{profilBean.town}" autocomplete="off"
+                                                         pt:placeholder="Ville" class="typeahead form-control" 
+                                                         required="true" requiredMessage="Veuillez renseigner votre ville !"/>
                                         </div>
                                     </div>
                                 </h:column>
@@ -177,8 +170,40 @@
 
         <ui:include src="footer.xhtml"/>
 
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        <script type="text/javascript" src="js/jquery.js"/>
+        <script type="text/javascript" src="js/bootstrap.min.js"/>
+        <script type="text/javascript" src="js/main.js"/>
+        <script type="text/javascript" src="js/typeahead.jquery.js"/>
+        <script type="text/javascript" src="js/bloodhound.js"/>
+        <script type="text/javascript">
+            var dataSource = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: 'villes.json'/*,
+                 remote: {
+                 url: 'villes.json'
+                 }*/
+            });
+
+            dataSource.initialize();
+
+            $('.typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1,
+                limit: 5
+            }, {
+                displayKey: 'value',
+                source: dataSource.ttAdapter(),
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        'Pas de résultat !',
+                        '</div>'
+                    ].join('\n')
+                }
+            });
+        </script>
     </h:body>
 </html>
 
