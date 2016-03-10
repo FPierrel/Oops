@@ -3,7 +3,8 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
         <title>Oops | Page d'Accueil</title>
         <meta charset="utf-8"/>
@@ -34,6 +35,118 @@
                 <div class="row">
                     <div class="center">
                         <h2>Les prestataires les mieux notés</h2>
+                        <div class="col-md-6">
+                            <blockquote>
+                                <div class="prestataire">
+                                    <h:form id="prestaForm0">
+                                        <h:link outcome="fiche.xhtml">
+                                            <f:param name="page" value="#{indexBean.bestGrades[0].login}"/>
+                                            <h:outputText value="#{indexBean.bestGrades[0].nomEntreprise}"/>
+                                        </h:link>
+                                    </h:form>
+                                    <span id="categories">
+                                        <ui:repeat value="#{indexBean.bestGrades[0].categories}" var="categorie">
+                                            <span class="label label-primary">#{categorie.nom}</span>
+                                        </ui:repeat>
+                                    </span>
+                                    <h:form>
+                                        <br/>
+                                        <div class='starrr' id="star_moyenne0">
+                                            <script src="js/starrr.js"></script>
+                                            <script>
+                                            $('#star_moyenne0').starrr({
+                                                readOnly: true,
+                                                rating: #{indexBean.bestGrades[0].average}
+                                            });
+                                            </script>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </blockquote>
+                            <blockquote>
+                                <div class="prestataire">
+                                    <h:form id="prestaForm1">
+                                        <h:link outcome="fiche.xhtml">
+                                            <f:param name="page" value="#{indexBean.bestGrades[1].login}"/>
+                                            <h:outputText value="#{indexBean.bestGrades[1].nomEntreprise}"/>
+                                        </h:link>
+                                    </h:form>
+                                    <span id="categories">
+                                        <ui:repeat value="#{indexBean.bestGrades[1].categories}" var="categorie">
+                                            <span class="label label-primary">#{categorie.nom}</span>
+                                        </ui:repeat>
+                                    </span>
+                                     <h:form>
+                                        <br/>
+                                        <div class='starrr' id="star_moyenne1">
+                                            <script src="js/starrr.js"></script>
+                                            <script>
+                                            $('#star_moyenne1').starrr({
+                                                readOnly: true,
+                                                rating: #{indexBean.bestGrades[1].average}
+                                            });
+                                            </script>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </blockquote>
+                        </div>
+                        <div class="col-md-6">
+                            <blockquote>
+                                <div class="prestataire">
+                                    <h:form id="prestaForm2">
+                                        <h:link outcome="fiche.xhtml">
+                                            <f:param name="page" value="#{indexBean.bestGrades[2].login}"/>
+                                            <h:outputText value="#{indexBean.bestGrades[2].nomEntreprise}"/>
+                                        </h:link>
+                                    </h:form>
+                                    <span id="categories">
+                                        <ui:repeat value="#{indexBean.bestGrades[2].categories}" var="categorie">
+                                            <span class="label label-primary">#{categorie.nom}</span>
+                                        </ui:repeat>
+                                    </span>
+                                     <h:form>
+                                        <br/>
+                                        <div class='starrr' id="star_moyenne2">
+                                            <script src="js/starrr.js"></script>
+                                            <script>
+                                            $('#star_moyenne2').starrr({
+                                                readOnly: true,
+                                                rating: #{indexBean.bestGrades[2].average}
+                                            });
+                                            </script>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </blockquote>
+                            <blockquote>
+                                <div class="prestataire">
+                                    <h:form id="prestaForm3">
+                                        <h:link outcome="fiche.xhtml">
+                                            <f:param name="page" value="#{indexBean.bestGrades[3].login}"/>
+                                            <h:outputText value="#{indexBean.bestGrades[3].nomEntreprise}"/>
+                                        </h:link>
+                                    </h:form>
+                                    <span id="categories">
+                                        <ui:repeat value="#{indexBean.bestGrades[3].categories}" var="categorie">
+                                            <span class="label label-primary">#{categorie.nom}</span>
+                                        </ui:repeat>
+                                    </span>
+                                     <h:form>
+                                        <br/>
+                                        <div class='starrr' id="star_moyenne3">
+                                            <script src="js/starrr.js"></script>
+                                            <script>
+                                            $('#star_moyenne3').starrr({
+                                                readOnly: true,
+                                                rating: #{indexBean.bestGrades[3].average}
+                                            });
+                                            </script>
+                                        </div>
+                                    </h:form>
+                                </div>
+                            </blockquote>
+                        </div>
                     </div>
                 </div>
             </div>
