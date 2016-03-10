@@ -58,12 +58,11 @@
                                             <span class="label label-primary">#{categorie.nom}</span>
                                         </ui:repeat>
                                     </span>
-                        <br/>|
+                        <br/>
 
                         <ui:repeat value="#{pres.adresses}" var="address">
                             <h:column>
-                                <h:outputText value="#{address.ville}" style="font-weight: bold"/>
-                                <h:outputText value=" (#{address.codePostal}) |"/>                  
+                                <h:outputText value="#{address.ville}" style="font-weight: bold"/>           
                             </h:column>
                         </ui:repeat>
                         <br/>

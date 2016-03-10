@@ -324,7 +324,8 @@ public class SearchResultsBean {
 
         for (Prestataire p : pres) {
             for (Adresse a : p.getAdresses()) {
-                String[] coords = geo.callGetCoordinates(a.getNumero() + " " + a.getRue() + " " + a.getVille());
+                String ville = a.getVille().substring(0, a.getVille().indexOf("(")-1);
+                String[] coords = geo.callGetCoordinates(a.getNumero() + " " + a.getRue() + " " + ville);
                 a.setLatitude(coords[0]);
                 a.setLongitude(coords[1]);
             }
