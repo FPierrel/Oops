@@ -1,6 +1,7 @@
 package dal;
 
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
+import fr.univ_lorraine.oops.library.model.ReportPhoto;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
@@ -28,11 +29,18 @@ public class ReportFichePrestataireDAL {
         return em.createQuery(query).getResultList();
     }
 
-    public List<ReportFichePrestataire> getAllUnverified() {
+    public List<ReportFichePrestataire> getAllUnverifiedFiche() {
         String query = "SELECT r "
                 + "FROM ReportFichePrestataire r "
                 + "WHERE  r.moderated='" + false + "'";
         return em.createQuery(query, ReportFichePrestataire.class).getResultList();
+    }
+
+    public List<ReportPhoto> getAllUnverifiedPhoto() {
+        String query = "SELECT r "
+                + "FROM ReportPhoto r "
+                + "WHERE  r.moderated='" + false + "'";
+        return em.createQuery(query, ReportPhoto.class).getResultList();
     }
 
     public ReportFichePrestataire update(ReportFichePrestataire r) {

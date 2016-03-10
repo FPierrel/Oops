@@ -8,14 +8,12 @@ import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
+import fr.univ_lorraine.oops.library.model.ReportPhoto;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.List;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
@@ -61,8 +59,12 @@ public class AdminUtilsBean {
         ud.update(u);
     }
 
-    public List<ReportFichePrestataire> getUnverifiedReport() {
-        return rfd.getAllUnverified();
+    public List<ReportFichePrestataire> getUnverifiedReportFiche() {
+        return rfd.getAllUnverifiedFiche();
+    }
+    
+    public List<ReportPhoto> getUnverifiedReportPhoto() {
+        return rfd.getAllUnverifiedPhoto();
     }
     
     public List<Avis> getAvisNotVerified(){

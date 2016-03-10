@@ -17,8 +17,8 @@
                 <div id="featured" class="container">
                     Bienvenue sur la page d'administration !
                     <h:form id="form">
-                        <p:tabView id="tabs">
-                            <p:tab id="avis" title="Avis non vérifié(s)">
+                        <b:tabView id="tabs">
+                            <b:tab id="avis" title="Avis non vérifié(s)">
 
                                 <h:dataTable id="datatable" value="#{adminBean.listeAvisNonVerifies}" var="avis">
                                     <h:column>
@@ -38,9 +38,9 @@
                                     </h:column>
                                 </h:dataTable>
 
-                            </p:tab>
-                            <p:tab id="signalements" title="Signalement(s) de profil non vérifié(s)">
-                                <h:dataTable cellpadding="10"   id="datatableReport2" value="#{adminBean.listUnverifiedReport}" var="report">
+                            </b:tab>
+                            <b:tab id="signalements" title="Signalement(s) de profil non vérifié(s)">
+                                <h:dataTable cellpadding="10"   id="datatableReport2" value="#{adminBean.listUnverifiedReportFiche}" var="report">
                                     <h:column>
                                         <f:facet name="header">
                                             <h:outputText value="Signalant" />
@@ -51,7 +51,7 @@
                                         <f:facet name="header">
                                             <h:outputText value="Date" />
                                         </f:facet>
-                                        <h:outputText id="reportingDate" value="#{report.reportingDate}"/>
+                                        <h:outputText id="reportingDate" value="#{report.dateFormat}"/>
                                     </h:column>
                                     <h:column>
                                         <f:facet name="header">
@@ -84,8 +84,54 @@
 
                                 </h:dataTable>
 
-                            </p:tab>
-                            <p:tab id="bannis" title="Utilisateur(s) banni(s)">
+                            </b:tab>
+                            <b:tab id="signalementsPhotos" title="Signalement(s) de photos non vérifiée(s)">
+                                <h:dataTable cellpadding="10"   id="datatableReport4" value="#{adminBean.listUnverifiedReportPhoto}" var="report">
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Signalant" />
+                                        </f:facet>
+                                        <h:outputText id="reportingLogin" value="#{report.userReporting}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Date" />
+                                        </f:facet>
+                                        <h:outputText id="reportingDate" value="#{report.dateFormat}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Signalé" />
+                                        </f:facet>
+                                        <h:outputText id="reportedLogin" value="#{report.userReported}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Motif" />
+                                        </f:facet>
+                                        <h:outputText id="reason" value="#{report.reason}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Complément" />
+                                        </f:facet>
+                                        <h:outputText id="complement" value="#{report.complement}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <a href="#{report.photo.photoBase64}"><img src="#{report.photo.photoBase64}" style="max-width: 300px"/></a>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="warn" value="Justifié" action="#{adminBean.acceptReport(report)}"/>
+                                    </h:column>
+                                    <h:column>
+                                        <h:commandButton id="dismiss" value="Injustifié" action="#{adminBean.dismissReport(report)}"/>
+                                    </h:column>
+
+
+                                </h:dataTable>
+
+                            </b:tab>
+                            <b:tab id="bannis" title="Utilisateur(s) banni(s)">
                                 <h:dataTable id="datatableReport3" value="#{adminBean.listBanishedUser}" var="user">
                                     <h:column>
                                         <f:facet name="header">
@@ -101,8 +147,8 @@
                                     </h:column>
                                 </h:dataTable>
 
-                            </p:tab>
-                        </p:tabView>
+                            </b:tab>
+                        </b:tabView>
                     </h:form>
                 </div>
             </div>

@@ -2,6 +2,7 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.ejb.ReportManagerBean;
+import fr.univ_lorraine.oops.library.model.Photo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +26,7 @@ public class ReportBean implements Serializable {
     private List<String> reasons = new ArrayList<>();
     private String reason;
     private String complement;
+    private Photo photo;
 
     public ReportBean() {
     }
@@ -33,6 +35,13 @@ public class ReportBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         report.reportFichePrestataire(request.getRemoteUser(), page, reason, complement);
+    }
+    
+    public void reportPhoto() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        System.out.println("photo = "+photo.getNomPhoto());
+        report.reportPhoto(request.getRemoteUser(), photo, reason, complement);
     }
 
     public String getComplement() {
@@ -66,7 +75,15 @@ public class ReportBean implements Serializable {
     public void setReason(String reasonChosen) {
         this.reason = reasonChosen;
     }
-    
+
+    public Photo getPhoto() {
+        return photo;
+    }
+
+    public void setPhoto(Photo photo) {
+        this.photo = photo;
+    }
+        
     public void banishPrestataire(){
         ban.banishUser(page);
     }

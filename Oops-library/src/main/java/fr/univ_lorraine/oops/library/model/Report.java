@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.library.model;
 
 import java.io.Serializable;
+import java.text.DateFormat;
 import java.util.Date;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -16,7 +17,7 @@ public class Report implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+
     private String userReporting;
     private String reason;
     private String complement;
@@ -25,9 +26,10 @@ public class Report implements Serializable {
     private boolean moderated;
     private boolean justified;
     private String userReported;
-    
+    private DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
+
     public Report() {
-       
+
     }
 
     public Long getId() {
@@ -77,7 +79,7 @@ public class Report implements Serializable {
     public void setJustified(boolean justified) {
         this.justified = justified;
     }
-    
+
     public String getComplement() {
         return complement;
     }
@@ -93,5 +95,13 @@ public class Report implements Serializable {
     public void setUserReported(String userReported) {
         this.userReported = userReported;
     }
-    
+
+    public String getDateFormat() {
+        return dateFormat.format(reportingDate);
+    }
+
+    public void setDateFormat(DateFormat dateFormat) {
+        this.dateFormat = dateFormat;
+    }
+
 }

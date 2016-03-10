@@ -5,6 +5,7 @@ import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
+import fr.univ_lorraine.oops.library.model.ReportPhoto;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -18,7 +19,8 @@ import javax.inject.Inject;
 public class AdminBean implements Serializable {
 
     private List<Avis> listeAvisNonVerifies;
-    private List<ReportFichePrestataire> listUnverifiedReport;
+    private List<ReportFichePrestataire> listUnverifiedReportFiche;
+    private List<ReportPhoto> listUnverifiedReportPhoto;
     private List<Utilisateur> listBanishedUser;
 
     @Inject
@@ -29,7 +31,8 @@ public class AdminBean implements Serializable {
 
     public AdminBean() {
         this.listeAvisNonVerifies = new ArrayList<>();
-        this.listUnverifiedReport = new ArrayList<>();
+        this.listUnverifiedReportFiche = new ArrayList<>();
+        this.listUnverifiedReportPhoto = new ArrayList<>();
         this.listBanishedUser = new ArrayList<>();
     }
 
@@ -61,13 +64,22 @@ public class AdminBean implements Serializable {
         this.admin.acceptReport(report);
     }
 
-    public List<ReportFichePrestataire> getListUnverifiedReport() {
-        this.listUnverifiedReport = this.admin.getUnverifiedReport();
-        return listUnverifiedReport;
+    public List<ReportFichePrestataire> getListUnverifiedReportFiche() {
+        this.listUnverifiedReportFiche = this.admin.getUnverifiedReportFiche();
+        return listUnverifiedReportFiche;
     }
 
-    public void setListUnverifiedReport(List<ReportFichePrestataire> listUnverifiedReport) {
-        this.listUnverifiedReport = listUnverifiedReport;
+    public void setListUnverifiedReportFiche(List<ReportFichePrestataire> listUnverifiedReportFiche) {
+        this.listUnverifiedReportFiche = listUnverifiedReportFiche;
+    }
+    
+    public List<ReportPhoto> getListUnverifiedReportPhoto() {
+        this.listUnverifiedReportPhoto = this.admin.getUnverifiedReportPhoto();
+        return listUnverifiedReportPhoto;
+    }
+
+    public void setListUnverifiedReportPhoto(List<ReportPhoto> listUnverifiedReportPhoto) {
+        this.listUnverifiedReportPhoto = listUnverifiedReportPhoto;
     }
 
     public String seeFiche(String login) {

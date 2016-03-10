@@ -1,19 +1,16 @@
 package fr.univ_lorraine.oops.ejb;
 
 import dal.PrestataireDAL;
+import fr.univ_lorraine.oops.library.model.Photo;
 import fr.univ_lorraine.oops.library.model.Prestataire;
-import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
-import fr.univ_lorraine.oops.library.model.Utilisateur;
+import fr.univ_lorraine.oops.library.model.ReportPhoto;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
@@ -30,6 +27,20 @@ public class ReportManagerBean {
         report.setUserReporting(loginReporting);
         report.setReportingDate(new Date());
         report.setComplement(complement);
+        pres.addReport(report);
+        pd.update(pres);
+    }
+    
+    public void reportPhoto(String loginReporting, Photo photo, String reason, String complement) {
+        String loginFicheReported = "noupi";
+        Prestataire pres = pd.get(loginFicheReported);
+        ReportPhoto report = new ReportPhoto();
+        report.setReason(reason);
+        report.setUserReported(loginFicheReported);
+        report.setUserReporting(loginReporting);
+        report.setReportingDate(new Date());
+        report.setComplement(complement);
+        report.setPhoto(photo);
         pres.addReport(report);
         pd.update(pres);
     }

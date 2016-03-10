@@ -40,7 +40,7 @@ public class AvisDAL {
     }
 
     public void delete(Avis a) {
-        em.remove(a);
+        em.remove(em.find(Avis.class, a.getId()));
     }
 
     public List<Avis> getAvisPrestatire(String loginPrestataire) {
