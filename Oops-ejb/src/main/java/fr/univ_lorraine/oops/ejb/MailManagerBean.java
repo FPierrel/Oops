@@ -49,11 +49,13 @@ public class MailManagerBean {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(targetMail));
             message.setSubject("Rejoignez OOPS");
-            String msg = "Vous avez reçu une invitation de " + user + "\n"
+            String msg = "Bonjour,\nVous avez reçu une invitation de " + user + "\n"
                     + "Rejoignez l'annuaire de prestataires ultime : Opinion On Provider of Services !\n"
                     + "http://pi-r-l.ovh:8080/Oops-web/ \n"
                     + "Message de " + user + " à votre intention : \n"
-                    + userMessage;
+                    + userMessage
+                    + "\n\nCordialement\n"
+                    + "L'équipe OOPS";
 
             message.setText(msg);
             Transport.send(message);
@@ -89,7 +91,7 @@ public class MailManagerBean {
                 message.setRecipients(Message.RecipientType.TO,
                         InternetAddress.parse(targetMail));
                 message.setSubject("Laissez votre avis sur un prestataire OOPS");
-                String msg = "L'utilisateur " + user + " vous invite à laisser un message sur ce prestataire !\n"
+                String msg = "Bonjour,\nL'utilisateur " + user + " vous invite à laisser un message sur ce prestataire !\n"
                         + url + "\n\nCordialement\n" + "L'équipe OOPS";
                 message.setText(msg);
                 Transport.send(message);
@@ -126,9 +128,12 @@ public class MailManagerBean {
             message.setRecipients(Message.RecipientType.TO,
                     InternetAddress.parse(targetMail));
             message.setSubject("Réinitialisation du mot de passe");
-            String msg = "Vous avez demandé la réinitialisation de votre mot de passe OOPS.\n"
+            String msg = "Bonjour,\n"
+                    + "Vous avez demandé la réinitialisation de votre mot de passe OOPS.\n"
                     + "Votre nouveau mot de passe est : " + userPassword+"\n"
-                    + "Connectez-vous à l'adresse suivante : http://pi-r-l.ovh:8080/Oops-web/login.xhtml et changez immédiatement votre mot de passe.";
+                    + "Connectez-vous à l'adresse suivante : http://pi-r-l.ovh:8080/Oops-web/login.xhtml et changez immédiatement votre mot de passe."
+                    + "\n\nCordialement\n"
+                    + "L'équipe OOPS";
             message.setText(msg);
             Transport.send(message);
 
