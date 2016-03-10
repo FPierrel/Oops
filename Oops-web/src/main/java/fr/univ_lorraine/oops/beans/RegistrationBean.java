@@ -7,8 +7,6 @@ import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -20,23 +18,22 @@ import javax.inject.Inject;
 @Named(value = "registrationBean")
 @SessionScoped
 public class RegistrationBean implements Serializable {
-    
+
     @Inject
     UserManagerBean userManager;
-    
+
     @Inject
     SearchResultsBean searchBean;
-    
-    private List<String> codes = new ArrayList<>();
-    private String login, password, confirmPassword, email, phone, companyName, 
-            lastname, firstname, user, number, street, code, complement, town, country;
-    private int turnover, employee;
-    private boolean prestataire, soumissionnaire;    
-    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, 
-            emailComponent, phoneComponent, companyNameComponent, lastnameComponent, 
-            firstnameComponent, numberComponent, streetComponent, complementComponent, 
-            codeComponent, townComponent, countryComponent, turnoverComponent, employeeComponent;
-    
+
+    private String login, password, confirmPassword, email, phone, companyName,
+            lastname, firstname, user, number, street, complement, town, 
+            country, turnover, employee;
+    private boolean prestataire, soumissionnaire;
+    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent,
+            emailComponent, phoneComponent, companyNameComponent, lastnameComponent,
+            firstnameComponent, numberComponent, streetComponent, complementComponent,
+            townComponent, countryComponent, turnoverComponent, employeeComponent;
+
     /**
      * Creates a new instance of RegistrationBean
      */
@@ -132,7 +129,7 @@ public class RegistrationBean implements Serializable {
 
     public void setUser(String user) {
         this.user = user;
-        if(user.equals("Soumissionnaire")) {
+        if (user.equals("Soumissionnaire")) {
             this.soumissionnaire = true;
             this.prestataire = false;
         } else {
@@ -221,14 +218,6 @@ public class RegistrationBean implements Serializable {
         this.street = street;
     }
 
-    public String getCode() {
-        return code;
-    }
-
-    public void setCode(String code) {
-        this.code = code;
-    }
-
     public String getComplement() {
         return complement;
     }
@@ -251,7 +240,7 @@ public class RegistrationBean implements Serializable {
 
     public void setCountry(String country) {
         this.country = country;
-    }   
+    }
 
     public UIComponent getNumberComponent() {
         return numberComponent;
@@ -277,14 +266,6 @@ public class RegistrationBean implements Serializable {
         this.complementComponent = complementComponent;
     }
 
-    public UIComponent getCodeComponent() {
-        return codeComponent;
-    }
-
-    public void setCodeComponent(UIComponent codeComponent) {
-        this.codeComponent = codeComponent;
-    }
-
     public UIComponent getTownComponent() {
         return townComponent;
     }
@@ -301,19 +282,19 @@ public class RegistrationBean implements Serializable {
         this.countryComponent = countryComponent;
     }
 
-    public int getTurnover() {
+    public String getTurnover() {
         return turnover;
     }
 
-    public void setTurnover(int turnover) {
+    public void setTurnover(String turnover) {
         this.turnover = turnover;
     }
 
-    public int getEmployee() {
+    public String getEmployee() {
         return employee;
     }
 
-    public void setEmployee(int employee) {
+    public void setEmployee(String employee) {
         this.employee = employee;
     }
 
@@ -331,23 +312,28 @@ public class RegistrationBean implements Serializable {
 
     public void setEmployeeComponent(UIComponent employeeComponent) {
         this.employeeComponent = employeeComponent;
-    }    
-    
+    }
+
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
-        if(this.password.length() < 6) {
+        if (this.password.length() < 6) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe trop petit (inférieur à 6), veuillez recommencer !", null);
-            context.addMessage(this.passwordComponent.getClientId(), message); 
+            context.addMessage(this.passwordComponent.getClientId(), message);
             return "inscription.xhtml";
         }
-        if(!this.password.equals(this.confirmPassword)) {
+        if (!this.password.equals(this.confirmPassword)) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Mot de passe différent, veuillez recommencer !", null);
-            context.addMessage(this.confirmPasswordComponent.getClientId(), message); 
+            context.addMessage(this.confirmPasswordComponent.getClientId(), message);
             return "inscription.xhtml";
         }
-        if(! Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.email)) {
+        if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.email)) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
-            context.addMessage(this.emailComponent.getClientId(), message); 
+            context.addMessage(this.emailComponent.getClientId(), message);
+            return "inscription.xhtml";
+        }
+        if (!Pattern.matches("^[A-Z]+([_A-Z-]+)*[ ]*([_A-Z-]+)*[ ]\\(([0-9]{5})+(-[0-9]{5})*\\)$", this.town)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ville non valide, veuillez recommencer !", null);
+            context.addMessage(this.townComponent.getClientId(), message);
             return "inscription.xhtml";
         }
         Utilisateur user;
@@ -355,9 +341,8 @@ public class RegistrationBean implements Serializable {
         address.setNumero(this.number);
         address.setRue(this.street);
         address.setComplement(this.complement);
-        address.setCodePostal(this.code);
         address.setVille(this.town);
-        if(this.soumissionnaire) {
+        if (this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
             s.setLogin(this.login);
             s.setMotDePasse(ProfilBean.sha256(this.password));
@@ -369,6 +354,28 @@ public class RegistrationBean implements Serializable {
             user = this.userManager.registerUser(s);
         } else {
             Prestataire p = new Prestataire();
+            int nbEmployeeNumber = 0;
+            try {
+                nbEmployeeNumber = Integer.parseInt(this.employee);
+                if (nbEmployeeNumber < 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Nombre d'employé(s) incorrect !", null);
+                context.addMessage(this.employeeComponent.getClientId(), message);
+                return "inscription.xhtml";
+            }
+            int turnoverNumber = 0;
+            try {
+                turnoverNumber = Integer.parseInt(this.turnover);
+                if (turnoverNumber < 0) {
+                    throw new NumberFormatException();
+                }
+            } catch (NumberFormatException ex) {
+                FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Chiffre d'affaire incorrect !", null);
+                context.addMessage(this.turnoverComponent.getClientId(), message);
+                return "inscription.xhtml";
+            }
             p.setLogin(this.login);
             p.setMotDePasse(ProfilBean.sha256(this.password));
             p.setMail(this.email);
@@ -376,36 +383,20 @@ public class RegistrationBean implements Serializable {
             p.setPrenom(this.firstname);
             p.setNumeroTelephone(this.phone);
             p.setNomEntreprise(this.companyName);
-            p.setChiffreAffaire(this.turnover);
-            p.setNbEmployes(this.employee);
+            p.setChiffreAffaire(turnoverNumber);
+            p.setNbEmployes(nbEmployeeNumber);
             p.addAdresse(address);
             user = this.userManager.registerUser(p);
         }
-        if(user == null) {
+        if (user == null) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Login déjà utilisé, veuillez en choisir un nouveau !", null);
-            context.addMessage(this.loginComponent.getClientId(), message); 
+            context.addMessage(this.loginComponent.getClientId(), message);
             return "inscription.xhtml";
         } else {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Inscription réussie !");
-            context.addMessage(null, message); 
+            context.addMessage(null, message);
             return "index.xhtml";
         }
     }
-    
-    public List<String> searchCode(String town){
-        return this.searchBean.searchCodes(town);
-    }
 
-    public List<String> getCodes() {
-        return codes;
-    }
-
-    public void setCodes(List<String> codes) {
-        this.codes = codes;
-    }
-    
-    public void codesListener() {
-        codes = searchBean.searchCodes(this.town);
-    }
-    
 }

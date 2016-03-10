@@ -38,7 +38,7 @@ public class RegistrationBeanTest {
     public void setUp() {
         rb = new RegistrationBean();
         driver.get(host + "/inscription.xhtml");
-        driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+        driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         this.fillFields();
     }
 
@@ -69,8 +69,6 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:street")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:complement")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("form_signin:complement")).sendKeys(Keys.DELETE);
-        driver.findElement(By.id("form_signin:code")).sendKeys(Keys.CONTROL + "a");
-        driver.findElement(By.id("form_signin:code")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:town")).sendKeys(Keys.CONTROL + "a");
         driver.findElement(By.id("form_signin:town")).sendKeys(Keys.DELETE);
 
@@ -84,9 +82,8 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:email")).sendKeys("jose@jose.jose");
         driver.findElement(By.id("form_signin:number")).sendKeys("12");
         driver.findElement(By.id("form_signin:street")).sendKeys("laRue");
-        driver.findElement(By.id("form_signin:complement")).sendKeys("3e Ã©tage");
-        driver.findElement(By.id("form_signin:code")).sendKeys("57150");
-        driver.findElement(By.id("form_signin:town")).sendKeys("Creutzwald");
+        driver.findElement(By.id("form_signin:complement")).sendKeys("3e etage");
+        driver.findElement(By.id("form_signin:town")).sendKeys("CREUTZWALD (57150)");
     }
 
     public int randomLogin() {
@@ -153,8 +150,7 @@ public class RegistrationBeanTest {
         driver.findElement(By.id("form_signin:confirmPassword")).sendKeys(Keys.DELETE);
         driver.findElement(By.id("form_signin:password")).sendKeys("Josejosee");
         driver.findElement(By.id("form_signin:confirmPassword")).sendKeys("Josejose");
-        driver.findElement(By.id("form_signin:town_input")).sendKeys("EPINAL");
-        driver.findElement(By.className("ui-autocomplete-query")).click();
+        driver.findElement(By.id("form_signin:town")).sendKeys("CREUTZWALD (57150)");
         driver.findElement(By.name("form_signin:register")).click();
         String str = "Mot de passe différent, veuillez recommencer !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
@@ -202,22 +198,11 @@ public class RegistrationBeanTest {
 
     @Test
     public void testRegistrationTownMiss() {
-        driver.findElement(By.id("form_signin:town_input")).sendKeys(Keys.CONTROL + "a");
-        driver.findElement(By.id("form_signin:town_input")).sendKeys(Keys.DELETE);
+        driver.findElement(By.id("form_signin:town")).sendKeys(Keys.CONTROL + "a");
+        driver.findElement(By.id("form_signin:town")).sendKeys(Keys.DELETE);
         driver.findElement(By.name("form_signin:register")).click();
         String str = "Veuillez renseigner votre ville !";
         assertEquals(str, driver.findElement(By.className("ui-message-error-detail")).getText());
     }
-
-
-    /*@Test
-     public void testRegistrationCompanyNameMiss() { 
-     driver.findElement(By.xpath("//div[@class = 'ui-helper-hidden-accessible']")).click();
-     driver.findElement(By.id("form_signin:radios:1")).click();
-     driver.findElement(By.id("form_signin:companyName")).clear();
-     driver.findElement(By.name("form_signin:register")).click();
-     String str = "Veuillez renseigner votre nom de prestataire !" ; 
-     assertEquals(driver.findElement(By.className("ui-message-error-detail")).getText(),str); 
-     driver.findElement(By.id("form_signin:j_idt21:0")).click();
-     }*/
+    
 }

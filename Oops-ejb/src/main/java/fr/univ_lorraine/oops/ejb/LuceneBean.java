@@ -47,6 +47,7 @@ public class LuceneBean {
     private IndexWriterConfig config;
     private Directory directory;    
     
+    
 
     public LuceneBean() throws IOException {
         this.analyzer = new FrenchAnalyzer();

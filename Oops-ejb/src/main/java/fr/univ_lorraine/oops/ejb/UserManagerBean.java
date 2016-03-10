@@ -35,7 +35,7 @@ public class UserManagerBean {
     public Utilisateur registerUser(Utilisateur u) {
         Utilisateur user = ud.get(u.getLogin());
         if (user == null) {
-            ud.add(user);
+            ud.add(u);
             if (u instanceof Prestataire) {
                 luceneBean.indexPrestataire(((Prestataire) u));
             }

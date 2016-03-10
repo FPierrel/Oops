@@ -140,7 +140,7 @@
                                 <h:form id="askOpinion" rendered="#{request.remoteUser != null}"> 
                                     <p:commandLink id="askOpinion" onclick="PF('toggleAskOpinion').toggle()" value="Inviter un soumissionnaire à donner son avis"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre message a été envoyé</p:panel>
                                     <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleAskOpinion">
-                                            <p:inputText value="#{askOpinionBean.mail}" id="askOpinionMail" placeholder="Adresse mail"/>
+                                        <p:inputText value="#{askOpinionBean.mail}" id="askOpinionMail" placeholder="Adresse mail"/>
                                         <br/><p:commandButton value="Envoyer la demande" id="askOpinionButton" onclick="PF('toggleAskOpinion').toggle();
                                                 PF('toggleReported').toggle()" actionListener="#{askOpinionBean.send()}"/>
                                     </p:panel>
@@ -300,15 +300,19 @@
             </div><!--/.row-->
         </section><!--/#blog-->
 
-        <c:if test="#{photoBean.photos != null}">        
-            <pe:fluidGrid value="#{photoBean.photosGrid}" var="photo" hasImages="true">  
-                <pe:fluidGridItem class="col-md-4">   
-                    <a href="#" class="thumbnail" style="margin-top: 10px; margin-left: 10px">
-                        <img src="#{photo}"/>
-                    </a>
-                </pe:fluidGridItem>  
-            </pe:fluidGrid>  
-        </c:if>
+        <section class="container">
+            <div>
+                <c:if test="#{photoBean.photos != null}">        
+                    <pe:fluidGrid value="#{photoBean.photosGrid}" var="photo" hasImages="true">  
+                        <pe:fluidGridItem class="col-md-4">   
+                            <a href="#" class="thumbnail" style="margin-top: 10px; margin-left: 10px">
+                                <img src="#{photo.photoBase64}"/>
+                            </a>
+                        </pe:fluidGridItem>  
+                    </pe:fluidGrid>  
+                </c:if>
+            </div>
+        </section>
 
         <ui:include src="footer.xhtml"/>
 

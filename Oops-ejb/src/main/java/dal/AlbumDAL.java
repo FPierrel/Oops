@@ -38,6 +38,7 @@ public class AlbumDAL {
     }
     
     public List<Photo> photosOfAlbum(Long id){
-        return em.createNamedQuery("findPhotoByPKalbum").setParameter("idAlbum", id).getResultList();
+        Album a = em.find(Album.class, id);
+        return (List<Photo>) a.getPhotos();
 }
 }

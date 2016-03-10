@@ -18,7 +18,7 @@ jQuery(function($) {
 	});
 
 	//portfolio
-	$(window).load(function(){
+	/*$(window).load(function(){
 		$portfolio_selectors = $('.portfolio-filter >li>a');
 		if($portfolio_selectors!='undefined'){
 			$portfolio = $('.portfolio-items');
@@ -34,7 +34,7 @@ jQuery(function($) {
 				return false;
 			});
 		}
-	});
+	});*/
 
 	//contact form
 	var form = $('.contact-form');
@@ -55,7 +55,7 @@ jQuery(function($) {
 	});	
 
 	//Pretty Photo
-	$("a[rel^='prettyPhoto']").prettyPhoto({
+	/*$("a[rel^='prettyPhoto']").prettyPhoto({
 		social_tools: false
-	});	
+	});	*/
 });

@@ -165,7 +165,7 @@ public class InitializationBean {
         liste.add(pres1);
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
-        adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "Metz", "Allemagne"));
+        adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "METZ (57000-57050-57070)", "Allemagne"));
         Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com",
                 "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
         pres2.setDescription("Ceci est un garenne...");
