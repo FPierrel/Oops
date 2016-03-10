@@ -11,11 +11,9 @@
     <f:metadata>
         <f:viewParam name="page" value="#{ficheBean.page}" />
         <f:viewParam name="page" value="#{reportBean.page}" />
-        <f:viewParam name="page" value="#{photoBean.page}" />
         <f:viewParam name="page" value="#{askOpinionBean.page}" />
         <f:viewAction action="#{ficheBean.init}" />
 
-        <f:viewAction action="#{photoBean.initAlternative}" />
     </f:metadata>
     <h:head>
         <title>Oops | #{ficheBean.prestataire.nomEntreprise}</title>
@@ -299,20 +297,6 @@
                 </div><!--/.col-md-8-->
             </div><!--/.row-->
         </section><!--/#blog-->
-
-        <section class="container">
-            <div>
-                <c:if test="#{photoBean.photos != null}">        
-                    <pe:fluidGrid value="#{photoBean.photosGrid}" var="photo" hasImages="true">  
-                        <pe:fluidGridItem class="col-md-4">   
-                            <a href="#" class="thumbnail" style="margin-top: 10px; margin-left: 10px">
-                                <img src="#{photo.photoBase64}"/>
-                            </a>
-                        </pe:fluidGridItem>  
-                    </pe:fluidGrid>  
-                </c:if>
-            </div>
-        </section>
 
         <ui:include src="footer.xhtml"/>
 
