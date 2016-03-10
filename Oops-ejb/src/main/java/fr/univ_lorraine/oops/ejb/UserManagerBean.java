@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.ejb;
 import dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
@@ -49,6 +50,10 @@ public class UserManagerBean {
 
     public void updateUser(Utilisateur user) {
         ud.update(user);
+    }
+    
+    public List<Prestataire> getBestGrades() {
+        return ud.getBestGrades(4);
     }
 
 }
