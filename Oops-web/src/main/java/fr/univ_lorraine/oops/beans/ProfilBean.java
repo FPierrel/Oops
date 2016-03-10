@@ -8,6 +8,7 @@ import javax.inject.Named;
 import java.io.Serializable;
 import java.security.MessageDigest;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
@@ -21,12 +22,12 @@ public class ProfilBean implements Serializable {
 
     @Inject
     private UserManagerBean userManager;
-    
+
     @Inject
     private SearchResultsBean searchBean;
 
     private Utilisateur user;
-    private String oldPassword, newPassword, newPasswordConfirm, newMail, newMailConfirm;
+    private String oldPassword, newPassword, newPasswordConfirm, newMail, newMailConfirm, town;
     private List<String> codes = new ArrayList<>();
 
     public ProfilBean() {
@@ -35,6 +36,9 @@ public class ProfilBean implements Serializable {
 
     public void init(String login) {
         this.user = this.userManager.searchByLogin(login);
+        Collection<Adresse> address = this.user.getAdresses();
+        Adresse a = (address.toArray(new Adresse[0]))[0];
+        this.town = a.getVille();
     }
 
     public String update() {
@@ -50,6 +54,8 @@ public class ProfilBean implements Serializable {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
         } else if (!this.newMail.isEmpty() && !this.newMail.equals(this.newMailConfirm)) {
             message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Confirmation de la nouvelle adresse mail incorrecte !", null);
+        } else if (!Pattern.matches("^[A-Z]+([_A-Z-]+)*[ ]*([_A-Z-]+)*[ ]\\(([0-9]{5})+(-[0-9]{5})*\\)$", this.town)) {
+            message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Ville non valide, veuillez recommencer !", null);
         } else {
             message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Modification(s) enregistrée(s) !", null);
             if (!this.newMail.isEmpty()) {
@@ -58,6 +64,10 @@ public class ProfilBean implements Serializable {
             if (!this.newPassword.isEmpty()) {
                 this.user.setMotDePasse(sha256(this.newPassword));
             }
+            Collection<Adresse> address = this.user.getAdresses();
+            Adresse a = (address.toArray(new Adresse[0]))[0];
+            a.setVille(this.town);
+            this.user.setAdresses(address);
             this.userManager.updateUser(this.user);
         }
         context.addMessage(null, message);
@@ -143,4 +153,13 @@ public class ProfilBean implements Serializable {
     public void codesListener(Adresse a) {
         codes = searchBean.searchCodes(a.getVille());
     }
+
+    public String getTown() {
+        return town;
+    }
+
+    public void setTown(String town) {
+        this.town = town;
+    }
+
 }
