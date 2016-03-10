@@ -15,6 +15,7 @@
         <link rel="stylesheet" href="css/animate.css"/>
         <link rel="stylesheet" href="css/main.css"/>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
+        <link rel="stylesheet" href="css/typeahead.css"/>
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -142,21 +143,11 @@
                                     <p:message for="form_signin:complement"/>
                                 </div>
                                 <div class="form-group">
-                                    <!--<input type="text" placeholder="Ville" class="form-control"/>-->
-                                    <p:autoComplete id="town" value="#{registrationBean.town}"
-                                                    required = "true" requiredMessage="Veuillez renseigner votre ville !" 
-                                                    forceSelection="true" placeholder="Où ?" 
-                                                    completeMethod="#{searchBean.searchTownWithoutCode}" maxResults="5">
-                                        <p:ajax event="itemSelect" update="code" listener="#{registrationBean.codesListener}" />
-                                    </p:autoComplete>
+                                    <h:inputText id="town" value="#{registrationBean.town}" autocomplete="off"
+                                                 binding="#{registrationBean.townComponent}"
+                                                 pt:placeholder="Ville" class="typeahead form-control" 
+                                                 required="true" requiredMessage="Veuillez renseigner votre ville !"/>
                                     <p:message for="form_signin:town"/>
-                                </div>
-                                <div class="form-group">
-                                    <!--<input type="text" placeholder="Code postal" class="form-control"/>-->
-                                    <p:selectOneMenu id="code" value="#{registrationBean.code}">
-                                        <f:selectItems value="#{registrationBean.codes}" />
-                                    </p:selectOneMenu>
-                                    <p:message for="form_signin:code"/>
                                 </div>
                             </fieldset>
                         </div>
@@ -174,33 +165,29 @@
                                         <p:message for="form_signin:companyName"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Raison sociale" class="form-control"/>
+                                        <input type="text" placeholder="Raison sociale" class="form-control" disabled="true"/>
                                         <!---->
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Forme juridique" class="form-control"/>
+                                        <input type="text" placeholder="Forme juridique" class="form-control" disabled="true"/>
                                         <!---->
                                     </div>
                                     <div class="form-group">
                                         <h:inputText id="nbEmployee" value="#{registrationBean.employee}" 
                                                      binding="#{registrationBean.employeeComponent}" 
-                                                     pt:placeholder="Nombre d'employé" class="form-control"
-                                                     converterMessage="Le nombre d'employé(s) doit être un nombre !">             
-                                            <f:convertNumber type="number" integerOnly="true" />
+                                                     pt:placeholder="Nombre d'employé" class="form-control">
                                         </h:inputText>
                                         <p:message for="form_signin:nbEmployee"/>
                                     </div>
                                     <div class="form-group">
                                         <h:inputText id="turnoverNumber" value="#{registrationBean.turnover}" 
                                                      binding="#{registrationBean.turnoverComponent}" 
-                                                     pt:placeholder="Chiffre d'affaire" class="form-control"
-                                                     converterMessage="Le chiffre d'affaire doit être un nombre !">             
-                                            <f:convertNumber type="number" integerOnly="true"/>
+                                                     pt:placeholder="Chiffre d'affaire" class="form-control">
                                         </h:inputText>
                                         <p:message for="form_signin:turnoverNumber"/>
                                     </div>
                                     <div class="form-group">
-                                        <input type="text" placeholder="Site Web" class="form-control"/>
+                                        <input type="text" placeholder="Site Web" class="form-control" disabled="true"/>
                                         <!---->
                                     </div>
                                 </fieldset>
@@ -218,10 +205,42 @@
                     </div>
                 </h:panelGroup>
             </h:form>
-        </section><!--/#registration-->
-        <ui:include src="footer.xhtml"/>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
+        </section><!--/#registration-->        
+        <ui:include src="footer.xhtml"/> 
+        <script type="text/javascript" src="js/jquery.js"/>
+        <script type="text/javascript" src="js/bootstrap.min.js"/>
+        <script type="text/javascript" src="js/main.js"/>
+        <script type="text/javascript" src="js/typeahead.jquery.js"/>
+        <script type="text/javascript" src="js/bloodhound.js"/>
+        <script type="text/javascript">
+            var dataSource = new Bloodhound({
+                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                queryTokenizer: Bloodhound.tokenizers.whitespace,
+                prefetch: 'villes.json'/*,
+                remote: {
+                 url: 'villes.json'
+                 }*/
+            });
+
+            dataSource.initialize();
+
+            $('.typeahead').typeahead({
+                hint: true,
+                highlight: true,
+                minLength: 1,
+                limit: 5
+            }, {
+                displayKey: 'value',
+                source: dataSource.ttAdapter(),
+                templates: {
+                    empty: [
+                        '<div class="empty-message">',
+                        'Pas de résultat !',
+                        '</div>'
+                    ].join('\n')
+                }
+            });
+        </script>
     </h:body>
 </html>
 

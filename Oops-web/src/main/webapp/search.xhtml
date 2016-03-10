@@ -151,9 +151,9 @@
             </h:form>
         </div>
     </section><!--/#services-->
-    <script src="js/typeahead.jquery.js"></script>
-    <script src="js/bloodhound.js"></script>
-    <script>
+    <script type="text/javascript" src="js/typeahead.jquery.js"/>
+    <script type="text/javascript" src="js/bloodhound.js"/>
+    <script type="text/javascript">
                         var dataSource = new Bloodhound({
                             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                             queryTokenizer: Bloodhound.tokenizers.whitespace,
@@ -164,7 +164,7 @@
                         });
 
                         dataSource.initialize();
-
+                        
                         $('.typeahead').typeahead({
                             hint: true,
                             highlight: true,
