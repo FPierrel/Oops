@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.beans;
 import fr.univ_lorraine.oops.ejb.AlbumEntityManager;
 import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Photo;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -28,18 +29,20 @@ public class PhotoBean implements Serializable {
     private String page;
     private Album defaultAlbum;
     private Photo first;
+    private boolean options = false;
+    private Photo photoToDelete;
 
     public PhotoBean() {
     }
 
-    public void init() {
+    public void init() throws IOException {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
         this.album = this.albumEM.getAlbum(this.idAlbum, request.getRemoteUser());
 
         this.defaultAlbum = this.albumEM.getDefault(request.getRemoteUser());
-        this.photos = album.getPhotos();
+        this.photos = album.getPhotos();    
     }
 
     public void initAlternative() {
@@ -67,13 +70,11 @@ public class PhotoBean implements Serializable {
         Photo p = new Photo();
         p.setNomPhoto(event.getFile().getFileName());
         p.setPhoto(event.getFile().getContents());
-        this.photos.add(p);
-
         this.albumEM.addPhoto(p, this.album.getId());
     }
 
     public Collection<Photo> getPhotos() {
-        return photos;
+        return this.albumEM.getAllPhotoAlbum(album.getId());
     }
 
     public void setPhotos(Collection<Photo> photos) {
@@ -106,14 +107,9 @@ public class PhotoBean implements Serializable {
         this.page = page;
     }
 
-    public void deletePhoto(long id) {
-        System.out.println("SALUT LES ENFANTS");
-        this.albumEM.deletePhoto(this.album, id);
-    }
-
-    public void test() throws Exception {
-        System.out.println("BONJOUR LES AMIS");
-        throw new Exception("Va bien te faire mettre");
+    public void deletePhoto() throws Exception {
+        this.options = false;
+        this.albumEM.deletePhoto(this.album, this.photoToDelete);
     }
 
     public Photo getFirst() {
@@ -123,5 +119,22 @@ public class PhotoBean implements Serializable {
     public void setFirst(Photo first) {
         this.first = first;
     }
+
+    public boolean getOptions() {
+        return options;
+    }
+    
+    public void setOptions(Photo p) {         
+        this.photoToDelete = p;  
+        if(this.photoToDelete.equals(p)){
+            this.options = !options;
+        }
+    }
+    
+    public void resetOptions() throws Exception{
+        this.photoToDelete = null;
+        this.options = false;
+    }
+    
 
 }

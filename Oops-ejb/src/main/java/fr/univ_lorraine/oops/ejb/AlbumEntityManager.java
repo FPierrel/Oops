@@ -48,8 +48,7 @@ public class AlbumEntityManager {
      }
      
      public  List<Photo> getAllPhotoAlbum(Long idAlbum){
-         return ad.photosOfAlbum(idAlbum);
-         
+         return ad.photosOfAlbum(idAlbum);        
      }
      
      public Album getAlbum(Long id){
@@ -63,9 +62,10 @@ public class AlbumEntityManager {
 
     public void deleteAlbum(Album album, String login) {
         Prestataire pres = presd.get(login);        
-        pres.deleteAlbum(album);
+        Album a = ad.get(album.getId());
+        pres.deleteAlbum(a);
         presd.update(pres);
-        ad.delete(album);
+        ad.delete(a);
     }
 
     public Album getDefault(String login) {
@@ -88,6 +88,15 @@ public class AlbumEntityManager {
         Photo p = pd.get(id);
         album.deletePhoto(p);
         ad.update(album);
+        pd.delete(p);
+    }
+
+    public void deletePhoto(Album album, Photo photoToDelete) {
+        Album a = ad.get(album.getId());
+        Photo p = pd.get(photoToDelete.getId());
+        
+        a.deletePhoto(p);
+        ad.update(a);
         pd.delete(p);
     }
 }
