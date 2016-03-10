@@ -48,124 +48,126 @@
             </div>
         </section><!--/#title-->   
 
-        <section id="registration" class="container">
-            <p:messages/>
-            <h:form id="profilForm" class="center">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <fieldset>
-                            <legend>Informations du compte</legend>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-user"></i></span>
-                                    <h:inputText disabled="true" pt:placeholder="Login" class="form-control" id="login" value="#{profilBean.user.login}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-lock"></i></span>
-                                    <h:inputSecret pt:placeholder="Mot de passe actuel" class="form-control" id="oldPassword" value="#{profilBean.oldPassword}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-lock"></i></span>
-                                    <h:inputSecret pt:placeholder="Nouveau mot de passe" class="form-control" id="newPassword" value="#{profilBean.newPassword}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-lock"></i></span>
-                                    <h:inputSecret pt:placeholder="Confirmation du nouveau mot de passe" class="form-control" id="newPasswordConfirm" value="#{profilBean.newPasswordConfirm}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-envelope"></i></span>
-                                    <h:inputText disabled="true" pt:placeholder="E-mail actuel" class="form-control" id="oldMail" value="#{profilBean.user.mail}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-envelope"></i></span>
-                                    <h:inputText pt:placeholder="Nouvelle adresse e-mail" class="form-control" id="newMail" value="#{profilBean.newMail}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-envelope"></i></span>
-                                    <h:inputText pt:placeholder="Confirmation nouvelle adresse e-mail" class="form-control" id="newMailConfirm" value="#{profilBean.newMailConfirm}"/>
-                                </div>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <fieldset>
-                            <legend>Informations personnelles</legend>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-user"></i></span>
-                                    <h:inputText disabled="true" pt:placeholder="Nom" class="form-control" id="lastname" value="#{profilBean.user.nom}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-user"></i></span>
-                                    <h:inputText disabled="true" pt:placeholder="Prénom" class="form-control" id="firstname" value="#{profilBean.user.prenom}"/>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-phone"></i></span>
-                                    <h:inputText pt:placeholder="Téléphone" class="form-control" id="telephone" value="#{profilBean.user.numeroTelephone}"/>
-                                </div>
-                            </div>
-                            <ui:repeat value="#{profilBean.user.adresses}" var="address">
-                                <h:column>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <h:inputText pt:placeholder="Numéro de rue" class="form-control" value="#{address.numero}"/>
-                                        </div>
+        <section id="registration" class="normal">
+            <div class="container">
+                <p:messages/>
+                <h:form id="profilForm" class="center">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Informations du compte</legend>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
+                                        <h:inputText disabled="true" pt:placeholder="Login" class="form-control" id="login" value="#{profilBean.user.login}"/>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <h:inputText pt:placeholder="Rue, Avenue..." class="form-control" value="#{address.rue}"/>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                        <h:inputSecret pt:placeholder="Mot de passe actuel" class="form-control" id="oldPassword" value="#{profilBean.oldPassword}"/>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <h:inputText pt:placeholder="Complément" class="form-control" value="#{address.complement}"/>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                        <h:inputSecret pt:placeholder="Nouveau mot de passe" class="form-control" id="newPassword" value="#{profilBean.newPassword}"/>
                                     </div>
-                                    <div class="form-group">
-                                        <div class="input-group">
-                                            <span class="input-group-addon"><i class="icon-home"></i></span>
-                                            <h:inputText id="town" value="#{profilBean.town}" autocomplete="off"
-                                                         pt:placeholder="Ville" class="typeahead form-control" 
-                                                         required="true" requiredMessage="Veuillez renseigner votre ville !"/>
-                                        </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-lock"></i></span>
+                                        <h:inputSecret pt:placeholder="Confirmation du nouveau mot de passe" class="form-control" id="newPasswordConfirm" value="#{profilBean.newPasswordConfirm}"/>
                                     </div>
-                                </h:column>
-                            </ui:repeat>
-                        </fieldset>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                        <h:inputText disabled="true" pt:placeholder="E-mail actuel" class="form-control" id="oldMail" value="#{profilBean.user.mail}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                        <h:inputText pt:placeholder="Nouvelle adresse e-mail" class="form-control" id="newMail" value="#{profilBean.newMail}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                        <h:inputText pt:placeholder="Confirmation nouvelle adresse e-mail" class="form-control" id="newMailConfirm" value="#{profilBean.newMailConfirm}"/>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3 col-sm-offset-3">
-                    <div class="form-group">
-                        <button id="cancel" class="btn btn-danger btn-md btn-block" outcome="index"><i class="icon-remove"></i> Annuler</button>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Informations personnelles</legend>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
+                                        <h:inputText disabled="true" pt:placeholder="Nom" class="form-control" id="lastname" value="#{profilBean.user.nom}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
+                                        <h:inputText disabled="true" pt:placeholder="Prénom" class="form-control" id="firstname" value="#{profilBean.user.prenom}"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-phone"></i></span>
+                                        <h:inputText pt:placeholder="Téléphone" class="form-control" id="telephone" value="#{profilBean.user.numeroTelephone}"/>
+                                    </div>
+                                </div>
+                                <ui:repeat value="#{profilBean.user.adresses}" var="address">
+                                    <h:column>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-home"></i></span>
+                                                <h:inputText pt:placeholder="Numéro de rue" class="form-control" value="#{address.numero}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-home"></i></span>
+                                                <h:inputText pt:placeholder="Rue, Avenue..." class="form-control" value="#{address.rue}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-home"></i></span>
+                                                <h:inputText pt:placeholder="Complément" class="form-control" value="#{address.complement}"/>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="input-group">
+                                                <span class="input-group-addon"><i class="icon-home"></i></span>
+                                                <h:inputText id="town" value="#{profilBean.town}" autocomplete="off"
+                                                             pt:placeholder="Ville" class="typeahead form-control" 
+                                                             required="true" requiredMessage="Veuillez renseigner votre ville !"/>
+                                            </div>
+                                        </div>
+                                    </h:column>
+                                </ui:repeat>
+                            </fieldset>
+                        </div>
                     </div>
-                </div>
-                <div class="col-sm-3">
-                    <div class="form-group">
-                        <h:commandLink id="save" class="btn btn-success btn-md btn-block" action="#{profilBean.update()}"><i class="icon-ok"></i> Modifier</h:commandLink>
+                    <div class="col-sm-3 col-sm-offset-3">
+                        <div class="form-group">
+                            <button id="cancel" class="btn btn-danger btn-md btn-block" outcome="index"><i class="icon-remove"></i> Annuler</button>
+                        </div>
                     </div>
-                </div>
-            </h:form>
+                    <div class="col-sm-3">
+                        <div class="form-group">
+                            <h:commandLink id="save" class="btn btn-success btn-md btn-block" action="#{profilBean.update()}"><i class="icon-ok"></i> Modifier</h:commandLink>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
         </section><!--/#registration-->
 
         <ui:include src="footer.xhtml"/>

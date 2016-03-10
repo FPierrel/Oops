@@ -6,11 +6,9 @@ import java.util.regex.Pattern;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-
 
 @Named(value = "inviteBean")
 @RequestScoped
@@ -20,9 +18,6 @@ public class InviteBean implements Serializable {
     MailManagerBean mMB;
 
     private String mail, message;
-    private String feedback = "";
-
-    private UIComponent emailComponent;
 
     public InviteBean() {
     }
@@ -43,35 +38,20 @@ public class InviteBean implements Serializable {
         this.message = message;
     }
 
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
-
-    public UIComponent getEmailComponent() {
-        return emailComponent;
-    }
-
-    public void setEmailComponent(UIComponent emailComponent) {
-        this.emailComponent = emailComponent;
-    }
-
     public String send() {
-        feedback = "";
         FacesContext context = FacesContext.getCurrentInstance();
         if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", this.mail)) {
             FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
-            context.addMessage(this.emailComponent.getClientId(), fM);
+            context.addMessage(null, fM);
             return "invite.xhtml";
         }
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         if (mMB.sendInviteMail(request.getRemoteUser(), mail, message)) {
-            feedback = "Message envoyé";
+            FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_INFO, "Message envoyé !", null);
+            context.addMessage(null, fM);
         } else {
-            feedback = "Un utilisateur ayant cette adresse mail est déjà inscrit sur le site";
+            FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Un utilisateur ayant cette adresse e-mail est déjà inscrit sur le site !", null);
+            context.addMessage(null, fM);
         }
         return "invite.xhtml";
     }

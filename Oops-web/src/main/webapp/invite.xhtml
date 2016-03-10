@@ -4,15 +4,14 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:p="http://primefaces.org/ui"
+      xmlns:pt="http://xmlns.jcp.org/jsf/passthrough"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
-
     <h:head>
         <meta charset="utf-8"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Oops | Invitation</title>
         <link href="css/bootstrap.min.css" rel="stylesheet"/>
         <link href="css/font-awesome.min.css" rel="stylesheet"/>
-        <link href="css/prettyPhoto.css" rel="stylesheet"/>
         <link href="css/animate.css" rel="stylesheet"/>
         <link href="css/main.css" rel="stylesheet"/>
         <!--[if lt IE 9]>
@@ -32,31 +31,59 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <h1>Invitation</h1>
-                       
+                        <p>Inviter l'une de vos connaissances à rejoindre OOPS.</p>
+                    </div>
+                    <div class="col-sm-6">
+                        <ul class="breadcrumb pull-right">
+                            <li><a href="index.xhtml">Accueil</a></li>
+                            <li class="active">Invitation</li>
+                        </ul>
                     </div>
                 </div>
             </div>
         </section>
 
-        <section id="invite" class="container">
- <p>Inviter l'une de vos connaissances à rejoindre OOPS</p>
-            <p:messages />
-
-            <h:form id="inviteForm" class="center" role="form">
-                <p:inputText value="#{inviteBean.mail}" id ="email" placeholder="Adresse mail"
-                             binding="#{inviteBean.emailComponent}"/> <br/>                 
-                <p:inputTextarea value="#{inviteBean.message}" id ="message" placeholder="Entrer votre message"/><br/>
-                <p:commandButton value="Inviter" id="button" actionListener="#{inviteBean.send()}" update="@all"/>
-
-            </h:form>
-            <h:outputText value="#{inviteBean.feedback}"/>
-        </section><!--/#login-->
+        <section id="registration" class="normal">
+            <div class="container">
+                <p:messages/>
+                <h:form id="ficheForm">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Envoyer une invitation</legend>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-envelope"></i></span>
+                                        <h:inputText value="#{inviteBean.mail}" id="email" pt:placeholder="Adresse e-mail" 
+                                                     class="form-control"/>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-info"> </i></span>
+                                        <h:inputTextarea value="#{inviteBean.message}" id="message" 
+                                                         pt:placeholder="Entrez votre message..." style="resize:none"
+                                                         cols="30" rows="10" class="form-control"/>
+                                    </div>
+                                </div>
+                            </fieldset>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <div class="form-group">
+                                <h:commandButton value="Inviter" class="btn btn-success btn-md btn-block" id="button" action="#{inviteBean.send()}"/>
+                            </div>
+                        </div>
+                    </div>
+                </h:form>
+            </div>
+        </section>
 
         <ui:include src="footer.xhtml"/>
 
-        <script src="js/jquery.js"></script>
-        <script src="js/bootstrap.min.js"></script>
-        <script src="js/jquery.prettyPhoto.js"></script>
-        <script src="js/main.js"></script>
+        <script src="js/jquery.js"/>
+        <script src="js/bootstrap.min.js"/>
+        <script src="js/main.js"/>
     </h:body><!--/body-->
 </html>

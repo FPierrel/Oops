@@ -48,97 +48,99 @@
             </div>
         </section><!--/#title--> 
 
-        <section id="registration" class="container">
-            <p:messages/>
-            <h:form id="ficheForm">
-                <div class="row">
-                    <div class="col-sm-4 col-sm-offset-4">
-                        <fieldset>
-                            <legend>Informations du prestataire</legend>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-user"></i></span>
-                                    <h:inputText id="companyName" 
-                                                 pt:placeholder="Nom du prestataire" class="form-control"
-                                                 binding="#{editFicheBean.companyNameComponent}" value="#{editFicheBean.companyName}"/>
+        <section id="registration" class="normal">
+            <div class="container">
+                <p:messages/>
+                <h:form id="ficheForm">
+                    <div class="row">
+                        <div class="col-sm-4 col-sm-offset-4">
+                            <fieldset>
+                                <legend>Informations du prestataire</legend>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-user"></i></span>
+                                        <h:inputText id="companyName" 
+                                                     pt:placeholder="Nom du prestataire" class="form-control"
+                                                     binding="#{editFicheBean.companyNameComponent}" value="#{editFicheBean.companyName}"/>
+                                    </div>
+                                    <p:message for="companyName"/>
                                 </div>
-                                <p:message for="companyName"/>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-list-alt"></i></span>
-                                    <h:inputText id="raisonSociale" 
-                                                 pt:placeholder="Raison sociale" class="form-control"
-                                                 disabled="true"/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-list-alt"></i></span>
+                                        <h:inputText id="raisonSociale" 
+                                                     pt:placeholder="Raison sociale" class="form-control"
+                                                     disabled="true"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-list-alt"></i></span>
-                                    <h:inputText id="formeJuridique" 
-                                                 pt:placeholder="Forme juridique" class="form-control"
-                                                 disabled="true"/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-list-alt"></i></span>
+                                        <h:inputText id="formeJuridique" 
+                                                     pt:placeholder="Forme juridique" class="form-control"
+                                                     disabled="true"/>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-group"></i></span>
-                                    <h:inputText id="nbEmployee" 
-                                                 pt:placeholder="Nombre d'employé" class="form-control"
-                                                 binding="#{editFicheBean.nbEmployeeComponent}" value="#{editFicheBean.nbEmployee}"/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-group"></i></span>
+                                        <h:inputText id="nbEmployee" 
+                                                     pt:placeholder="Nombre d'employé" class="form-control"
+                                                     binding="#{editFicheBean.nbEmployeeComponent}" value="#{editFicheBean.nbEmployee}"/>
+                                    </div>
+                                    <p:message for="nbEmployee"/>
                                 </div>
-                                <p:message for="nbEmployee"/>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-euro"></i></span>
-                                    <h:inputText id="turnoverNumber" 
-                                                 pt:placeholder="Chiffre d'affaire" class="form-control"
-                                                 binding="#{editFicheBean.turnoverNumberComponent}" value="#{editFicheBean.turnover}"/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-euro"></i></span>
+                                        <h:inputText id="turnoverNumber" 
+                                                     pt:placeholder="Chiffre d'affaire" class="form-control"
+                                                     binding="#{editFicheBean.turnoverNumberComponent}" value="#{editFicheBean.turnover}"/>
+                                    </div>
+                                    <p:message for="turnoverNumber"/>
                                 </div>
-                                <p:message for="turnoverNumber"/>
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-globe"></i></span>
-                                    <h:inputText id="website" 
-                                                 pt:placeholder="Site Web" class="form-control"
-                                                 binding="#{editFicheBean.websiteComponent}" value="#{editFicheBean.website}"/>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-globe"></i></span>
+                                        <h:inputText id="website" 
+                                                     pt:placeholder="Site Web" class="form-control"
+                                                     binding="#{editFicheBean.websiteComponent}" value="#{editFicheBean.website}"/>
+                                    </div>
+                                    <p:message for="website"/>
                                 </div>
-                                <p:message for="website"/>
-                            </div>
-                            <div class="form-group">
-                                <h:selectManyMenu id="allCategories" class="selectpicker" value="#{editFicheBean.categories}"
-                                                  pt:multiple="" pt:data-live-search="true" pt:data-selected-text-format="count > 3"
-                                                  pt:data-width="100%" pt:title="Catégories">
-                                    <f:selectItems value="#{editFicheBean.allCategories}"/>
-                                </h:selectManyMenu>                                
-                            </div>
-                            <div class="form-group">
-                                <div class="input-group">
-                                    <span class="input-group-addon"><i class="icon-info"></i></span>
-                                    <h:inputTextarea id="description" style="resize:none"
-                                                     pt:placeholder="Description..." class="form-control"
-                                                     binding="#{editFicheBean.descriptionComponent}" value="#{editFicheBean.description}" cols="30" rows="10"/>
+                                <div class="form-group">
+                                    <h:selectManyMenu id="allCategories" class="selectpicker" value="#{editFicheBean.categories}"
+                                                      pt:multiple="" pt:data-live-search="true" pt:data-selected-text-format="count > 3"
+                                                      pt:data-width="100%" pt:title="Catégories">
+                                        <f:selectItems value="#{editFicheBean.allCategories}"/>
+                                    </h:selectManyMenu>                                
                                 </div>
-                                <p:message for="description"/>
-                            </div>
-                        </fieldset>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-sm-3 col-sm-offset-3">
-                        <div class="form-group">
-                            <h:link id="cancel" class="btn btn-danger btn-md btn-block" outcome="index"><i class="icon-remove"></i> Annuler</h:link>
+                                <div class="form-group">
+                                    <div class="input-group">
+                                        <span class="input-group-addon"><i class="icon-info"></i></span>
+                                        <h:inputTextarea id="description" style="resize:none"
+                                                         pt:placeholder="Description..." class="form-control"
+                                                         binding="#{editFicheBean.descriptionComponent}" value="#{editFicheBean.description}" cols="30" rows="10"/>
+                                    </div>
+                                    <p:message for="description"/>
+                                </div>
+                            </fieldset>
                         </div>
                     </div>
-                    <div class="col-sm-3">
-                        <div class="form-group">
-                            <h:commandLink id="save" class="btn btn-success btn-md btn-block" action="#{editFicheBean.update()}"><i class="icon-ok"></i> Modifier</h:commandLink>
+                    <div class="row">
+                        <div class="col-sm-3 col-sm-offset-3">
+                            <div class="form-group">
+                                <h:link id="cancel" class="btn btn-danger btn-md btn-block" outcome="index"><i class="icon-remove"></i> Annuler</h:link>
+                            </div>
+                        </div>
+                        <div class="col-sm-3">
+                            <div class="form-group">
+                                <h:commandLink id="save" class="btn btn-success btn-md btn-block" action="#{editFicheBean.update()}"><i class="icon-ok"></i> Modifier</h:commandLink>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </h:form>
+                </h:form>
+            </div>
         </section>
         <ui:include src="footer.xhtml"/>
     </h:body>
