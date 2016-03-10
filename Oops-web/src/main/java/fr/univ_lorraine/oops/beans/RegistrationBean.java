@@ -1,5 +1,6 @@
 package fr.univ_lorraine.oops.beans;
 
+import fr.univ_lorraine.oops.ejb.PasswordManagerBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Adresse;
@@ -24,16 +25,19 @@ public class RegistrationBean implements Serializable {
 
     @Inject
     SearchResultsBean searchBean;
+    
+    @Inject
+    PasswordManagerBean pMB;
 
-    private String login, password, confirmPassword, email, phone, companyName,
+    private String login, password, confirmPassword, email, phone, companyName, 
             lastname, firstname, user, number, street, complement, town, 
             country, turnover, employee;
-    private boolean prestataire, soumissionnaire;
-    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent,
-            emailComponent, phoneComponent, companyNameComponent, lastnameComponent,
-            firstnameComponent, numberComponent, streetComponent, complementComponent,
+    private boolean prestataire, soumissionnaire;    
+    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, 
+            emailComponent, phoneComponent, companyNameComponent, lastnameComponent, 
+            firstnameComponent, numberComponent, streetComponent, complementComponent, 
             townComponent, countryComponent, turnoverComponent, employeeComponent;
-
+    
     /**
      * Creates a new instance of RegistrationBean
      */
@@ -328,7 +332,7 @@ public class RegistrationBean implements Serializable {
         }
         if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.email)) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
-            context.addMessage(this.emailComponent.getClientId(), message);
+            context.addMessage(this.emailComponent.getClientId(), message); 
             return "inscription.xhtml";
         }
         if (!Pattern.matches("^[A-Z]+([_A-Z-]+)*[ ]*([_A-Z-]+)*[ ]\\(([0-9]{5})+(-[0-9]{5})*\\)$", this.town)) {
@@ -345,7 +349,7 @@ public class RegistrationBean implements Serializable {
         if (this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
             s.setLogin(this.login);
-            s.setMotDePasse(ProfilBean.sha256(this.password));
+            s.setMotDePasse(pMB.sha256(this.password));
             s.setMail(this.email);
             s.setNom(this.lastname);
             s.setPrenom(this.firstname);
@@ -377,7 +381,7 @@ public class RegistrationBean implements Serializable {
                 return "inscription.xhtml";
             }
             p.setLogin(this.login);
-            p.setMotDePasse(ProfilBean.sha256(this.password));
+            p.setMotDePasse(pMB.sha256(this.password));
             p.setMail(this.email);
             p.setNom(this.lastname);
             p.setPrenom(this.firstname);
@@ -398,5 +402,5 @@ public class RegistrationBean implements Serializable {
             return "index.xhtml";
         }
     }
-
-}
+    
+    }

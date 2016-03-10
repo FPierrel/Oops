@@ -102,4 +102,39 @@ public class MailManagerBean {
         System.out.println("SessionBean : mail pas ok ");
         return false;
     }
+    
+    public void sendNewPassword(String targetMail, String userPassword) {
+
+        String from = "oops@pi-r-l.ovh";
+        final String username = "oops@pi-r-l.ovh";
+        final String password = "oops_password";
+        String host = "smtp.pi-r-l.ovh";
+        Properties props = new Properties();
+        props.put("mail.smtp.auth", "true");
+        props.put("mail.smtp.host", host);
+        props.put("mail.smtp.port", "25");
+        Session session = Session.getInstance(props,
+                new javax.mail.Authenticator() {
+                    protected PasswordAuthentication getPasswordAuthentication() {
+                        return new PasswordAuthentication(username, password);
+                    }
+                });
+
+        try {
+            Message message = new MimeMessage(session);
+            message.setFrom(new InternetAddress(from));
+            message.setRecipients(Message.RecipientType.TO,
+                    InternetAddress.parse(targetMail));
+            message.setSubject("Réinitialisation du mot de passe");
+            String msg = "Vous avez demandé la réinitialisation de votre mot de passe OOPS.\n"
+                    + "Votre nouveau mot de passe est : " + userPassword+"\n"
+                    + "Connectez-vous à l'adresse suivante : http://pi-r-l.ovh:8080/Oops-web/login.xhtml et changez immédiatement votre mot de passe.";
+            message.setText(msg);
+            Transport.send(message);
+
+        } catch (MessagingException e) {
+            throw new RuntimeException(e);
+        }
+
+    }
 }
