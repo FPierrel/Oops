@@ -70,7 +70,7 @@ public class AlbumEntityManager {
 
     public Album getDefault(String login) {
         Prestataire pres = presd.get(login);        
-        return pres.getAlbums().size() == 0 ? new Album() : pres.getAlbums().get(0);
+        return pres.getAlbums().size() == 0 ? null : pres.getAlbums().get(0);
     }
 
     public Album getAlbum(long idAlbum, String login) {
@@ -98,6 +98,13 @@ public class AlbumEntityManager {
         a.deletePhoto(p);
         ad.update(a);
         pd.delete(p);
+    }
+
+
+    public void updatePhotoDesc(Photo photoToDelete, String description) {
+        Photo p = pd.get(photoToDelete.getId());
+        p.setDescription(description);
+        pd.update(p);
     }
 }
 

@@ -25,6 +25,7 @@ public class Photo implements Serializable {
     private byte[] photo;
     @Transient
     private String photoBase64;
+    private String description;
     
     public Long getId() {
         return id;
@@ -58,5 +59,15 @@ public class Photo implements Serializable {
         this.photo = photo;
         this.photoBase64 = "data:image/png;base64," + new sun.misc.BASE64Encoder().encode(photo); 
     }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    
+    
 }
 
