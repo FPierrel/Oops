@@ -7,6 +7,7 @@
                 xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
                 xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
                 xmlns:pt="http://xmlns.jcp.org/jsf/passthrough">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/css/bootstrap-select.min.css"/>
     <section id="services" class="emerald">
         <div class="container">
             <h:form id="searchForm" role="form" class="form-inline center">
@@ -59,12 +60,13 @@
                                     </div>
                                 </div>
                                 <div class='col-sm-4 col-sm-offset-1'>
+                                    
                                     <div class="form-group">
-                                        <h:selectOneMenu id="categorie" class="form-control" value="#{searchBean.categorie}" required = "true" > 
-                                            <f:selectItems value="#{searchBean.categories}"/>
-                                        </h:selectOneMenu>
-                                    </div>
-                                    <div class="form-group">
+                                        <h:selectManyMenu id="allCategories" class="selectpicker" value="#{searchBean.categories}"
+                                                          pt:multiple="" pt:data-live-search="true" pt:data-selected-text-format="count > 3"
+                                                          pt:data-width="100%" pt:title="Catégories">
+                                            <f:selectItems value="#{searchBean.allCategories}"/>
+                                        </h:selectManyMenu>    
                                         <br/>
                                         <table>
                                             <tr>
@@ -174,6 +176,14 @@
                             displayKey: 'value',
                             source: dataSource.ttAdapter()
                         });
+    </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"/>
+    <script>
+        $('.selectpicker').val(#{searchBean.toJavascriptArray()});
+        $('.selectpicker').selectpicker({
+            style: 'btn-default',
+            size: 6
+        });
     </script>
 </ui:composition>
 

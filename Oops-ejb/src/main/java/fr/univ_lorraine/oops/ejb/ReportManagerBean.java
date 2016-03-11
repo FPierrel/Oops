@@ -52,4 +52,12 @@ public class ReportManagerBean {
         reasons.add("Autre");
         return reasons;
     }
+    
+    public List<String> getPhotosReasons() {
+        ArrayList<String> reasons = new ArrayList<>();
+        reasons.add("Image choquante");
+        reasons.add("Usurpation d'indentité");
+        reasons.add("Autre");
+        return reasons;
+    }
 }
