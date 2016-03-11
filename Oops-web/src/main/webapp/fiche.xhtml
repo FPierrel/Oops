@@ -170,14 +170,6 @@
                                 </h:form>
 
                                 <div class="blog-content">
-                                    <h:form id="askOpinion" rendered="#{request.remoteUser != null}"> 
-                                        <p:commandLink id="askOpinion" onclick="PF('toggleAskOpinion').toggle()" value="Inviter un soumissionnaire à donner son avis"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre message a été envoyé</p:panel>
-                                        <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleAskOpinion">
-                                            <p:inputText value="#{askOpinionBean.mail}" id="askOpinionMail" placeholder="Adresse mail"/>
-                                            <br/><p:commandButton value="Envoyer la demande" id="askOpinionButton" onclick="PF('toggleAskOpinion').toggle();
-                                                    PF('toggleReported').toggle()" actionListener="#{askOpinionBean.send()}"/>
-                                        </p:panel>
-                                    </h:form>
                                     <h:form id="formNotes">
                                         <h3>
                                             <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/>
@@ -189,6 +181,17 @@
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
                                             </h:form>
+                                            <a id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Inviter à laisser un avis</a>
+                                            <div id="askOpinionDiv" style="display:none">
+                                                <h:form id="askOpinionForm"> 
+                                                    <div class="form-group">
+                                                        <h:inputText value="#{askOpinionBean.mail}" id="askOpinionMailInput" class="form-control" pt:placeholder="Adresse mail" binding="#{askOpinionBean.emailComponent}"/>
+                                                        <h:commandButton value="Envoyer la demande" class="btn btn-info" id="askOpinionButton" onclick="showRepondre('askOpinionDiv')" action="#{askOpinionBean.send()}">
+                                                            <f:ajax render=":pmessage"/>
+                                                        </h:commandButton>
+                                                    </div>
+                                                </h:form>
+                                            </div>
                                             <a id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Signaler</a>
                                             <div id="reportFiche" style="display:none">
                                                 <h:form id="reportFicheForm">   
@@ -200,15 +203,6 @@
                                                         <h:commandButton value="Valider" class="btn btn-danger" id="reportFicheButton" onclick="showRepondre('reportFiche')" action="#{reportBean.reportFiche()}">
                                                             <f:ajax render=":pmessage"/>
                                                         </h:commandButton>
-                                                    </div>
-                                                </h:form>
-                                            </div>
-                                            <a id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Inviter à laisser un avis</a>
-                                            <div id="askOpinionDiv" style="display:none">
-                                                <h:form id="askOpinionForm"> 
-                                                    <div class="form-group">
-                                                        <h:inputText value="#{askOpinionBean.mail}" id="askOpinionMail2" pt:placeholder="Adresse mail"/>
-                                                        <h:commandButton value="Envoyer la demande" class="btn btn-info" id="askOpinionButton2" onclick="showRepondre('askOpinionDiv')" action="#{askOpinionBean.send()}"/>
                                                     </div>
                                                 </h:form>
                                             </div>

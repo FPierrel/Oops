@@ -13,13 +13,12 @@ import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "askOpinionBean")
 @ViewScoped
-public class AskOpinionBean implements Serializable{
+public class AskOpinionBean implements Serializable {
 
     @Inject
     MailManagerBean mMB;
 
-    private String mail;
-    private String feedback = "";
+    private String mail ;
     private UIComponent emailComponent;
     private String page;
 
@@ -34,14 +33,6 @@ public class AskOpinionBean implements Serializable{
         this.mail = mail;
     }
 
-    public String getFeedback() {
-        return feedback;
-    }
-
-    public void setFeedback(String feedback) {
-        this.feedback = feedback;
-    }
-
     public UIComponent getEmailComponent() {
         return emailComponent;
     }
@@ -50,21 +41,22 @@ public class AskOpinionBean implements Serializable{
         this.emailComponent = emailComponent;
     }
 
-    public String send() {
+    public void send() {
         System.out.println("************ SEND ******************");
         FacesContext context = FacesContext.getCurrentInstance();
-        if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", this.mail)) {
-            FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
+        System.out.println(mail);
+        if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.mail)) {
+            FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Format adresse mail non valide, veuillez recommencer !", null);
             context.addMessage(this.emailComponent.getClientId(), fM);
-            return "fiche.xhtml?page"+page;
         }
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        if (mMB.sendAskOpinion(request.getRemoteUser(), mail, "http://pi-r-l.ovh:8080/Oops-web/"+"?page="+page)) {
-            feedback = "Message envoyé";
+        if (mMB.sendAskOpinion(request.getRemoteUser(), mail, "http://pi-r-l.ovh:8080/Oops-web/" + "?page=" + page)) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "L'invitation a bien été envoyé !", null);
+            context.addMessage(null, message);
         } else {
-            feedback = "Ce mail ne correspond à personne inscrit sur le site";
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Cette adresse n'est associée à aucun utilisateur du site !", null);
+            context.addMessage(null, message);
         }
-        return "fiche.xhtml?page"+page;
     }
 
     public String getPage() {
@@ -75,5 +67,4 @@ public class AskOpinionBean implements Serializable{
         this.page = page;
     }
 
-    
 }
