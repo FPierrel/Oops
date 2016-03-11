@@ -81,8 +81,6 @@ public class AlbumBean implements Serializable {
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String login = request.getRemoteUser();
 
-        System.out.println(login);
-
         album.setLogin(login);
 
         albumEM.addAlbum(album, login);

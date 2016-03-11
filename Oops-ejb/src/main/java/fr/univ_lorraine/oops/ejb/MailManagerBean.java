@@ -35,7 +35,6 @@ public class MailManagerBean {
         props.put("mail.smtp.host", host);
         props.put("mail.smtp.port", "25");
 
-        System.out.println("target mail : " + targetMail);
         Session session = Session.getInstance(props,
                 new javax.mail.Authenticator() {
                     protected PasswordAuthentication getPasswordAuthentication() {
@@ -69,7 +68,6 @@ public class MailManagerBean {
 
     public boolean sendAskOpinion(String user, String targetMail, String url) {
         if (ud.mailExist(targetMail)) {
-            System.out.println("SessionBean : mail ok ");
             String from = "oops@pi-r-l.ovh";
             final String username = "oops@pi-r-l.ovh";
             final String password = "oops_password";
@@ -101,7 +99,6 @@ public class MailManagerBean {
                 throw new RuntimeException(e);
             }
         }
-        System.out.println("SessionBean : mail pas ok ");
         return false;
     }
     

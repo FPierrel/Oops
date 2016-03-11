@@ -96,7 +96,7 @@ public class ReportBean implements Serializable {
     }
 
     public void setPhoto(Photo photo) {
-        options = true;
+        options = !options;
         this.photo = photo;
     }
         
