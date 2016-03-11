@@ -60,7 +60,7 @@
                                     </div>
                                 </div>
                                 <div class='col-sm-4 col-sm-offset-1'>
-                                    
+
                                     <div class="form-group">
                                         <h:selectManyMenu id="allCategories" class="selectpicker" value="#{searchBean.categories}"
                                                           pt:multiple="" pt:data-live-search="true" pt:data-selected-text-format="count > 3"
@@ -149,6 +149,14 @@
                             }
                         });
                     </script>
+                    <script src="js/bootstrap-select.min.js"/>
+                    <script>
+                        $('.selectpicker').val(#{searchBean.toJavascriptArray()});
+                        $('.selectpicker').selectpicker({
+                            style: 'btn-default',
+                            size: 6
+                        });
+                    </script>
                 </h:panelGroup>
             </h:form>
         </div>
@@ -166,7 +174,7 @@
                         });
 
                         dataSource.initialize();
-                        
+
                         $('.typeahead').typeahead({
                             hint: true,
                             highlight: true,
@@ -176,14 +184,6 @@
                             displayKey: 'value',
                             source: dataSource.ttAdapter()
                         });
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.10.0/js/bootstrap-select.min.js"/>
-    <script>
-        $('.selectpicker').val(#{searchBean.toJavascriptArray()});
-        $('.selectpicker').selectpicker({
-            style: 'btn-default',
-            size: 6
-        });
     </script>
 </ui:composition>
 
