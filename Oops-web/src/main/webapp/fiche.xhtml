@@ -26,6 +26,7 @@
         <link href="css/main.css" rel="stylesheet"/>
         <link rel="stylesheet" href="http://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.2.0/css/font-awesome.min.css"/>
         <link href="css/starrr.css" rel="stylesheet"/>
+        <link rel="stylesheet" href="css/typeahead.css"/>
         <!--[if lt IE 9]>
         <script src="js/html5shiv.js"></script>
         <script src="js/respond.min.js"></script>
@@ -120,22 +121,6 @@
                             <div class="blog-item">
                                 <img class="img-responsive img-blog" src="images/blog/blog2.jpg" width="100%" alt="" />
                                 <div class="blog-content">
-
-                                    <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
-                                        <p:commandButton rendered="#{!reportBean.banished}" actionListener="#{reportBean.banishPrestataire()}" value="Bannir" ><f:ajax render="banish"/></p:commandButton> <p:commandButton rendered="#{reportBean.banished}" actionListener="#{reportBean.redeemPrestataire()}" value="Gracier" ><f:ajax render="banish"/></p:commandButton>
-                                    </h:form>
-
-                                    <h:form id="reportFiche" rendered="#{request.remoteUser != null}"> 
-                                        <p:commandLink id="reportFiche" onclick="PF('toggleReportFiche').toggle()" value="Signaler cette fiche"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre signalement sera bientôt traité par un administrateur</p:panel>
-                                        <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleReportFiche">
-                                            <h:selectOneMenu id="reasons" value="#{reportBean.reason}" required = "true" > 
-                                                <f:selectItems value="#{reportBean.reasons}"/>
-                                            </h:selectOneMenu><br/>
-                                            <p:inputTextarea value="#{reportBean.complement}" id="reportFicheReason" placeholder="Complément"/>
-                                            <br/><p:commandButton value="Signaler" id="reportFicheButton" onclick="PF('toggleReportFiche').toggle();
-                                                    PF('toggleReported').toggle()" actionListener="#{reportBean.reportFiche()}"/>
-                                        </p:panel>
-                                    </h:form>
                                     <h:form id="askOpinion" rendered="#{request.remoteUser != null}"> 
                                         <p:commandLink id="askOpinion" onclick="PF('toggleAskOpinion').toggle()" value="Inviter un soumissionnaire à donner son avis"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre message a été envoyé</p:panel>
                                         <p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" closable="true" widgetVar="toggleAskOpinion">
@@ -145,7 +130,29 @@
                                         </p:panel>
                                     </h:form>
                                     <h:form id="formNotes">
-                                        <h3><h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/></h3>
+                                        <h3>
+                                            <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/>
+                                            <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
+                                                <h:commandLink class="btn btn-danger" rendered="#{!reportBean.banished}" action="#{reportBean.banishPrestataire()}" value="Bannir">
+                                                    <f:ajax render="@form"/>
+                                                </h:commandLink>
+                                                <h:commandLink class="btn btn-danger" rendered="#{reportBean.banished}" action="#{reportBean.redeemPrestataire()}" value="Gracier" >
+                                                    <f:ajax render="@form"/>
+                                                </h:commandLink>
+                                            </h:form>
+                                            <a id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Signaler</a>
+                                            <div id="reportFiche" style="display:none">
+                                                <h:form id="reportFicheForm"> 
+                                                    <div class="form-group">
+                                                        <h:selectOneMenu id="reasons" class="form-control" value="#{reportBean.reason}" required = "true" > 
+                                                            <f:selectItems value="#{reportBean.reasons}"/>
+                                                        </h:selectOneMenu>
+                                                        <h:inputTextarea value="#{reportBean.complement}" style="resize:none" id="reportFicheReason" class="form-control" pt:placeholder="Complément..."/>
+                                                        <h:commandButton value="Valider" class="btn btn-danger" id="reportFicheButton" onclick="showRepondre('reportFiche')" action="#{reportBean.reportFiche()}"/>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                        </h3>
                                         <div class='starrr' id="star_moyenne"></div><h:outputText value=" (#{ficheBean.noteTotal})"/>
                                         <div class="entry-meta">
                                             <span><i class="icon-user"></i><h:outputText value=" #{ficheBean.prestataire.prenom} #{ficheBean.prestataire.nom}"/></span>
@@ -191,7 +198,7 @@
                                                 <h:form id="lAvis#{loop.index}">
                                                     <div class="media">
                                                         <div class="pull-left">
-                                                            <img class="avatar img-circle" src="images/blog/avatar1.png" alt=""/>
+                                                            <img class="avatar img-circle" src="images/blog/avatar3.png" alt=""/>
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="well well-avis">
