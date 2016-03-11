@@ -51,6 +51,7 @@ public class AskOpinionBean implements Serializable{
     }
 
     public String send() {
+        System.out.println("************ SEND ******************");
         FacesContext context = FacesContext.getCurrentInstance();
         if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", this.mail)) {
             FacesMessage fM = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
