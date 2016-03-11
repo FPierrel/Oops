@@ -49,89 +49,113 @@
             </div>
         </section>
 
-        <div class="row">           
-            <div class="col-md-offset-2"  style="margin-top: 2%; margin-bottom: 2%;">
-                <h:link class="btn btn-default" value="Retour aux albums" outcome="albums"/>
-            </div>
+        <section id="testimonial" class="normal">
+            <div class="container">
 
-            <div class="col-md-offset-2 col-md-8">
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Gérer l'album</h3>
+                <div class="row">           
+                    <div class="col-md-offset-2"  style="margin-top: 2%; margin-bottom: 2%;">
+                        <h:link class="btn btn-default" value="Retour aux albums" outcome="albums"/>
                     </div>
 
-                    <div class="panel-body">
-                        <h:form>
-                            <p:fileUpload  update="photos" 
-                                           fileUploadListener="#{photoBean.handleFileUpload}" 
-                                           mode="advanced" 
-                                           dragDropSupport="true"
-                                           sizeLimit="10000000" 
-                                           fileLimit="10"  
-                                           allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
+                    <div class="col-md-offset-2 col-md-8">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Gérer l'album</h3>
+                            </div>
 
-                                           />
-                        </h:form>
+                            <div class="panel-body">
+                                <h:form>
+                                    <p:fileUpload  update="photos" 
+                                                   fileUploadListener="#{photoBean.handleFileUpload}" 
+                                                   mode="advanced" 
+                                                   dragDropSupport="true"
+                                                   sizeLimit="10000000" 
+                                                   fileLimit="10"  
+                                                   allowTypes="/(\.|\/)(gif|jpe?g|png)$/"
 
-                        <div class="row">
-                            <h:panelGroup id="photos">
-                                <h:form id="bonjour">
-                                    <c:if test="#{photoBean.photos.size() != 0}">
-                                        <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
-                                            <div class="carousel-inner" role="listbox" >
+                                                   />
+                                </h:form>
 
-                                                <ui:repeat value="#{photoBean.photos}" var="photo" varStatus="loop">   
-                                                    <h:panelGroup rendered="#{loop.index == 0}">
-                                                        <div class="item active center">                                          
-                                                            <p:commandLink action="#{photoBean.setOptions(photo)}" update=":options">
-                                                                <img class="img-responsive center" src="#{photo.photoBase64}" alt=""/>
-                                                            </p:commandLink>
-                                                        </div>
+                                <div class="row">
+                                    <h:panelGroup id="photos">
+                                        <h:form id="bonjour">
+                                            <c:if test="#{photoBean.photos.size() != 0}">
+                                                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                                                    <div class="carousel-inner" role="listbox" >
+
+                                                        <ui:repeat value="#{photoBean.photos}" var="photo" varStatus="loop">   
+                                                            <h:panelGroup rendered="#{loop.index == 0}">
+                                                                <div class="item active">                                          
+                                                                    <p:commandLink action="#{photoBean.setOptions(photo)}" update=":options">
+                                                                        <img style="width:auto; height:500px; max-height: 500px; margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
+                                                                    </p:commandLink>
+                                                                    <div class="carousel-caption">
+                                                                        #{photo.description}
+                                                                    </div>
+                                                                </div>
+                                                            </h:panelGroup>
+                                                            <h:panelGroup rendered="#{loop.index != 0}">
+                                                                <div class="item center">                                          
+                                                                    <p:commandLink action="#{photoBean.setOptions(photo)}" update=":options">
+                                                                        <img style="width:auto; height:500px; max-height: 500px; margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
+                                                                    </p:commandLink>
+                                                                    <div class="carousel-caption">
+                                                                        #{photo.description}
+                                                                    </div>
+                                                                </div>
+                                                            </h:panelGroup>
+                                                        </ui:repeat>
+                                                    </div>
+
+                                                    <!-- Left and right controls -->
+                                                    <h:panelGroup>
+                                                        <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
+                                                            <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <f:ajax event="click" listener="#{photoBean.resetOptions()}" render=":options"/>
                                                     </h:panelGroup>
-                                                    <h:panelGroup rendered="#{loop.index != 0}">
-                                                        <div class="item center">                                          
-                                                            <p:commandLink action="#{photoBean.setOptions(photo)}" update=":options">
-                                                                <img class="img-responsive center" src="#{photo.photoBase64}" alt=""/>
-                                                            </p:commandLink>
-                                                        </div>
+                                                    <h:panelGroup>
+                                                        <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
+                                                            <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                        <f:ajax event="click" listener="#{photoBean.resetOptions()}" render=":options"/>
                                                     </h:panelGroup>
-                                                </ui:repeat>
-                                            </div>
+                                                </div>
+                                            </c:if>
+                                        </h:form>                          
+                                    </h:panelGroup>
+                                </div>
 
-                                            <!-- Left and right controls -->
-                                            <h:panelGroup>
-                                                <a class="left carousel-control" href="#myCarousel" role="button" data-slide="prev">
-                                                    <span class="glyphicon glyphicon-chevron-left" aria-hidden="true"></span>
-                                                    <span class="sr-only">Previous</span>
-                                                </a>
-                                                <f:ajax event="click" listener="#{photoBean.resetOptions()}" render=":options"/>
-                                            </h:panelGroup>
-                                            <h:panelGroup>
-                                                <a class="right carousel-control" href="#myCarousel" role="button" data-slide="next">
-                                                    <span class="glyphicon glyphicon-chevron-right" aria-hidden="true"></span>
-                                                    <span class="sr-only">Next</span>
-                                                </a>
-                                                <f:ajax event="click" listener="#{photoBean.resetOptions()}" render=":options"/>
-                                            </h:panelGroup>
+                                <br/>
+
+
+                                <h:form id="options">
+                                    <h:panelGroup id="wrap" rendered="#{photoBean.options}">
+                                        <div class="row col-md-offset-0">
+                                            <p:commandButton class="btn btn-danger pull-right col-md-pull-1" action="#{photoBean.deletePhoto()}" value="Supprimer" update=":bonjour options"/>
                                         </div>
-                                    </c:if>
-                                </h:form>                          
-                            </h:panelGroup>
-                        </div>
+                                        <br/>
 
-                        <br/>
-
-                        <div class="row col-md-offset-0 top-buffer">
-                            <h:form id="options">
-                                <h:panelGroup id="wrap" rendered="#{photoBean.options}">
-                                    <p:commandButton class="btn btn-danger" action="#{photoBean.deletePhoto()}" value="Supprimer" update=":bonjour options"/>
-                                </h:panelGroup>
-                            </h:form>
+                                        <div class="form-group">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <h:inputTextarea value="#{photoBean.description}" class="form-control" rows="5" id="desc" style="resize: none;"/>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <p:commandButton action="#{photoBean.modifyDesc()}" class="btn btn-success col-md-offset-0" value="Modifier la description" update=":bonjour options"/>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </h:panelGroup>
+                                </h:form>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
         <ui:include src="footer.xhtml"/>
         <script src="js/bootstrap.min.js"></script>

@@ -15,6 +15,7 @@ import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.extensions.model.fluidgrid.FluidGridItem;
+import org.primefaces.model.UploadedFile;
 
 @Named(value = "photoBean")
 @ViewScoped
@@ -31,23 +32,28 @@ public class PhotoBean implements Serializable {
     private Photo first;
     private boolean options = false;
     private Photo photoToDelete;
+    private UploadedFile file;
+    private String description;
 
     public PhotoBean() {
     }
 
-    public void init() throws IOException {
+    public void init(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
 
         this.album = this.albumEM.getAlbum(this.idAlbum, request.getRemoteUser());
 
         this.defaultAlbum = this.albumEM.getDefault(request.getRemoteUser());
-        this.photos = album.getPhotos();    
+        this.photos = album.getPhotos();
     }
 
     public void initAlternative() {
-        this.defaultAlbum = this.albumEM.getDefault(page);
-        this.photos = this.defaultAlbum.getPhotos();
+        this.album = this.albumEM.getDefault(page);
+        
+        if(this.album != null){
+            this.photos = this.album.getPhotos();
+        }
     }
 
     public long getIdAlbum() {
@@ -107,9 +113,14 @@ public class PhotoBean implements Serializable {
         this.page = page;
     }
 
-    public void deletePhoto() throws Exception {
+    public void deletePhoto(){
         this.options = false;
         this.albumEM.deletePhoto(this.album, this.photoToDelete);
+    }
+    
+    public void modifyDesc(){
+        this.options = false;
+        this.albumEM.updatePhotoDesc(this.photoToDelete, this.description);
     }
 
     public Photo getFirst() {
@@ -123,18 +134,54 @@ public class PhotoBean implements Serializable {
     public boolean getOptions() {
         return options;
     }
-    
-    public void setOptions(Photo p) {         
-        this.photoToDelete = p;  
-        if(this.photoToDelete.equals(p)){
+
+    public void setOptions(Photo p) {
+        this.photoToDelete = p;
+        this.description = this.photoToDelete.getDescription();
+        
+        if (this.photoToDelete.equals(p)) {
             this.options = !options;
         }
     }
-    
-    public void resetOptions() throws Exception{
+
+    public void resetOptions() throws Exception {
         this.photoToDelete = null;
         this.options = false;
     }
+
+    public UploadedFile getFile() {
+        return file;
+    }
+
+    public void setFile(UploadedFile file) {
+        this.file = file;
+    }
+
+    public void upload() {
+        if (file != null) {
+            Photo p = new Photo();
+            p.setNomPhoto(this.file.getFileName());
+            p.setPhoto(this.getFile().getContents());
+            this.albumEM.addPhoto(p, this.album.getId());
+        }
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Album getDefaultAlbum() {
+        return defaultAlbum;
+    }
+
+    public void setDefaultAlbum(Album defaultAlbum) {
+        this.defaultAlbum = defaultAlbum;
+    }
+    
     
 
 }

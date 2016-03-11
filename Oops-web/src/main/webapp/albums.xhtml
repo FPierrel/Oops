@@ -47,59 +47,63 @@
             </div>
         </section>
 
-        <div id="featured-wrapper" style="margin-top: 2%;">
-            <div id ="content">
-                <div id="featured" class="container">                 
-                    <h:form >                      
-                        <div class="panel panel-default">
+        <section id="testimonial" class="normal">
+            <div class="container">
 
-                            <div class="panel-heading">
-                                <h3 class="panel-title">Mes albums</h3>
-                            </div>
+                <div id="featured-wrapper" style="margin-top: 2%;">
+                    <div id ="content">
+                        <div id="featured" class="container">                 
+                            <h:form >                      
+                                <div class="panel panel-default">
 
-                            <div class="panel-body">     
-
-                                    <div class="form-group">
-                                        <label for="name">Nom</label>
-                                        <h:inputText class="form-control" id="name" value="#{albumBean.nomAlbum}"/>
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">Mes albums</h3>
                                     </div>
-                                    <p:commandButton style="margin-bottom: 2%;" value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums"/>  
-                                <!--<div class="row col-md-offset-0">
 
-                                    <label class="col-md-2" for="in">Nom de l'album : </label>
-                                    <h:inputText class="col-md-2" id="in" value="#{albumBean.nomAlbum}"/>
-                                    <p:commandButton value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums"/>   
-                                </div>-->
+                                    <div class="panel-body">     
+
+                                        <div class="form-group">
+                                            <label for="name">Nom</label>
+                                            <h:inputText class="form-control" id="name" value="#{albumBean.nomAlbum}"/>
+                                        </div>
+                                        <p:commandButton style="margin-bottom: 2%;" value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums"/>  
+                                        <!--<div class="row col-md-offset-0">
+        
+                                            <label class="col-md-2" for="in">Nom de l'album : </label>
+                                            <h:inputText class="col-md-2" id="in" value="#{albumBean.nomAlbum}"/>
+                                            <p:commandButton value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums"/>   
+                                        </div>-->
 
 
 
-                                <h:panelGroup id="albums" >
-                                    <c:if test="#{albumBean.albums.size() != 0}">
-                                        <h:dataTable  value="#{albumBean.albums}" var="album" border="1" cellpadding="10" width="100%">
-                                            <h:column>
-                                                <h:outputText value="#{album.nom}"/>
-                                            </h:column>
-                                            <h:column>
-                                                <h:outputText value="#{album.photos.size()} photo(s)"/>
-                                            </h:column>
-                                            <h:column>        
-                                                <h:link outcome="album.xhtml">
-                                                    <f:param name="id" value="#{album.id}"/>
-                                                    <h:outputText value="Accéder à l'album"/>
-                                                </h:link>
-                                            </h:column>
-                                            <h:column>
-                                                <p:commandButton action="#{albumBean.deleteAlbum(album)}" value="Supprimer l'album" update="@all"/>
-                                            </h:column>
-                                        </h:dataTable>
-                                    </c:if>
-                                </h:panelGroup>
-                            </div>
+                                        <h:panelGroup id="albums" >
+                                            <c:if test="#{albumBean.albums.size() != 0}">
+                                                <h:dataTable  value="#{albumBean.albums}" var="album" border="1" cellpadding="10" width="100%">
+                                                    <h:column>
+                                                        <h:outputText value="#{album.nom}"/>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <h:outputText value="#{album.photos.size()} photo(s)"/>
+                                                    </h:column>
+                                                    <h:column>        
+                                                        <h:link outcome="album.xhtml">
+                                                            <f:param name="id" value="#{album.id}"/>
+                                                            <h:outputText value="Accéder à l'album"/>
+                                                        </h:link>
+                                                    </h:column>
+                                                    <h:column>
+                                                        <p:commandButton action="#{albumBean.deleteAlbum(album)}" value="Supprimer l'album" update="@all"/>
+                                                    </h:column>
+                                                </h:dataTable>
+                                            </c:if>
+                                        </h:panelGroup>
+                                    </div>
+                                </div>
+                            </h:form>
                         </div>
-                    </h:form>
+                    </div>
                 </div>
-            </div>
-        </div>
+            </div></section>
 
         <ui:include src="footer.xhtml"/>
         <script src="js/bootstrap.min.js"></script>
