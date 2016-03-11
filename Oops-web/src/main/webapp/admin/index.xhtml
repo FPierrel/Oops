@@ -118,6 +118,9 @@
                                         <h:outputText id="complement" value="#{report.complement}"/>
                                     </h:column>
                                     <h:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Photo" />
+                                        </f:facet>
                                         <a href="#{report.photo.photoBase64}"><img src="#{report.photo.photoBase64}" style="max-width: 300px"/></a>
                                     </h:column>
                                     <h:column>

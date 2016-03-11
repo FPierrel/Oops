@@ -27,8 +27,8 @@ public class SearchBean implements Serializable {
     private List<Prestataire> prestataires = new ArrayList<>();
     private List<String> villes = new ArrayList<>();
     private String choix;
+    private List<String> allCategories = new ArrayList<>();
     private List<String> categories = new ArrayList<>();
-    private String categorie;
     private List<String> codes = new ArrayList<>();
     private String code;
     private List<Prestataire> listPrestataires;
@@ -52,7 +52,7 @@ public class SearchBean implements Serializable {
             this.advanced = false;
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categorie);
+            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categories);
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
@@ -237,20 +237,21 @@ public class SearchBean implements Serializable {
         }
     }
 
+    public List<String> getAllCategories() {
+        allCategories = this.categoriesB.getListCategories();
+        return allCategories;
+    }
+
+    public void setAllCategories(List<String> categories) {
+        this.allCategories = categories;
+    }
+
     public List<String> getCategories() {
-        return this.categoriesB.getListCategories();
+        return categories;
     }
 
-    public void setCategories(ArrayList<String> categories) {
+    public void setCategories(List<String> categories) {
         this.categories = categories;
-    }
-
-    public String getCategorie() {
-        return categorie;
-    }
-
-    public void setCategorie(String categorie) {
-        this.categorie = categorie;
     }
 
     public List<String> getCodes() {
@@ -273,4 +274,17 @@ public class SearchBean implements Serializable {
         this.code = code;
     }
 
+    public String toJavascriptArray() {
+        String[] arr = this.categories.toArray(new String[0]);
+        StringBuilder sb = new StringBuilder();
+        sb.append("[");
+        for (int i = 0; i < arr.length; i++) {
+            sb.append("\"").append(arr[i]).append("\"");
+            if (i + 1 < arr.length) {
+                sb.append(",");
+            }
+        }
+        sb.append("]");
+        return sb.toString();
+    }
 }

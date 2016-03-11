@@ -45,7 +45,7 @@
         <section id="blog" class="normal">
             <div class="container">
                 <div class="row">
-                    <p:messages />
+                    <p:messages id="pmessage" />
                     <aside class="col-sm-4 col-sm-push-8">
 
                         <div class="widget tags">
@@ -113,8 +113,10 @@
                                                 <div class="carousel-inner"  role="listbox" >
                                                     <ui:repeat value="#{photoBean.photos}" var="photo" varStatus="loop">   
                                                         <h:panelGroup rendered="#{loop.index == 0}">
-                                                            <div class="item active">                                          
-                                                                <img style="width:auto; height:300px; max-height: 300px; margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
+                                                            <div class="item active"> 
+                                                                <p:commandLink action="#{reportBean.setPhoto(photo)}" update=":reportPhoto">
+                                                                    <img style="width:auto; height:300px; max-height: 300px; margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
+                                                                </p:commandLink>
                                                                 <div class="carousel-caption">
                                                                     #{photo.description}
                                                                 </div>
@@ -122,9 +124,9 @@
                                                         </h:panelGroup>
                                                         <h:panelGroup rendered="#{loop.index != 0}">
                                                             <div class="item">                                          
-
-                                                                <img style="width:auto; height:300px; max-height:300px;margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
-
+                                                                <p:commandLink action="#{reportBean.setPhoto(photo)}" update=":reportPhoto">
+                                                                    <img style="width:auto; height:300px; max-height:300px;margin: auto;" class="img-responsive" src="#{photo.photoBase64}" alt=""/>
+                                                                </p:commandLink>
                                                                 <div class="carousel-caption">
                                                                     #{photo.description}
                                                                 </div>
@@ -152,6 +154,21 @@
                                         </c:if>
                                     </h:form>                          
                                 </h:panelGroup>
+
+                                <h:form id="reportPhoto">
+                                    <h:panelGroup id="wrap" rendered="#{reportBean.options and request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">
+                                        <div class="form-group">
+                                            <h:selectOneMenu id="reasons" class="form-control" value="#{reportBean.reason}" required = "true" > 
+                                                <f:selectItems value="#{reportBean.photosReasons}"/>
+                                            </h:selectOneMenu>
+                                            <h:inputTextarea value="#{reportBean.complement}" style="resize:none" id="reportPhotoReason" class="form-control" pt:placeholder="Complément..."/>
+                                            <h:commandButton value="Signaler" class="btn btn-danger" id="reportPhotoButton" actionListener="#{reportBean.reportPhoto()}">
+                                                <f:ajax render="reportPhoto :pmessage"/>
+                                            </h:commandButton>
+                                        </div>
+                                    </h:panelGroup>
+                                </h:form>
+
                                 <div class="blog-content">
                                     <h:form id="askOpinion" rendered="#{request.remoteUser != null}"> 
                                         <p:commandLink id="askOpinion" onclick="PF('toggleAskOpinion').toggle()" value="Inviter un soumissionnaire à donner son avis"/><p:panel style="background-color:#ededed; border:0px" collapsed="true" toggleable="true" widgetVar="toggleReported">Votre message a été envoyé</p:panel>
@@ -174,13 +191,24 @@
                                             </h:form>
                                             <a id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Signaler</a>
                                             <div id="reportFiche" style="display:none">
-                                                <h:form id="reportFicheForm"> 
+                                                <h:form id="reportFicheForm">   
                                                     <div class="form-group">
                                                         <h:selectOneMenu id="reasons" class="form-control" value="#{reportBean.reason}" required = "true" > 
                                                             <f:selectItems value="#{reportBean.reasons}"/>
                                                         </h:selectOneMenu>
                                                         <h:inputTextarea value="#{reportBean.complement}" style="resize:none" id="reportFicheReason" class="form-control" pt:placeholder="Complément..."/>
-                                                        <h:commandButton value="Valider" class="btn btn-danger" id="reportFicheButton" onclick="showRepondre('reportFiche')" action="#{reportBean.reportFiche()}"/>
+                                                        <h:commandButton value="Valider" class="btn btn-danger" id="reportFicheButton" onclick="showRepondre('reportFiche')" action="#{reportBean.reportFiche()}">
+                                                            <f:ajax render=":pmessage"/>
+                                                        </h:commandButton>
+                                                    </div>
+                                                </h:form>
+                                            </div>
+                                            <a id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Inviter à laisser un avis</a>
+                                            <div id="askOpinionDiv" style="display:none">
+                                                <h:form id="askOpinionForm"> 
+                                                    <div class="form-group">
+                                                        <h:inputText value="#{askOpinionBean.mail}" id="askOpinionMail2" pt:placeholder="Adresse mail"/>
+                                                        <h:commandButton value="Envoyer la demande" class="btn btn-info" id="askOpinionButton2" onclick="showRepondre('askOpinionDiv')" action="#{askOpinionBean.send()}"/>
                                                     </div>
                                                 </h:form>
                                             </div>
@@ -439,3 +467,7 @@
         </script>
     </h:body>
 </html>
+
+
+
+
