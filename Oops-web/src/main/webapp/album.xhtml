@@ -134,6 +134,8 @@
                                 <h:form id="options">
                                     <h:panelGroup id="wrap" rendered="#{photoBean.options}">
                                         <div class="row col-md-offset-0">
+                                            <p:commandButton class="btn btn-info" action="#{photoBean.chooseAsProfilePicture()}" value="Choisir comme photo de profil" update=":bonjour options"/>
+
                                             <p:commandButton class="btn btn-danger pull-right col-md-pull-1" action="#{photoBean.deletePhoto()}" value="Supprimer" update=":bonjour options"/>
                                         </div>
                                         <br/>

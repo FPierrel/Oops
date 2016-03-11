@@ -118,6 +118,12 @@ public class PhotoBean implements Serializable {
         this.albumEM.deletePhoto(this.album, this.photoToDelete);
     }
     
+    public void chooseAsProfilePicture(){
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        this.albumEM.setProfilePicture(request.getRemoteUser(), this.photoToDelete);
+    }
+    
     public void modifyDesc(){
         this.options = false;
         this.albumEM.updatePhotoDesc(this.photoToDelete, this.description);
@@ -181,6 +187,8 @@ public class PhotoBean implements Serializable {
     public void setDefaultAlbum(Album defaultAlbum) {
         this.defaultAlbum = defaultAlbum;
     }
+    
+
     
     
 

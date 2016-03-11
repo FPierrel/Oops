@@ -29,6 +29,7 @@ public class Prestataire extends Utilisateur implements Serializable {
     private Collection<Avis> cAvis = new ArrayList<>();
     @OneToMany(cascade = CascadeType.ALL)
     private List<Album> albums = new ArrayList<>();
+    private Photo profilePicture;
 
     private int communication, quality, price, delay, average;
 
@@ -207,4 +208,14 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void deleteAlbum(Album album) {
         this.albums.remove(album);
     }
+
+    public Photo getProfilePicture() {
+        return profilePicture;
+    }
+
+    public void setProfilePicture(Photo profilePicture) {
+        this.profilePicture = profilePicture;
+    }
+    
+    
 }

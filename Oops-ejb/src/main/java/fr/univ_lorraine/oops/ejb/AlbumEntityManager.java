@@ -106,5 +106,11 @@ public class AlbumEntityManager {
         p.setDescription(description);
         pd.update(p);
     }
+
+    public void setProfilePicture(String remoteUser, Photo photoToDelete) {
+        Prestataire p = presd.get(remoteUser);
+        p.setProfilePicture(photoToDelete);
+        presd.update(p);
+    }
 }
 
