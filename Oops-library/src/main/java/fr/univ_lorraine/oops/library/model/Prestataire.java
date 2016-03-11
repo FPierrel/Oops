@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -18,7 +19,9 @@ public class Prestataire extends Utilisateur implements Serializable {
 
     private static final long serialVersionUID = 1L;
     public final static String prestataire = "PRESTATAIRE";
-    private String nomEntreprise, description, siteWeb;
+    private String nomEntreprise, siteWeb;
+    @Column(length=5000)
+    private String description; 
     private int nbEmployes, chiffreAffaire;
     @OneToMany
     private Collection<Categorie> categories;
