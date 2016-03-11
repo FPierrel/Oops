@@ -158,16 +158,26 @@
                                         </fieldset>
                                         <fieldset>
                                             <legend>Evaluation</legend>
-                                            <h:inputHidden id="moyenne" value="#{ficheBean.noteTotal}"/>
-                                            <p>Moyenne : </p><div class='starrr' id="eval_moyenne"/><h:outputText value=" (#{ficheBean.noteTotal})"/>
-                                            <h:inputHidden id="communication" value="#{ficheBean.noteGlobCom}"/>
-                                            <p>Communication : </p><div class='starrr' id="eval_communication"></div><h:outputText value=" (#{ficheBean.noteGlobCom})"/>
-                                            <h:inputHidden id="delai" value="#{ficheBean.noteGlobDelai}"/>
-                                            <p>Délai : </p><div class='starrr' id="eval_delai"></div><h:outputText value=" (#{ficheBean.noteGlobDelai})"/>
-                                            <h:inputHidden id="prix" value="#{ficheBean.noteGlobPrix}"/>
-                                            <p>Prix : </p><div class='starrr' id="eval_prix"></div><h:outputText value=" (#{ficheBean.noteGlobPrix})"/>
-                                            <h:inputHidden id="qualite" value="#{ficheBean.noteGlobQualite}"/>
-                                            <p>Qualité : </p><div class='starrr' id="eval_qualite"></div><h:outputText value=" (#{ficheBean.noteGlobQualite})"/>
+                                            <div class="col-sm-6">
+                                                <h:inputHidden id="moyenne" value="#{ficheBean.noteTotal}"/>
+                                                <p>Moyenne : </p><div class='starrr' id="eval_moyenne"/><h:outputText value=" (#{ficheBean.noteTotal})"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <h:inputHidden id="communication" value="#{ficheBean.noteGlobCom}"/>
+                                                <p>Communication : </p><div class='starrr' id="eval_communication"></div><h:outputText value=" (#{ficheBean.noteGlobCom})"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <h:inputHidden id="delai" value="#{ficheBean.noteGlobDelai}"/>
+                                                <p>Délai : </p><div class='starrr' id="eval_delai"></div><h:outputText value=" (#{ficheBean.noteGlobDelai})"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <h:inputHidden id="prix" value="#{ficheBean.noteGlobPrix}"/>
+                                                <p>Prix : </p><div class='starrr' id="eval_prix"></div><h:outputText value=" (#{ficheBean.noteGlobPrix})"/>
+                                            </div>
+                                            <div class="col-sm-6">
+                                                <h:inputHidden id="qualite" value="#{ficheBean.noteGlobQualite}"/>
+                                                <p>Qualité : </p><div class='starrr' id="eval_qualite"></div><h:outputText value=" (#{ficheBean.noteGlobQualite})"/>
+                                            </div>
                                         </fieldset>
                                         <br/>
                                     </h:form>
@@ -194,14 +204,22 @@
                                                                     <h:outputText class="pull-right" value=" &nbsp; "/>
                                                                     <a class="pull-right" href="#repondre_avis" onclick="showRepondre('repondre_avis#{loop.index}')"><i class="icon-repeat"></i> Répondre</a>
                                                                 </div>
-                                                                <h:inputHidden id="a_comm" value="#{cAvis.noteCom}"/>
-                                                                <p>Communication :<div class='starrr' id="avis_comm#{loop.index}"/><h:outputText value=" (#{cAvis.noteCom})"/></p>
-                                                                <h:inputHidden id="a_delai" value="#{cAvis.noteDelai}"/>
-                                                                <p>Délai : <div class='starrr' id="avis_delai#{loop.index}"/><h:outputText value=" (#{cAvis.noteDelai})"/></p>
-                                                                <h:inputHidden id="a_prix" value="#{cAvis.notePrix}"/>
-                                                                <p>Prix : <div class='starrr' id="avis_prix#{loop.index}"/><h:outputText value=" (#{cAvis.notePrix})"/></p>
-                                                                <h:inputHidden id="a_qual" value="#{cAvis.noteQualite}"/>
-                                                                <p>Qualité : <div class='starrr' id="avis_qualite#{loop.index}"/><h:outputText value=" (#{cAvis.noteQualite})"/></p>
+                                                                <div class="col-sm-6">
+                                                                    <h:inputHidden id="a_comm" value="#{cAvis.noteCom}"/>
+                                                                    <p>Communication :<div class='starrr' id="avis_comm#{loop.index}"/><h:outputText value=" (#{cAvis.noteCom})"/></p>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <h:inputHidden id="a_delai" value="#{cAvis.noteDelai}"/>
+                                                                    <p>Délai : <div class='starrr' id="avis_delai#{loop.index}"/><h:outputText value=" (#{cAvis.noteDelai})"/></p>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <h:inputHidden id="a_prix" value="#{cAvis.notePrix}"/>
+                                                                    <p>Prix : <div class='starrr' id="avis_prix#{loop.index}"/><h:outputText value=" (#{cAvis.notePrix})"/></p>
+                                                                </div>
+                                                                <div class="col-sm-6">
+                                                                    <h:inputHidden id="a_qual" value="#{cAvis.noteQualite}"/>
+                                                                    <p>Qualité : <div class='starrr' id="avis_qualite#{loop.index}"/><h:outputText value=" (#{cAvis.noteQualite})"/></p>
+                                                                </div>
                                                                 <hr/>
                                                                 <p><h:outputText id="contenu" value="#{cAvis.contenu}"/></p>
                                                             </div>
@@ -283,7 +301,7 @@
                                                 </div>
                                                 <div class="form-group">
                                                     <div class="col-sm-12">
-                                                        <h:inputTextarea value="#{ficheBean.opinion}" id="opinion" rows="8" class="form-control" pt:placeholder="Commentaire sur la prestation..."/>
+                                                        <h:inputTextarea value="#{ficheBean.opinion}" id="opinion" rows="8" class="form-control" pt:placeholder="Commentaire sur la prestation... (255 caractères maximum)" ><f:validateLength maximum="255"/></h:inputTextarea>
                                                     </div>
                                                 </div>
                                                 <h:commandButton id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}">
