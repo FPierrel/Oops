@@ -8,6 +8,7 @@ import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.io.Serializable;
+import java.util.Date;
 import java.util.regex.Pattern;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Named;
@@ -25,19 +26,19 @@ public class RegistrationBean implements Serializable {
 
     @Inject
     SearchResultsBean searchBean;
-    
+
     @Inject
     PasswordManagerBean pMB;
 
-    private String login, password, confirmPassword, email, phone, companyName, 
-            lastname, firstname, user, number, street, complement, town, 
+    private String login, password, confirmPassword, email, phone, companyName,
+            lastname, firstname, user, number, street, complement, town,
             country, turnover, employee;
-    private boolean prestataire, soumissionnaire;    
-    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent, 
-            emailComponent, phoneComponent, companyNameComponent, lastnameComponent, 
-            firstnameComponent, numberComponent, streetComponent, complementComponent, 
+    private boolean prestataire, soumissionnaire;
+    private UIComponent loginComponent, passwordComponent, confirmPasswordComponent,
+            emailComponent, phoneComponent, companyNameComponent, lastnameComponent,
+            firstnameComponent, numberComponent, streetComponent, complementComponent,
             townComponent, countryComponent, turnoverComponent, employeeComponent;
-    
+
     /**
      * Creates a new instance of RegistrationBean
      */
@@ -332,7 +333,7 @@ public class RegistrationBean implements Serializable {
         }
         if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9]+)*(\\.[A-Za-z]{2,})$", this.email)) {
             FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Adresse mail non valide, veuillez recommencer !", null);
-            context.addMessage(this.emailComponent.getClientId(), message); 
+            context.addMessage(this.emailComponent.getClientId(), message);
             return "inscription.xhtml";
         }
         if (!Pattern.matches("^[A-Z]+([_A-Z-]+)*[ ]*([_A-Z-]+)*[ ]\\(([0-9]{5})+(-[0-9]{5})*\\)$", this.town)) {
@@ -348,6 +349,7 @@ public class RegistrationBean implements Serializable {
         address.setVille(this.town);
         if (this.soumissionnaire) {
             Soumissionnaire s = new Soumissionnaire();
+            s.setInscription(new Date());
             s.setLogin(this.login);
             s.setMotDePasse(pMB.sha256(this.password));
             s.setMail(this.email);
@@ -389,6 +391,7 @@ public class RegistrationBean implements Serializable {
             p.setNomEntreprise(this.companyName);
             p.setChiffreAffaire(turnoverNumber);
             p.setNbEmployes(nbEmployeeNumber);
+            p.setInscription(new Date());
             p.addAdresse(address);
             user = this.userManager.registerUser(p);
         }
@@ -402,5 +405,5 @@ public class RegistrationBean implements Serializable {
             return "index.xhtml";
         }
     }
-    
-    }
+
+}

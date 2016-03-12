@@ -307,6 +307,7 @@ public class InitializationBean {
         prestataire.setNbEmployes(nbEmployes);
         prestataire.setChiffreAffaire(chiffreAffaire);
         prestataire.setAdresses(adresses);
+        prestataire.setInscription(new Date());
         if (login == "jose") {
             prestataire.setGroupe(Administrateur.administrateur);
         }
@@ -323,6 +324,7 @@ public class InitializationBean {
         soumissionnaire.setMail(mail);
         soumissionnaire.setNumeroTelephone(telephone);
         soumissionnaire.setAdresses(adresses);
+        soumissionnaire.setInscription(new Date());
         return soumissionnaire;
     }
 

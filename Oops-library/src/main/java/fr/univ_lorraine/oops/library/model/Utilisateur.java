@@ -3,16 +3,19 @@ package fr.univ_lorraine.oops.library.model;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
+import java.util.Date;
 import java.util.Objects;
 import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public abstract class Utilisateur implements Serializable {
+
     private static final long serialVersionUID = 1L;
     public final static String defaut = "DEFAUT";
     @Id
@@ -23,16 +26,18 @@ public abstract class Utilisateur implements Serializable {
     private String mail;
     private String numeroTelephone;
     protected String groupe;
-    
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date inscription;
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Collection<Adresse> adresses;
-    
+
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private Collection<Report> reports;        
-    
+    private Collection<Report> reports;
+
     private int adminWarnings;
     private boolean banished;
-    
+
     public Utilisateur() {
         this.adresses = new ArrayList<>();
         this.reports = new ArrayList<>();
@@ -93,7 +98,7 @@ public abstract class Utilisateur implements Serializable {
     public void setAdresses(Collection<Adresse> adresses) {
         this.adresses = adresses;
     }
-    
+
     public void addAdresse(Adresse adresse) {
         this.adresses.add(adresse);
     }
@@ -105,11 +110,11 @@ public abstract class Utilisateur implements Serializable {
     public void setReports(Collection<Report> reports) {
         this.reports = reports;
     }
-    
-    public void addReport(Report report){
+
+    public void addReport(Report report) {
         reports.add(report);
     }
-    
+
     public String getGroupe() {
         return groupe;
     }
@@ -132,6 +137,14 @@ public abstract class Utilisateur implements Serializable {
 
     public void setBanished(boolean banished) {
         this.banished = banished;
+    }
+
+    public Date getInscription() {
+        return inscription;
+    }
+
+    public void setInscription(Date inscription) {
+        this.inscription = inscription;
     }
 
     @Override
@@ -159,5 +172,5 @@ public abstract class Utilisateur implements Serializable {
     @Override
     public String toString() {
         return "Utilisateur{" + "login=" + login + ", nom=" + nom + ", prenom=" + prenom + ", motDePasse=" + motDePasse + ", mail=" + mail + ", numeroTelephone=" + numeroTelephone + '}';
-    }   
+    }
 }
