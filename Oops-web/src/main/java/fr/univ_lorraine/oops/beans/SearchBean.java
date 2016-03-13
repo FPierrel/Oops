@@ -43,12 +43,11 @@ public class SearchBean implements Serializable {
         String ville = "";
         String codePostal = "";
         
-        if (this.choix.split(" ").length == 1) {
-            return "results?faces-redirect=true";
-        }
         if(this.choix != null && !this.choix.isEmpty()) {
             ville = this.choix.split(" ")[0];
-            codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
+            if (this.choix.split(" ").length > 1) {
+                codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
+            }
         }
 
         if (this.advanced) {
