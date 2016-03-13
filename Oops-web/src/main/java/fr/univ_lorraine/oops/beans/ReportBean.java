@@ -6,15 +6,15 @@ import fr.univ_lorraine.oops.library.model.Photo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
-import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "reportBean")
-@ViewScoped
+@RequestScoped
 public class ReportBean implements Serializable {
 
     @Inject
@@ -35,6 +35,7 @@ public class ReportBean implements Serializable {
     }
 
     public void reportFiche() {
+        System.out.println("complement = "+complement);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         report.reportFichePrestataire(request.getRemoteUser(), page, reason, complement);

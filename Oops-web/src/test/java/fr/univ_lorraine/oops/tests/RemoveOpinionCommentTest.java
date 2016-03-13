@@ -54,10 +54,10 @@ public class RemoveOpinionCommentTest {
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.id("formOpinion:opinion")).clear();
         int notes[] = {0, 0, 0, 0};
-        driver.findElement(By.id("formOpinion:rate1")).findElements(By.xpath("div")).get(notes[0]).click();
-        driver.findElement(By.id("formOpinion:rate2")).findElements(By.xpath("div")).get(notes[1]).click();
-        driver.findElement(By.id("formOpinion:rate3")).findElements(By.xpath("div")).get(notes[2]).click();
-        driver.findElement(By.id("formOpinion:rate4")).findElements(By.xpath("div")).get(notes[3]).click();
+        driver.findElement(By.id("s_new_a_delai")).findElements(By.xpath("i")).get(notes[0]).click();
+        driver.findElement(By.id("s_new_a_prix")).findElements(By.xpath("i")).get(notes[1]).click();
+        driver.findElement(By.id("s_new_a_comm")).findElements(By.xpath("i")).get(notes[2]).click();
+        driver.findElement(By.id("s_new_a_qual")).findElements(By.xpath("i")).get(notes[3]).click();
         driver.findElement(By.id("formOpinion:opinion")).sendKeys(s);
         driver.findElement(By.id("formOpinion:opinionButton")).click();
         driver.get(host);
@@ -69,12 +69,12 @@ public class RemoveOpinionCommentTest {
         /* Initialisation */
         this.initialisation("testSuppressionAvisSuccess");
         /* Suppression de l'avis */
-        driver.findElement(By.xpath(".//form[last()]/fieldset//button")).click();
+        driver.findElement(By.xpath(".//form[last()]//a[@class='pull-right']")).click();
         /* Test */
         driver.get(host);
         driver.get(host + "/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
-        assertFalse(driver.findElement(By.id("opinions")).getText().contains("testSuppressionAvisSuccess"));
+        assertFalse(driver.findElement(By.id("comments-list")).getText().contains("testSuppressionAvisSuccess"));
     }
 
     @Test
@@ -85,24 +85,25 @@ public class RemoveOpinionCommentTest {
         driver.get(host + "/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);   
         String msg = "testSuppressionCommentSuccess";
-        driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//input")).sendKeys(msg);
-        driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//button")).click();
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//div[@class='media-heading']/a[last()]")).click();
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//input[@placeholder='Réponse']")).sendKeys(msg);
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//div[@class='media-body']/div[last()]/div/a")).click();
         driver.get(host);
         driver.get(host + "/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);   
         /* Verif presence commentaire */ 
-        assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]")).getText().contains(msg));
+        assertTrue(driver.findElement(By.id("comments-list")).getText().contains(msg));
         driver.get(host + "/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         /* Suppression du commentaire */ 
-        driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/fieldset/div/div/button")).click();
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//div[@class='media']//div[@class='media']//div[@class='media-heading']/a")).click();
         driver.get(host);
         driver.get(host + "/fiche.xhtml?page=Oui");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         /* Verif absence commentaire */
-        assertFalse(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]")).getText().contains(msg));
+        assertFalse(driver.findElement(By.id("comments-list")).getText().contains(msg));
         /* Suppression avis */
-        driver.findElement(By.xpath(".//form[last()]/fieldset//button")).click();
+        driver.findElement(By.xpath(".//form[last()]//a[@class='pull-right']")).click();
     }
 
 }

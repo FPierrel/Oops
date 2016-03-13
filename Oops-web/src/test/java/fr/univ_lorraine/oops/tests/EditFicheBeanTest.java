@@ -151,10 +151,11 @@ public class EditFicheBeanTest {
         driver.get(host + "/fiche.xhtml?page=noupi");
         assertFalse(driver.findElement(By.id("categories")).getText().contains("Audit"));
         driver.get(host + "/ficheedit.xhtml");
+        driver.findElement(By.xpath("//button[@data-id='ficheForm:allCategories']")).click();
         List<WebElement> l = driver.findElements(By.xpath("//ul/li"));
         for (WebElement w : l) {
             if (w.getText().equals("Audit")) {
-                w.findElement(By.xpath("div/div/span")).click();
+                w.findElement(By.xpath("./a")).click();
 
             }
         }
@@ -163,10 +164,11 @@ public class EditFicheBeanTest {
         assertTrue(driver.findElement(By.id("categories")).getText().contains("Audit"));
 
         driver.get(host + "/ficheedit.xhtml");
+        driver.findElement(By.xpath("//button[@data-id='ficheForm:allCategories']")).click();
         l = driver.findElements(By.xpath("//ul/li"));
         for (WebElement w : l) {
             if (w.getText().equals("Audit")) {
-                w.findElement(By.xpath("div/div/span")).click();
+                w.findElement(By.xpath("./a")).click();
 
             }
         }

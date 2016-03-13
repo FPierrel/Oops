@@ -1,5 +1,6 @@
 package dal;
 
+import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Commentaire;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -33,6 +34,7 @@ public class CommentaireDAL {
     }  
     
     public void delete(Commentaire c){
-        em.remove(c);
+        em.remove(em.find(Commentaire.class,c.getId()));
+        
     }
 }
