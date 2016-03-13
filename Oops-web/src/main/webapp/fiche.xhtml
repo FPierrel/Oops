@@ -186,9 +186,9 @@
                                                 <h:form id="askOpinionForm"> 
                                                     <div class="form-group">
                                                         <h:inputText value="#{askOpinionBean.mail}" id="askOpinionMailInput" class="form-control" pt:placeholder="Adresse mail" binding="#{askOpinionBean.emailComponent}"/>
-                                                        <h:commandButton value="Envoyer la demande" class="btn btn-info" id="askOpinionButton" onclick="showRepondre('askOpinionDiv')" action="#{askOpinionBean.send()}">
-                                                            <f:ajax render=":pmessage"/>
-                                                        </h:commandButton>
+                                                        <h:commandButton value="Envoyer la demande" class="btn btn-info" id="askOpinionButton" onclick="showRepondre('askOpinionDiv')" action="#{askOpinionBean.send()}"/>
+                                                        <!--   <f:ajax render=":pmessage"/>
+                                                       </h:commandButton>-->
                                                     </div>
                                                 </h:form>
                                             </div>
