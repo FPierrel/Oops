@@ -5,8 +5,9 @@ import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
+import fr.univ_lorraine.oops.library.model.ReportPhoto;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
-import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
@@ -35,6 +36,7 @@ public class InitializationBean {
     public void init() {
         this.addPrestataires();
         this.addSoumissionaires();
+        this.addSignalements();
     }
 
     /**
@@ -243,6 +245,7 @@ public class InitializationBean {
         Collection<Categorie> col5 = new ArrayList<>();
         col5.add(c4d);
         pres5.setCategories(col5);
+        pres5.setBanished(true);
         liste.add(pres5);
         //----------------------------------------------
         ArrayList<Adresse> adressesNancy = new ArrayList<>();
@@ -254,6 +257,7 @@ public class InitializationBean {
         col6.add(c1c);
         col6.add(c1d);
         pres6.setCategories(col6);
+        pres6.setBanished(true);
         liste.add(pres6);
         //----------------------------------------------
         ArrayList<Adresse> adressesOui = new ArrayList<>();
@@ -338,4 +342,38 @@ public class InitializationBean {
         return adresse;
     }
 
+    private void addSignalements() {
+        ArrayList<ReportFichePrestataire> liste = new ArrayList<>();
+        //DEBUT AJOUTS DE SIGNALEMENTS DE FICHES: (MODIFIER CI-DESSOUS)
+        //----------------------------------------------
+        liste.add(this.creerSignalementFiche("john","Autre","Le prestataire n'a pas facturé le prix initialement négocié.",new Date(),"philippe"));
+        liste.add(this.creerSignalementFiche("philippe","Usurpation d'indentité","Cette entreprise utilise mes informations pour se faire passer pour mon entreprise.",new Date(),"Jacky"));
+        //----------------------------------------------
+        //FIN AJOUTS DE SOUMISSIONNAIRES.
+        for (ReportFichePrestataire r : liste) {
+            this.em.persist(r);
+        }
+    }
+
+    private ReportFichePrestataire creerSignalementFiche(String userReporting, String reason, String complement, Date reportingDate, String userReported) {
+        ReportFichePrestataire r = new ReportFichePrestataire();
+        r.setUserReporting(userReporting);
+        r.setUserReported(userReported);
+        r.setReason(reason);
+        r.setComplement(complement);
+        r.setReportingDate(reportingDate);
+        return r;
+    }/*
+    private ReportFichePrestataire creerSignalementPhoto(String userReporting, String reason, String complement, Date reportingDate, String userReported) {
+        ReportPhoto r = new ReportPhoto();
+        r.setUserReporting(userReporting);
+        r.setUserReported(userReported);
+        r.setReason(reason);
+        r.setComplement(complement);
+        r.setReportingDate(reportingDate);
+        r.setPhoto(new P);
+        return r;
+    }
+*/
 }
+        

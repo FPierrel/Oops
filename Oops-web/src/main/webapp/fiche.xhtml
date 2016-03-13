@@ -79,7 +79,7 @@
                                             <h:outputText value="#{address.rue}"/><br/>         
                                             <c:if test="!#{address.complement}.isEmpty()"><h:outputText value="#{address.complement}"/><br/></c:if>       
                                             <!--<h:outputText value="#{address.codePostal} "/>-->                  
-                                            <h:outputText value="#{address.ville.substring(0, address.ville.indexOf('(')-1)}"/>
+                                            <h:outputText value="#{address.ville.split('\\u0028')[0]}"/>
                                         </p>                
                                     </h:column>
                                 </ui:repeat>
