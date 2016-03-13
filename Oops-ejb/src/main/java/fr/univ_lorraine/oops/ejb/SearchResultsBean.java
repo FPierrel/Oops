@@ -52,9 +52,18 @@ public class SearchResultsBean {
                 + searchPrestataireWithPrice(price, "AND")
                 + searchPrestataireWithValue(delay, "AND")
                 + searchPrestataireWithAverage(moyenne, "AND");
+                if(!categories.isEmpty()){
+                    queryString+=" AND (";
+                }
+                boolean b = true;
         for (String cat : categories) {
-            queryString += searchPrestataireWithCategorie(cat, "AND");
+            queryString += searchPrestataireWithCategorie(cat, "OR",b);
+            b = false;
         }
+        
+        if(!categories.isEmpty()){
+                    queryString+=" )";
+                }
 
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
@@ -135,8 +144,8 @@ public class SearchResultsBean {
         return " " + operateur + " p.average >= " + average;
     }
 
-    private String searchPrestataireWithCategorie(String categorie, String operateur) {
-        return " " + operateur + " c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles";
+    private String searchPrestataireWithCategorie(String categorie, String operateur, boolean firstCategory) {
+        return " " + ((firstCategory)?"":operateur) + " ( c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles )";
     }
 
     public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {

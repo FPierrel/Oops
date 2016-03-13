@@ -64,24 +64,24 @@ public class ReportBeanTest {
 
     @Test
     public void reportFichePrestataireTest() {
-        driver.findElement(By.id("reportFiche:reportFiche")).click();
-        Select sel = new Select(driver.findElement(By.id("reportFiche:reasons")));
+        driver.findElement(By.id("reportFicheLink")).click();
+        Select sel = new Select(driver.findElement(By.id("formNotes:reportFicheForm:reasons")));
         sel.selectByVisibleText("Autre");
+       
+        driver.findElement(By.id("formNotes:reportFicheForm:reportFicheReason")).sendKeys("Test_report");
+        driver.findElement(By.id("formNotes:reportFicheForm:reportFicheButton")).click();
+        driver.get(host + "/admin/index.xhtml");
+        driver.findElement(By.id("form:tabs")).findElement(By.xpath(".//li[2]")).click();
         try {
-            Thread.sleep(1000);
+            Thread.sleep(2000);
         } catch (InterruptedException ex) {
             Logger.getLogger(ReportBeanTest.class.getName()).log(Level.SEVERE, null, ex);
         }
-
-        driver.findElement(By.id("reportFiche:reportFicheReason")).sendKeys("Test_report");
-        driver.findElement(By.id("reportFiche:reportFicheButton")).click();
-        driver.get(host + "/admin/index.xhtml");
-        driver.findElement(By.id("form:tabs")).findElement(By.xpath(".//li[2]")).click();
-        assertTrue((driver.findElement(By.id("form:tabs:datatableReport2")).getText()).contains("Test_report"));
-        driver.findElement(By.id("form:tabs:datatableReport2")).findElement(By.xpath(".//td[last()]/input")).click();
+        assertTrue((driver.findElement(By.id("form:datatableReport2")).getText()).contains("Test_report"));
+        driver.findElement(By.id("form:datatableReport2")).findElement(By.xpath(".//td[last()]/input")).click();
 
     }
-
+/*
     @Test
     public void blockedViaReportsTest() {
         driver.get(host + "/login.xhtml");
@@ -145,5 +145,5 @@ public class ReportBeanTest {
         driver.findElement(By.name("submit")).click();
         driver.get(host + "/fiche.xhtml?page=satan");
         driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
-    }
+    }*/
 }

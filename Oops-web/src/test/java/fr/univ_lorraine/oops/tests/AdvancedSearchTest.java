@@ -12,9 +12,9 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.phantomjs.PhantomJSDriver;
 import org.openqa.selenium.remote.DesiredCapabilities;
-import org.openqa.selenium.support.ui.Select;
 
 public class AdvancedSearchTest {
 
@@ -43,6 +43,7 @@ public class AdvancedSearchTest {
         driver.get(host + "/index.xhtml");
         driver.manage().timeouts().implicitlyWait(5, TimeUnit.SECONDS);
         driver.findElement(By.id("searchForm:buttonAdvancedSearch")).click();
+        driver.get(host + "/index.xhtml");
         try {
             Thread.sleep(2000);
         } catch (InterruptedException ex) {
@@ -53,7 +54,10 @@ public class AdvancedSearchTest {
         driver.findElement(By.id("searchForm:lastnameSearch")).clear();
         driver.findElement(By.id("searchForm:employeeSearch")).clear();
         driver.findElement(By.id("searchForm:chiffreAffaireSearch")).clear();
-        new Select(driver.findElement(By.id("searchForm:categorie"))).selectByVisibleText("Toutes cat\u00e9gories");
+        driver.findElement(By.xpath("//button[@data-id='searchForm:allCategories']")).click();
+        for (WebElement w : driver.findElements(By.xpath("//li[@class='selected']"))) {
+            w.findElement(By.xpath("./a")).click();
+        }
     }
 
     @After
@@ -105,16 +109,33 @@ public class AdvancedSearchTest {
 
     @Test
     public void testAdvancedSearchWithCategorieRestauration() {
-        Select sel = new Select(driver.findElement(By.id("searchForm:categorie")));
-        sel.selectByVisibleText("Restauration");
+        for (WebElement e : driver.findElements(By.xpath("//li"))) {
+            if (e.getText().equals("Restauration")) {
+                e.findElement(By.xpath("./a")).click();
+            }
+        }
         driver.findElement(By.id("searchForm:go")).click();
-        Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
+        Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("2"));
+    }
+
+    @Test
+    public void testAdvancedSearchWithCategorieBTPandLivraison() {
+        for (WebElement e : driver.findElements(By.xpath("//li"))) {
+            if (e.getText().equals("BTP, Construction") || e.getText().equals("Livraison à domicile")) {
+                e.findElement(By.xpath("./a")).click();
+            }
+        }
+        driver.findElement(By.id("searchForm:go")).click();
+        Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("3"));
     }
 
     @Test
     public void testAdvancedSearchWithCategorieAudit() {
-        Select sel = new Select(driver.findElement(By.id("searchForm:categorie")));
-        sel.selectByVisibleText("Audit");
+        for (WebElement e : driver.findElements(By.xpath("//li"))) {
+            if (e.getText().equals("Audit")) {
+                e.findElement(By.xpath("./a")).click();
+            }
+        }
         driver.findElement(By.id("searchForm:go")).click();
         Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }

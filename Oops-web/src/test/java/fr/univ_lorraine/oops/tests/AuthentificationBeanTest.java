@@ -77,7 +77,7 @@ public class AuthentificationBeanTest {
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         driver.get(host + "/fiche.xhtml?page=satan");
-        driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
+        driver.findElement(By.id("formNotes:banish:ban")).click();
 
         driver.get(host + "/login.xhtml");
         driver.findElement(By.name("j_username")).sendKeys("satan");
@@ -91,6 +91,6 @@ public class AuthentificationBeanTest {
         driver.findElement(By.name("j_password")).sendKeys("123456");
         driver.findElement(By.name("submit")).click();
         driver.get(host + "/fiche.xhtml?page=satan");
-        driver.findElement(By.id("banish")).findElement(By.xpath("./button")).click();
+        driver.findElement(By.id("formNotes:banish:pardon")).click();
     }
 }

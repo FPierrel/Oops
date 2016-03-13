@@ -173,11 +173,11 @@
                                     <h:form id="formNotes">
                                         <h3>
                                             <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/>
-                                            <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
-                                                <h:commandLink class="btn btn-danger" rendered="#{!reportBean.banished}" action="#{reportBean.banishPrestataire()}" value="Bannir">
+                                             <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
+                                                <h:commandLink id ="ban" class="btn btn-danger" rendered="#{!reportBean.banished}" action="#{reportBean.banishPrestataire()}" value="Bannir">
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
-                                                <h:commandLink class="btn btn-danger" rendered="#{reportBean.banished}" action="#{reportBean.redeemPrestataire()}" value="Gracier" >
+                                                <h:commandLink id="pardon" class="btn btn-danger" rendered="#{reportBean.banished}" action="#{reportBean.redeemPrestataire()}" value="Gracier" >
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
                                             </h:form>
