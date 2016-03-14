@@ -5,6 +5,7 @@ import fr.univ_lorraine.oops.ejb.OpinionManagerBean;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Commentaire;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -41,7 +42,7 @@ public class FicheBean implements Serializable {
     private int rate3;
     private int rate4;
     private String opinion;
-    private String commentaire;    
+    private String commentaire;
     private int noteGlobPrix = 0;
     private int noteGlobQualite = 0;
     private int noteGlobDelai = 0;
@@ -92,7 +93,7 @@ public class FicheBean implements Serializable {
             context.addMessage(null, message);
         }
         this.init();
-    }  
+    }
 
     public void saveComment(int i) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -104,12 +105,12 @@ public class FicheBean implements Serializable {
         }
         this.init();
     }
-    
+
     public void removeOpinion(Avis a) {
         this.om.removeOpinion(a);
         this.init();
     }
-    
+
     public void removeComment(Commentaire c, int i) {
         this.om.removeComment(c, this.lAvis.get(i));
         this.init();
@@ -249,5 +250,15 @@ public class FicheBean implements Serializable {
 
     public void setCommentaires(String[] commentaires) {
         this.commentaires = commentaires;
+    }
+
+    public String getProfilePicture(Utilisateur owner) {
+        if (owner instanceof Prestataire) {
+            if (((Prestataire) owner).getProfilePicture() != null) {
+                return ((Prestataire) owner).getProfilePicture().getPhotoBase64();
+            }
+        }
+
+        return null;
     }
 }

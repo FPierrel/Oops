@@ -61,8 +61,12 @@ public class AlbumEntityManager {
      }
 
     public void deleteAlbum(Album album, String login) {
-        Prestataire pres = presd.get(login);        
+        Prestataire pres = presd.get(login);      
+        Photo p = pd.get(pres.getProfilePicture().getId());
         Album a = ad.get(album.getId());
+        if(a.getPhotos().contains(p)){
+            pres.setProfilePicture(null);
+        }
         pres.deleteAlbum(a);
         presd.update(pres);
         ad.delete(a);
@@ -86,8 +90,15 @@ public class AlbumEntityManager {
 
     public void deletePhoto(Album album, long id) {
         Photo p = pd.get(id);
+        Prestataire pres = presd.get(album.getLogin());  
+        
+        if(pres.getProfilePicture().getId() == id){
+            pres.setProfilePicture(null);
+        }
+                
         album.deletePhoto(p);
         ad.update(album);
+        presd.update(pres);
         pd.delete(p);
     }
 

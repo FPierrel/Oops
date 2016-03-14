@@ -146,5 +146,5 @@ public class ProfilBean implements Serializable {
     public void setTown(String town) {
         this.town = town;
     }
- 
+     
 }
