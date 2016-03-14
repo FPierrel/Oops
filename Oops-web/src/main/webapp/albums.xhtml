@@ -53,7 +53,8 @@
                 <div id="featured-wrapper" style="margin-top: 2%;">
                     <div id ="content">
                         <div id="featured" class="container col-md-offset-2 col-md-8">                 
-                            <h:form >                      
+                            <h:form >                     
+                                <p:messages id="pmessage" />
                                 <div class="panel panel-default ">
 
                                     <div class="panel-heading">
@@ -66,7 +67,7 @@
                                             <label for="name">Nom</label>
                                             <h:inputText class="form-control" id="name" value="#{albumBean.nomAlbum}"/>
                                         </div>
-                                        <p:commandButton style="margin-bottom: 2%;" value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums"/>  
+                                        <p:commandButton style="margin-bottom: 2%;" value="Ajouter un album" action="#{albumBean.ajouterAlbum}" update="albums pmessage name"/>  
 
 
 

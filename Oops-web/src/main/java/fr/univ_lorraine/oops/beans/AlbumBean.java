@@ -74,16 +74,20 @@ public class AlbumBean implements Serializable {
     }
 
     public void ajouterAlbum() {
-        Album album = new Album();
-        album.setNom(nomAlbum);
-
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        String login = request.getRemoteUser();
 
-        album.setLogin(login);
-
-        albumEM.addAlbum(album, login);
+        if (this.nomAlbum.isEmpty()) {
+            FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_ERROR, "Veuillez renseigner un nom !", null);
+            context.addMessage(null, message);
+        } else {
+            Album album = new Album();
+            album.setNom(nomAlbum);
+            String login = request.getRemoteUser();
+            album.setLogin(login);
+            albumEM.addAlbum(album, login);
+            this.nomAlbum = "";
+        }
     }
 
     public Collection<Album> getAlbums() {

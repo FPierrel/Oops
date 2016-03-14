@@ -8,6 +8,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
 import javax.faces.view.ViewScoped;
@@ -116,12 +117,19 @@ public class PhotoBean implements Serializable {
     public void deletePhoto(){
         this.options = false;
         this.albumEM.deletePhoto(this.album, this.photoToDelete);
+        
+        FacesContext context = FacesContext.getCurrentInstance();
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();      
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo supprimée", null);
     }
     
     public void chooseAsProfilePicture(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         this.albumEM.setProfilePicture(request.getRemoteUser(), this.photoToDelete);
+        
+        FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo de profil modifiée", null);
+        context.addMessage(null, message);
     }
     
     public void modifyDesc(){

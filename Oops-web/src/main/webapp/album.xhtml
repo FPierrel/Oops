@@ -53,11 +53,11 @@
             <div class="container">
 
                 <div class="row">           
-                    <div class="col-md-offset-2"  style="margin-top: 2%; margin-bottom: 2%;">
+                    <div class="col-md-offset-0"  style="margin-top: 2%; margin-bottom: 2%;">
                         <h:link class="btn btn-default" value="Retour aux albums" outcome="albums"/>
                     </div>
 
-                    <div class="col-md-offset-2 col-md-8">
+                    <div class="col-md-offset-1 col-md-10">
                         <div class="panel panel-default">
                             <div class="panel-heading">
                                 <h3 class="panel-title">Gérer l'album</h3>
@@ -75,7 +75,7 @@
 
                                                    />
                                 </h:form>
-
+                                <br/>
                                 <div class="row">
                                     <h:panelGroup id="photos">
                                         <h:form id="bonjour">
@@ -129,14 +129,17 @@
                                 </div>
 
                                 <br/>
+                                <p:messages id="pmessage" closable="true"/>
 
 
                                 <h:form id="options">
                                     <h:panelGroup id="wrap" rendered="#{photoBean.options}">
                                         <div class="row col-md-offset-0">
-                                            <p:commandButton class="btn btn-info" action="#{photoBean.chooseAsProfilePicture()}" value="Choisir comme photo de profil" update=":bonjour options"/>
+                                            <p:commandLink class="btn btn-info" action="#{photoBean.chooseAsProfilePicture()}" value="Choisir comme photo de profil" update=":bonjour options :pmessage"/>
 
-                                            <p:commandButton class="btn btn-danger pull-right col-md-pull-1" action="#{photoBean.deletePhoto()}" value="Supprimer" update=":bonjour options"/>
+                                            <div class="pull-right col-md-pull-2">
+                                                <p:commandLink class="btn btn-danger" action="#{photoBean.deletePhoto()}" value="Supprimer" update=":bonjour options :pmessage"/>
+                                            </div>
                                         </div>
                                         <br/>
 
@@ -146,7 +149,7 @@
                                                     <h:inputTextarea value="#{photoBean.description}" class="form-control" rows="5" id="desc" style="resize: none;"/>
                                                 </div>
                                                 <div class="col-md-2">
-                                                    <p:commandButton action="#{photoBean.modifyDesc()}" class="btn btn-success col-md-offset-0" value="Modifier la description" update=":bonjour options"/>
+                                                    <p:commandLink action="#{photoBean.modifyDesc()}" class="btn btn-success col-md-offset-0" value="Modifier la description" update=":bonjour options"/>
                                                 </div>
                                             </div>
                                         </div>
