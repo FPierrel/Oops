@@ -1,8 +1,10 @@
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.AdminUtilsBean;
+import fr.univ_lorraine.oops.ejb.AlbumEntityManager;
 import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.library.model.Avis;
+import fr.univ_lorraine.oops.library.model.Photo;
 import fr.univ_lorraine.oops.library.model.Report;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
 import fr.univ_lorraine.oops.library.model.ReportPhoto;
@@ -28,6 +30,9 @@ public class AdminBean implements Serializable {
 
     @Inject
     BanishmentBean ban;
+    
+    @Inject
+    AlbumEntityManager aEM;
 
     public AdminBean() {
         this.listeAvisNonVerifies = new ArrayList<>();
@@ -63,6 +68,14 @@ public class AdminBean implements Serializable {
     public void acceptReport(Report report) {
         this.admin.acceptReport(report);
     }
+    
+    public void acceptReportPhoto(ReportPhoto report) {
+        Photo p = report.getPhoto();
+        report.setPhoto(null);
+        this.admin.acceptReport(report);
+        this.aEM.deletePhoto(report.getAlbum(), p);
+    }
+    
 
     public List<ReportFichePrestataire> getListUnverifiedReportFiche() {
         this.listUnverifiedReportFiche = this.admin.getUnverifiedReportFiche();

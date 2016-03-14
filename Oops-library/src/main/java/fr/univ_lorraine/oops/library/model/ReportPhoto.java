@@ -11,6 +11,9 @@ public class ReportPhoto extends Report implements Serializable {
 
     @OneToOne
     private Photo photo;
+    
+    @OneToOne
+    private Album album;
 
     public ReportPhoto() {
     }
@@ -23,4 +26,12 @@ public class ReportPhoto extends Report implements Serializable {
         this.photo = photo;
     }
 
+    public Album getAlbum() {
+        return album;
+    }
+
+    public void setAlbum(Album album) {
+        this.album = album;
+    }
+    
 }

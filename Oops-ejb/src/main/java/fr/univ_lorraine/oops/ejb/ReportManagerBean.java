@@ -1,6 +1,7 @@
 package fr.univ_lorraine.oops.ejb;
 
 import dal.PrestataireDAL;
+import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Photo;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
@@ -31,7 +32,7 @@ public class ReportManagerBean {
         pd.update(pres);
     }
     
-    public void reportPhoto(String loginReporting, Photo photo, String reason, String complement) {
+    public void reportPhoto(String loginReporting, Photo photo, Album album, String reason, String complement) {
         String loginFicheReported = "noupi";
         Prestataire pres = pd.get(loginFicheReported);
         ReportPhoto report = new ReportPhoto();
@@ -41,6 +42,7 @@ public class ReportManagerBean {
         report.setReportingDate(new Date());
         report.setComplement(complement);
         report.setPhoto(photo);
+        report.setAlbum(album);
         pres.addReport(report);
         pd.update(pres);
     }

@@ -2,19 +2,20 @@ package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.BanishmentBean;
 import fr.univ_lorraine.oops.ejb.ReportManagerBean;
+import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Photo;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import javax.enterprise.context.RequestScoped;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
+import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
 
 @Named(value = "reportBean")
-@RequestScoped
+@ViewScoped
 public class ReportBean implements Serializable {
 
     @Inject
@@ -22,13 +23,14 @@ public class ReportBean implements Serializable {
 
     @Inject
     BanishmentBean ban;
-
+    
     private String page;
     private List<String> reasons = new ArrayList<>();
     private List<String> photosReasons = new ArrayList<>();
     private String reason;
     private String complement;
     private Photo photo;
+    private Album album;
     private boolean options;
 
     public ReportBean() {
@@ -46,7 +48,7 @@ public class ReportBean implements Serializable {
         options = false;
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-        report.reportPhoto(request.getRemoteUser(), photo, reason, complement);
+        report.reportPhoto(request.getRemoteUser(), photo, album, reason, complement);
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Votre signalement sera bientôt traité par un administrateur !", null);
         context.addMessage(null, message);
     }
@@ -95,9 +97,10 @@ public class ReportBean implements Serializable {
         return photo;
     }
 
-    public void setPhoto(Photo photo) {
+    public void setPhoto(Photo photo, Album al) {
         options = !options;
         this.photo = photo;
+        this.album = al;
     }
         
     public void banishPrestataire() {
