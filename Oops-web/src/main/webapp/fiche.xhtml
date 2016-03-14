@@ -247,7 +247,7 @@
                                     <fieldset>
                                         <legend>Avis</legend>
                                     </fieldset>
-                                    <div id="comments">
+                                    <h:panelGroup id="comments">
                                         <div id="comments-list">
                                             <h3>#{ficheBean.nbAvis} Avis</h3>
                                             <ui:repeat id="ravis" value="#{ficheBean.getlAvis()}" var="cAvis" varStatus="loop">
@@ -317,11 +317,8 @@
                                                             </ui:repeat>
                                                             <div id="repondre_avis#{loop.index}" style="display: none">
                                                                 <div class="form-group">
-                                                                    <input class="form-control" type="text" id="co#{loop.index}" name="co#{loop.index}" placeholder="Réponse"/>
-                                                                    <h:commandLink class="btn btn-default btn-md btn-block" action="#{ficheBean.saveComment(loop.index)}">
-                                                                        Répondre
-                                                                        <f:ajax execute="@form" render="@all" />
-                                                                    </h:commandLink>
+                                                                    <input class="form-control" type="text" id="co#{loop.index}" name="co#{loop.index}" placeholder="Réponse"/>                                 
+                                                                    <p:commandLink value="Répondre" class="btn btn-default btn-md btn-block" action="#{ficheBean.saveComment(loop.index)}" update="comments :script"/>
                                                                 </div>
                                                             </div>
                                                         </div>
@@ -348,7 +345,7 @@
                                             </ui:repeat>
                                         </div><!--/#comments-list-->  
 
-                                        <div id="comment-form">
+                                        <h:panelGroup id="comment-form">
                                             <h3>Donnez votre avis</h3>
                                             <c:if test="#{request.remoteUser == null}">
                                                 <h:outputText value="Connectez-vous pour laisser un avis !"/>
@@ -377,12 +374,10 @@
                                                         <h:inputTextarea value="#{ficheBean.opinion}" id="opinion" rows="8" class="form-control" pt:placeholder="Commentaire sur la prestation... (1000 caractères maximum)" />
                                                     </div>
                                                 </div>
-                                                <h:commandButton id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}">
-                                                    <f:ajax execute="@form" render="@all" />
-                                                </h:commandButton>
+                                                <p:commandLink id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}" update=":comments formOpinion :script"/>
                                             </h:form>
-                                        </div><!--/#comment-form-->
-                                    </div><!--/#comments-->
+                                        </h:panelGroup><!--/#comment-form-->
+                                    </h:panelGroup><!--/#comments-->
                                 </div>
                             </div><!--/.blog-item-->
                         </div>
@@ -392,11 +387,12 @@
         </section><!--/#blog-->
 
         <ui:include src="footer.xhtml"/>
-        <script type="text/javascript" src="js/jquery.js"/>
-        <script src="js/bootstrap.min.js"/>
-        <script src="js/main.js"/>
-        <script src="js/starrr.js"/>
-        <script>
+        <h:panelGroup id="script">
+            <script type="text/javascript" src="js/jquery.js"/>
+            <script src="js/bootstrap.min.js"/>
+            <script src="js/main.js"/>
+            <script src="js/starrr.js"/>
+            <script>
                                                         $('#star_moyenne').starrr({
                                                             readOnly: true,
                                                             rating: document.getElementById('formNotes:moyenne').value
@@ -457,17 +453,18 @@
                                                                 }
                                                             }
                                                         });
-        </script>
-        <script>
-            function showRepondre(box) {
-                if (document.getElementById(box).style.display === "none") {
-                    vis = "block";
-                } else {
-                    vis = "none";
+            </script>
+            <script>
+                function showRepondre(box) {
+                    if (document.getElementById(box).style.display === "none") {
+                        vis = "block";
+                    } else {
+                        vis = "none";
+                    }
+                    document.getElementById(box).style.display = vis;
                 }
-                document.getElementById(box).style.display = vis;
-            }
-        </script>
+            </script>
+        </h:panelGroup>
     </h:body>
 </html>
 
