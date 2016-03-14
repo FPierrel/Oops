@@ -167,10 +167,10 @@
                         var dataSource = new Bloodhound({
                             datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
                             queryTokenizer: Bloodhound.tokenizers.whitespace,
-                            prefetch: 'villes.json',
-                            remote: {
-                                url: 'villes.json'
-                            }
+                            prefetch: 'villes.json'/*,
+                             remote: {
+                             url: 'villes.json'
+                             }*/
                         });
 
                         dataSource.initialize();
@@ -182,7 +182,14 @@
                             limit: 5
                         }, {
                             displayKey: 'value',
-                            source: dataSource.ttAdapter()
+                            source: dataSource.ttAdapter(),
+                            templates: {
+                                empty: [
+                                    '<div class="empty-message">',
+                                    'Pas de résultat !',
+                                    '</div>'
+                                ].join('\n')
+                            }
                         });
     </script>
 </ui:composition>

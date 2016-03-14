@@ -24,6 +24,9 @@
         <link rel="apple-touch-icon-precomposed" sizes="114x114" href="images/ico/apple-touch-icon-114-precomposed.png"/>
         <link rel="apple-touch-icon-precomposed" sizes="72x72" href="images/ico/apple-touch-icon-72-precomposed.png"/>
         <link rel="apple-touch-icon-precomposed" href="images/ico/apple-touch-icon-57-precomposed.png"/>
+        <script type="text/javascript" src="js/jquery.js"/>
+        <script type="text/javascript" src="js/bootstrap.min.js"/>
+        <script type="text/javascript" src="js/main.js"/>
     </h:head>
     <h:body> 
         <ui:include src="header.xhtml"/>
@@ -150,6 +153,37 @@
                                         <p:message for="form_signin:town"/>
                                     </div>
                                 </fieldset>
+                                <script type="text/javascript" src="js/typeahead.jquery.js"/>
+                                <script type="text/javascript" src="js/bloodhound.js"/>
+                                <script type="text/javascript">
+                                    var dataSource = new Bloodhound({
+                                        datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
+                                        queryTokenizer: Bloodhound.tokenizers.whitespace,
+                                        prefetch: 'villes.json'/*,
+                                         remote: {
+                                         url: 'villes.json'
+                                         }*/
+                                    });
+
+                                    dataSource.initialize();
+
+                                    $('.typeahead').typeahead({
+                                        hint: true,
+                                        highlight: true,
+                                        minLength: 1,
+                                        limit: 5
+                                    }, {
+                                        displayKey: 'value',
+                                        source: dataSource.ttAdapter(),
+                                        templates: {
+                                            empty: [
+                                                '<div class="empty-message">',
+                                                'Pas de résultat !',
+                                                '</div>'
+                                            ].join('\n')
+                                        }
+                                    });
+                                </script>
                             </div>
                         </div>
                         <h:panelGroup rendered="#{registrationBean.prestataire}">
@@ -187,8 +221,9 @@
                                             <p:message for="form_signin:turnoverNumber"/>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" placeholder="Site Web" class="form-control" disabled="true"/>
-                                            <!---->
+                                            <h:inputText id="website" value="#{registrationBean.website}"
+                                                         pt:placeholder="Site Web" class="form-control">
+                                            </h:inputText>
                                         </div>
                                     </fieldset>
                                 </div>
@@ -208,40 +243,6 @@
             </div>
         </section><!--/#registration-->        
         <ui:include src="footer.xhtml"/> 
-        <script type="text/javascript" src="js/jquery.js"/>
-        <script type="text/javascript" src="js/bootstrap.min.js"/>
-        <script type="text/javascript" src="js/main.js"/>
-        <script type="text/javascript" src="js/typeahead.jquery.js"/>
-        <script type="text/javascript" src="js/bloodhound.js"/>
-        <script type="text/javascript">
-            var dataSource = new Bloodhound({
-                datumTokenizer: Bloodhound.tokenizers.obj.whitespace('value'),
-                queryTokenizer: Bloodhound.tokenizers.whitespace,
-                prefetch: 'villes.json'/*,
-                 remote: {
-                 url: 'villes.json'
-                 }*/
-            });
-
-            dataSource.initialize();
-
-            $('.typeahead').typeahead({
-                hint: true,
-                highlight: true,
-                minLength: 1,
-                limit: 5
-            }, {
-                displayKey: 'value',
-                source: dataSource.ttAdapter(),
-                templates: {
-                    empty: [
-                        '<div class="empty-message">',
-                        'Pas de résultat !',
-                        '</div>'
-                    ].join('\n')
-                }
-            });
-        </script>
     </h:body>
 </html>
 

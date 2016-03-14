@@ -32,7 +32,7 @@ public class RegistrationBean implements Serializable {
 
     private String login, password, confirmPassword, email, phone, companyName,
             lastname, firstname, user, number, street, complement, town,
-            country, turnover, employee;
+            country, turnover, employee, website;
     private boolean prestataire, soumissionnaire;
     private UIComponent loginComponent, passwordComponent, confirmPasswordComponent,
             emailComponent, phoneComponent, companyNameComponent, lastnameComponent,
@@ -319,6 +319,14 @@ public class RegistrationBean implements Serializable {
         this.employeeComponent = employeeComponent;
     }
 
+    public String getWebsite() {
+        return website;
+    }
+
+    public void setWebsite(String website) {
+        this.website = website;
+    }
+
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (this.password.length() < 6) {
@@ -393,6 +401,9 @@ public class RegistrationBean implements Serializable {
             p.setNbEmployes(nbEmployeeNumber);
             p.setInscription(new Date());
             p.addAdresse(address);
+            if(this.website != null && !this.website.isEmpty()) {
+                p.setSiteWeb(this.website);
+            }
             user = this.userManager.registerUser(p);
         }
         if (user == null) {
