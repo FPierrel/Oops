@@ -270,7 +270,121 @@ public class InitializationBean {
         pres7.setCategories(col7);
         liste.add(pres7);
         //----------------------------------------------
-
+        ArrayList<Adresse> adressesStahl = new ArrayList<>();
+        adressesStahl.add(this.creerAdresse("2", "avenue du General Leclerc", "", "54000", "NANCY (54100)", "France"));
+        Prestataire pres8 = this.creerPrestataire("Stahl Auto", "Martin", "Patrick", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "stahlauto@gmail.com",
+                "0123456789", "Stahl Auto", 20, 15000, adressesStahl);
+        pres8.setDescription("Les professionnels de chez Stahl Auto assurent différents services pour votre véhicule 2 et 4 roues : "
+                + "passage controle technique, "
+                + "révision véhicule, "
+                + "devis et réparations (possibilité d'avoir un véhicule de remplacement si plusieurs jours de travail sont nécéssaires, "
+                + "vente et reprise de véhicules d'occasion. "
+                + "Nous contacter par téléphone ou email(joint à cette fiche), accueil sans rendez-vous du lundi au vendredi 8h-18h.");
+        Collection<Categorie> col8 = new ArrayList<>();
+        col8.add(c4d);
+        pres8.setCategories(col8);
+        liste.add(pres8);
+        Avis avisSA = new Avis();
+        avisSA.setContenu("Travail sérieux, bonne disponibilité des employés, prix raisonnable.");
+        avisSA.setOwner(pres1);
+        avisSA.setNoteCom(5);
+        avisSA.setNoteDelai(4);
+        avisSA.setNotePrix(3);
+        avisSA.setpDate(new Date());
+        avisSA.setNoteQualite(5);
+        avisSA.setLoginPrestaire("Stahl Auto");
+        pres8.addAvis(avisSA);
+        //----------------------------------------------
+        ArrayList<Adresse> adressesTech = new ArrayList<>();
+        adressesTech.add(this.creerAdresse("20", "route de Longwy", "", "57100", "THIONVILLE (57100)", "France"));
+        Prestataire pres9 = this.creerPrestataire("Clark et Al", "Clark", "David", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "clarketal@ultime.de",
+                "0666886688", "Clark et Al", 368, 11652000, adressesTech);
+        pres9.setDescription("Spécialiste des solutions en informatique et de réputation mondiale, Clark et Al ouvre sa première succursale dans le Grand Est français. "
+                + "De la conception à la réalisation, nos équipes accompagnent votre société tout au long de votre projet. "
+                + "Pour toute information, visitez notre site www.clarketal.io ou contactez nous via les renseignements disponibles sur la fiche. ");
+        Collection<Categorie> col9 = new ArrayList<>();
+        col9.add(c5);
+        col9.add(c5a);
+        col9.add(c5b);
+        pres9.setCategories(col9);
+        liste.add(pres9);
+        Avis avisTech = new Avis();
+        avisTech.setContenu("Le meilleur dans le domaine informatique, un service de qualité et un maintien constant de la solution. ");
+        avisTech.setOwner(pres2);
+        avisTech.setNoteCom(5);
+        avisTech.setNoteDelai(4);
+        avisTech.setNotePrix(4);
+        avisTech.setpDate(new Date());
+        avisTech.setNoteQualite(5);
+        avisTech.setLoginPrestaire("Clark et Al");
+        pres9.addAvis(avisTech);
+        Avis avisTech2 = new Avis();
+        avisTech2.setContenu("L'assurance d'un service impécable, je recommande. ");
+        avisTech2.setOwner(pres1);
+        avisTech2.setNoteCom(5);
+        avisTech2.setNoteDelai(4);
+        avisTech2.setNotePrix(5);
+        avisTech2.setpDate(new Date());
+        avisTech2.setNoteQualite(5);
+        avisTech2.setLoginPrestaire("Clark et Al");
+        pres9.addAvis(avisTech2);
+        Avis avisTech3 = new Avis();
+        avisTech3.setContenu("Des tarifs au dessus de la moyenne, mais la qualité est au rendez vous.  ");
+        avisTech3.setOwner(pres1);
+        avisTech3.setNoteCom(5);
+        avisTech3.setNoteDelai(5);
+        avisTech3.setNotePrix(2);
+        avisTech3.setpDate(new Date());
+        avisTech3.setNoteQualite(5);
+        avisTech3.setLoginPrestaire("Clark et Al");
+        pres9.addAvis(avisTech3);
+        //----------------------------------------------
+        ArrayList<Adresse> adressesBTP = new ArrayList<>();
+        adressesBTP.add(this.creerAdresse("33", "avenue du Cassoulet", "", "31000", "TOULOUSE (31000-31100-31200-31300-31400-31500)", "France"));
+        Prestataire pres10 = this.creerPrestataire("BTP Grand Selve", "Pennington", "Ty", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "btpgrandselve@sudouest.fr",
+                "0233775521", "BTP Grand Selve", 1500, 500001, adressesBTP);
+        pres10.setDescription("Réunissant tous les métiers de la construction à la réhabilitation à Toulouse, BTP Grand Selve est un acteur historique, indépendant, de proximité,  au service de ses clients, de ses partenaires et de ses collaborateurs. " 
+                + "Avec une activité principale de gros œuvre dans les travaux neufs, la société forge également son savoir-faire dans l’entreprise générale, les travaux de rénovation lourde structurante, les travaux services et les travaux de second œuvre (bois et plâtre). ");
+        Collection<Categorie> col10 = new ArrayList<>();
+        col10.add(c1);
+        col10.add(c1a);
+        col10.add(c1d);
+        pres10.setCategories(col10);
+        liste.add(pres10);
+        Avis avisB = new Avis();
+        avisB.setContenu("Entrepreneur sérieux, travail impécable. ");
+        avisB.setOwner(pres4);
+        avisB.setNoteCom(5);
+        avisB.setNoteDelai(4);
+        avisB.setNotePrix(4);
+        avisB.setpDate(new Date());
+        avisB.setNoteQualite(5);
+        avisB.setLoginPrestaire("BTP Grand Selve");
+        pres10.addAvis(avisB);
+        //----------------------------------------------
+        ArrayList<Adresse> adressesR = new ArrayList<>();
+        adressesR.add(this.creerAdresse("69", "rue des Verts", "", "42000", "SAINT-ETIENNE (42000-42100-42230)", "France"));
+        Prestataire pres11 = this.creerPrestataire("Cabinet Schmidt et Russel", "Russel", "John", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "cser@stannet.fr",
+                "0233775574", "Cabinet Schmidt et Russel", 20, 233000000, adressesR);
+        pres11.setDescription("Les banques sont soumises à de nouvelles règlementations qui visent à développer la concurrence et la transparence. "
+                + "Ces nouvelles réglementations devraient conduire à une baisse de 8% à 15% du PNB des banques de détail. Parallèlement, les banques doivent s’adapter à des clients mieux informés et plus exigeants. "
+                + "Elles doivent également lutter contre l’arrivée de nouveaux entrants dans le domaine des paiements. " 
+                + "Notre approche : La définition de la trajectoire est aussi importante que celle de la cible.");
+        Collection<Categorie> col11 = new ArrayList<>();
+        col11.add(c2);
+        pres11.setCategories(col11);
+        liste.add(pres11);
+        Avis avisR = new Avis();
+        avisR.setContenu("Un travail de qualité, des conseillers éfficaces et des solutions innovantes ");
+        avisR.setOwner(pres4);
+        avisR.setNoteCom(5);
+        avisR.setNoteDelai(3);
+        avisR.setNotePrix(3);
+        avisR.setpDate(new Date());
+        avisR.setNoteQualite(5);
+        avisR.setLoginPrestaire("Cabinet Schmidt et Russel");
+        pres11.addAvis(avisR);
+        
         //FIN AJOUTS DE PRESTATAIRE.
         for (Prestataire p : liste) {
             this.em.persist(p);
