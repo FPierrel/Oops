@@ -173,7 +173,7 @@
                                     <h:form id="formNotes">
                                         <h3>
                                             <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/>
-                                             <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
+                                            <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
                                                 <h:commandLink id ="ban" class="btn btn-danger" rendered="#{!reportBean.banished}" action="#{reportBean.banishPrestataire()}" value="Bannir">
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
@@ -254,7 +254,12 @@
                                                 <h:form id="lAvis#{loop.index}">
                                                     <div class="media">
                                                         <div class="pull-left">
-                                                            <img class="avatar img-circle" src="images/blog/avatar3.png" alt=""/>
+                                                            <h:panelGroup rendered="#{ficheBean.getProfilePicture(cAvis.owner) == null}">
+                                                                <img class="avatar img-circle" src="images/blog/avatar3.png" alt="" rendered="false"/>
+                                                            </h:panelGroup>
+                                                            <h:panelGroup rendered="#{ficheBean.getProfilePicture(cAvis.owner) != null}">
+                                                                <img class="avatar img-circle" src="#{ficheBean.getProfilePicture(cAvis.owner)}" height="50" width="50" alt=""/>
+                                                            </h:panelGroup>                                
                                                         </div>
                                                         <div class="media-body">
                                                             <div class="well well-avis">
