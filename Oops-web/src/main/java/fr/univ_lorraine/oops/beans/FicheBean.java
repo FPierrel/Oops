@@ -261,4 +261,15 @@ public class FicheBean implements Serializable {
 
         return null;
     }
+    
+    public String getProfilePictureByLogin(String login) {
+        Utilisateur owner = this.fiche.getPrestataireLogin(login);
+        if (owner instanceof Prestataire) {
+            if (((Prestataire) owner).getProfilePicture() != null) {
+                return ((Prestataire) owner).getProfilePicture().getPhotoBase64();
+            }
+        }
+
+        return null;
+    }
 }

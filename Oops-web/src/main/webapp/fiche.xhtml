@@ -294,7 +294,12 @@
                                                             <ui:repeat value="#{cAvis.commentaires}" var="comm" varStatus="i">
                                                                 <div class="media">
                                                                     <div class="pull-left">
-                                                                        <img class="avatar img-circle" src="images/blog/avatar3.png" alt=""/>
+                                                                        <h:panelGroup rendered="#{ficheBean.getProfilePictureByLogin(comm.profil) == null}">
+                                                                            <img class="avatar img-circle" src="images/blog/avatar3.png" alt=""/>
+                                                                        </h:panelGroup>
+                                                                        <h:panelGroup rendered="#{ficheBean.getProfilePictureByLogin(comm.profil) != null}">
+                                                                            <img class="avatar img-circle" src="#{ficheBean.getProfilePictureByLogin(comm.profil)}" height="50" width="50" alt=""/>
+                                                                        </h:panelGroup>      
                                                                     </div>
                                                                     <div class="media-body">
                                                                         <div class="well">
