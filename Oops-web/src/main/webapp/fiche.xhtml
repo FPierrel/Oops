@@ -181,7 +181,8 @@
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
                                             </h:form>
-                                            <h:outputLabel id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Inviter à laisser un avis</h:outputLabel>
+                                            <h:outputLabel id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}"> Signaler</h:outputLabel>
+                                            <h:outputLabel id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}"> Inviter à laisser un avis</h:outputLabel>
                                             <div id="askOpinionDiv" style="display:none">
                                                 <h:form id="askOpinionForm"> 
                                                     <div class="form-group">
@@ -192,7 +193,6 @@
                                                     </div>
                                                 </h:form>
                                             </div>
-                                            <h:outputLabel id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}">Signaler</h:outputLabel>
                                             <div id="reportFiche" style="display:none">
                                                 <h:form id="reportFicheForm">   
                                                     <div class="form-group">
