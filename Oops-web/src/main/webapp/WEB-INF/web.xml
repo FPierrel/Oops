@@ -81,7 +81,7 @@
         <web-resource-collection>
             <web-resource-name>addAlbum-page</web-resource-name>
             <description>Page ajouter un album</description>
-            <url-pattern>/addAlbum.xhtml</url-pattern>
+            <url-pattern>/albums.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>
@@ -99,7 +99,7 @@
         <web-resource-collection>
             <web-resource-name>addPhoto-page</web-resource-name>
             <description>Page ajouter une photo</description>
-            <url-pattern>/addPhoto.xhtml</url-pattern>
+            <url-pattern>/album.xhtml</url-pattern>
             <http-method>GET</http-method>
             <http-method>POST</http-method>
             <http-method>HEAD</http-method>

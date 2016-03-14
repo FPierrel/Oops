@@ -8,6 +8,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.faces.application.FacesMessage;
 import javax.inject.Named;
 import javax.faces.context.FacesContext;
@@ -42,6 +44,16 @@ public class PhotoBean implements Serializable {
     public void init(){
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
+        String user = request.getRemoteUser();
+        
+        if(user == null || user.isEmpty() || !this.albumEM.userHasAlbum(user, this.idAlbum)){
+            try {
+                context.getExternalContext().redirect("403.xhtml");
+                return;
+            } catch (IOException ex) {
+                Logger.getLogger(PhotoBean.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
 
         this.album = this.albumEM.getAlbum(this.idAlbum, request.getRemoteUser());
 
