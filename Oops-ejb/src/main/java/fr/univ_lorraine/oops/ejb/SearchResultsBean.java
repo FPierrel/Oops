@@ -158,8 +158,7 @@ public class SearchResultsBean {
                     + "WHERE 1=1 "
                     + searchPrestataireWithTownName(ou, codePostal, "AND");
             Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-            
-            
+
             if (!this.villes.isEmpty()) {
                 query.setParameter("villes", this.villes);
             }
@@ -252,7 +251,7 @@ public class SearchResultsBean {
         this.villes = this.searchTownsByRadius(ou, codePostal, 20);
 
         if (this.villes.isEmpty()) {
-            return "";
+            return " " + operateur + " UPPER(a.ville) = \"" + ou + "\"";
         }
 
         return " " + operateur + " UPPER(a.ville) IN :villes AND a MEMBER OF p.adresses";
