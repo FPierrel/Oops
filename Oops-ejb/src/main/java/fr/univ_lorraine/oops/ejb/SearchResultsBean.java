@@ -52,18 +52,18 @@ public class SearchResultsBean {
                 + searchPrestataireWithPrice(price, "AND")
                 + searchPrestataireWithValue(delay, "AND")
                 + searchPrestataireWithAverage(moyenne, "AND");
-                if(!categories.isEmpty()){
-                    queryString+=" AND (";
-                }
-                boolean b = true;
+        if (!categories.isEmpty()) {
+            queryString += " AND (";
+        }
+        boolean b = true;
         for (String cat : categories) {
-            queryString += searchPrestataireWithCategorie(cat, "OR",b);
+            queryString += searchPrestataireWithCategorie(cat, "OR", b);
             b = false;
         }
-        
-        if(!categories.isEmpty()){
-                    queryString+=" )";
-                }
+
+        if (!categories.isEmpty()) {
+            queryString += " )";
+        }
 
         if (!what.isEmpty()) {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
@@ -145,7 +145,7 @@ public class SearchResultsBean {
     }
 
     private String searchPrestataireWithCategorie(String categorie, String operateur, boolean firstCategory) {
-        return " " + ((firstCategory)?"":operateur) + " ( c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles )";
+        return " " + ((firstCategory) ? "" : operateur) + " ( c IN (p.categories) AND '" + categorie + "' MEMBER OF c.motsCles )";
     }
 
     public List<Prestataire> simpleSearch(String quoi, String ou, String codePostal) {
@@ -158,12 +158,15 @@ public class SearchResultsBean {
                     + "WHERE 1=1 "
                     + searchPrestataireWithTownName(ou, codePostal, "AND");
             Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
+            
+            
             if (!this.villes.isEmpty()) {
                 query.setParameter("villes", this.villes);
             }
 
             List<Prestataire> l = query.getResultList();
             this.setCoordinates(l);
+            
             return l;
         }
 
@@ -233,8 +236,10 @@ public class SearchResultsBean {
             ResultSet resultat = MySQL.getInstance().search(query);
 
             while (resultat.next()) {
-                String nom = resultat.getString("ville_nom");
-                li.add(nom);
+                StringBuilder sb = new StringBuilder();
+                sb.append(resultat.getString("ville_nom")).append(" ");
+                sb.append("(").append(resultat.getString("ville_code_postal")).append(")");
+                li.add(sb.toString());
             }
         } catch (SQLException ex) {
             Logger.getLogger(SearchResultsBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -335,7 +340,7 @@ public class SearchResultsBean {
 
         for (Prestataire p : pres) {
             for (Adresse a : p.getAdresses()) {
-                String ville = a.getVille().substring(0, a.getVille().indexOf("(")-1);
+                String ville = a.getVille().substring(0, a.getVille().indexOf("(") - 1);
                 String[] coords = geo.callGetCoordinates(a.getNumero() + " " + a.getRue() + " " + ville);
                 a.setLatitude(coords[0]);
                 a.setLongitude(coords[1]);

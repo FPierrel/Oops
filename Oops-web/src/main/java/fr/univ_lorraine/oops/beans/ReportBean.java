@@ -35,7 +35,6 @@ public class ReportBean implements Serializable {
     }
 
     public void reportFiche() {
-        System.out.println("complement = "+complement);
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         report.reportFichePrestataire(request.getRemoteUser(), page, reason, complement);
