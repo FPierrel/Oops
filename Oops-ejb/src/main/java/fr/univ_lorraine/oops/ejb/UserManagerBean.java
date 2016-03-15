@@ -7,8 +7,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 
 @Stateless
 @LocalBean
@@ -20,18 +18,11 @@ public class UserManagerBean {
     @Inject
     UtilisateurDAL ud;
 
-    /*  @PersistenceContext(unitName = "fr.univ_lorraine_Oops-library_jar_1.0-SNAPSHOTPU")
-     private EntityManager em;
-
-
-
-     public EntityManager getEntityManager() {
-     return this.em;
-     }
-    
-     public LuceneBean getLuceneBean(){
-     return this.luceneBean;
-     }*/
+    /**
+     * Add a new Utilisateur 
+     * @param u the new Utilisateur
+     * @return the new Utilisateur if the Utilisateur doesn't already exists, else null
+     */
     public Utilisateur registerUser(Utilisateur u) {
         Utilisateur user = ud.get(u.getLogin());
         if (user == null) {
@@ -44,14 +35,27 @@ public class UserManagerBean {
         return null;
     }
 
+    /**
+     * Return the Utilisateur with the login "login"
+     * @param login the login of the Utilisateur to return
+     * @return the Utilisateur with the login in parameter
+     */
     public Utilisateur searchByLogin(String login) {
         return ud.get(login);
     }
 
+    /**
+     * Update a Utilisateur
+     * @param user the Utilisateur to update
+     */
     public void updateUser(Utilisateur user) {
         ud.update(user);
     }
     
+    /**
+     * Return a List of Prestataire containing the four Prestataire with the highest grades
+     * @return a List of Prestataire containing the four Prestataire with the highest grades
+     */
     public List<Prestataire> getBestGrades() {
         return ud.getBestGrades(4);
     }

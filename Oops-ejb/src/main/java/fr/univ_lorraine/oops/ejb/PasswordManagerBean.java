@@ -23,6 +23,11 @@ public class PasswordManagerBean {
     @Inject
     UtilisateurDAL uD;
 
+    /**
+     * Create a new password for the Utilisateur with the matching email address and send it to this address
+     * @param mail the email address of the Utilisateur asking a new password
+     * @return a boolean, true if the email address existsn, else false
+     */
     public boolean sendNewPassword(String mail) {
         if (!uD.mailExist(mail)) {
             return false;
@@ -38,6 +43,11 @@ public class PasswordManagerBean {
 
     }
 
+    /**
+     * Hash a String using the sha256 method
+     * @param base the String to hash
+     * @return the hashed String
+     */
     public static String sha256(String base) {
         try {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
