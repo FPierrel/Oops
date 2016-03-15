@@ -44,6 +44,10 @@ public class ProfilBean implements Serializable {
         this.town = a.getVille();
     }
 
+    /**
+     * Handle modifications information of the profile
+     * @return the redirection link
+     */
     public String update() {
         FacesContext context = FacesContext.getCurrentInstance();
         FacesMessage message;

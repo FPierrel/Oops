@@ -341,7 +341,10 @@ public class RegistrationBean implements Serializable {
     public Type[] getFormes() {
         return this.formes;
     }
-    
+    /**
+     * Manage the registration of the user, set error messages and redirect
+     * @return the correct link
+     */
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (this.password.length() < 6) {
