@@ -171,7 +171,7 @@
                                 <div class="blog-content">
                                     <h:form id="formNotes">
                                         <h3>
-                                            <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise}"/>
+                                            <h:outputText id="companyName" value="#{ficheBean.prestataire.nomEntreprise} "/>
                                              <h:form id="banish" rendered="#{request.isUserInRole('ADMINISTRATEUR')}">
                                                 <h:commandLink id ="ban" class="btn btn-danger" rendered="#{!reportBean.banished}" action="#{reportBean.banishPrestataire()}" value="Bannir">
                                                     <f:ajax render="@form"/>
@@ -180,7 +180,9 @@
                                                     <f:ajax render="@form"/>
                                                 </h:commandLink>
                                             </h:form>
+                                            <h:outputText value=" "/>
                                             <h:outputLabel id="reportFicheLink" class="btn btn-danger" onclick="showRepondre('reportFiche')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}"> Signaler</h:outputLabel>
+                                            <h:outputText value=" "/>
                                             <h:outputLabel id="askOpinionLink" class="btn btn-info" onclick="showRepondre('askOpinionDiv')" rendered="#{request.remoteUser != null and !request.isUserInRole('ADMINISTRATEUR')}"> Inviter à laisser un avis</h:outputLabel>
                                             <div id="askOpinionDiv" style="display:none">
                                                
@@ -215,7 +217,7 @@
                                         <fieldset>
                                             <legend>Description</legend>
                                             <div class="blog-content">
-                                                <p class="lead"><h:outputText id="description" value="#{ficheBean.prestataire.description}"/></p>
+                                                <p style="text-align:justify; font-size:16px;"><h:outputText id="description" value="#{ficheBean.prestataire.description}"/></p>
                                             </div>
                                         </fieldset>
                                         <fieldset>
