@@ -54,6 +54,9 @@ public class FicheBean implements Serializable {
 
     }
 
+    /**
+     * Méthode permettant d'initialiser les champs pour la fiche du prestataire.
+     */
     public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (this.page.isEmpty()) {
@@ -82,6 +85,9 @@ public class FicheBean implements Serializable {
         this.categories = this.fiche.getPrestataireCategoriesNames(this.prestataire.getLogin());
     }
 
+    /**
+     * Méthode permettant de laisser un avis.
+     */
     public void saveOpinion() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -95,6 +101,10 @@ public class FicheBean implements Serializable {
         this.init();
     }
 
+    /**
+     * Méthode permettant de laisser un commentaire sur un avis.
+     * @param i : indice de l'avis à commenter.
+     */
     public void saveComment(int i) {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -252,6 +262,11 @@ public class FicheBean implements Serializable {
         this.commentaires = commentaires;
     }
 
+    /**
+     * Méthode donnant l'image de profil d'un utilisateur.
+     * @param owner : utilisateur.
+     * @return la photo de profil de l'utilisateur.
+     */
     public String getProfilePicture(Utilisateur owner) {
         if (owner instanceof Prestataire) {
             if (((Prestataire) owner).getProfilePicture() != null) {
@@ -262,6 +277,11 @@ public class FicheBean implements Serializable {
         return null;
     }
     
+    /**
+     * Méthode donnant l'image de profil d'un utilisateur à partir de son login.
+     * @param login : login de l'utilisateur.
+     * @return la photo de profil de l'utilisateur.
+     */
     public String getProfilePictureByLogin(String login) {
         Utilisateur owner = this.fiche.getPrestataireLogin(login);
         if (owner instanceof Prestataire) {

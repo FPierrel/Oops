@@ -6,20 +6,14 @@ import fr.univ_lorraine.oops.library.model.Photo;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.Collection;
-import java.util.List;
-import javax.enterprise.context.ConversationScoped;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
-import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.PhaseId;
 import javax.faces.view.ViewScoped;
 import javax.inject.Inject;
 import javax.servlet.http.HttpServletRequest;
-import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 import org.primefaces.model.UploadedFile;
@@ -46,14 +40,12 @@ public class AlbumBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String login = request.getRemoteUser();
-
         this.albums = this.albumEM.getAllAlbumsUser(login);
     }
 
     public void init2() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
-
         this.album = this.albumEM.getAlbum(this.id);
     }
 
@@ -73,6 +65,9 @@ public class AlbumBean implements Serializable {
         this.nomAlbum = nomAlbum;
     }
 
+    /**
+     * Méthode permettant d'ajouter un album.
+     */
     public void ajouterAlbum() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -94,7 +89,6 @@ public class AlbumBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String login = request.getRemoteUser();
-
         return this.albumEM.getAllAlbumsUser(login);
     }
 
@@ -114,12 +108,11 @@ public class AlbumBean implements Serializable {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String login = request.getRemoteUser();
-
         albumEM.deleteAlbum(album, login);
     }
 
     public boolean isAlbum() {
-        return this.album == null ? false : true;
+        return this.album != null;
     }
 
     public UploadedFile getFile() {

@@ -41,6 +41,9 @@ public class AskOpinionBean implements Serializable {
         this.emailComponent = emailComponent;
     }
 
+    /**
+     * Méthode permettant d'envoyer un e-mail d'invitation.
+     */
     public void send() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (!Pattern.matches("^[_A-Za-z0-9-\\+\\.]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z-]{2,})$", this.mail)) {

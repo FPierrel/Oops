@@ -15,6 +15,10 @@ public class AuthenticationBean {
     public AuthenticationBean() {
     }
 
+    /**
+     * Méthode permettant de vérifier les différents scénario concernant la session d'un utilisateur.
+     * @param event 
+     */
     public void checkErrors(ComponentSystemEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
@@ -31,6 +35,10 @@ public class AuthenticationBean {
         }
     }
 
+    /**
+     * Méthode permettant la déconnexion d'un utilisateur.
+     * @return page vers laquelle on est redirigé.
+     */
     public String logout() {
         String page = "/login?logout=true&faces-redirect=true";
         FacesContext context = FacesContext.getCurrentInstance();

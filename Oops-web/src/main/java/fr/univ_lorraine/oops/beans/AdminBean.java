@@ -30,7 +30,7 @@ public class AdminBean implements Serializable {
 
     @Inject
     BanishmentBean ban;
-    
+
     @Inject
     AlbumEntityManager aEM;
 
@@ -68,14 +68,13 @@ public class AdminBean implements Serializable {
     public void acceptReport(Report report) {
         this.admin.acceptReport(report);
     }
-    
+
     public void acceptReportPhoto(ReportPhoto report) {
         Photo p = report.getPhoto();
         report.setPhoto(null);
         this.admin.acceptReport(report);
         this.aEM.deletePhoto(report.getAlbum(), p);
     }
-    
 
     public List<ReportFichePrestataire> getListUnverifiedReportFiche() {
         this.listUnverifiedReportFiche = this.admin.getUnverifiedReportFiche();
@@ -85,7 +84,7 @@ public class AdminBean implements Serializable {
     public void setListUnverifiedReportFiche(List<ReportFichePrestataire> listUnverifiedReportFiche) {
         this.listUnverifiedReportFiche = listUnverifiedReportFiche;
     }
-    
+
     public List<ReportPhoto> getListUnverifiedReportPhoto() {
         this.listUnverifiedReportPhoto = this.admin.getUnverifiedReportPhoto();
         return listUnverifiedReportPhoto;
@@ -96,10 +95,10 @@ public class AdminBean implements Serializable {
     }
 
     public String seeFiche(String login) {
-        return "/fiche.xhtml?page=" + login+ "&faces-redirect=true";
+        return "/fiche.xhtml?page=" + login + "&faces-redirect=true";
     }
-    
-    public void redeemPrestataire(String login){
+
+    public void redeemPrestataire(String login) {
         ban.redeemUser(login);
     }
 
@@ -111,5 +110,4 @@ public class AdminBean implements Serializable {
         this.listBanishedUser = listBanishedUser;
     }
 
-     
 }

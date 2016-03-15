@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package fr.univ_lorraine.oops.beans;
 
 import fr.univ_lorraine.oops.ejb.PasswordManagerBean;
@@ -10,10 +5,6 @@ import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
 import javax.inject.Inject;
 
-/**
- *
- * @author romain
- */
 @Named(value = "askPasswordBean")
 @RequestScoped
 public class AskPasswordBean {
@@ -24,12 +15,13 @@ public class AskPasswordBean {
     private String feedback = "";
     private String mail;
 
-    /**
-     * Creates a new instance of PasswordManagerBean
-     */
     public AskPasswordBean() {
     }
 
+    /**
+     * Méthode permettant d'envoyer un nouveau mot de passe.
+     * @return page vers laquelle on est redirigé.
+     */
     public String requestNewPassword() {
         if (pMB.sendNewPassword(mail)) {
             feedback = "Un email vous à été envoyé à l'adresse " + mail;

@@ -32,6 +32,10 @@ public class EditFicheBean implements Serializable {
     public EditFicheBean() {
     }
 
+    /**
+     * Méthode permettant d'initialiser le formulaire.
+     * @param login : login du prestataire.
+     */
     public void init(String login) {
         this.prestataire = (Prestataire) this.userManager.searchByLogin(login);
         if (this.prestataire != null) {
@@ -45,6 +49,10 @@ public class EditFicheBean implements Serializable {
         }
     }
 
+    /**
+     * Méthode permettant de mettre à jour sa fiche.
+     * @return page vers laquelle on est redirigé.
+     */
     public String update() {
         boolean error = false;
         FacesContext context = FacesContext.getCurrentInstance();
@@ -198,6 +206,10 @@ public class EditFicheBean implements Serializable {
         this.categories = categories;
     }
 
+    /**
+     * Méthode mettant en forme la liste des catégories au format pour javascript.
+     * @return la liste des catégories au format pour javascript.
+     */
     public String toJavascriptArray() {
         String[] arr = this.categories.toArray(new String[0]);
         StringBuilder sb = new StringBuilder();
