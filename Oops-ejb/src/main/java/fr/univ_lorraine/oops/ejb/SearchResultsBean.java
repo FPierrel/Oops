@@ -69,6 +69,7 @@ public class SearchResultsBean {
             queryString += searchPrestataireWithEnterprisename(what, "AND");
         }
 
+        villes.clear();
         if (!where.isEmpty()) {
             queryString += searchPrestataireWithTownName(where, postalCode, "AND");
         }
