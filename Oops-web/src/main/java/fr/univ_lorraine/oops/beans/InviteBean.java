@@ -38,6 +38,10 @@ public class InviteBean implements Serializable {
         this.message = message;
     }
 
+    /**
+     * Méthode permettant d'envoyer un mail d'inviation.
+     * @return page vers laquelle on est redirigé.
+     */
     public String send() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (!Pattern.matches("^[_A-Za-z0-9-\\+]+(\\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\\.[A-Za-z0-9-]+)*(\\.[A-Za-z]{2,})$", this.mail)) {

@@ -41,12 +41,12 @@ public class PhotoBean implements Serializable {
     public PhotoBean() {
     }
 
-    public void init(){
+    public void init() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         String user = request.getRemoteUser();
-        
-        if(user == null || user.isEmpty() || !this.albumEM.userHasAlbum(user, this.idAlbum)){
+
+        if (user == null || user.isEmpty() || !this.albumEM.userHasAlbum(user, this.idAlbum)) {
             try {
                 context.getExternalContext().redirect("403.xhtml");
                 return;
@@ -63,8 +63,8 @@ public class PhotoBean implements Serializable {
 
     public void initAlternative() {
         this.album = this.albumEM.getDefault(page);
-        
-        if(this.album != null){
+
+        if (this.album != null) {
             this.photos = this.album.getPhotos();
         }
     }
@@ -126,25 +126,25 @@ public class PhotoBean implements Serializable {
         this.page = page;
     }
 
-    public void deletePhoto(){
+    public void deletePhoto() {
         this.options = false;
         this.albumEM.deletePhoto(this.album, this.photoToDelete);
-        
+
         FacesContext context = FacesContext.getCurrentInstance();
-        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();      
+        HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo supprimée", null);
     }
-    
-    public void chooseAsProfilePicture(){
+
+    public void chooseAsProfilePicture() {
         FacesContext context = FacesContext.getCurrentInstance();
         HttpServletRequest request = (HttpServletRequest) context.getExternalContext().getRequest();
         this.albumEM.setProfilePicture(request.getRemoteUser(), this.photoToDelete);
-        
+
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, "Photo de profil modifiée", null);
         context.addMessage(null, message);
     }
-    
-    public void modifyDesc(){
+
+    public void modifyDesc() {
         this.options = false;
         this.albumEM.updatePhotoDesc(this.photoToDelete, this.description);
     }
@@ -164,7 +164,7 @@ public class PhotoBean implements Serializable {
     public void setOptions(Photo p) {
         this.photoToDelete = p;
         this.description = this.photoToDelete.getDescription();
-        
+
         if (this.photoToDelete.equals(p)) {
             this.options = !options;
         }
@@ -207,9 +207,5 @@ public class PhotoBean implements Serializable {
     public void setDefaultAlbum(Album defaultAlbum) {
         this.defaultAlbum = defaultAlbum;
     }
-    
-
-    
-    
 
 }
