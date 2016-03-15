@@ -1,7 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
 import fr.univ_lorraine.oops.dal.UtilisateurDAL;
-import java.util.List;
 import java.util.Properties;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
@@ -21,6 +20,13 @@ public class MailManagerBean {
     @Inject
     UtilisateurDAL ud;
 
+    /**
+     * Send an invite email to the targeted email address
+     * @param user login of the Utilisateur inviting
+     * @param targetMail email address to send the invite
+     * @param userMessage text message embedded in the email
+     * @return true if the email is sent to an existing address, else false
+     */
     public boolean sendInviteMail(String user, String targetMail, String userMessage) {
         if (ud.mailExist(targetMail)) {
             return false;
@@ -66,6 +72,13 @@ public class MailManagerBean {
 
     }
 
+    /**
+     * Send an email asking to post an opinion on a Prestataire page
+     * @param user login of the Utilisateur inviting
+     * @param targetMail email address to send the invite
+     * @param url url address of the Prestataire page to post on
+     * @return false if the address does not exist, else true; 
+     */
     public boolean sendAskOpinion(String user, String targetMail, String url) {
         if (ud.mailExist(targetMail)) {
             String from = "oops@pi-r-l.ovh";
@@ -102,6 +115,11 @@ public class MailManagerBean {
         return false;
     }
     
+    /**
+     * Send an email containing a new password
+     * @param targetMail email address to send the password
+     * @param userPassword the new password
+     */
     public void sendNewPassword(String targetMail, String userPassword) {
 
         String from = "oops@pi-r-l.ovh";

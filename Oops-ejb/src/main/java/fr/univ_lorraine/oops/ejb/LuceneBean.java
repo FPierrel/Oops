@@ -9,13 +9,10 @@ import java.util.Set;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct; 
-import javax.annotation.PreDestroy;
 import javax.ejb.LocalBean;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
 import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.fr.FrenchAnalyzer;
 import org.apache.lucene.document.Document;
@@ -47,8 +44,10 @@ public class LuceneBean {
     private IndexWriterConfig config;
     private Directory directory;    
     
-    
-
+    /**
+     * Constructor
+     * @throws IOException
+     */
     public LuceneBean() throws IOException {
         this.analyzer = new FrenchAnalyzer();
         this.directory = new RAMDirectory();
@@ -56,6 +55,9 @@ public class LuceneBean {
         this.iwriter = new IndexWriter(directory, config);
     }
 
+    /**
+     * Initialize the variables
+     */
     @PostConstruct
     public void init() {
        try {
@@ -70,6 +72,10 @@ public class LuceneBean {
         }
     }
 
+    /**
+     * Index a Prestataire
+     * @param p the Prestataire to index
+     */
     public void indexPrestataire(Prestataire p) {
         try {
             iwriter.addDocument(prestataireToDocument(p));
@@ -79,10 +85,18 @@ public class LuceneBean {
         }
     }
   
+    /**
+     * Remove a Prestataire from the index
+     * @param p the Prestataire to remove
+     */
     public void removePrestataire(Prestataire p) {  
         removePrestataire(p.getLogin());
     }
     
+    /**
+     * Remove a Prestataire from the index
+     * @param login the login of the Prestataire to remove
+     */
     public void removePrestataire(String login){
         try {
             iwriter.deleteDocuments(new Term("id",login));
@@ -92,11 +106,20 @@ public class LuceneBean {
         }
     }
     
+    /**
+     * Update the Prestataire in the index
+     * @param p the Prestataire to update
+     */
     public void updatePrestataire(Prestataire p){
         removePrestataire(p);
         indexPrestataire(p);
     }
 
+    /**
+     * Return a HashMap of id and percentage of matching between the Prestataire in the index and the result of the search
+     * @param quoi the keyword to look for
+     * @return a HashMap of id and percentage of matching between the Prestataire in the index and the result of the search
+     */
     public HashMap<String, Float> search(String quoi) {        
         HashMap<String,Float> result = new HashMap<>();
         if (quoi.isEmpty()) {
@@ -133,6 +156,7 @@ public class LuceneBean {
         }
         return result;
     }   
+    
     
     private Document prestataireToDocument(Prestataire p) {
         Document d = new Document();
