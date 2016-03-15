@@ -63,22 +63,22 @@ public class FicheAvisTest {
     @Test
     public void testFicheAvisComplete() {
         int notes[] = {4, 3, 2, 1};
-        driver.findElement(By.id("formOpinion:rate1")).findElements(By.xpath("div")).get(notes[0] - 1).click();
-        driver.findElement(By.id("formOpinion:rate2")).findElements(By.xpath("div")).get(notes[1] - 1).click();
-        driver.findElement(By.id("formOpinion:rate3")).findElements(By.xpath("div")).get(notes[2] - 1).click();
-        driver.findElement(By.id("formOpinion:rate4")).findElements(By.xpath("div")).get(notes[3] - 1).click();
+        driver.findElement(By.id("s_new_a_comm")).findElements(By.xpath("i")).get(notes[0]-1).click();
+        driver.findElement(By.id("s_new_a_delai")).findElements(By.xpath("i")).get(notes[1]-1).click();
+        driver.findElement(By.id("s_new_a_prix")).findElements(By.xpath("i")).get(notes[2]-1).click();
+        driver.findElement(By.id("s_new_a_qual")).findElements(By.xpath("i")).get(notes[3]-1).click();
         String comment = "Ceci est un avis de test";
         driver.findElement(By.id("formOpinion:opinion")).sendKeys(comment);
         driver.findElement(By.id("formOpinion:opinionButton")).click();
         driver.get(host);
         driver.get(host + "/fiche.xhtml?page=satan");
-        assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/legend")).getText().contains("noupi"));
+        assertTrue(driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//strong")).getText().contains("noupi"));
 
-        List<WebElement> l = driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table")).findElements(By.xpath(".//input"));
+        List<WebElement> l = driver.findElement(By.id("comments-list")).findElements(By.xpath("./form[last()]//div[@class='starrr']"));
         for (int i = 0; i <= 3; i++) {
-            assertEquals(l.get(i).getAttribute("value"), notes[i] + "");
+            assertEquals(l.get(i).findElements(By.xpath("./i[@class='fa fa-star']")).size(), notes[i]);
         }
-        assertEquals(driver.findElement(By.id("opinions")).findElement(By.xpath("form[last()]/fieldset/div/span")).getText(), comment);
+        assertEquals(driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]/div/div[2]/div/p")).getText(), comment);
     }
 
     @Test
@@ -90,11 +90,12 @@ public class FicheAvisTest {
     @Test
     public void testFicheAvisResponse() {
         String msg = "Ceci est un commentaire en réponse à un avis";
-        driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//input")).sendKeys(msg);
-        driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/table[last()]")).findElement(By.xpath(".//button")).click();
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//div[@class='media-heading']/a[last()]")).click();
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//input[@placeholder='Réponse']")).sendKeys(msg);
+        driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]//div[@class='media-body']/div[last()]/div/a")).click();
         driver.get(host);
         driver.get(host + "/fiche.xhtml?page=satan");
-        assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/fieldset/legend")).getText().contains("noupi"));
-        assertTrue(driver.findElement(By.id("opinions")).findElement(By.xpath("./form[last()]/fieldset/div/fieldset/div")).getText().contains(msg));
+        assertTrue(driver.findElement(By.id("comments-list")).findElement(By.xpath("./form[last()]/div/div[2]/div[2]//strong")).getText().contains("noupi"));
+        assertTrue(driver.findElement(By.id("comments-list")).getText().contains(msg));
     }
 }

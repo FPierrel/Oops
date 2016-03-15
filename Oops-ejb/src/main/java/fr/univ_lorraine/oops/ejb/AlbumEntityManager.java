@@ -1,5 +1,5 @@
 package fr.univ_lorraine.oops.ejb;
- 
+
 import dal.AlbumDAL;
 import dal.PhotoDAL;
 import dal.PrestataireDAL;
@@ -15,56 +15,56 @@ import javax.ejb.LocalBean;
 import javax.inject.Inject;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
- 
+
 @Stateless
 @LocalBean
 public class AlbumEntityManager {
 
     @Inject
     PrestataireDAL presd;
-      
+
     @Inject
     AlbumDAL ad;
-    
+
     @Inject
     PhotoDAL pd;
-    
-    public Album addAlbum(Album album,String login){       
+
+    public Album addAlbum(Album album, String login) {
         Prestataire pres = presd.get(login);
         pres.addAlbum(album);
         presd.update(pres);
         return album;
     }
-    
-     public Photo addPhoto(Photo photo,Long idAlbum){ 
-         Album album = ad.get(idAlbum);
-         album.addPhoto(photo);
-         ad.update(album);
-         return photo;
-     }
-     
-     public List<Album> getAllAlbumsUser(String login){
-         return presd.get(login).getAlbums();
-     }
-     
-     public  List<Photo> getAllPhotoAlbum(Long idAlbum){
-         return ad.photosOfAlbum(idAlbum);        
-     }
-     
-     public Album getAlbum(Long id){
-          return ad.get(id);
-     }
-     
-     public void deleteAlbum(Long idAlbum){
-         Album a = ad.get(idAlbum);
-         ad.delete(a);
-     }
+
+    public Photo addPhoto(Photo photo, Long idAlbum) {
+        Album album = ad.get(idAlbum);
+        album.addPhoto(photo);
+        ad.update(album);
+        return photo;
+    }
+
+    public List<Album> getAllAlbumsUser(String login) {
+        return presd.get(login).getAlbums();
+    }
+
+    public List<Photo> getAllPhotoAlbum(Long idAlbum) {
+        return ad.photosOfAlbum(idAlbum);
+    }
+
+    public Album getAlbum(Long id) {
+        return ad.get(id);
+    }
+
+    public void deleteAlbum(Long idAlbum) {
+        Album a = ad.get(idAlbum);
+        ad.delete(a);
+    }
 
     public void deleteAlbum(Album album, String login) {
-        Prestataire pres = presd.get(login);      
+        Prestataire pres = presd.get(login);
         Photo p = pd.get(pres.getProfilePicture().getId());
         Album a = ad.get(album.getId());
-        if(a.getPhotos().contains(p)){
+        if (a.getPhotos().contains(p)) {
             pres.setProfilePicture(null);
         }
         pres.deleteAlbum(a);
@@ -73,29 +73,29 @@ public class AlbumEntityManager {
     }
 
     public Album getDefault(String login) {
-        Prestataire pres = presd.get(login);        
+        Prestataire pres = presd.get(login);
         return pres.getAlbums().size() == 0 ? null : pres.getAlbums().get(0);
     }
 
     public Album getAlbum(long idAlbum, String login) {
-        Prestataire pres = presd.get(login);        
-        for(Album b : pres.getAlbums()){
-            if(b.getId() == idAlbum){
+        Prestataire pres = presd.get(login);
+        for (Album b : pres.getAlbums()) {
+            if (b.getId() == idAlbum) {
                 return b;
             }
         }
-        
+
         return new Album();
     }
 
     public void deletePhoto(Album album, long id) {
         Photo p = pd.get(id);
-        Prestataire pres = presd.get(album.getLogin());  
-        
-        if(pres.getProfilePicture().getId() == id){
+        Prestataire pres = presd.get(album.getLogin());
+
+        if (pres.getProfilePicture().getId() == id) {
             pres.setProfilePicture(null);
         }
-                
+
         album.deletePhoto(p);
         ad.update(album);
         presd.update(pres);
@@ -105,12 +105,11 @@ public class AlbumEntityManager {
     public void deletePhoto(Album album, Photo photoToDelete) {
         Album a = ad.get(album.getId());
         Photo p = pd.get(photoToDelete.getId());
-        
+
         a.deletePhoto(p);
         ad.update(a);
         pd.delete(p);
     }
-
 
     public void updatePhotoDesc(Photo photoToDelete, String description) {
         Photo p = pd.get(photoToDelete.getId());
@@ -123,5 +122,22 @@ public class AlbumEntityManager {
         p.setProfilePicture(photoToDelete);
         presd.update(p);
     }
-}
 
+    public boolean userHasAlbum(String user, long idAlbum) {    
+        Prestataire p = presd.get(user);
+
+        if (p == null) {
+            return false;
+        }
+
+        if (p.getAlbums().size() > 0) {
+            for (Album a : p.getAlbums()) {
+                if (a.getId() == idAlbum) {
+                    return true;
+                }
+            }
+        }
+
+        return false;
+    }
+}
