@@ -257,6 +257,10 @@ public class SearchResultsBean {
 
     private String searchPrestataireWithTownName(String ou, String codePostal, String operateur) {
         this.villes = this.searchTownsByRadius(ou, codePostal, 20);
+        
+        if(ou.isEmpty()){
+            return "";
+        }
 
         if (this.villes.isEmpty()) {
             return " " + operateur + " UPPER(a.ville) = \"" + ou + "\"";
