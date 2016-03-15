@@ -115,7 +115,7 @@ public class AdvancedSearchTest {
             }
         }
         driver.findElement(By.id("searchForm:go")).click();
-        Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("2"));
+        Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
 
     @Test
@@ -126,13 +126,13 @@ public class AdvancedSearchTest {
             }
         }
         driver.findElement(By.id("searchForm:go")).click();
-        Assert.assertTrue(driver.findElement(By.id("nbResult")).getText().contains("3"));
+        Assert.assertFalse(driver.findElement(By.id("nbResult")).getText().contains("Aucun"));
     }
 
     @Test
-    public void testAdvancedSearchWithCategorieAudit() {
+    public void testAdvancedSearchWithCategorieDepannage() {
         for (WebElement e : driver.findElements(By.xpath("//li"))) {
-            if (e.getText().equals("Audit")) {
+            if (e.getText().equals("Dépannage")) {
                 e.findElement(By.xpath("./a")).click();
             }
         }

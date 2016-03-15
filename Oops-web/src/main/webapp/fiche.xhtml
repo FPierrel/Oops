@@ -270,7 +270,9 @@
                                                                         <f:ajax execute="@form" render="@all" />
                                                                     </h:commandLink>
                                                                     <h:outputText class="pull-right" value=" &nbsp; "/>
-                                                                    <a class="pull-right" href="#repondre_avis" onclick="showRepondre('repondre_avis#{loop.index}')"><i class="icon-repeat"></i> Répondre</a>
+                                                                    <h:commandLink rendered="#{request.remoteUser != null}" class="pull-right" onclick="showRepondre('repondre_avis#{loop.index}')"><i class="icon-repeat"></i> Répondre
+                                                                        <f:ajax render="@none"/>
+                                                                    </h:commandLink>
                                                                 </div>
                                                                 <div class="col-sm-6">
                                                                     <h:inputHidden id="a_comm" value="#{cAvis.noteCom}"/>
@@ -374,7 +376,7 @@
                                                         <h:inputTextarea value="#{ficheBean.opinion}" id="opinion" rows="8" class="form-control" pt:placeholder="Commentaire sur la prestation... (1000 caractères maximum)" />
                                                     </div>
                                                 </div>
-                                                <p:commandLink id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}" update=":comments formOpinion :script"/>
+                                                <p:commandLink id="opinionButton" value="Soumettre l'avis" class="btn btn-danger btn-lg" action="#{ficheBean.saveOpinion()}" update=":comments formOpinion :script :pmessage"/>
                                             </h:form>
                                         </h:panelGroup><!--/#comment-form-->
                                     </h:panelGroup><!--/#comments-->
