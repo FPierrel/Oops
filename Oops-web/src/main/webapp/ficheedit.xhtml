@@ -69,7 +69,7 @@
                                     <div class="input-group">
                                         <span class="input-group-addon"><i class="icon-list-alt"></i></span>
                                         <h:selectOneMenu id="raison" class="form-control" value="#{editFicheBean.prestataire.formeJuridique}"> 
-                                            <f:selectItems value="#{editFicheBean.formes}" var="f" itemLabel="Forme juridique : #{f}" itemValue="#{f.toString}"/>
+                                            <f:selectItems value="#{editFicheBean.formes}" var="f" itemLabel="Forme juridique : #{f}" itemValue="#{f}"/>
                                         </h:selectOneMenu>
                                     </div>
                                 </div>
