@@ -31,6 +31,11 @@ public class AdminUtilsBean {
     @Inject
     ReportFichePrestataireDAL rfd;
 
+    /**
+     * Méthode permettant de supprimer un avis.
+     *
+     * @param avis : avis à supprimer.
+     */
     public void removeAvis(Avis avis) {
         Prestataire p = (Prestataire) ud.get(avis.getLoginPrestaire());
         p.removeAvis(avis);
@@ -40,11 +45,22 @@ public class AdminUtilsBean {
         p.recalculateMarks();
     }
 
+    /**
+     * Méthode permettant de gérer un signalement injustifié.
+     *
+     * @param report : le signalement géré.
+     */
     public void dismissReport(Report report) {
         report.setModerated(true);
         rd.update(report);
     }
 
+    /**
+     * Méthode permettant de gérer un signalement justifié et donne un
+     * avertissement. Au bout de 3 avertissements, le prestataire est banni.
+     *
+     * @param report : le signalement géré.
+     */
     public void acceptReport(Report report) {
         report.setModerated(true);
         report.setJustified(true);
@@ -59,19 +75,40 @@ public class AdminUtilsBean {
         ud.update(u);
     }
 
+    /**
+     * Méthode donnant les signalements de fiche non vérifiés.
+     *
+     * @return la liste des signalements de fiche non vérifiés.
+     */
     public List<ReportFichePrestataire> getUnverifiedReportFiche() {
         return rfd.getAllUnverifiedFiche();
     }
-    
+
+    /**
+     * Méthode donnant les signalements de photo non vérifiés.
+     *
+     * @return la liste des signalements de photo non vérifiés.
+     */
     public List<ReportPhoto> getUnverifiedReportPhoto() {
         return rfd.getAllUnverifiedPhoto();
     }
-    
-    public List<Avis> getAvisNotVerified(){
+
+    /**
+     * Méthode donnant les avis non vérifiés.
+     *
+     * @return la liste des avis non vérifiés.
+     */
+    public List<Avis> getAvisNotVerified() {
         return ad.getAllUnverified();
-}
-    
-    public Avis updateAvis(Avis a){
+    }
+
+    /**
+     * Méthode permettant de mettre à jour un avis.
+     *
+     * @param a : avis à mettre à jour.
+     * @return l'avis mis à jour.
+     */
+    public Avis updateAvis(Avis a) {
         return ad.update(a);
     }
 }

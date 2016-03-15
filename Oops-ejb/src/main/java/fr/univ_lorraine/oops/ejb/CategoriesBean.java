@@ -8,10 +8,6 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;
 import javax.inject.Inject;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
-import javax.persistence.TypedQuery;
 
 @Stateless
 @LocalBean
@@ -20,16 +16,32 @@ public class CategoriesBean {
     @Inject
     CategorieDAL cd;
 
-    public Categorie getCategories() { //TODO nom non explicite
+    /**
+     * Méthode donnant les catégories à travers la catégorie parente.
+     *
+     * @return les catégories.
+     */
+    public Categorie getCategories() {
         return cd.getCategories();
     }
-    
-      public List<String> getListCategories() {
+
+    /**
+     * Méthode donnant les noms de toutes les catégories et sous-catégories.
+     *
+     * @return la liste des noms de toutes les catégories et sous-catégories.
+     */
+    public List<String> getListCategories() {
         Categorie c = getCategories();
         return c.getListCategories(new ArrayList<String>(), 0);
     }
-      
-      public Collection<Categorie> getCategoriesFromListString(List<String> l){
-          return cd.getFromList(l);
-      }
+
+    /**
+     * Méthode donnant les catégories voulues à partir de leur nom.
+     *
+     * @param l : liste des noms de catégories voulues.
+     * @return liste des catégories voulues.
+     */
+    public Collection<Categorie> getCategoriesFromListString(List<String> l) {
+        return cd.getFromList(l);
+    }
 }
