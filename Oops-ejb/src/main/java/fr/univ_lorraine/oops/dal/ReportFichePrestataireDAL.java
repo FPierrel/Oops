@@ -1,4 +1,4 @@
-package dal;
+package fr.univ_lorraine.oops.dal;
 
 import fr.univ_lorraine.oops.library.model.ReportFichePrestataire;
 import fr.univ_lorraine.oops.library.model.ReportPhoto;

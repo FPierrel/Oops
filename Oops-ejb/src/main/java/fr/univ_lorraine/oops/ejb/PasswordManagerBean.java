@@ -5,7 +5,7 @@
  */
 package fr.univ_lorraine.oops.ejb;
 
-import dal.UtilisateurDAL;
+import fr.univ_lorraine.oops.dal.UtilisateurDAL;
 import java.security.MessageDigest;
 import javax.ejb.Stateless;
 import javax.ejb.LocalBean;

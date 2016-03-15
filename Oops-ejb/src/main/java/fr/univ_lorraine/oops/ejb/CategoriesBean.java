@@ -1,6 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
-import dal.CategorieDAL;
+import fr.univ_lorraine.oops.dal.CategorieDAL;
 import fr.univ_lorraine.oops.library.model.Categorie;
 import java.util.ArrayList;
 import java.util.Collection;

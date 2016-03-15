@@ -1,6 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
-import dal.PrestataireDAL;
+import fr.univ_lorraine.oops.dal.PrestataireDAL;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import java.io.IOException;
 import java.util.HashMap;

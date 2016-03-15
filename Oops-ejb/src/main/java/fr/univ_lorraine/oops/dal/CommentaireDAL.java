@@ -1,4 +1,4 @@
-package dal;
+package fr.univ_lorraine.oops.dal;
 
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Commentaire;

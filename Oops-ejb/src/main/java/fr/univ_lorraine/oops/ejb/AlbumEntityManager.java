@@ -1,9 +1,9 @@
 package fr.univ_lorraine.oops.ejb;
 
-import dal.AlbumDAL;
-import dal.PhotoDAL;
-import dal.PrestataireDAL;
-import dal.UtilisateurDAL;
+import fr.univ_lorraine.oops.dal.AlbumDAL;
+import fr.univ_lorraine.oops.dal.PhotoDAL;
+import fr.univ_lorraine.oops.dal.PrestataireDAL;
+import fr.univ_lorraine.oops.dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Album;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Photo;

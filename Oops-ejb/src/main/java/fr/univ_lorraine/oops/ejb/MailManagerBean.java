@@ -1,6 +1,6 @@
 package fr.univ_lorraine.oops.ejb;
 
-import dal.UtilisateurDAL;
+import fr.univ_lorraine.oops.dal.UtilisateurDAL;
 import java.util.List;
 import java.util.Properties;
 import javax.ejb.Stateless;

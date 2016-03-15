@@ -1,9 +1,9 @@
 package fr.univ_lorraine.oops.ejb;
 
-import dal.AvisDAL;
-import dal.ReportDAL;
-import dal.ReportFichePrestataireDAL;
-import dal.UtilisateurDAL;
+import fr.univ_lorraine.oops.dal.AvisDAL;
+import fr.univ_lorraine.oops.dal.ReportDAL;
+import fr.univ_lorraine.oops.dal.ReportFichePrestataireDAL;
+import fr.univ_lorraine.oops.dal.UtilisateurDAL;
 import fr.univ_lorraine.oops.library.model.Avis;
 import fr.univ_lorraine.oops.library.model.Prestataire;
 import fr.univ_lorraine.oops.library.model.Report;
