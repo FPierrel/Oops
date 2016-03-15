@@ -49,15 +49,16 @@
                                         </h:inputText>
                                     </div>
                                     <div class='form-group'>
-                                        <h:inputText id="raisonSocialeSearch" class="form-control" pt:placeholder="Raison sociale" value="#{searchBean.raisonSocialeSearch}"/>
-                                    </div>
-                                    <div class='form-group'>
-                                        <h:inputText id="formeJuridiqueSearch" class="form-control" pt:placeholder="Forme juridique" value="#{searchBean.formeJuridiqueSearch}"/>
-                                    </div>
-                                    <div class='form-group'>
                                         <h:inputText id="chiffreAffaireSearch" class="form-control" pt:placeholder="Chiffre d'affaire min." value="#{searchBean.chiffreAffaireSearch}" converterMessage="Le chiffre d'affaire doit être un nombre !">
                                             <f:convertNumber type="number" integerOnly="true"/>
                                         </h:inputText>
+                                    </div>
+                                    <div class='form-group'>
+                                        <h:selectManyMenu id="formeJuridiqueSearch" class="selectpicker selectpicker2 form-control" value="#{searchBean.formesJuridiques}"
+                                                          pt:multiple="" pt:data-selected-text-format="count > 3"
+                                                          pt:data-width="auto" pt:title="Formes Juridiques">
+                                            <f:selectItems value="#{searchBean.allFormes}"/>
+                                        </h:selectManyMenu>    
                                     </div>
                                 </div>
                                 <div class='col-sm-4 col-sm-offset-1'>
@@ -151,10 +152,15 @@
                     </script>
                     <script src="js/bootstrap-select.min.js"/>
                     <script>
-                        $('.selectpicker').val(#{searchBean.toJavascriptArray()});
+                        $('.selectpicker').val(#{searchBean.toJavascriptArray(searchBean.categories)});
+                        $('.selectpicker2').val(#{searchBean.toJavascriptArray(searchBean.formesJuridiques)});
                         $('.selectpicker').selectpicker({
                             style: 'btn-default',
                             size: 6
+                        });
+                        $('.selectpicker2').selectpicker({
+                            style: 'btn-default',
+                            size: 4
                         });
                     </script>
                 </h:panelGroup>

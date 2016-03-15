@@ -20,8 +20,8 @@ public class Prestataire extends Utilisateur implements Serializable {
     private static final long serialVersionUID = 1L;
     public final static String prestataire = "PRESTATAIRE";
     private String nomEntreprise, siteWeb;
-    @Column(length=5000)
-    private String description; 
+    @Column(length = 5000)
+    private String description;
     private int nbEmployes, chiffreAffaire;
     @OneToMany
     private Collection<Categorie> categories;
@@ -32,6 +32,22 @@ public class Prestataire extends Utilisateur implements Serializable {
     private Photo profilePicture;
 
     private int communication, quality, price, delay, average;
+
+    public enum Type {
+        EIRL("EIRL"), EURL("EURL"), SA("SA"), SARL("SARL"), SASU("SASU"), SAS("SAS"), SNC("SNC");
+        
+        private String type; 
+        
+        Type(String type) {
+            this.type = type;
+        }
+        
+        @Override
+        public String toString() {
+            return this.type;
+        }
+    }
+    private String formeJuridique;
 
     public Prestataire() {
         this.groupe = prestataire;
@@ -216,6 +232,13 @@ public class Prestataire extends Utilisateur implements Serializable {
     public void setProfilePicture(Photo profilePicture) {
         this.profilePicture = profilePicture;
     }
-    
-    
+
+    public String getFormeJuridique() {
+        return formeJuridique;
+    }
+
+    public void setFormeJuridique(String formeJuridique) {
+        this.formeJuridique = formeJuridique;
+    }
+
 }

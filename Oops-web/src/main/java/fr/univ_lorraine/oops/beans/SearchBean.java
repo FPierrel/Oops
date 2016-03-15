@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.beans;
 import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Prestataire.Type;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -31,9 +32,9 @@ public class SearchBean implements Serializable {
     private List<String> categories = new ArrayList<>();
     private List<String> codes = new ArrayList<>();
     private String code;
-    private List<Prestataire> listPrestataires;
-
     private int communication, quality, price, delay, moyenne;
+    private final Prestataire.Type[] allFormes = Prestataire.Type.values();
+    private List<String> formesJuridiques = new ArrayList<>();
 
     public SearchBean() {
 
@@ -42,8 +43,8 @@ public class SearchBean implements Serializable {
     public String search() {
         String ville = "";
         String codePostal = "";
-        
-        if(this.choix != null && !this.choix.isEmpty()) {
+
+        if (this.choix != null && !this.choix.isEmpty()) {
             ville = this.choix.split(" ")[0];
             if (this.choix.split(" ").length > 1) {
                 codePostal = this.choix.split(" ")[1].replaceAll("[()]", "");
@@ -54,7 +55,7 @@ public class SearchBean implements Serializable {
             this.advanced = false;
             int emp = this.employeeSearch == null ? 0 : Integer.parseInt(this.employeeSearch);
             int turnover = this.chiffreAffaireSearch == null ? 0 : Integer.parseInt(this.chiffreAffaireSearch);
-            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formeJuridiqueSearch, turnover, communication, quality, price, delay, moyenne, categories);
+            this.prestataires = this.searchResults.search(this.quoi, ville, codePostal, this.lastnameSearch, this.firstnameSearch, emp, this.raisonSocialeSearch, this.formesJuridiques, turnover, communication, quality, price, delay, moyenne, categories);
         } else {
             this.prestataires = this.searchResults.simpleSearch(this.quoi, ville, codePostal);
         }
@@ -63,20 +64,6 @@ public class SearchBean implements Serializable {
 
     public List<String> searchTown(String query) {
         return this.searchResults.searchTest(query);
-    }
-
-    public String toJavascriptArray(String query) {
-        String[] arr = searchTown(query).toArray(new String[0]);
-        StringBuilder sb = new StringBuilder();
-        sb.append("[");
-        for (int i = 0; i < arr.length; i++) {
-            sb.append("\"").append(arr[i]).append("\"");
-            if (i + 1 < arr.length) {
-                sb.append(",");
-            }
-        }
-        sb.append("]");
-        return sb.toString();
     }
 
     public List<String> searchTownWithoutCode(String query) {
@@ -276,8 +263,8 @@ public class SearchBean implements Serializable {
         this.code = code;
     }
 
-    public String toJavascriptArray() {
-        String[] arr = this.categories.toArray(new String[0]);
+    public String toJavascriptArray(List<String> list) {
+        String[] arr = list.toArray(new String[0]);
         StringBuilder sb = new StringBuilder();
         sb.append("[");
         for (int i = 0; i < arr.length; i++) {
@@ -289,4 +276,17 @@ public class SearchBean implements Serializable {
         sb.append("]");
         return sb.toString();
     }
+    
+    public Type[] getAllFormes() {
+        return this.allFormes;
+    }
+
+    public List<String> getFormesJuridiques() {
+        return formesJuridiques;
+    }
+
+    public void setFormesJuridiques(List<String> formesJuridiques) {
+        this.formesJuridiques = formesJuridiques;
+    }
+    
 }

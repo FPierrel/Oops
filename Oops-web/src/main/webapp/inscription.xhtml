@@ -199,12 +199,9 @@
                                             <p:message for="form_signin:companyName"/>
                                         </div>
                                         <div class="form-group">
-                                            <input type="text" placeholder="Raison sociale" class="form-control" disabled="true"/>
-                                            <!---->
-                                        </div>
-                                        <div class="form-group">
-                                            <input type="text" placeholder="Forme juridique" class="form-control" disabled="true"/>
-                                            <!---->
+                                            <h:selectOneMenu id="raison" class="form-control" value="#{registrationBean.forme}"> 
+                                                <f:selectItems value="#{registrationBean.formes}" var="f" itemLabel="Forme juridique : #{f}" itemValue="#{f.toString}"/>
+                                            </h:selectOneMenu>
                                         </div>
                                         <div class="form-group">
                                             <h:inputText id="nbEmployee" value="#{registrationBean.employee}" 

@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.ejb;
 import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Categorie;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Prestataire.Type;
 import fr.univ_lorraine.oops.library.model.Resultat;
 import fr.univ_lorraine.oops.rest.Geocoding;
 import fr.univ_lorraine.oops.rest.MySQL;
@@ -35,7 +36,7 @@ public class SearchResultsBean {
         return this.em;
     }
 
-    public List<Prestataire> search(String what, String where, String postalCode, String lastname, String firstname, int employee, String raisonSociale, String formeJuridique, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, List<String> categories) {
+    public List<Prestataire> search(String what, String where, String postalCode, String lastname, String firstname, int employee, String raisonSociale, List<String> formesJuridiques, int chiffreAffaire, int communication, int quality, int price, int delay, int moyenne, List<String> categories) {
         String queryString = "SELECT DISTINCT p "
                 + "FROM Prestataire p"
                 + ((!where.isEmpty()) ? ", Adresse a" : "")
@@ -44,8 +45,7 @@ public class SearchResultsBean {
                 + searchPrestataireWithLastname(lastname, "AND")
                 + searchPrestataireWithFirstname(firstname, "AND")
                 + searchPrestataireWithEmployee(employee, "AND")
-                + searchPrestataireWithRaisonSociale(raisonSociale, "AND")
-                + searchPrestataireWithFormeJuridique(formeJuridique, "AND")
+                + searchPrestataireWithFormesJuridiques(formesJuridiques, "AND")
                 + searchPrestataireWithChiffreAffaire(chiffreAffaire, "AND")
                 + searchPrestataireWithCommunication(communication, "AND")
                 + searchPrestataireWithQuality(quality, "AND")
@@ -75,7 +75,7 @@ public class SearchResultsBean {
 
         queryString += " ORDER BY p.average DESC";
         Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-
+        
         if (!this.villes.isEmpty()) {
             query.setParameter("villes", this.villes);
         }
@@ -112,12 +112,20 @@ public class SearchResultsBean {
         //return " " + operateur + " UPPER(p.raisonSociale) = '" + raisonSociale.toUpperCase() + "'";
     }
 
-    public String searchPrestataireWithFormeJuridique(String formeJuridique, String operateur) {
-        if (formeJuridique.isEmpty()) {
+    public String searchPrestataireWithFormesJuridiques(List<String> formesJuridiques, String operateur) {
+        if (formesJuridiques.isEmpty()) {
             return "";
         }
-        return "";
-        //return " " + operateur + " UPPER(p.formeJuridique) = '" + formeJuridique.toUpperCase() + "'";
+        String queryString = " " + operateur + " ( 1!=1";
+        for (int i = 0 ; i < formesJuridiques.size() ; i++ ) {
+            queryString += searchPrestataireWithFormeJuridique(formesJuridiques.get(i), "OR");
+        }        
+        queryString += " )";
+        return queryString;
+    }
+    
+    public String searchPrestataireWithFormeJuridique(String type, String operateur) {
+        return " " + operateur + " p.formeJuridique =  '" + type + "'";
     }
 
     public String searchPrestataireWithChiffreAffaire(int chiffreAffaire, String operateur) {
@@ -158,15 +166,14 @@ public class SearchResultsBean {
                     + "WHERE 1=1 "
                     + searchPrestataireWithTownName(ou, codePostal, "AND");
             Query query = this.getEntityManager().createQuery(queryString, Prestataire.class);
-            
-            
+
             if (!this.villes.isEmpty()) {
                 query.setParameter("villes", this.villes);
             }
 
             List<Prestataire> l = query.getResultList();
             this.setCoordinates(l);
-            
+
             return l;
         }
 
@@ -252,7 +259,7 @@ public class SearchResultsBean {
         this.villes = this.searchTownsByRadius(ou, codePostal, 20);
 
         if (this.villes.isEmpty()) {
-            return "";
+            return " " + operateur + " UPPER(a.ville) = \"" + ou + "\"";
         }
 
         return " " + operateur + " UPPER(a.ville) IN :villes AND a MEMBER OF p.adresses";

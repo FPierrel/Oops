@@ -3,6 +3,7 @@ package fr.univ_lorraine.oops.beans;
 import fr.univ_lorraine.oops.ejb.CategoriesBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Prestataire.Type;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -25,9 +26,8 @@ public class EditFicheBean implements Serializable {
     private Prestataire prestataire;
     private String companyName, website, nbEmployee, turnover, description;
     private UIComponent companyNameComponent, websiteComponent, nbEmployeeComponent, turnoverNumberComponent, descriptionComponent;
-
-    private List<String> allCategories;
-    private List<String> categories;
+    private List<String> allCategories, categories;
+    private final Prestataire.Type[] formes = Prestataire.Type.values();
 
     public EditFicheBean() {
     }
@@ -210,6 +210,10 @@ public class EditFicheBean implements Serializable {
         }
         sb.append("]");
         return sb.toString();
+    }
+
+    public Type[] getFormes() {
+        return this.formes;
     }
     
 }

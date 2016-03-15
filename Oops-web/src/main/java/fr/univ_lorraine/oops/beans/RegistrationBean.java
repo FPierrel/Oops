@@ -5,6 +5,7 @@ import fr.univ_lorraine.oops.ejb.SearchResultsBean;
 import fr.univ_lorraine.oops.ejb.UserManagerBean;
 import fr.univ_lorraine.oops.library.model.Adresse;
 import fr.univ_lorraine.oops.library.model.Prestataire;
+import fr.univ_lorraine.oops.library.model.Prestataire.Type;
 import fr.univ_lorraine.oops.library.model.Soumissionnaire;
 import fr.univ_lorraine.oops.library.model.Utilisateur;
 import java.io.Serializable;
@@ -38,6 +39,8 @@ public class RegistrationBean implements Serializable {
             emailComponent, phoneComponent, companyNameComponent, lastnameComponent,
             firstnameComponent, numberComponent, streetComponent, complementComponent,
             townComponent, countryComponent, turnoverComponent, employeeComponent;
+    private Type forme;
+    private final Type[] formes = Prestataire.Type.values();
 
     /**
      * Creates a new instance of RegistrationBean
@@ -327,6 +330,18 @@ public class RegistrationBean implements Serializable {
         this.website = website;
     }
 
+    public Type getForme() {
+        return forme;
+    }
+
+    public void setForme(Type forme) {
+        this.forme = forme;
+    }
+
+    public Type[] getFormes() {
+        return this.formes;
+    }
+    
     public String registration() {
         FacesContext context = FacesContext.getCurrentInstance();
         if (this.password.length() < 6) {
@@ -371,7 +386,7 @@ public class RegistrationBean implements Serializable {
             int nbEmployeeNumber = 0;
             try {
                 nbEmployeeNumber = Integer.parseInt(this.employee);
-                if (nbEmployeeNumber < 0) {
+                if (!this.employee.isEmpty() && nbEmployeeNumber < 0) {
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException ex) {
@@ -382,7 +397,7 @@ public class RegistrationBean implements Serializable {
             int turnoverNumber = 0;
             try {
                 turnoverNumber = Integer.parseInt(this.turnover);
-                if (turnoverNumber < 0) {
+                if (!this.turnover.isEmpty() && turnoverNumber < 0) {
                     throw new NumberFormatException();
                 }
             } catch (NumberFormatException ex) {
@@ -401,9 +416,10 @@ public class RegistrationBean implements Serializable {
             p.setNbEmployes(nbEmployeeNumber);
             p.setInscription(new Date());
             p.addAdresse(address);
-            if(this.website != null && !this.website.isEmpty()) {
+            if (this.website != null && !this.website.isEmpty()) {
                 p.setSiteWeb(this.website);
             }
+            p.setFormeJuridique(this.forme.toString());
             user = this.userManager.registerUser(p);
         }
         if (user == null) {
