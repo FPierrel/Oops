@@ -168,69 +168,62 @@ public class InitializationBean {
         liste.add(pres1);
         //----------------------------------------------
         ArrayList<Adresse> adressesNoupi = new ArrayList<>();
-        adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "METZ (57000-57050-57070)", "Allemagne"));
-        Prestataire pres2 = this.creerPrestataire("noupi", "Le lapin", "Noupi", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "noupi@lelapin.com",
-                "0123456789", "T'es sale Noupi", 3, 10, adressesNoupi);
-        pres2.setDescription("Ceci est un garenne...");
+        adressesNoupi.add(this.creerAdresse("8", "Rue Lafayette", "", "57000", "METZ (57000-57050-57070)", "France"));
+        Prestataire pres2 = this.creerPrestataire("Restopolitan", "Gérard", "André", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "restopolitan@gmail.com",
+                "0123456789", "Restopolitan", 12, 45603, adressesNoupi);
+        pres2.setDescription("Restaurant Ouvert du Mardi midi au Dimanche midi inclus\n"
+                + "Fermé le dimanche soir, lundi  toute la journée .\n"
+                + "\n"
+                + "Début des services :\n"
+                + "12 heures le midi / dernière prise de commande 13h30min \n"
+                + "19H30 le soir / dernière prise de commande 21h45 min\n"
+                + "\n"
+                + "\n"
+                + "Le restaurant vous accueille dans un cadre chaleureux où plusieurs petites salles vous permettent de passer un agréable moment tout en dégustant la cuisine au goût du jour d'Hervé Klein.\n"
+                + "Situées sur plusieurs niveaux, les salles peuvent accueillir jusqu'à 15 couverts");
         pres2.setFormeJuridique(Prestataire.Type.SAS.toString());
         Collection<Categorie> col2 = new ArrayList<>();
-        col2.add(c4d);
-        col2.add(c4c);
+        col2.add(c3);
+        col2.add(c3c);
         pres2.setCategories(col2);
         Avis avis1 = new Avis();
-        avis1.setContenu("Bonjour");
+        avis1.setContenu("Accueil moyen, restaurant surcoté, je regrette mon repas");
         avis1.setOwner(pres1);
         avis1.setNoteCom(1);
         avis1.setNoteDelai(3);
         avis1.setNotePrix(2);
         avis1.setpDate(new Date());
-        avis1.setNoteQualite(5);
-        avis1.setLoginPrestaire("noupi");
+        avis1.setNoteQualite(2);
+        avis1.setLoginPrestaire("Restopolitan");
         pres2.addAvis(avis1);
-        Avis avis22 = new Avis();
-        avis22.setContenu("Bonjour satan");
-        avis22.setOwner(pres1);
-        avis22.setNoteCom(0);
-        avis22.setNoteDelai(0);
-        avis22.setNotePrix(0);
-        avis22.setpDate(new Date());
-        avis22.setNoteQualite(0);
-        avis22.setLoginPrestaire("noupi");
-        pres2.addAvis(avis22);
+
         liste.add(pres2);
         //----------------------------------------------
         ArrayList<Adresse> adressesPhilippe = new ArrayList<>();
-        adressesPhilippe.add(this.creerAdresse("17", "Rue Saint-Pierre", "", "57000", "METZ (57000-57050-57070)", "Allemagne"));
-        Prestataire pres3 = this.creerPrestataire("philippe", "Le héros", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "philippe@hitman-lecobra.com",
-                "0123456789", "Je sais où tu te caches !", 1, 99999999, adressesPhilippe);
-        pres3.setDescription("Ceci est la description de Philippe ...");
+        adressesPhilippe.add(this.creerAdresse("17", "Rue Saint-Pierre", "", "57000", "METZ (57000-57050-57070)", "France"));
+        Prestataire pres3 = this.creerPrestataire("Phil Logistic", "Montrat", "Philippe", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "montrat@aol.com",
+                "0123456789", "Phil Logistic", 31, 20000, adressesPhilippe);
+        pres3.setDescription("Depuis de nombreuses années, notre entreprise prend en charge le transport de différents produits : bois, agro-alimentaire, explosifs, chimiques, matériels roulants.\n"
+                + "\n"
+                + "Soucieux de vous satisfaire, nous vous proposons un service personnalisé et un suivi rigoureux de vos commandes avec une information quotidienne sur leur position.");
         pres3.setFormeJuridique(Prestataire.Type.EURL.toString());
         Collection<Categorie> col3 = new ArrayList<>();
-        col3.add(c1);
+        col3.add(c4);
+        col3.add(c4b);
         pres3.setCategories(col3);
         Avis avis2 = new Avis();
-        avis2.setContenu("Bonjour les amis");
+        avis2.setContenu("Transport rapide et bien emballé, j'utiliserai de nouveau.");
         avis2.setOwner(pres1);
         avis2.setNoteCom(1);
         avis2.setNoteDelai(3);
         avis2.setNotePrix(2);
         avis2.setpDate(new Date());
         avis2.setNoteQualite(5);
-        avis2.setLoginPrestaire("philippe");
+        avis2.setLoginPrestaire("Phil Logistic");
         pres3.addAvis(avis2);
-        Avis avis3 = new Avis();
-        avis3.setContenu("Bonsoir !");
-        avis3.setOwner(pres2);
-        avis3.setNoteCom(4);
-        avis3.setNoteDelai(3);
-        avis3.setNotePrix(0);
-        avis3.setpDate(new Date());
-        avis3.setNoteQualite(3);
-        avis3.setLoginPrestaire("philippe");
-        pres3.addAvis(avis3);
         liste.add(pres3);
         //----------------------------------------------
-        ArrayList<Adresse> adressesDemon = new ArrayList<>();
+        /*ArrayList<Adresse> adressesDemon = new ArrayList<>();
         adressesDemon.add(this.creerAdresse("7", "Quai des Iranees", "", "88250", "LA BRESSE (88250)", "Enfer"));
         Prestataire pres4 = this.creerPrestataire("satan", "Satan", "Belzébuth", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "satan@satan.enfer",
                 "0123456789", "Ca brule", 1, 666666666, adressesDemon);
@@ -239,21 +232,22 @@ public class InitializationBean {
         Collection<Categorie> col4 = new ArrayList<>();
         col4.add(c3d);
         pres4.setCategories(col4);
-        liste.add(pres4);
-        //----------------------------------------------
-        ArrayList<Adresse> adressesNeufchateau = new ArrayList<>();
-        adressesNeufchateau.add(this.creerAdresse("3", "Rue de la comédie", "", "88300", "NEUFCHATEAU (88300)", "France"));
-        Prestataire pres5 = this.creerPrestataire("Jacky", "Tuning", "Jacky", "123456", "thomas.pagelot8@etu.univ-lorraine.fr",
-                "0123456789", "La Caisse à Jacky", 1, 50, adressesNeufchateau);
-        pres5.setDescription("Jacky Tuning c'est le meilleur !");
+        liste.add(pres4);*/
+        //----------------------------------------------      
+        ArrayList<Adresse> a = new ArrayList<>();
+        a.add(this.creerAdresse("5", "Rue Jacques Callot", "", "54500", "VANDOEUVRE-LES-NANCY (54500)", "France"));
+        Prestataire pres5 = this.creerPrestataire("Devis et Jones", "Forlan", "Davis", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "thomas.pagelot8@etu.univ-lorraine.fr",
+                "0123456789", "Devis et Jones", 4, 1000000, a);
+        pres5.setDescription("Forte de la complémentarité de 2 architectes, aux approches architecturales différentes, notre agence est en mesure de répondre à tout type de projet.");
         pres5.setFormeJuridique(Prestataire.Type.SASU.toString());
         Collection<Categorie> col5 = new ArrayList<>();
-        col5.add(c4d);
+        col5.add(c1d);
         pres5.setCategories(col5);
-        pres5.setBanished(true);
+        //pres5.setBanished(true);
         liste.add(pres5);
+
         //----------------------------------------------
-        ArrayList<Adresse> adressesNancy = new ArrayList<>();
+        /*ArrayList<Adresse> adressesNancy = new ArrayList<>();
         adressesNancy.add(this.creerAdresse("18", "Cours Léopold", "", "54000", "NANCY (54100)", "France"));
         Prestataire pres6 = this.creerPrestataire("Riri", "Fifi", "Loulou", "123456", "a@a.b",
                 "0123456789", "Oooooh", 1, 126423, adressesNancy);
@@ -264,16 +258,17 @@ public class InitializationBean {
         col6.add(c1d);
         pres6.setCategories(col6);
         pres6.setBanished(true);
-        liste.add(pres6);
+        liste.add(pres6);*/
         //----------------------------------------------
         ArrayList<Adresse> adressesOui = new ArrayList<>();
-        adressesOui.add(this.creerAdresse("21", "Rue d'Alger", "", "88630", "COUSSEY (88630)", "France"));
-        Prestataire pres7 = this.creerPrestataire("Oui", "Oui", "Oui", "123456", "thibaut.humbert5@etu.univ-lorraine.fr",
-                "0123456789", "Oui", 1, 126423, adressesOui);
-        pres7.setDescription("Oui oui oui oui oui oui oui oui...");
+        adressesOui.add(this.creerAdresse("1", "1 Rue Dr Archambault", "", "54520", "LAXOU (54520)", "France"));
+        Prestataire pres7 = this.creerPrestataire("Bernard et Fils", "Bernard", "Jean", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "thibaut.humbert5@etu.univ-lorraine.fr",
+                "1523459878", "Bernard et Fils", 2, 14, adressesOui);
+        pres7.setDescription("Artisan qualifié, maison fondée depuis plus de 15 ans - Electricité- agréé FFB. Dépannage entretien,installation. Remise aux normes Rénovation complète, disjoncteur, tableau électrique, courant faible, courant fort. Mise à la terre, raccord équipotentiel installation. Depuis 1994... Urgence 7h30 à 23h, 6 jours / 7. Agréé Consuel et Apav.");
         pres7.setFormeJuridique(Prestataire.Type.SA.toString());
         Collection<Categorie> col7 = new ArrayList<>();
-        col7.add(c3b);
+        col7.add(c1b);
+        col7.add(c1c);
         pres7.setCategories(col7);
         liste.add(pres7);
         //----------------------------------------------
@@ -352,7 +347,7 @@ public class InitializationBean {
         adressesBTP.add(this.creerAdresse("33", "avenue du Cassoulet", "", "31000", "TOULOUSE (31000-31100-31200-31300-31400-31500)", "France"));
         Prestataire pres10 = this.creerPrestataire("BTP Grand Selve", "Pennington", "Ty", "8d969eef6ecad3c29a3a629280e686cf0c3f5d5a86aff3ca12020c923adc6c92", "btpgrandselve@sudouest.fr",
                 "0233775521", "BTP Grand Selve", 1500, 500001, adressesBTP);
-        pres10.setDescription("Réunissant tous les métiers de la construction à la réhabilitation à Toulouse, BTP Grand Selve est un acteur historique, indépendant, de proximité,  au service de ses clients, de ses partenaires et de ses collaborateurs. " 
+        pres10.setDescription("Réunissant tous les métiers de la construction à la réhabilitation à Toulouse, BTP Grand Selve est un acteur historique, indépendant, de proximité,  au service de ses clients, de ses partenaires et de ses collaborateurs. "
                 + "Avec une activité principale de gros œuvre dans les travaux neufs, la société forge également son savoir-faire dans l’entreprise générale, les travaux de rénovation lourde structurante, les travaux services et les travaux de second œuvre (bois et plâtre). ");
         pres10.setFormeJuridique(Prestataire.Type.EURL.toString());
         Collection<Categorie> col10 = new ArrayList<>();
@@ -363,7 +358,7 @@ public class InitializationBean {
         liste.add(pres10);
         Avis avisB = new Avis();
         avisB.setContenu("Entrepreneur sérieux, travail impécable. ");
-        avisB.setOwner(pres4);
+        avisB.setOwner(pres1);
         avisB.setNoteCom(5);
         avisB.setNoteDelai(4);
         avisB.setNotePrix(4);
@@ -378,7 +373,7 @@ public class InitializationBean {
                 "0233775574", "Cabinet Schmidt et Russel", 20, 233000000, adressesR);
         pres11.setDescription("Les banques sont soumises à de nouvelles règlementations qui visent à développer la concurrence et la transparence. "
                 + "Ces nouvelles réglementations devraient conduire à une baisse de 8% à 15% du PNB des banques de détail. Parallèlement, les banques doivent s’adapter à des clients mieux informés et plus exigeants. "
-                + "Elles doivent également lutter contre l’arrivée de nouveaux entrants dans le domaine des paiements. " 
+                + "Elles doivent également lutter contre l’arrivée de nouveaux entrants dans le domaine des paiements. "
                 + "Notre approche : La définition de la trajectoire est aussi importante que celle de la cible.");
         pres11.setFormeJuridique(Prestataire.Type.SAS.toString());
         Collection<Categorie> col11 = new ArrayList<>();
@@ -387,7 +382,7 @@ public class InitializationBean {
         liste.add(pres11);
         Avis avisR = new Avis();
         avisR.setContenu("Un travail de qualité, des conseillers éfficaces et des solutions innovantes ");
-        avisR.setOwner(pres4);
+        avisR.setOwner(pres1);
         avisR.setNoteCom(5);
         avisR.setNoteDelai(3);
         avisR.setNotePrix(3);
@@ -471,8 +466,8 @@ public class InitializationBean {
         ArrayList<ReportFichePrestataire> liste = new ArrayList<>();
         //DEBUT AJOUTS DE SIGNALEMENTS DE FICHES: (MODIFIER CI-DESSOUS)
         //----------------------------------------------
-        liste.add(this.creerSignalementFiche("john","Autre","Le prestataire n'a pas facturé le prix initialement négocié.",new Date(),"philippe"));
-        liste.add(this.creerSignalementFiche("philippe","Usurpation d'indentité","Cette entreprise utilise mes informations pour se faire passer pour mon entreprise.",new Date(),"Jacky"));
+        liste.add(this.creerSignalementFiche("john", "Autre", "Le prestataire n'a pas facturé le prix initialement négocié.", new Date(), "philippe"));
+        liste.add(this.creerSignalementFiche("philippe", "Usurpation d'indentité", "Cette entreprise utilise mes informations pour se faire passer pour mon entreprise.", new Date(), "Jacky"));
         //----------------------------------------------
         //FIN AJOUTS DE SOUMISSIONNAIRES.
         for (ReportFichePrestataire r : liste) {
