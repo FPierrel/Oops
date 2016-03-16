@@ -48,7 +48,7 @@ public class ReportManagerBean {
      * @param complement the complementary reason of the report 
      */
     public void reportPhoto(String loginReporting, Photo photo, Album album, String reason, String complement) {
-        String loginFicheReported = "noupi";
+        String loginFicheReported = loginReporting;
         Prestataire pres = pd.get(loginFicheReported);
         ReportPhoto report = new ReportPhoto();
         report.setReason(reason);
