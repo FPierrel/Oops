@@ -1,11 +1,5 @@
 # Manuel d'installation du projet Oops:
 
-## Récuperation du dépot git:
-```sh
-$ git clone http://vps212426.ovh.net/plugins/git/oops/oops.git
-```
-login: guest \
-pass: Fowler54
 ## Installation et configuration du serveur d'application
 ### Installation du serveur glassfish
 ```sh
